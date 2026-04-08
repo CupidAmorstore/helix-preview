@@ -1,0 +1,40 @@
+# Short-Form Video Scripts (TikTok, IG Reels, YouTube Shorts)
+Shoot these natively on your phone. Record yourself speaking into the camera, and then cut to screen recordings of the Cryptofinancial app.
+Keep the pacing fast. Total length should be 15-25 seconds max.
+
+## Script 1: The "Secret" App (High Conversion)
+**[Hook - Focus on camera or green screen over the app]**
+"Stop day-trading crypto until you start using a scanner with a literal 'NO TRADE' rule integrated into the code."
+
+**[Body - Show the app loading the cinematic loader, then cut to clicking a chart]**
+"I got so tired of staring at TradingView charts lagging that I built a custom market intelligence engine called Apex."
+
+**[Action - Point to the screen showing the Signal Explanation Card]**
+"It streams live via Binance WebSockets, but the best part is the risk engine. If volume is dead, it actively tells you to stay out of the market so you don’t get chopped up."
+
+**[Call to Action]**
+"It's completely free to run the baseline scanner. Check the link in my bio to start surviving this market."
+
+---
+
+## Script 2: The Actionable Market Update (Viral Growth)
+*(Note: Record this fresh every Monday morning based on real data)*
+
+**[Hook - Pointing at a big red or green number on the app]**
+"Is Solana actually breaking out or is this a trap? Let's check the momentum scanner."
+
+**[Body - Show moving crosshair over the Apex canvas chart]**
+"I just booted up Apex, checking the 1-hour live feed. You can see price is up 4%, but look at the factor analysis..."
+
+**[Action - Zoom in on the Volatility/Volume scores on the Signal Card]**
+"Volume score is literally negative right now and the confidence meter is sitting at 35%. The engine is throwing a strict NO TRADE caution."
+
+**[Call to Action]**
+"Do what you want, but the math says this is a trap. If you want to use this scanner to check your own trades, grab it at the link in my bio."
+
+---
+
+## Filming Tips for Conversion:
+1. **Never promise profits.** The fact that you are the ONLY app saying "stay out of the market" is your unique selling proposition (USP).
+2. **Move fast.** Your first 2 seconds determine if they keep watching. Start speaking before you even turn on the camera.
+3. **Show, don't tell.** The app is gorgeous (Graphite/Emerald UI). Let the design do the selling. Screen-record the `Live` timeframe sliding animation—it looks highly engineered.

@@ -1,0 +1,2 @@
+﻿8ffa37f50f234bda5d205b37af42e78316aed981813a91cc4eaedddeb959b16b *Cryptofinancial.exe
+05c36db9db9192e81e60f498ccad02180c7e2c177d2d811d65f9d661b2cada64 *CryptofinancialPortable-v2.2.0.zip

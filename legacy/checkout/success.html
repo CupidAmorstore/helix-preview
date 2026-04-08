@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HELIX | Access Request Received</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../assets/helix_icon.ico">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="checkout-page">
+  <main class="section checkout-main">
+    <div class="shell checkout-shell">
+      <div class="checkout-intro">
+        <h1>Request Received</h1>
+        <p class="subtitle">Thanks for your request. If payment was completed, this page will confirm the Stripe session status.</p>
+      </div>
+      <div class="checkout-status-box" aria-live="polite">
+        <div class="status-inner">
+          <div class="status-message status-info" id="checkout-success-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Review in progress. We will respond via email.</span>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-status-box" style="margin-top:1rem">
+        <div class="status-inner">
+          <div class="status-message status-info" id="checkout-session-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+            <span>Stripe session not detected. Manual access only.</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.5rem;">
+        <a class="button ghost back-btn" href="../index.html">Return to home</a>
+        <a class="button primary" id="pilot-access-link" href="../checkout/index.html" style="display:none">Check Pilot Gate</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const statusEl = document.getElementById('checkout-success-status');
+      const sessionEl = document.getElementById('checkout-session-note');
+      const pilotLink = document.getElementById('pilot-access-link');
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+
+      if (!sessionId) {
+        return;
+      }
+
+      if (pilotLink) {
+        pilotLink.style.display = 'inline-flex';
+        pilotLink.href = `/pilot?session_id=${encodeURIComponent(sessionId)}`;
+      }
+
+      sessionEl.className = 'status-message status-info';
+      sessionEl.querySelector('span').textContent = 'Checking Stripe session status...';
+
+      fetch(`/api/access-check?session_id=${encodeURIComponent(sessionId)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.access === 'active') {
+            statusEl.className = 'status-message status-ok';
+            statusEl.querySelector('span').textContent = 'Stripe session verified. Pilot access still requires server-side provisioning.';
+            sessionEl.className = 'status-message status-ok';
+            sessionEl.querySelector('span').textContent = 'Stripe session is active.';
+          } else if (data.access === 'inactive') {
+            statusEl.className = 'status-message status-info';
+            statusEl.querySelector('span').textContent = 'Stripe session detected but not active yet.';
+            sessionEl.className = 'status-message status-info';
+            sessionEl.querySelector('span').textContent = 'Stripe session is inactive or pending.';
+          } else {
+            sessionEl.className = 'status-message status-info';
+            sessionEl.querySelector('span').textContent = 'Stripe status unavailable. Manual review required.';
+          }
+        })
+        .catch(() => {
+          sessionEl.className = 'status-message status-info';
+          sessionEl.querySelector('span').textContent = 'Stripe status check failed. Manual review required.';
+        });
+    })();
+  </script>
+</body>
+</html>

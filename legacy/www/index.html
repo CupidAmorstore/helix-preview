@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HELIX | Market Intelligence Preview</title>
+  <meta name="description" content="HELIX is a crypto market intelligence dashboard. Live market data, transparent signals, and clear risk framing. No custody, no trading.">
+  <link rel="canonical" href="https://helix.app/">
+  <!-- TODO: Replace canonical domain with production URL -->
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="HELIX | Market Intelligence Preview">
+  <meta property="og:description" content="Live crypto market context with transparent signals and clear risk framing. No custody or trading.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://helix.app/assets/helix_banner.png">
+  <meta property="og:url" content="https://helix.app">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HELIX | Market Intelligence Preview">
+  <meta name="twitter:description" content="Live market data with explainable signals and clear risk framing.">
+  <meta name="twitter:image" content="https://helix.app/assets/helix_banner.png">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="icon" href="./assets/helix_icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- Analytics removed: no telemetry in preview build -->
+</head>
+<body>
+
+  <!-- CINEMATIC LOADER -->
+  <div class="cinematic-loader" id="cinematic-loader" role="status" aria-label="Loading HELIX">
+    <div class="loader-logo-wrap">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 12L10 88H90L50 12Z" stroke="#10b981" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M32 65H68" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="14" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+      </svg>
+      <div class="loader-ring"></div>
+    </div>
+    <div class="loader-text">Initializing Market Intelligence</div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="shell">
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="./index.html" class="brand" aria-label="HELIX home">
+          <img src="./assets/helix_logo.png" alt="HELIX mark" width="32" height="32">
+          <span class="brand-name">HELIX</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation menu">
+          <span class="hamburger" aria-hidden="true"></span>
+        </button>
+        <div class="nav-links" id="nav-links" role="list">
+          <a href="./#features" class="nav-link" role="listitem">Features</a>
+          <a href="./#live-preview" class="nav-link" role="listitem">Live Markets</a>
+          <a href="./#access" class="nav-link" role="listitem">Access</a>
+          <a href="./support.html" class="nav-link" role="listitem">Support</a>
+          <a class="button primary sm" href="#access" id="nav-access-btn" role="listitem">
+            Get Access
+          </a>
+        </div>
+      </nav>
+
+      <section class="hero-grid" aria-labelledby="hero-heading">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Preview Release - Market Intelligence</p>
+          <h1 id="hero-heading">HELIX | <strong>Market Intelligence</strong> with clear, honest context.</h1>
+          <p class="subtitle">
+            Monitor top markets live, understand momentum and volatility, and capture risk context in real time.
+            No custody, no trading, and no false claims.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#live-preview" id="hero-live-btn">
+              See Live Markets
+            </a>
+            <a class="button secondary" href="#access" id="hero-access-btn">Request Access</a>
+          </div>
+          <ul class="trust-row" aria-label="Trust signals">
+            <li>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              No custody or private keys
+            </li>
+            <li>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Public market data sources
+            </li>
+            <li>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              No exchange sync in this build
+            </li>
+            <li>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              No profit guarantees ever
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-card" role="img" aria-label="HELIX market preview">
+          <img src="./assets/helix_banner.png" alt="HELIX market intelligence preview" width="600" height="340" loading="eager">
+          <div class="hero-meta">
+            <span>Channel: Preview</span>
+            <span id="hero-updated-date">Loading...</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <!-- LIVE TICKER -->
+  <div class="ticker-strip" aria-label="Live market prices ticker">
+    <div class="ticker-inner" id="ticker-inner" aria-live="polite">
+      <span class="ticker-loading">Connecting to markets...</span>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- FEATURES -->
+    <section id="features" class="section" aria-labelledby="features-heading">
+      <div class="shell">
+        <p class="section-label">Platform Features</p>
+        <h2 id="features-heading">Built for clarity, not hype.</h2>
+        <p class="section-sub">HELIX focuses on real-time market context and explainable signals. No trading promises. No false automation.</p>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Live Market Intelligence</h3>
+            <p>Real-time price streaming, momentum tracking, and regime labeling based on public market data.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3>Explainable Signals</h3>
+            <p>Signals include the factors and confidence behind them. When confidence is weak, the system marks NO ACTION.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+            </div>
+            <h3>Interactive Charts</h3>
+            <p>Multi-timeframe price charts with clear data sources and freshness labeling.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Portfolio Tracking (Coming Soon)</h3>
+            <p>Read-only exchange + address tracking is planned. Not available in this preview build.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE MARKET INTELLIGENCE SECTION -->
+    <section id="live-preview" class="section section-dark-preview" aria-labelledby="preview-heading">
+      <div class="shell">
+        <div class="preview-header">
+          <div>
+            <p class="section-label">Market Intelligence - Live</p>
+            <h2 id="preview-heading">Live Market Snapshot</h2>
+            <p class="section-sub light">Real-time data streamed via Binance WebSocket. 24h statistics updated every 60 seconds from CoinGecko. Signals are analytical context only.</p>
+          </div>
+          <div class="live-badge" id="live-status-badge" aria-live="polite" aria-atomic="true">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="live-status-text">Connecting...</span>
+          </div>
+        </div>
+
+        <!-- Market Regime Banner -->
+        <div class="market-regime-banner" role="status" aria-live="polite">
+          <div>
+            <div class="regime-label">Global Market Regime</div>
+            <div class="regime-value uncertain" id="regime-value">Analyzing...</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem" id="regime-reason"></div>
+          </div>
+          <div class="regime-freshness">
+            <span class="freshness-dot" id="freshness-dot"></span>
+            <span id="freshness-age">-</span>
+            <span style="margin-left:0.25rem">data freshness</span>
+          </div>
+        </div>
+
+        <!-- Top Movers -->
+        <p class="section-label" style="margin-bottom:0.75rem">Top Movers (24h)</p>
+        <div class="top-movers" id="top-movers" aria-label="Top 24h movers">
+          <div class="mover-card" style="opacity:0.4"><div class="sk-line wide" style="height:36px;border-radius:8px"></div></div>
+          <div class="mover-card" style="opacity:0.4"><div class="sk-line wide" style="height:36px;border-radius:8px"></div></div>
+          <div class="mover-card" style="opacity:0.4"><div class="sk-line wide" style="height:36px;border-radius:8px"></div></div>
+        </div>
+
+        <!-- Market Cards -->
+        <div class="market-cards-grid" id="market-cards" aria-live="polite" aria-label="Live asset prices and signals">
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+          <div class="market-card skeleton" aria-busy="true"><div class="sk-line wide"></div><div class="sk-line narrow"></div><div class="sk-line wide"></div></div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container" aria-label="BTC/USD interactive price chart">
+          <div class="chart-header">
+            <div class="chart-title-group">
+              <span class="chart-title" id="chart-symbol-label">BTC/USD</span>
+              <span class="chart-badge" id="chart-timeframe-label">24h</span>
+            </div>
+            <div class="chart-controls" role="group" aria-label="Select timeframe">
+              <button class="chart-btn tf-btn" data-tf="LIVE" id="tf-btn-live">Live</button>
+              <button class="chart-btn tf-btn active" data-tf="1D" id="tf-btn-1d">1D</button>
+              <button class="chart-btn tf-btn" data-tf="1W" id="tf-btn-1w">1W</button>
+              <button class="chart-btn tf-btn" data-tf="1M" id="tf-btn-1m">1M</button>
+              <button class="chart-btn tf-btn" data-tf="1Y" id="tf-btn-1y">1Y</button>
+            </div>
+            <div class="chart-controls" role="group" aria-label="Select asset">
+              <button class="chart-btn asset-btn active" data-symbol="BTC" id="chart-btn-btc">BTC</button>
+              <button class="chart-btn asset-btn" data-symbol="ETH" id="chart-btn-eth">ETH</button>
+              <button class="chart-btn asset-btn" data-symbol="SOL" id="chart-btn-sol">SOL</button>
+              <button class="chart-btn asset-btn" data-symbol="BNB" id="chart-btn-bnb">BNB</button>
+            </div>
+          </div>
+          <div class="chart-value-row">
+            <span class="chart-price" id="chart-price">-</span>
+            <span class="chart-change" id="chart-change">-</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="priceChart" width="900" height="220" role="img" aria-label="Price chart"></canvas>
+          </div>
+          <div class="chart-footer">
+            <span class="chart-data-note">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Prices: Binance WebSocket (live) + CoinGecko REST (60s). For context only - not trading advice.
+            </span>
+            <span class="chart-update-time" id="chart-last-updated">-</span>
+          </div>
+        </div>
+
+        <!-- AI Intelligence Dashboard (Preview) -->
+        <div class="ai-dashboard" id="ai-dashboard">
+          <div class="ai-dashboard-grid">
+            <!-- Left: Market Bias & Confidence -->
+            <div class="ai-card bias-card">
+              <div class="ai-card-label">Overall Bias</div>
+              <div class="bias-value" id="ai-bias-value">Analyzing...</div>
+
+              <div class="meter-group">
+                <div class="meter-label">
+                  <span>Confidence Score</span>
+                  <span id="ai-conf-val">0%</span>
+                </div>
+                <div class="meter-bar">
+                  <div class="meter-fill" id="ai-conf-fill" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div class="meter-group">
+                <div class="meter-label">
+                  <span>Volatility Risk</span>
+                  <span id="ai-risk-val">0%</span>
+                </div>
+                <div class="meter-bar risk">
+                  <div class="meter-fill" id="ai-risk-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Setup Explanation & Levels -->
+            <div class="ai-card setup-card">
+              <div class="ai-card-label">Active Setup</div>
+              <div class="setup-type" id="ai-setup-type">Calculating Setup...</div>
+              <p class="setup-reasoning" id="ai-reasoning">Waiting for market data confluence...</p>
+
+              <div class="setup-levels">
+                <div class="level-item">
+                  <span class="level-label">Reference Zone</span>
+                  <span class="level-price" id="ai-entry-price">-</span>
+                </div>
+                <div class="level-item inv">
+                  <span class="level-label">Invalidation</span>
+                  <span class="level-price" id="ai-sl-price">-</span>
+                </div>
+                <div class="level-item tgt">
+                  <span class="level-label">Target Zone</span>
+                  <span class="level-price" id="ai-tp-price">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: Factor Checklist -->
+          <div class="factor-row" id="ai-factors">
+            <!-- JS rendered items -->
+          </div>
+
+          <div class="ai-dashboard-footer">
+            <span class="freshness-label" id="ai-freshness">Data Refreshing...</span>
+            <span class="disclaimer-trigger" title="Market analysis is for educational purposes only.">Disclaimer and Risk Disclosure</span>
+          </div>
+        </div>
+
+        <p style="margin-top:1.5rem;font-size:0.78rem;color:var(--text-muted);line-height:1.6;max-width:68ch">
+          <strong style="color:var(--text-secondary)">Important:</strong> All signals on this page are analytical context generated from public market data.
+          They are not financial advice, do not guarantee outcomes, and should not be used as the sole basis for any trading decision.
+          Crypto markets carry substantial risk. You may lose all capital invested.
+        </p>
+      </div>
+    </section>
+
+    <!-- ACCESS SECTION -->
+    <section id="access" class="section section-download" aria-labelledby="access-heading">
+      <div class="shell">
+        <p class="section-label">Access</p>
+        <h2 id="access-heading">Preview access and desktop roadmap</h2>
+        <p class="section-sub">HELIX is live as a web preview. Desktop builds and paid tiers are not automated yet. Request access for pilot availability.</p>
+        <div class="download-grid">
+          <article class="download-card">
+            <div class="download-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3>Web Preview</h3>
+            <p>Live market dashboard in your browser. No login required.</p>
+            <a class="button primary block" href="#live-preview" id="access-web-btn">
+              Open Live Markets
+            </a>
+            <p class="meta">Public data only. No custody, no trading.</p>
+          </article>
+          <article class="download-card">
+            <div class="download-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <h3>Desktop App (Coming Soon)</h3>
+            <p>Private alpha builds are not public yet. Request access to be notified.</p>
+            <a class="button secondary block" href="mailto:support@helix.app?subject=HELIX%20Desktop%20Waitlist" id="access-desktop-btn">
+              Request Access
+            </a>
+            <p class="meta">Manual onboarding. No instant activation.</p>
+          </article>
+        </div>
+
+        <div class="hashes">
+          <div class="hashes-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <h3>Transparency Notes</h3>
+          </div>
+          <pre aria-label="Transparency notes">No exchange connections, no wallet signing, and no custody features are live in this preview build. Portfolio tracking is not enabled yet.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="section" aria-labelledby="pricing-heading">
+      <div class="shell">
+        <p class="section-label">Access Options</p>
+        <h2 id="pricing-heading">Preview now. Pilot access by request.</h2>
+        <p class="section-sub">HELIX is early. Paid tiers are not automated and require manual onboarding.</p>
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <h3>Preview</h3>
+            <p class="price">$0<span></span></p>
+            <ul>
+              <li>Live market board (top assets)</li>
+              <li>Real-time price streaming</li>
+              <li>24h momentum and volume context</li>
+              <li>Explainable signal labels</li>
+              <li>Interactive charts</li>
+            </ul>
+            <a class="button ghost block" href="#live-preview" id="pricing-preview-btn">Explore Preview</a>
+          </article>
+          <article class="pricing-card featured">
+            <div class="featured-badge">Pilot Program</div>
+            <h3>Research Access (Waitlist)</h3>
+            <p class="price">Request<span> access</span></p>
+            <p class="price-alt">Manual onboarding. Pricing shared during pilot review.</p>
+            <ul>
+              <li>Priority onboarding support</li>
+              <li>Early access to experimental features</li>
+              <li>Feedback channel with product team</li>
+              <li>Roadmap input and previews</li>
+            </ul>
+            <a class="button primary block" href="./checkout/index.html" id="pricing-pro-btn">Request Access</a>
+            <p class="pricing-note-inline">No automated checkout. We confirm access manually.</p>
+          </article>
+        </div>
+        <p class="pricing-note">Questions about access? <a href="mailto:support@helix.app?subject=HELIX%20Access%20Inquiry" id="pricing-support-link">support@helix.app</a></p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section" aria-labelledby="faq-heading" style="border-top:1px solid var(--border)">
+      <div class="shell">
+        <p class="section-label">FAQ</p>
+        <h2 id="faq-heading">Common Questions</h2>
+        <div class="faq-grid">
+          <details class="faq-item">
+            <summary>Does HELIX hold funds or private keys?</summary>
+            <p>No. HELIX is a market intelligence dashboard. It does not hold funds, manage keys, or execute transactions.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is there a real wallet or exchange sync?</summary>
+            <p>Not yet. This preview focuses on market intelligence only. Read-only portfolio tracking is planned for a future phase.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Are the charts live?</summary>
+            <p>Yes. Price data streams via Binance WebSocket, and 24-hour stats refresh via CoinGecko. Data sources are labeled in the UI.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How does access work for the desktop app?</summary>
+            <p>Desktop builds are not publicly available yet. You can request access and we will follow up manually.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does HELIX provide financial advice?</summary>
+            <p>No. All analysis is informational only and does not guarantee outcomes. Use at your own risk.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="section footer" role="contentinfo">
+    <div class="shell">
+      <div class="footer-brand">
+        <img src="./assets/helix_logo.png" alt="HELIX" width="26" height="26">
+        <span>HELIX</span>
+      </div>
+      <p>Live crypto market intelligence with clear, honest context.</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="./#features" id="footer-features-link">Features</a>
+        <a href="./#live-preview" id="footer-markets-link">Live Markets</a>
+        <a href="./#access" id="footer-access-link">Access</a>
+        <a href="./#pricing" id="footer-pricing-link">Access Options</a>
+        <a href="./#faq" id="footer-faq-link">FAQ</a>
+        <a href="./checkout/index.html" id="footer-upgrade-link">Request Access</a>
+        <a href="./health.html" id="footer-health-link">System Health</a>
+        <a href="./support.html" id="footer-support-link">Support</a>
+        <a href="./privacy.html" id="footer-privacy-link">Privacy Policy</a>
+        <a href="./terms.html" id="footer-terms-link">Terms of Service</a>
+      </nav>
+      <p class="fine-print">
+        This software is for market research and monitoring purposes only.
+        It is not financial advice. All signals are analytical context - not trading recommendations.
+        Crypto markets are highly volatile. Never invest more than you can afford to lose.
+        Past performance of any market or indicator does not guarantee future results.
+      </p>
+      <p class="fine-print copy" style="margin-top:0.75rem;opacity:0.5">
+        Copyright <span id="footer-year">2026</span> HELIX. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

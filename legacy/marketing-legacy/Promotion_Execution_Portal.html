@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX | Launch Control Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0e12;
+            --card: #16181d;
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #0ea5e9;
+            --glass: rgba(22, 24, 29, 0.7);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 280px;
+            background: #111318;
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--emerald);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--emerald-glow);
+            color: var(--emerald);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 4rem;
+            max-width: 1200px;
+        }
+
+        .header-section {
+            margin-bottom: 4rem;
+        }
+
+        .logo-tag {
+            background: var(--emerald-glow);
+            color: var(--emerald);
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-top: 1rem;
+        }
+
+        /* tab-content handling */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--emerald), transparent);
+            opacity: 0.3;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+        }
+
+        .asset-preview {
+            width: 100%;
+            height: 220px;
+            background: #000;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            padding: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            margin: 1.5rem 0;
+            resize: none;
+            line-height: 1.5;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            text-align: center;
+            padding: 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-emerald { 
+            background: var(--emerald); 
+            color: #000; 
+            box-shadow: 0 4px 15px var(--emerald-glow);
+        }
+        .btn-emerald:hover { 
+            background: #059669; 
+            transform: scale(1.02);
+        }
+
+        .btn-outline { 
+            background: transparent; 
+            border: 1px solid var(--border); 
+            color: var(--text); 
+        }
+        .btn-outline:hover { 
+            background: var(--border); 
+            border-color: var(--muted);
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            background: var(--emerald);
+            color: #000;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            bottom: 60px;
+            right: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Progress Checklist */
+        .checklist {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist-item:last-child { border: none; }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox.checked {
+            background: var(--emerald);
+            border-color: var(--emerald);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .checked-text {
+            text-decoration: line-through;
+            color: var(--muted);
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <span>⚡</span> APEX CONTROL
+        </div>
+        
+        <div class="nav-item active" onclick="showTab(0)">
+            <span>🖼️</span> Launch Assets
+        </div>
+        <div class="nav-item" onclick="showTab(1)">
+            <span>👾</span> Reddit Infiltration
+        </div>
+        <div class="nav-item" onclick="showTab(2)">
+            <span>🐦</span> Twitter/X Threads
+        </div>
+        <div class="nav-item" onclick="showTab(3)">
+            <span>📧</span> Creator Outreach
+        </div>
+        <div class="nav-item" onclick="showTab(4)">
+            <span>📅</span> 7-Day Roadmap
+        </div>
+
+        <div style="flex-grow: 1"></div>
+
+        <div class="checklist">
+            <h4 style="margin: 0 0 1rem 0; font-size: 0.8rem; text-transform: uppercase; color: var(--emerald)">Launch Status</h4>
+            <div class="checklist-item">
+                <div class="checkbox checked"></div>
+                <span style="font-size: 0.85rem">Domain Online</span>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox checked"></div>
+                <span style="font-size: 0.85rem">Support Email</span>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox" id="checkDay1" onclick="this.classList.toggle('checked')"></div>
+                <span style="font-size: 0.85rem">Day 1 Routine</span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        
+        <!-- PHASE 1: ASSETS -->
+        <div id="tab0" class="tab-content active">
+            <div class="header-section">
+                <span class="logo-tag">Day 1: Operational</span>
+                <h1>Visual Branding</h1>
+                <p class="subtitle">Deploy your premium social headers and cinematic mockups to establish technical authority.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>Premium Header <span class="badge">Day 1</span></h3>
+                    <p style="font-size: 0.9rem; color: var(--muted)">optimized for Twitter/X and LinkedIn branding.</p>
+                    <img src="launch_banner_premium.png" class="asset-preview" alt="Launch Banner">
+                    <a href="launch_banner_premium.png" download class="action-btn btn-emerald">📥 Download Full Res</a>
+                </div>
+
+                <div class="card">
+                    <h3>App Environment <span class="badge">Hero Image</span></h3>
+                    <p style="font-size: 0.9rem; color: var(--muted)">Actionable screenshot of the "No Trade" logic in desktop view.</p>
+                    <img src="app_mockup_premium.png" class="asset-preview" alt="App Mockup">
+                    <a href="app_mockup_premium.png" download class="action-btn btn-outline">📥 Download for Socials</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHASE 2: REDDIT -->
+        <div id="tab1" class="tab-content">
+            <div class="header-section">
+                <span class="logo-tag">Day 2-3: Seeding</span>
+                <h1>Reddit Distribution</h1>
+                <p class="subtitle">Build credibility in technical subreddits. Focus on logic, not hype.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>r/ethdev <span class="badge">Post</span></h3>
+                    <p style="font-size: 0.9rem; color: var(--muted)">Feedback-focused post for developer communities.</p>
+                    <textarea id="redditEth">I built a custom crypto-market intelligence engine using sub-second Binance WS feeds to handle market noise. 
+
+Most apps flash 'BUY' signals to generate dopamine, but I programmed this one explicitly to flash 'NO TRADE' when volume is divergent or volatility is fake. It calculates a 0-100% confidence score based on multi-timeframe factor analysis.
+
+Would love some dev feedback on the risk-analysis logic and whether you think the async volume factor is being weighted correctly. I don't guarantee profits, just focusing on capital preservation.
+
+URL: Cryptofinancial.com</textarea>
+                    <button onclick="copyToClipboard('redditEth', this)" class="action-btn btn-emerald">📋 Copy & Open r/ethdev</button>
+                    <div class="copy-tooltip">Copied!</div>
+                </div>
+
+                <div class="card">
+                    <h3>r/CryptoMarkets <span class="badge">Post</span></h3>
+                    <p style="font-size: 0.9rem; color: var(--muted)">Broad sentiment post focused on capital preservation.</p>
+                    <textarea id="redditCryptoMarket">Check this out - anyone else getting sick of signal apps that just promise 100% wins?
+
+I built a tool called Apex that does the opposite. If the market is noisy (low volume, ranging prices), it explicitly tells you to do nothing. It focuses on the 80% of the time you shouldn't be trading.
+
+Built with sub-second WebSocket feeds for near-zero latency. Free for everyone to use the main terminal. Let me know what you think.
+
+URL: Cryptofinancial.com</textarea>
+                    <button onclick="copyToClipboard('redditCryptoMarket', this)" class="action-btn btn-outline">📋 Copy & Open Reddit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHASE 3: TWITTER/X -->
+        <div id="tab2" class="tab-content">
+            <div class="header-section">
+                <span class="logo-tag">Day 3: Social authority</span>
+                <h1>Twitter Thread Engine</h1>
+                <p class="subtitle">Launch your "Anti-Hype" thread to capture the risk-management niche.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3>Main Thread: "The Anti-Signal" <span class="badge">1.3M High Potential</span></h3>
+                <textarea id="twitterThread" style="height: 250px;">[1/4] Trading crypto will drain your account if you don't realize that 80% of the time, the correct trade is doing absolutely nothing. 
+
+I just built a new market intelligence engine that focuses on *Capital Preservation*. Here's why I programmed it to yell "NO TRADE" at you: 🧵👇
+
+[2/4] Most signal apps want to feed your dopamine. They flash BUY BUY BUY so you feel like you aren't missing out. 
+
+The engine powering Apex (my app) does the opposite. If volume drops or the 1H/4H trend clash, the confidence score tanks to 15% and it explicitly blocks the setup.
+
+[3/4] It also hooks directly into the Binance WebSocket stream. Sub-second pricing. No 60s polling lag. 
+
+Better data + better risk management = better survival rate.
+
+[4/4] It's free to download and use the base terminal. Check it out: Cryptofinancial.com</textarea>
+                <button onclick="copyToClipboard('twitterThread', this)" class="action-btn btn-emerald">📋 Copy Thread & Open X.com</button>
+            </div>
+        </div>
+
+        <!-- PHASE 5: ROADMAP -->
+        <div id="tab4" class="tab-content">
+            <div class="header-section">
+                <span class="logo-tag">The Big Picture</span>
+                <h1>Launch Roadmap</h1>
+                <p class="subtitle">Your 7-day sprint to 100 organic users. Stick to the routine, provide value, and never spam.</p>
+            </div>
+
+            <div class="roadmap-container">
+                <style>
+                    .roadmap-container {
+                        background: var(--card);
+                        border: 1px solid var(--border);
+                        border-radius: 24px;
+                        padding: 2rem;
+                    }
+                    .roadmap-step {
+                        display: flex;
+                        gap: 2rem;
+                        padding: 1.5rem 0;
+                        border-bottom: 3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.0 v3.0 v2.1px solid var(--border);
+                    }
+                    .roadmap-step:last-child { border: none; }
+                    .day-number {
+                        font-family: 'Space Grotesk', sans-serif;
+                        font-size: 2rem;
+                        font-weight: 700;
+                        color: var(--emerald);
+                        min-width: 80px;
+                    }
+                    .step-content h4 { margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+                    .step-content p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+                </style>
+                <div class="roadmap-step">
+                    <div class="day-number">01</div>
+                    <div class="step-content">
+                        <h4>Operation "Clean House"</h4>
+                        <p>Set up social bios on X and Reddit. Final audit of Cryptofinancial.com home page. Verify all download links work.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">02</div>
+                    <div class="step-content">
+                        <h4>Reddit Technical Seeding</h4>
+                        <p>Post in r/ethdev or r/CryptoTechnology asking for technical feedback on the signal logic. Engagement > Promotion.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">03</div>
+                    <div class="step-content">
+                        <h4>The "Anti-Hype" X Thread</h4>
+                        <p>Launch the "80% of trades are bad" thread. Pin it to your profile. Use the premium banner.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">04</div>
+                    <div class="step-content">
+                        <h4>Problem-Solver Outreach</h4>
+                        <p>Search for people complaining about "TradingView Lag" or "Signal Overload" and reply with a screenshot of Apex.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">05</div>
+                    <div class="step-content">
+                        <h4>Creator DM Blitz</h4>
+                        <p>Send the "Free Pro Account" offer to 5 micro-influencer analysts. Personalization is key.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">06</div>
+                    <div class="step-content">
+                        <h4>Short-Form Viral Loop</h4>
+                        <p>Post a "Live Signal" demo on TikTok/Reels/Shorts. 15-30 seconds, high energy, technical focus.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="day-number">07</div>
+                    <div class="step-content">
+                        <h4>Recap & Scale</h4>
+                        <p>Analyze traffic logs, respond to all support emails, and celebrate your first users.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="header-section">
+                <span class="logo-tag">Day 4-5: Direct Growth</span>
+                <h1>Creator Outreach</h1>
+                <p class="subtitle">Target micro-influencers whose followers value actual analysis over moonshots.</p>
+            </div>
+
+            <div class="card">
+                <h3>The "Free Pro Tier" VIP Offer</h3>
+                <p style="font-size: 0.9rem; color: var(--muted)">Send this to analysts with 5k-25k followers on X or YouTube.</p>
+                <textarea id="outreachEmail">Subject: Hey [Name] - Built a tool for your workflow (Free Lifetime Pro Account)
+
+Hey [Name],
+
+I’ve been following your crypto analysis for a while, and I really respect how much you emphasize risk management rather than just shilling 100x coins. 
+
+Because of that, I think you'll actually like a tool I just finished building called Cryptofinancial. Most apps flash "BUY" endlessly. I programmed Apex to actively analyze volume/momentum and print a huge "NO TRADE" signal with a 0% confidence score when the market is noisy.
+
+It runs on sub-second Binance WebSockets, so the latency is basically zero.
+
+I’m giving free lifetime Pro accounts to a few creators whose work I respect to test the beta. URL: Cryptofinancial.com
+
+Absolutely no obligation to post. I genuinely just want to see if an analyst of your caliber finds the "NO TRADE" engine useful.
+
+Cheers,
+[Your Name]
+Founder, Apex Crypto</textarea>
+                <button onclick="copyToClipboard('outreachEmail', this)" class="action-btn btn-emerald">📋 Copy Email Body</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function showTab(index) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            navItems.forEach(n => n.classList.remove('active'));
+            
+            document.getElementById('tab' + index).classList.add('active');
+            navItems[index].classList.add('active');
+        }
+
+        function copyToClipboard(id, btn) {
+            const text = document.getElementById(id).value;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✨ Copied to clipboard!';
+                btn.classList.add('btn-emerald');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    if (!btn.classList.contains('active')) btn.classList.remove('btn-emerald');
+                }, 2000);
+            });
+
+            // If it's a social link, open in new tab
+            if(id.includes('reddit')) window.open('https://www.reddit.com/submit', '_blank');
+            if(id.includes('twitter')) window.open('https://twitter.com/compose/tweet', '_blank');
+        }
+    </script>
+</body>
+</html>
