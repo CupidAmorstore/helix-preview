@@ -12,6 +12,7 @@ ios/App/build/
 
 # Logs
 *.log
+deploy-*.zip
 
 # Env
 .env
