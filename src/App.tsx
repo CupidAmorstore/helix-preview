@@ -11,6 +11,7 @@ import LegalPage from './pages/LegalPage';
 import { VaultProvider } from './services/vault';
 
 export default function App() {
+  const base = import.meta.env.BASE_URL;
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const stored = localStorage.getItem('helix_theme');
     return stored === 'light' ? 'light' : 'dark';
@@ -23,7 +24,7 @@ export default function App() {
   }, [theme]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={base}>
       <VaultProvider>
         <AppShell
           theme={theme}
