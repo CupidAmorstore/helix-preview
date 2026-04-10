@@ -38,7 +38,7 @@ export default function AccessPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Access</p>
         <h1 className="text-3xl font-semibold text-white">Request Research Access</h1>
         <p className="text-sm text-slate-400">
-          HELIX access is manually reviewed. If Stripe is configured, you can start checkout, otherwise request access by email.
+          HELIX (Apex App) access is manually reviewed. If Stripe is configured, you can start checkout, otherwise request access by email.
         </p>
       </header>
 

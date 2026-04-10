@@ -6,14 +6,14 @@ const content = {
   support: {
     title: 'Support',
     body: [
-      'HELIX preview support is available via support@helix.app.',
+      'HELIX (Apex App) preview support is available via support@helix.app.',
       '[TODO: Legal review required] Replace this section with official support commitments and response SLAs.'
     ]
   },
   privacy: {
     title: 'Privacy Policy',
     body: [
-      'HELIX does not collect private keys, seed phrases, or financial data on any server.',
+      'HELIX (Apex App) does not collect private keys, seed phrases, or financial data on any server.',
       'This preview build stores settings locally in your browser (IndexedDB).',
       '[TODO: Legal review required] Replace this summary with a full privacy policy before launch.'
     ]
@@ -21,7 +21,7 @@ const content = {
   terms: {
     title: 'Terms of Service',
     body: [
-      'HELIX provides market intelligence and read-only portfolio tracking only.',
+      'HELIX (Apex App) provides market intelligence and read-only portfolio tracking only.',
       'No custody, no trading, and no financial advice is provided.',
       '[TODO: Legal review required] Replace this summary with a full terms of service before launch.'
     ]

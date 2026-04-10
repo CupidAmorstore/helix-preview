@@ -1,6 +1,6 @@
-﻿# HELIX
+# HELIX (Apex App)
 
-HELIX is a crypto market intelligence dashboard with a read-only portfolio tracker and a testnet-first self-custody wallet. It does **not** custody funds or run any backend wallet logic — all keys stay client-side and are stored locally in encrypted form.
+HELIX (Apex App) is a crypto market intelligence dashboard with a read-only portfolio tracker and a testnet-first self-custody wallet. It does **not** custody funds or run any backend wallet logic - all keys stay client-side and are stored locally in encrypted form.
 
 ## What This Build Includes
 - Live market data (Binance WebSocket + CoinGecko REST)

@@ -17,7 +17,7 @@ export default function TopBar({ theme, onToggleTheme, mobileOpen, onMobileToggl
           {mobileOpen ? 'Close' : 'Menu'}
         </button>
         <div>
-          <div className="text-sm uppercase tracking-[0.2em] text-slate-500">HELIX</div>
+          <div className="text-sm uppercase tracking-[0.2em] text-slate-500">HELIX (Apex App)</div>
           <div className="text-sm text-slate-200">Live market context + read-only tracking</div>
         </div>
       </div>

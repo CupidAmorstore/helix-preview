@@ -16,10 +16,10 @@ export default function AppShell({ children, theme, onToggleTheme }: AppShellPro
     <div className="app-shell bg-ink-900 text-slate-100">
       <aside className="hidden lg:flex flex-col gap-6 border-r border-white/10 px-6 py-8">
         <div className="flex items-center gap-3">
-          <img src="/assets/helix_logo.png" alt="HELIX" className="h-8 w-8" />
+          <img src="/assets/helix_logo.png" alt="HELIX (Apex App)" className="h-8 w-8" />
           <div>
             <div className="text-lg font-semibold tracking-wide">HELIX</div>
-            <div className="text-xs text-slate-400">Market Intelligence</div>
+            <div className="text-xs text-slate-400">Apex App / Market Intelligence</div>
           </div>
         </div>
         <nav className="flex flex-col gap-2 text-sm">
@@ -88,7 +88,7 @@ export default function AppShell({ children, theme, onToggleTheme }: AppShellPro
         <main className="flex-1 px-6 py-8 lg:px-10">{children}</main>
         <footer className="section-divider px-6 py-6 text-xs text-slate-500 lg:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>HELIX is a read-only market intelligence platform. No custody. No trading.</div>
+            <div>HELIX (Apex App) is a read-only market intelligence platform. No custody. No trading.</div>
             <div className="flex gap-4">
               {legalItems.map((item) => (
                 <NavLink key={item.path} to={item.path} className="hover:text-slate-200">

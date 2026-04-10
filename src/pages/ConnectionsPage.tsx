@@ -120,7 +120,7 @@ export default function ConnectionsPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Connections</p>
         <h1 className="text-3xl font-semibold text-white">Secure Connection Setup</h1>
         <p className="text-sm text-slate-400">
-          Store read-only API keys encrypted in your browser. Keys are never transmitted to HELIX servers.
+          Store read-only API keys encrypted in your browser. Keys are never transmitted to HELIX (Apex App) servers.
         </p>
       </header>
 

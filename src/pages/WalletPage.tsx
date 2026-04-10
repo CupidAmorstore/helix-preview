@@ -240,7 +240,7 @@ export default function WalletPage() {
         <section className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-6 space-y-4">
           <h2 className="text-sm font-semibold text-rose-200">Mainnet Unlock Required</h2>
           <p className="text-xs text-rose-100">
-            Mainnet sends real funds. HELIX cannot recover lost keys or reversed transactions. Confirm you understand before enabling.
+            Mainnet sends real funds. HELIX (Apex App) cannot recover lost keys or reversed transactions. Confirm you understand before enabling.
           </p>
           <label className="flex items-center gap-2 text-xs text-rose-100">
             <input
@@ -330,7 +330,7 @@ export default function WalletPage() {
                 </div>
               ))}
             </div>
-            <div className="text-xs text-amber-400">Never share this phrase. HELIX cannot recover it.</div>
+            <div className="text-xs text-amber-400">Never share this phrase. HELIX (Apex App) cannot recover it.</div>
           </div>
         )}
 
