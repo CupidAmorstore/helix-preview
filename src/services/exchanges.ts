@@ -1,4 +1,4 @@
-﻿import type { ExchangeId } from '../types';
+import type { ExchangeId } from '../types';
 
 export type ExchangeCredentials = {
   apiKey: string;
@@ -13,37 +13,13 @@ export const EXCHANGE_LABELS: Record<ExchangeId, string> = {
 };
 
 export async function fetchExchangeBalances(exchangeId: ExchangeId, creds: ExchangeCredentials) {
-  const mod = await import('ccxt');
-  const ccxt: any = mod.default ?? mod;
-  const ExchangeClass = ccxt[exchangeId];
-  if (!ExchangeClass) throw new Error('Exchange not supported in CCXT browser build');
-  const exchange = new ExchangeClass({
-    apiKey: creds.apiKey,
-    secret: creds.secret,
-    password: creds.passphrase,
-    enableRateLimit: true
-  });
-  exchange.timeout = 15000;
-  const balance = await exchange.fetchBalance();
-  return balance;
+  void exchangeId;
+  void creds;
+  throw new Error('Exchange sync requires a server-side connector and is not available in this web preview.');
 }
 
 export async function fetchExchangeHistory(exchangeId: ExchangeId, creds: ExchangeCredentials) {
-  const mod = await import('ccxt');
-  const ccxt: any = mod.default ?? mod;
-  const ExchangeClass = ccxt[exchangeId];
-  if (!ExchangeClass) throw new Error('Exchange not supported in CCXT browser build');
-  const exchange = new ExchangeClass({
-    apiKey: creds.apiKey,
-    secret: creds.secret,
-    password: creds.passphrase,
-    enableRateLimit: true
-  });
-  exchange.timeout = 15000;
-  const [trades, orders] = await Promise.all([
-    exchange.fetchMyTrades(),
-    exchange.fetchOpenOrders()
-  ]);
-  return { trades, orders };
+  void exchangeId;
+  void creds;
+  throw new Error('Exchange history requires a server-side connector and is not available in this web preview.');
 }
-
