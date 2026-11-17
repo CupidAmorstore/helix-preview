@@ -96,3 +96,8 @@ which a cloud session cannot attach to.
    HTTPS beta.
 
 Constraints carried over: no real-money trading, no paid billing, $0 additional spend.
+
+## Recheck log
+
+- 2026-11-17: still blocked. No PC folder attached, no new repo on GitHub (no `helix-omega`),
+  `helix-preview` unchanged, no HELIX/OMEGA files in Google Drive.
