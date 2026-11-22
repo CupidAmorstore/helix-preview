@@ -1,5 +1,6 @@
 ﻿export const navItems = [
   { label: 'Markets', path: '/' },
+  { label: 'Trading Bot', path: '/bot' },
   { label: 'Portfolio', path: '/portfolio' },
   { label: 'Connections', path: '/connections' },
   { label: 'Alerts', path: '/alerts' },

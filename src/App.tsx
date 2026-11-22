@@ -1,5 +1,5 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import AppShell from './components/AppShell';
 import DashboardPage from './pages/DashboardPage';
 import PortfolioPage from './pages/PortfolioPage';
@@ -9,6 +9,8 @@ import WalletPage from './pages/WalletPage';
 import AccessPage from './pages/AccessPage';
 import LegalPage from './pages/LegalPage';
 import { VaultProvider } from './services/vault';
+
+const BotPage = lazy(() => import('./pages/BotPage'));
 
 export default function App() {
   const base = import.meta.env.BASE_URL;
@@ -32,6 +34,14 @@ export default function App() {
         >
           <Routes>
             <Route path="/" element={<DashboardPage />} />
+            <Route
+              path="/bot"
+              element={
+                <Suspense fallback={<div className="text-sm text-slate-500">Loading trading bot…</div>}>
+                  <BotPage />
+                </Suspense>
+              }
+            />
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/connections" element={<ConnectionsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />

@@ -40,6 +40,7 @@ export default function AppShell({ children, theme, onToggleTheme }: AppShellPro
           <div className="rounded-lg border border-white/10 px-3 py-2">
             <div className="text-slate-400">Mode</div>
             <div className="text-slate-200">Read-only / No custody</div>
+            <div className="text-amber-400">Trading Bot: paper only</div>
           </div>
           <div className="rounded-lg border border-white/10 px-3 py-2">
             <div className="text-slate-400">Default network</div>
@@ -48,7 +49,7 @@ export default function AppShell({ children, theme, onToggleTheme }: AppShellPro
         </div>
       </aside>
 
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen min-w-0 flex-col">
         <TopBar
           theme={theme}
           onToggleTheme={onToggleTheme}
@@ -85,10 +86,10 @@ export default function AppShell({ children, theme, onToggleTheme }: AppShellPro
             </nav>
           </div>
         )}
-        <main className="flex-1 px-6 py-8 lg:px-10">{children}</main>
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-10">{children}</main>
         <footer className="section-divider px-6 py-6 text-xs text-slate-500 lg:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>HELIX (Apex App) is a read-only market intelligence platform. No custody. No trading.</div>
+            <div>HELIX (Apex App) is a read-only market intelligence platform. No custody. Trading Bot runs in paper mode only — no real-money orders.</div>
             <div className="flex gap-4">
               {legalItems.map((item) => (
                 <NavLink key={item.path} to={item.path} className="hover:text-slate-200">
