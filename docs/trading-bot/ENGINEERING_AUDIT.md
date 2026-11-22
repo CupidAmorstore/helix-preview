@@ -7,7 +7,7 @@ The original Pro Trading Bot code could not be audited (not available); this aud
 |---|---|---|
 | Market discovery (CEX) | PARTIAL | Fixed 10-market Coinbase universe (`sources.ts RESEARCH_UNIVERSE`); no automatic listing scan yet |
 | Exchange adapters (public data) | VERIFIED | Coinbase Exchange candles/ticker/products, Kraken OHLC/Ticker/AssetPairs, Gemini ticker — fetched live 2026-11-22; keyless, read-only |
-| Binance (HELIX Markets page) | BROKEN here | HTTP 451 "restricted location" from the container; HELIX live prices may fail in restricted regions |
+| HELIX Markets live data | VERIFIED | Switched Binance (HTTP 451 restricted) → Coinbase REST + ws-feed; prices and 1h/4h/1w charts verified in Chromium |
 | DEX / multichain discovery | MISSING | Only DEX *cost presets* exist (`costs.ts`); no pool discovery, honeypot or liquidity screening |
 | Historical ingestion | VERIFIED | 8,754 hourly + up to 2,189 daily bars per market, paginated, stored gzipped with content hash |
 | Freshness / timestamps | VERIFIED | `validateCandles`: forming bar dropped, staleness flag, grid alignment — tests `engine.test.ts` |
@@ -29,10 +29,10 @@ The original Pro Trading Bot code could not be audited (not available); this aud
 | Mobile UI | VERIFIED | Pixel 7 (412 px) checks: no horizontal overflow on all 7 bot tabs; app-shell grid overflow fixed for all pages |
 | Backend services | N/A | Static app + research script; no server process |
 | Monitoring / alerting | PARTIAL | `--watch-only` mode; no scheduler or push alerts yet |
-| Automated tests | VERIFIED | 43 tests (`npm test`) |
-| CI/CD | PARTIAL | GitHub Pages deploy on `main` only; **no test job in CI** |
-| Type checking | BROKEN (pre-existing) | 9 `tsc` errors in wallet/vault/MarketChart/Portfolio; bot code clean |
-| Lint | PARTIAL | 17 pre-existing errors after config fix; bot code 0 errors |
+| Automated tests | VERIFIED | 59 tests (`npm test`) incl. wallet BIP84/ETH vectors and offline SOL signing |
+| CI/CD | VERIFIED (config) | `ci.yml`: typecheck, lint, test, build on every PR/branch; Pages deploy uses `npm ci` and runs tests first |
+| Type checking | VERIFIED | 0 `tsc` errors repo-wide (was 9) |
+| Lint | VERIFIED | 0 errors / 0 warnings repo-wide (was 63 errors) |
 | Documentation | VERIFIED | `docs/trading-bot/*` (this set) |
 
 ## Defects fixed in this milestone
@@ -43,3 +43,18 @@ The original Pro Trading Bot code could not be audited (not available); this aud
 5. Profit-factor gate rejected strategies with **zero losing trades** (undefined PF treated as 0) — caught by power test, fixed.
 6. Training selection favoured 1-trade buy-and-hold-like configs that can never pass OOS trade gates — selection now
    ranks testable configs first (stricter, not looser).
+
+## Fix pass 2026-11-22 (after full audit)
+| Item | Before | After |
+|---|---|---|
+| Dependency advisories | 41 (3 critical, 8 high) | 10 (0 critical, 0 high; 6 low build-time only, 4 moderate in @solana/web3.js → jayson) |
+| HELIX wallet | **broken**: `deriveAddresses` threw for every mnemonic (bip32 v5 Uint8Array vs bitcoinjs Buffer; BTC key serialised with `Uint8Array#toString('hex')`; ethers path ignored) | fixed; BIP84 + ETH vectors pass; browser import verified |
+| Markets data | Binance (HTTP 451) | Coinbase REST + WebSocket |
+| Main bundle | 2,295 kB (704 kB gz) | 390 kB (129 kB gz); pages code-split |
+| Wallet chunk | 1,882 kB | 1,287 kB (crypto-browserify/elliptic no longer shipped) |
+| Toolchain | vite 5, vitest 2, react-router 6 | vite 8, vitest 5, react-router 7; build 8.6 s → 1.0 s |
+| Phone layout | Markets page 439 px on 412 px screen | 412 px |
+
+Accepted risk: `@solana/web3.js` 1.x → `jayson`/`uuid`/`stream-json` (moderate). v3 changes `Keypair` to an async API
+and breaks the wallet; revisit with a dedicated Solana migration. Wallet *sending* (BTC/ETH/SOL) was not exercised in the
+browser (needs funded testnet accounts); SOL signing is covered offline in Node tests.

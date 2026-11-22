@@ -34,12 +34,12 @@ design intent and Nov-21 lessons, not old code. If the ChatGPT code is later exp
 | `npm ci` | **fail** (EUSAGE, lockfile out of sync) → fixed in `f016c9c` |
 | `tsc --noEmit` | fail (wallet/vault/MarketChart/Portfolio typing) — pre-existing, untouched |
 | `npm run lint` | 63 errors (mostly `no-undef` misconfig) → 17 after config fix, rest pre-existing |
-| Binance REST from container | HTTP 451 restricted location (HELIX Markets live feed depends on it) |
+| Binance REST from container | HTTP 451 restricted location → Markets page moved to Coinbase (fixed) |
 
 ## What exists now
 | Area | State |
 |---|---|
-| Research engine `src/bot/*` | implemented, 49 tests |
+| Research engine `src/bot/*` | implemented, 59 tests |
 | Research runner `npm run bot:research` | implemented; real public data (Coinbase Exchange) |
 | Datasets | 20 stored (`research/data/`, 10 markets × 1h/1d) |
 | Research runs | 4 run records (`research/runs/`) |
