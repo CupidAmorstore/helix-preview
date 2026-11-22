@@ -2,15 +2,17 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import AppShell from './components/AppShell';
 import DashboardPage from './pages/DashboardPage';
-import PortfolioPage from './pages/PortfolioPage';
-import ConnectionsPage from './pages/ConnectionsPage';
-import AlertsPage from './pages/AlertsPage';
-import WalletPage from './pages/WalletPage';
-import AccessPage from './pages/AccessPage';
-import LegalPage from './pages/LegalPage';
 import { VaultProvider } from './services/vault';
 
+// Markets (home) loads eagerly; every other page is code-split so the wallet/crypto
+// libraries only download when the Wallet page is opened.
 const BotPage = lazy(() => import('./pages/BotPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const ConnectionsPage = lazy(() => import('./pages/ConnectionsPage'));
+const AlertsPage = lazy(() => import('./pages/AlertsPage'));
+const WalletPage = lazy(() => import('./pages/WalletPage'));
+const AccessPage = lazy(() => import('./pages/AccessPage'));
+const LegalPage = lazy(() => import('./pages/LegalPage'));
 
 export default function App() {
   const base = import.meta.env.BASE_URL;
@@ -32,16 +34,10 @@ export default function App() {
           theme={theme}
           onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
         >
+          <Suspense fallback={<div className="text-sm text-slate-500">Loading…</div>}>
           <Routes>
             <Route path="/" element={<DashboardPage />} />
-            <Route
-              path="/bot"
-              element={
-                <Suspense fallback={<div className="text-sm text-slate-500">Loading trading bot…</div>}>
-                  <BotPage />
-                </Suspense>
-              }
-            />
+            <Route path="/bot" element={<BotPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/connections" element={<ConnectionsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
@@ -52,6 +48,7 @@ export default function App() {
             <Route path="/terms" element={<LegalPage kind="terms" />} />
             <Route path="*" element={<LegalPage kind="notfound" />} />
           </Routes>
+          </Suspense>
         </AppShell>
       </VaultProvider>
     </BrowserRouter>
