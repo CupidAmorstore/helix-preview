@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-22T20:09:38.015Z",
- "codeVersion": "07ed0a29a0654b6733b7949d6790d7cd4a1f263a+dirty",
+ "generatedAt": "2026-11-22T20:22:14.468Z",
+ "codeVersion": "5a7a5ab1f594cbad09d5227f0f1bfa91cff0a2e6+dirty",
  "mode": "paper",
  "runs": [
   {
@@ -10236,253 +10236,253 @@
    "base": "BTC",
    "buyVenue": "kraken",
    "sellVenue": "gemini",
-   "grossEdgePct": 0.004683941173655448,
+   "grossEdgePct": 0.013187554121851797,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8553160588263445,
+   "netEdgePct": -0.8468124458781482,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186446
+   "observedAt": 1795378950557
   },
   {
    "base": "BTC",
    "buyVenue": "gemini",
    "sellVenue": "kraken",
-   "grossEdgePct": -0.004865132748044232,
+   "grossEdgePct": -0.013367572384404003,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8648651327480442,
+   "netEdgePct": -0.873367572384404,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186446
+   "observedAt": 1795378950557
   },
   {
    "base": "BTC",
    "buyVenue": "coinbase",
    "sellVenue": "gemini",
-   "grossEdgePct": 0.0155213601791937,
+   "grossEdgePct": 0.01700565318152325,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0444786398208064,
+   "netEdgePct": -1.0429943468184768,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186446
+   "observedAt": 1795378950557
   },
   {
    "base": "BTC",
    "buyVenue": "coinbase",
    "sellVenue": "kraken",
-   "grossEdgePct": 0.010671966031816638,
+   "grossEdgePct": 0.003652331732850733,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0493280339681834,
+   "netEdgePct": -1.0563476682671493,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186240
+   "observedAt": 1795378950527
   },
   {
    "base": "BTC",
    "buyVenue": "kraken",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.010852229902336141,
+   "grossEdgePct": -0.0038339756344263343,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0708522299023362,
+   "netEdgePct": -1.0638339756344264,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186240
+   "observedAt": 1795378950527
   },
   {
    "base": "BTC",
    "buyVenue": "gemini",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.015551932818291814,
+   "grossEdgePct": -0.01703580609186961,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0755519328182919,
+   "netEdgePct": -1.0770358060918697,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186446
+   "observedAt": 1795378950557
   },
   {
    "base": "ETH",
    "buyVenue": "kraken",
    "sellVenue": "gemini",
-   "grossEdgePct": 0.006428500464594755,
+   "grossEdgePct": 0.011109746756243766,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8535714995354052,
+   "netEdgePct": -0.8488902532437562,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186734
+   "observedAt": 1795378950698
   },
   {
    "base": "ETH",
    "buyVenue": "gemini",
    "sellVenue": "kraken",
-   "grossEdgePct": -0.012855423235591523,
+   "grossEdgePct": -0.012277757964462843,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8728554232355915,
+   "netEdgePct": -0.8722777579644628,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186734
+   "observedAt": 1795378950698
   },
   {
    "base": "ETH",
    "buyVenue": "coinbase",
    "sellVenue": "gemini",
-   "grossEdgePct": 0.009350819365550045,
+   "grossEdgePct": 0.01403377461757227,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.05064918063445,
+   "netEdgePct": -1.0459662253824278,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186734
+   "observedAt": 1795378950698
   },
   {
    "base": "ETH",
    "buyVenue": "coinbase",
    "sellVenue": "kraken",
-   "grossEdgePct": 0.0023377048413930623,
+   "grossEdgePct": 0.0023389624362657457,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.057662295158607,
+   "netEdgePct": -1.0576610375637343,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186707
+   "observedAt": 1795378950672
   },
   {
    "base": "ETH",
    "buyVenue": "kraken",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.008766136997195861,
+   "grossEdgePct": -0.014618087837170446,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.068766136997196,
+   "netEdgePct": -1.0746180878371705,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186707
+   "observedAt": 1795378950672
   },
   {
    "base": "ETH",
    "buyVenue": "gemini",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.02103614711278512,
+   "grossEdgePct": -0.026309481352426722,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0810361471127852,
+   "netEdgePct": -1.0863094813524268,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186734
+   "observedAt": 1795378950698
   },
   {
    "base": "SOL",
    "buyVenue": "kraken",
    "sellVenue": "gemini",
-   "grossEdgePct": -0.0028563267637782275,
+   "grossEdgePct": 0.00143041052782511,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8628563267637782,
+   "netEdgePct": -0.8585695894721749,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186829
+   "observedAt": 1795378950799
   },
   {
    "base": "SOL",
    "buyVenue": "gemini",
    "sellVenue": "kraken",
-   "grossEdgePct": -0.0656617563092321,
+   "grossEdgePct": -0.06862240521529062,
    "roundTripCostPct": 0.86,
-   "netEdgePct": -0.9256617563092321,
+   "netEdgePct": -0.9286224052152906,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186829
+   "observedAt": 1795378950799
   },
   {
    "base": "SOL",
    "buyVenue": "coinbase",
    "sellVenue": "gemini",
-   "grossEdgePct": -0.0028563267637782275,
+   "grossEdgePct": 0.00143041052782511,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0628563267637783,
+   "netEdgePct": -1.058569589472175,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186829
+   "observedAt": 1795378950799
   },
   {
    "base": "SOL",
    "buyVenue": "coinbase",
    "sellVenue": "kraken",
-   "grossEdgePct": -0.014281633818891137,
+   "grossEdgePct": -0.014304105278206691,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0742816338188912,
+   "netEdgePct": -1.0743041052782067,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186804
+   "observedAt": 1795378950769
   },
   {
    "base": "SOL",
    "buyVenue": "kraken",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.014281633818891137,
+   "grossEdgePct": -0.014304105278206691,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0742816338188912,
+   "netEdgePct": -1.0743041052782067,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186804
+   "observedAt": 1795378950769
   },
   {
    "base": "SOL",
    "buyVenue": "gemini",
    "sellVenue": "coinbase",
-   "grossEdgePct": -0.0656617563092321,
+   "grossEdgePct": -0.06862240521529062,
    "roundTripCostPct": 1.06,
-   "netEdgePct": -1.1256617563092322,
+   "netEdgePct": -1.1286224052152907,
    "status": "rejected",
    "reasons": [
     "edge does not cover taker fees + slippage on both venues",
     "unmodelled: transfer delay, withdrawal fee, inventory, depth"
    ],
-   "observedAt": 1795378186829
+   "observedAt": 1795378950799
   }
  ],
  "paper": [
@@ -10767,6 +10767,1029 @@
    "fills": []
   }
  ],
+ "costs": {
+  "placeholder": {
+   "halfSpreadBps": 2,
+   "slippageBps": 3
+  },
+  "collectionDays": 1,
+  "snapshots": 23,
+  "requiredDays": 30,
+  "measured": [
+   {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008264462128587649,
+    "slippageBpsP75": 1.202637522787548e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378942993,
+    "lastAt": 1795378942993
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008264462128587649,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378942993,
+    "lastAt": 1795378942993
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008264462128587649,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378942993,
+    "lastAt": 1795378942993
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008264462128587649,
+    "slippageBpsP75": 1.202637522787548e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378942993,
+    "lastAt": 1795378942993
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.4094046087257944,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378943450,
+    "lastAt": 1795378943450
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.4094046087257944,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378943450,
+    "lastAt": 1795378943450
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.4094046087257944,
+    "slippageBpsP75": 0.000610715435291412,
+    "unfilledShare": 0,
+    "firstAt": 1795378943450,
+    "lastAt": 1795378943450
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.4094046087257944,
+    "slippageBpsP75": 0.7851415851171779,
+    "unfilledShare": 0,
+    "firstAt": 1795378943450,
+    "lastAt": 1795378943450
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7154611146887828,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378943698,
+    "lastAt": 1795378943698
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7154611146887828,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378943698,
+    "lastAt": 1795378943698
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7154611146887828,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378943698,
+    "lastAt": 1795378943698
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7154611146887828,
+    "slippageBpsP75": 1.0913582095467458,
+    "unfilledShare": 0,
+    "firstAt": 1795378943698,
+    "lastAt": 1795378943698
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.5414478315013752,
+    "slippageBpsP75": 1.0229050491184775,
+    "unfilledShare": 0,
+    "firstAt": 1795378943934,
+    "lastAt": 1795378943934
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.5414478315013752,
+    "slippageBpsP75": 1.0708975978170696,
+    "unfilledShare": 0,
+    "firstAt": 1795378943934,
+    "lastAt": 1795378943934
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.5414478315013752,
+    "slippageBpsP75": 1.0816958577816567,
+    "unfilledShare": 0,
+    "firstAt": 1795378943934,
+    "lastAt": 1795378943934
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.5414478315013752,
+    "slippageBpsP75": 1.329814914433854,
+    "unfilledShare": 0,
+    "firstAt": 1795378943934,
+    "lastAt": 1795378943934
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.8191740949608135,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378944178,
+    "lastAt": 1795378944178
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.8191740949608135,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378944178,
+    "lastAt": 1795378944178
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.8191740949608135,
+    "slippageBpsP75": 0.8427142414234574,
+    "unfilledShare": 0,
+    "firstAt": 1795378944178,
+    "lastAt": 1795378944178
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.8191740949608135,
+    "slippageBpsP75": 1.6238668730283126,
+    "unfilledShare": 0,
+    "firstAt": 1795378944178,
+    "lastAt": 1795378944178
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.083767451551599,
+    "slippageBpsP75": 1.9278721688983062e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378944420,
+    "lastAt": 1795378944420
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.083767451551599,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378944420,
+    "lastAt": 1795378944420
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.083767451551599,
+    "slippageBpsP75": 0.8232362756766459,
+    "unfilledShare": 0,
+    "firstAt": 1795378944420,
+    "lastAt": 1795378944420
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.083767451551599,
+    "slippageBpsP75": 2.8883423354194915,
+    "unfilledShare": 0,
+    "firstAt": 1795378944420,
+    "lastAt": 1795378944420
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.750018750468346,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378944678,
+    "lastAt": 1795378944678
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.750018750468346,
+    "slippageBpsP75": 1.1001115061484665,
+    "unfilledShare": 0,
+    "firstAt": 1795378944678,
+    "lastAt": 1795378944678
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.750018750468346,
+    "slippageBpsP75": 1.9468505193711216,
+    "unfilledShare": 0,
+    "firstAt": 1795378944678,
+    "lastAt": 1795378944678
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.750018750468346,
+    "slippageBpsP75": 3.932112286793852,
+    "unfilledShare": 0,
+    "firstAt": 1795378944678,
+    "lastAt": 1795378944678
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.570157933747332,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378944911,
+    "lastAt": 1795378944911
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.570157933747332,
+    "slippageBpsP75": 0.6622569580652348,
+    "unfilledShare": 0,
+    "firstAt": 1795378944911,
+    "lastAt": 1795378944911
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.570157933747332,
+    "slippageBpsP75": 1.0925079199532455,
+    "unfilledShare": 0,
+    "firstAt": 1795378944911,
+    "lastAt": 1795378944911
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.570157933747332,
+    "slippageBpsP75": 2.5057891869898254,
+    "unfilledShare": 0,
+    "firstAt": 1795378944911,
+    "lastAt": 1795378944911
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.0128824476657288,
+    "slippageBpsP75": 1.7877987514092698e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378945151,
+    "lastAt": 1795378945151
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.0128824476657288,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378945151,
+    "lastAt": 1795378945151
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.0128824476657288,
+    "slippageBpsP75": 0.367088087281206,
+    "unfilledShare": 0,
+    "firstAt": 1795378945151,
+    "lastAt": 1795378945151
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.0128824476657288,
+    "slippageBpsP75": 2.4468807647889057,
+    "unfilledShare": 0,
+    "firstAt": 1795378945151,
+    "lastAt": 1795378945151
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2791157031069433,
+    "slippageBpsP75": 1.4054707038023662,
+    "unfilledShare": 0,
+    "firstAt": 1795378945410,
+    "lastAt": 1795378945410
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2791157031069433,
+    "slippageBpsP75": 1.496622723543973,
+    "unfilledShare": 0,
+    "firstAt": 1795378945410,
+    "lastAt": 1795378945410
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2791157031069433,
+    "slippageBpsP75": 1.5171316988937638,
+    "unfilledShare": 0,
+    "firstAt": 1795378945410,
+    "lastAt": 1795378945410
+   },
+   {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2791157031069433,
+    "slippageBpsP75": 3.4018495187053626,
+    "unfilledShare": 0,
+    "firstAt": 1795378945410,
+    "lastAt": 1795378945410
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XBTUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.008262885349866661,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378945686,
+    "lastAt": 1795378945686
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XBTUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.008262885349866661,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378945686,
+    "lastAt": 1795378945686
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XBTUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.008262885349866661,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378945686,
+    "lastAt": 1795378945686
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XBTUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.008262885349866661,
+    "slippageBpsP75": 0.09160657106931429,
+    "unfilledShare": 0,
+    "firstAt": 1795378945686,
+    "lastAt": 1795378945686
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ETHUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029236261149952505,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946273,
+    "lastAt": 1795378946273
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ETHUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029236261149952505,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946273,
+    "lastAt": 1795378946273
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ETHUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029236261149952505,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946273,
+    "lastAt": 1795378946273
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ETHUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029236261149952505,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946273,
+    "lastAt": 1795378946273
+   },
+   {
+    "venue": "kraken",
+    "symbol": "SOLUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7152564194257138,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946611,
+    "lastAt": 1795378946611
+   },
+   {
+    "venue": "kraken",
+    "symbol": "SOLUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7152564194257138,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946611,
+    "lastAt": 1795378946611
+   },
+   {
+    "venue": "kraken",
+    "symbol": "SOLUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7152564194257138,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946611,
+    "lastAt": 1795378946611
+   },
+   {
+    "venue": "kraken",
+    "symbol": "SOLUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.7152564194257138,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946611,
+    "lastAt": 1795378946611
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XRPUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.43307853879344327,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378946934,
+    "lastAt": 1795378946934
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XRPUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.43307853879344327,
+    "slippageBpsP75": 0.06382368130192696,
+    "unfilledShare": 0,
+    "firstAt": 1795378946934,
+    "lastAt": 1795378946934
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XRPUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.43307853879344327,
+    "slippageBpsP75": 0.27208548694203655,
+    "unfilledShare": 0,
+    "firstAt": 1795378946934,
+    "lastAt": 1795378946934
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XRPUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.43307853879344327,
+    "slippageBpsP75": 0.40087951375230185,
+    "unfilledShare": 0,
+    "firstAt": 1795378946934,
+    "lastAt": 1795378946934
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XDGUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.3546992650450354,
+    "slippageBpsP75": 1.2621643938157234e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378947269,
+    "lastAt": 1795378947269
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XDGUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.3546992650450354,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378947269,
+    "lastAt": 1795378947269
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XDGUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.3546992650450354,
+    "slippageBpsP75": 0.01191917679776762,
+    "unfilledShare": 0,
+    "firstAt": 1795378947269,
+    "lastAt": 1795378947269
+   },
+   {
+    "venue": "kraken",
+    "symbol": "XDGUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.3546992650450354,
+    "slippageBpsP75": 1.0247011922883484,
+    "unfilledShare": 0,
+    "firstAt": 1795378947269,
+    "lastAt": 1795378947269
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ADAUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.729442740481406,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378947589,
+    "lastAt": 1795378947589
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ADAUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.729442740481406,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378947589,
+    "lastAt": 1795378947589
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ADAUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.729442740481406,
+    "slippageBpsP75": 0.15563590885657866,
+    "unfilledShare": 0,
+    "firstAt": 1795378947589,
+    "lastAt": 1795378947589
+   },
+   {
+    "venue": "kraken",
+    "symbol": "ADAUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.729442740481406,
+    "slippageBpsP75": 1.563835264660054,
+    "unfilledShare": 0,
+    "firstAt": 1795378947589,
+    "lastAt": 1795378947589
+   },
+   {
+    "venue": "kraken",
+    "symbol": "AVAXUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2500562514063702,
+    "slippageBpsP75": 1.3323009370736147e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378947916,
+    "lastAt": 1795378947916
+   },
+   {
+    "venue": "kraken",
+    "symbol": "AVAXUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2500562514063702,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378947916,
+    "lastAt": 1795378947916
+   },
+   {
+    "venue": "kraken",
+    "symbol": "AVAXUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2500562514063702,
+    "slippageBpsP75": 1.3323009370736147e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378947916,
+    "lastAt": 1795378947916
+   },
+   {
+    "venue": "kraken",
+    "symbol": "AVAXUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.2500562514063702,
+    "slippageBpsP75": 0.6510126788049502,
+    "unfilledShare": 0,
+    "firstAt": 1795378947916,
+    "lastAt": 1795378947916
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LINKUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.402494159124502,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378948245,
+    "lastAt": 1795378948245
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LINKUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.402494159124502,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378948245,
+    "lastAt": 1795378948245
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LINKUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.402494159124502,
+    "slippageBpsP75": 0.009573851635920503,
+    "unfilledShare": 0,
+    "firstAt": 1795378948245,
+    "lastAt": 1795378948245
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LINKUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.402494159124502,
+    "slippageBpsP75": 0.3373676852040736,
+    "unfilledShare": 0,
+    "firstAt": 1795378948245,
+    "lastAt": 1795378948245
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LTCUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.515723270439751,
+    "slippageBpsP75": 1.7875288949939628e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378948571,
+    "lastAt": 1795378948571
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LTCUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.515723270439751,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378948571,
+    "lastAt": 1795378948571
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LTCUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.515723270439751,
+    "slippageBpsP75": 1.131728260103223,
+    "unfilledShare": 0,
+    "firstAt": 1795378948571,
+    "lastAt": 1795378948571
+   },
+   {
+    "venue": "kraken",
+    "symbol": "LTCUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.515723270439751,
+    "slippageBpsP75": 2.238954927481028,
+    "unfilledShare": 0,
+    "firstAt": 1795378948571,
+    "lastAt": 1795378948571
+   },
+   {
+    "venue": "kraken",
+    "symbol": "DOTUSD",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.5192950470979791,
+    "slippageBpsP75": 2.4538225215739295,
+    "unfilledShare": 0,
+    "firstAt": 1795378948893,
+    "lastAt": 1795378948893
+   },
+   {
+    "venue": "kraken",
+    "symbol": "DOTUSD",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.5192950470979791,
+    "slippageBpsP75": 2.9216420531611362,
+    "unfilledShare": 0,
+    "firstAt": 1795378948893,
+    "lastAt": 1795378948893
+   },
+   {
+    "venue": "kraken",
+    "symbol": "DOTUSD",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.5192950470979791,
+    "slippageBpsP75": 3.747491183383503,
+    "unfilledShare": 0,
+    "firstAt": 1795378948893,
+    "lastAt": 1795378948893
+   },
+   {
+    "venue": "kraken",
+    "symbol": "DOTUSD",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 1.5192950470979791,
+    "slippageBpsP75": 6.97247066925824,
+    "unfilledShare": 0,
+    "firstAt": 1795378948893,
+    "lastAt": 1795378948893
+   },
+   {
+    "venue": "gemini",
+    "symbol": "btcusd",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008261788307670411,
+    "slippageBpsP75": 1.202248431509143e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378949216,
+    "lastAt": 1795378949216
+   },
+   {
+    "venue": "gemini",
+    "symbol": "btcusd",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008261788307670411,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378949216,
+    "lastAt": 1795378949216
+   },
+   {
+    "venue": "gemini",
+    "symbol": "btcusd",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008261788307670411,
+    "slippageBpsP75": 1.202248431509143e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378949216,
+    "lastAt": 1795378949216
+   },
+   {
+    "venue": "gemini",
+    "symbol": "btcusd",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.0008261788307670411,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378949216,
+    "lastAt": 1795378949216
+   },
+   {
+    "venue": "gemini",
+    "symbol": "ethusd",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029232842513880933,
+    "slippageBpsP75": 1.3293557692080649e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378949862,
+    "lastAt": 1795378949862
+   },
+   {
+    "venue": "gemini",
+    "symbol": "ethusd",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029232842513880933,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378949862,
+    "lastAt": 1795378949862
+   },
+   {
+    "venue": "gemini",
+    "symbol": "ethusd",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029232842513880933,
+    "slippageBpsP75": 1.3293557692080649e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378949862,
+    "lastAt": 1795378949862
+   },
+   {
+    "venue": "gemini",
+    "symbol": "ethusd",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 0.029232842513880933,
+    "slippageBpsP75": 1.3293557692080649e-12,
+    "unfilledShare": 0,
+    "firstAt": 1795378949862,
+    "lastAt": 1795378949862
+   },
+   {
+    "venue": "gemini",
+    "symbol": "solusd",
+    "notionalUsd": 20,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.645521561000145,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378950109,
+    "lastAt": 1795378950109
+   },
+   {
+    "venue": "gemini",
+    "symbol": "solusd",
+    "notionalUsd": 100,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.645521561000145,
+    "slippageBpsP75": 0,
+    "unfilledShare": 0,
+    "firstAt": 1795378950109,
+    "lastAt": 1795378950109
+   },
+   {
+    "venue": "gemini",
+    "symbol": "solusd",
+    "notionalUsd": 1000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.645521561000145,
+    "slippageBpsP75": 1.2169370880276948,
+    "unfilledShare": 0,
+    "firstAt": 1795378950109,
+    "lastAt": 1795378950109
+   },
+   {
+    "venue": "gemini",
+    "symbol": "solusd",
+    "notionalUsd": 5000,
+    "samples": 1,
+    "halfSpreadBpsP75": 2.645521561000145,
+    "slippageBpsP75": 3.401247763503834,
+    "unfilledShare": 0,
+    "firstAt": 1795378950109,
+    "lastAt": 1795378950109
+   }
+  ]
+ },
  "datasets": [
   "coinbase_ADA-USD_1d.csv.gz",
   "coinbase_ADA-USD_1h.csv.gz",

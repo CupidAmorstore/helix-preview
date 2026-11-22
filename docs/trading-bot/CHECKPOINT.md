@@ -1,11 +1,12 @@
 # CHECKPOINT — resume here
 
 - Repo / branch: `CupidAmorstore/helix-preview` @ `ccr-8d17e0b5-yaqvtm` (see `git log` for HEAD SHA)
-- Completed: source search (not recoverable) · HELIX baseline · bot engine (`src/bot`) · 43 tests · research runner ·
+- Completed: source search (not recoverable) · HELIX baseline · bot engine (`src/bot`) · 49 tests · research runner ·
   154 candidates evaluated on real data (0 qualified) · 14 diagnostic paper accounts started · `/bot` app section · docs
 - Modified outside `src/bot`: `package.json` (script), `package-lock.json`, `eslint.config.js`, `src/App.tsx`,
   `src/components/AppShell.tsx`, `src/components/navigation.ts`, `src/vite-env.d.ts`
-- Active experiment: R1 forward paper (accounts created 2026-11-22 20:00:26 UTC)
+- Active experiments: R1 forward paper (accounts created 2026-11-22 20:00:26 UTC); R2 order-book cost collection
+  (`research/costs/*.jsonl`, started 2026-11-22; swap placeholders only after 30 days)
 - Datasets: `research/data/coinbase_*_{1h,1d}.csv.gz` (ids in run JSONs)
 - Unresolved defects: pre-existing tsc errors (wallet/vault/MarketChart/Portfolio), 17 lint errors, Binance 451 on Markets
   page, no CI test job, DEX discovery missing

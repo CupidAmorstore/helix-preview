@@ -4,7 +4,7 @@ Verdict: **ready for private review as a research/paper tool. Not ready for real
 
 | Check | Status | Evidence |
 |---|---|---|
-| Unit/integration tests | PASS | `npm test` — 43 passed |
+| Unit/integration tests | PASS | `npm test` — 49 passed |
 | Build | PASS | `npm run build`; bot page lazy chunk ≈ 48 kB gzip |
 | `npm ci` reproducibility | PASS | fixed lockfile |
 | Bot typecheck / lint | PASS | 0 errors in `src/bot`, `src/pages/BotPage.tsx`, `src/components/bot`, `scripts` |

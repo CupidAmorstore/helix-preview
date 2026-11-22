@@ -17,7 +17,7 @@ The original Pro Trading Bot code could not be audited (not available); this aud
 | Signal → execution | VERIFIED | Decide at close, fill next open — test asserts entry price = next open |
 | Position sizing | VERIFIED | Policy fraction (25%), venue minimum rejection (not resized) |
 | Risk management | VERIFIED (paper) | Daily/weekly loss, drawdown kill switch, stale-data block, same-base de-dup — `risk-paper.test.ts` |
-| Fee & slippage model | PARTIAL | Proportional + fixed costs verified arithmetically; fee tiers are **assumptions**, spreads not yet measured per market |
+| Fee & slippage model | PARTIAL | Proportional + fixed costs verified arithmetically; fee tiers are **assumptions**. Spread/slippage now **measured** from public order books (`orderbook.ts`, R2) — collection started 2026-11-22, placeholder kept until 30 days |
 | Walk-forward validation | VERIFIED | 50/25/25 chronological; test window opened only after validation passes |
 | Robustness | VERIFIED | 2× costs, +1 bar delay, parameter neighbours |
 | Statistics / multiple testing | VERIFIED | Bootstrap CI with Bonferroni alpha; month-block bootstrap for pooled tests; false-positive control on random walks |

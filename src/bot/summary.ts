@@ -2,6 +2,7 @@
 import type { Regime, DataQuality, Discrepancy } from './watchbot';
 import type { Feasibility } from './risk';
 import type { PaperDecision, PaperFill } from './paper';
+import type { MeasuredCost } from './orderbook';
 
 export type Window = {
   trades: number;
@@ -83,5 +84,12 @@ export type BotSummary = {
   runs: RunRow[];
   watchbot: Discrepancy[];
   paper: PaperRow[];
+  costs?: {
+    placeholder: { halfSpreadBps: number; slippageBps: number };
+    collectionDays: number;
+    snapshots: number;
+    requiredDays: number;
+    measured: MeasuredCost[];
+  };
   datasets: string[];
 };

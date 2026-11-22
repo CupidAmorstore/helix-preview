@@ -39,7 +39,7 @@ design intent and Nov-21 lessons, not old code. If the ChatGPT code is later exp
 ## What exists now
 | Area | State |
 |---|---|
-| Research engine `src/bot/*` | implemented, 43 tests |
+| Research engine `src/bot/*` | implemented, 49 tests |
 | Research runner `npm run bot:research` | implemented; real public data (Coinbase Exchange) |
 | Datasets | 20 stored (`research/data/`, 10 markets × 1h/1d) |
 | Research runs | 4 run records (`research/runs/`) |

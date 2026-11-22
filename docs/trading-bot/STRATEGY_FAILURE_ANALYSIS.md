@@ -24,5 +24,12 @@ Result reproduces Nov-21: **0 of 154 candidates qualified.**
 | 13 | Inactive paper accounts read as success | Nov-21: 7 accounts, 0 entries | test "account created after the last bar processes nothing ($0 P&L — not a success)" | UI states "$0 P&L is not performance" |
 | 14–18 | Weak entries, exits, frequency, risk/reward, regime misclassification | Subsumed by 1–4: gross edges exist on 1h but cost-dominated; daily edges are too sparse to measure | — | Addressed via R1–R4 |
 
+## Cost decomposition (R2, first measurement 2026-11-22)
+23 public order books (Coinbase 10, Kraken 10, Gemini 3): p75 half-spread + book-walk slippage for a $1,000 market order
+was **0.0–5.3 bps per side** (worst: Kraken DOTUSD 1.5 + 3.8 bps); $5,000 ≤ 8.5 bps; no order exceeded visible depth.
+The 5 bps placeholder is realistic-to-conservative. **The taker fee (60 bps) is ~92% of modelled per-side cost**, so
+better spread data cannot rescue the hourly strategies; only a lower fee tier or maker execution (R6) could, and maker
+fills carry adverse-selection risk that must be modelled. Single Sunday snapshot — not yet a basis for changing costs.
+
 ## What was NOT done
 No gate was loosened. No threshold was tuned against test results. Costs were not reduced to rescue candidates.

@@ -530,6 +530,7 @@ function Risk() {
           ))}
         </div>
       </Card>
+      <MeasuredCosts />
       <Card title="Small-account feasibility">
         <p className="mb-3 text-xs text-slate-500">
           A $20 account is not a scaled-down $1,000 account: venue minimums and fixed costs (gas) bind. Round-trip cost shown for one
@@ -652,5 +653,52 @@ function Settings() {
         </div>
       </Card>
     </div>
+  );
+}
+
+function MeasuredCosts() {
+  const c = S.costs;
+  const [size, setSize] = useState(1000);
+  if (!c) return null;
+  const rows = c.measured.filter((m) => m.notionalUsd === size).sort((a, b) => a.symbol.localeCompare(b.symbol) || a.venue.localeCompare(b.venue));
+  const total = c.placeholder.halfSpreadBps + c.placeholder.slippageBps;
+  return (
+    <Card
+      title="Measured execution costs (order books)"
+      right={
+        <div className="flex gap-1 text-xs">
+          {[20, 100, 1000, 5000].map((n) => (
+            <Chip key={n} on={size === n} onClick={() => setSize(n)}>${n}</Chip>
+          ))}
+        </div>
+      }
+    >
+      <p className="mb-3 text-xs text-slate-500">
+        Spread + book-walk slippage per side for a market order, 75th percentile of {c.snapshots} public order-book snapshots over{' '}
+        {c.collectionDays} day{c.collectionDays === 1 ? '' : 's'}. Research still uses the {total} bps placeholder until {c.requiredDays} days are
+        collected (pre-registered). Exchange fees are separate and dominate: {COST_PRESETS.coinbase_taker.takerFeeBps} bps Coinbase taker.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[420px] text-left text-xs">
+          <thead className="text-slate-500">
+            <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Venue</th><th className="font-normal">Half-spread</th><th className="font-normal">Slippage</th><th className="font-normal">Total vs {total} bps</th></tr>
+          </thead>
+          <tbody className="font-mono text-slate-300">
+            {rows.map((m) => {
+              const t = m.halfSpreadBpsP75 + (Number.isFinite(m.slippageBpsP75) ? m.slippageBpsP75 : NaN);
+              return (
+                <tr key={m.venue + m.symbol} className="border-t border-white/5">
+                  <td className="py-1.5 font-display">{m.symbol}</td>
+                  <td className="font-display text-slate-400">{m.venue}</td>
+                  <td>{m.halfSpreadBpsP75.toFixed(2)}</td>
+                  <td>{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
+                  <td className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-mint-400' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </Card>
   );
 }

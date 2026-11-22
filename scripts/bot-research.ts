@@ -31,6 +31,7 @@ import {
   Quote
 } from '../src/bot/sources';
 import { crossVenueDiscrepancies } from '../src/bot/watchbot';
+import { CostSnapshot, costSnapshot, fetchBook, summarizeCosts } from '../src/bot/orderbook';
 import { PaperAccount, createPaperAccount, paperSummary, stepPaper } from '../src/bot/paper';
 import { assertPaperOnly } from '../src/bot/risk';
 import type { Candle, CostModel, Dataset, MarketRef } from '../src/bot/types';
@@ -38,7 +39,7 @@ import type { Candle, CostModel, Dataset, MarketRef } from '../src/bot/types';
 assertPaperOnly();
 const ROOT = join(__dirname, '..');
 const R = (...p: string[]) => join(ROOT, 'research', ...p);
-for (const d of ['data', 'runs', 'paper', 'watchbot']) mkdirSync(R(d), { recursive: true });
+for (const d of ['data', 'runs', 'paper', 'watchbot', 'costs']) mkdirSync(R(d), { recursive: true });
 mkdirSync(join(ROOT, 'src/bot/data'), { recursive: true });
 
 const offline = process.argv.includes('--offline');
@@ -132,6 +133,33 @@ async function main() {
     console.log(`  run ${record.runId}: evaluated ${record.totals.oosCandidates} candidates, qualified ${record.totals.qualified}, rejected ${record.totals.rejected}`);
   }
   writeFileSync(R('registry.json'), JSON.stringify(reg, null, 1));
+
+  // ---- R2: measured execution costs from public order books (appended, never overwritten)
+  if (!offline) {
+    const books: MarketRef[] = [
+      ...RESEARCH_UNIVERSE,
+      ...RESEARCH_UNIVERSE.map((m) => ({ ...m, venue: 'kraken' as const, symbol: KRAKEN_SYMBOLS[m.base] })),
+      ...['BTC', 'ETH', 'SOL'].map((b) => ({ venue: 'gemini' as const, symbol: `${b.toLowerCase()}usd`, base: b, quote: 'USD' }))
+    ];
+    const lines: string[] = [];
+    for (const m of books) {
+      try {
+        lines.push(JSON.stringify(costSnapshot(await fetchBook(m))));
+      } catch (e) {
+        console.warn(`  ! book ${m.venue} ${m.symbol}: ${(e as Error).message}`);
+      }
+      await new Promise((r) => setTimeout(r, 200));
+    }
+    const day = new Date(now).toISOString().slice(0, 10);
+    const f = R('costs', `${day}.jsonl`);
+    writeFileSync(f, (existsSync(f) ? readFileSync(f, 'utf8') : '') + lines.join('\n') + '\n');
+    console.log(`  cost snapshots: ${lines.length} order books`);
+  }
+  const costSnaps: CostSnapshot[] = readdirSync(R('costs'))
+    .filter((f) => f.endsWith('.jsonl'))
+    .flatMap((f) => readFileSync(R('costs', f), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l) as CostSnapshot));
+  const measured = summarizeCosts(costSnaps);
+  const costDays = new Set(costSnaps.map((c) => new Date(c.observedAt).toISOString().slice(0, 10))).size;
 
   // ---- Watchbot: cross-venue quote snapshot (detected opportunities only; never "arbitrage")
   let watch: ReturnType<typeof crossVenueDiscrepancies> = [];
@@ -293,6 +321,13 @@ async function main() {
       recentDecisions: a.decisions.slice(-10),
       fills: a.fills.slice(-20)
     })),
+    costs: {
+      placeholder: { halfSpreadBps: COST_PRESETS.coinbase_taker.halfSpreadBps, slippageBps: COST_PRESETS.coinbase_taker.slippageBps },
+      collectionDays: costDays,
+      snapshots: costSnaps.length,
+      requiredDays: 30,
+      measured: measured.filter((m) => [20, 100, 1000, 5000].includes(m.notionalUsd))
+    },
     datasets: readdirSync(R('data'))
   };
   writeFileSync(join(ROOT, 'src/bot/data/latest.json'), JSON.stringify(summary, null, 1));
