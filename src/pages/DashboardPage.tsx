@@ -3,8 +3,18 @@ import MarketChart from '../components/MarketChart';
 import { MARKET_COINS, TIMEFRAMES, fetchMarketOverview } from '../services/market';
 import { useLivePrices } from '../hooks/useLivePrices';
 
+type CoinGeckoMarket = {
+  id: string;
+  symbol: string;
+  name: string;
+  image?: string;
+  current_price: number;
+  market_cap: number;
+  price_change_percentage_24h: number | null;
+};
+
 export default function DashboardPage() {
-  const [overview, setOverview] = useState<any[]>([]);
+  const [overview, setOverview] = useState<CoinGeckoMarket[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [selected, setSelected] = useState(MARKET_COINS[0]);
   const [timeframe, setTimeframe] = useState('1h');
@@ -135,7 +145,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div>${coin.current_price.toLocaleString()}</div>
-              <div className={coin.price_change_percentage_24h >= 0 ? 'text-mint-300' : 'text-rose-400'}>
+              <div className={(coin.price_change_percentage_24h ?? 0) >= 0 ? 'text-mint-300' : 'text-rose-400'}>
                 {coin.price_change_percentage_24h?.toFixed(2)}%
               </div>
               <div>${coin.market_cap.toLocaleString()}</div>

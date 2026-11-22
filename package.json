@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint .",
     "test": "vitest run",
-    "bot:research": "vite-node --config scripts/vite.node.config.ts scripts/bot-research.ts"
+    "bot:research": "vite-node --config scripts/vite.node.config.ts scripts/bot-research.ts",
+    "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.2.0",

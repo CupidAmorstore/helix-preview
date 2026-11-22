@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { STATUS_LABEL } from './format';
 
 export function Card({ title, right, children, className = '' }: { title?: string; right?: ReactNode; children: ReactNode; className?: string }) {
   return (
@@ -36,17 +37,6 @@ const PILL: Record<string, string> = {
   paper: 'border-amber-500/50 bg-amber-500/15 text-amber-300'
 };
 
-export const STATUS_LABEL: Record<string, string> = {
-  detected_opportunity: 'Detected opportunity',
-  research_hypothesis: 'Research hypothesis',
-  backtested_candidate: 'Backtested candidate',
-  rejected: 'Rejected',
-  qualified_paper_strategy: 'Qualified for paper',
-  owner_approved_live_candidate: 'Owner-approved live candidate',
-  diagnostic: 'Diagnostic (not qualified)',
-  qualified: 'Qualified'
-};
-
 export function Pill({ status, children }: { status: string; children?: ReactNode }) {
   return (
     <span className={`inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[11px] ${PILL[status] ?? PILL.research_hypothesis}`}>
@@ -54,10 +44,3 @@ export function Pill({ status, children }: { status: string; children?: ReactNod
     </span>
   );
 }
-
-export const pct = (x: number | null | undefined, d = 1) => (x == null || !Number.isFinite(x) ? '—' : `${x >= 0 ? '+' : ''}${(x * 100).toFixed(d)}%`);
-export const usd = (x: number | null | undefined) =>
-  x == null || !Number.isFinite(x) ? '—' : `${x < 0 ? '-' : ''}$${Math.abs(x).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-export const date = (t: number | null | undefined) => (t ? new Date(t).toISOString().slice(0, 10) : '—');
-export const dateTime = (t: number | string | null | undefined) => (t ? new Date(t).toISOString().slice(0, 16).replace('T', ' ') + ' UTC' : '—');
-export const ivLabel = (ms: number) => (ms === 86_400_000 ? '1d' : ms === 3_600_000 ? '1h' : `${ms / 60000}m`);

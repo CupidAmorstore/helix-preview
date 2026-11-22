@@ -19,7 +19,13 @@ async function deriveKey(password: string, salt: Uint8Array): Promise<CryptoKey>
     outputType: 'binary'
   });
   pwdBytes.fill(0);
-  return crypto.subtle.importKey('raw', hash, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  const keyBytes = new Uint8Array(hash);
+  hash.fill(0);
+  try {
+    return await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  } finally {
+    keyBytes.fill(0);
+  }
 }
 
 const VaultContext = createContext<VaultState | null>(null);
@@ -120,6 +126,7 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return <VaultContext.Provider value={value}>{children}</VaultContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook is intentionally co-located with its provider
 export function useVault(): VaultState {
   const ctx = useContext(VaultContext);
   if (!ctx) {

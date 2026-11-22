@@ -27,8 +27,8 @@ export default function AccessPage() {
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.message || 'Checkout unavailable');
       window.location.href = data.url;
-    } catch (err: any) {
-      setStatus(err.message || 'Checkout failed. Manual access only.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'Checkout failed. Manual access only.');
     }
   };
 

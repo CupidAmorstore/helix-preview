@@ -1,7 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import { listAddresses, listExchanges, saveAddress, saveExchange, deleteAddress, deleteExchange, getSetting, setSetting } from '../services/storage';
 import { useVault } from '../services/vault';
-import type { AddressRecord, ExchangeId, ExchangeRecord } from '../types';
+import type { AddressRecord, EncryptedPayload, ExchangeId, ExchangeRecord } from '../types';
 import { EXCHANGE_LABELS } from '../services/exchanges';
 
 export default function ConnectionsPage() {
@@ -36,9 +36,9 @@ export default function ConnectionsPage() {
   useEffect(() => {
     if (vault.locked) return;
     const load = async () => {
-      const storedEtherscan = await getSetting<any>('etherscan_key');
-      const storedEthRpc = await getSetting<any>('eth_rpc');
-      const storedSolRpc = await getSetting<any>('sol_rpc');
+      const storedEtherscan = await getSetting<EncryptedPayload>('etherscan_key');
+      const storedEthRpc = await getSetting<EncryptedPayload>('eth_rpc');
+      const storedSolRpc = await getSetting<EncryptedPayload>('sol_rpc');
       if (storedEtherscan) {
         setEtherscanKey(await vault.decrypt(storedEtherscan));
       }

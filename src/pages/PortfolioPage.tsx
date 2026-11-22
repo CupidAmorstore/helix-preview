@@ -4,7 +4,7 @@ import { listAddresses, listExchanges, listSnapshots, saveSnapshot, getSetting, 
 import { useVault } from '../services/vault';
 import { fetchExchangeBalances } from '../services/exchanges';
 import { fetchBtcBalance, fetchEthBalance, fetchSolBalance } from '../services/onchain';
-import type { ExchangeRecord } from '../types';
+import type { EncryptedPayload } from '../types';
 
 const COIN_ID_MAP: Record<string, string> = {
   BTC: 'bitcoin',
@@ -51,8 +51,8 @@ export default function PortfolioPage() {
       let solRpc = 'https://api.mainnet-beta.solana.com';
 
       if (!vault.locked) {
-        const encryptedEtherscan = await getSetting<any>('etherscan_key');
-        const encryptedSolRpc = await getSetting<any>('sol_rpc');
+        const encryptedEtherscan = await getSetting<EncryptedPayload>('etherscan_key');
+        const encryptedSolRpc = await getSetting<EncryptedPayload>('sol_rpc');
         if (encryptedEtherscan) {
           try {
             etherscanKey = await vault.decrypt(encryptedEtherscan);

@@ -69,7 +69,8 @@ export async function fetchSolTokens(address: string, rpc: string) {
   if (!res.ok) throw new Error('Solana token RPC failed');
   const data = await res.json();
   const accounts = data.result?.value ?? [];
-  return accounts.map((acc: any) => ({
+  type TokenAccount = { account?: { data?: { parsed?: { info?: { mint?: string; tokenAmount?: { uiAmount?: number } } } } } };
+  return (accounts as TokenAccount[]).map((acc) => ({
     mint: acc.account?.data?.parsed?.info?.mint,
     amount: acc.account?.data?.parsed?.info?.tokenAmount?.uiAmount ?? 0
   }));

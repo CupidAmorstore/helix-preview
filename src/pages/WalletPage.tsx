@@ -1,8 +1,8 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
 import { buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
-import type { KeystoreRecord, WalletNetwork } from '../types';
+import type { EncryptedPayload, KeystoreRecord, WalletNetwork } from '../types';
 
 export default function WalletPage() {
   const vault = useVault();
@@ -50,11 +50,11 @@ export default function WalletPage() {
 
   useEffect(() => {
     if (vault.locked) return;
-    getSetting<any>('eth_rpc').then((val) => {
+    getSetting<EncryptedPayload>('eth_rpc').then((val) => {
       if (!val) return;
       vault.decrypt(val).then(setEthRpc).catch(() => undefined);
     });
-    getSetting<any>('sol_rpc').then((val) => {
+    getSetting<EncryptedPayload>('sol_rpc').then((val) => {
       if (!val) return;
       vault.decrypt(val).then(setSolRpc).catch(() => undefined);
     });
@@ -150,8 +150,8 @@ export default function WalletPage() {
       const txid = await broadcastBtcTx(raw, network);
       setBtcTxid(txid);
       setStatus('BTC transaction broadcasted.');
-    } catch (err: any) {
-      setStatus(err.message || 'BTC transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'BTC transaction failed.');
     }
   };
 
@@ -166,8 +166,8 @@ export default function WalletPage() {
       });
       setEthTxid(txid);
       setStatus('ETH transaction submitted.');
-    } catch (err: any) {
-      setStatus(err.message || 'ETH transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'ETH transaction failed.');
     }
   };
 
@@ -182,8 +182,8 @@ export default function WalletPage() {
       });
       setSolTxid(txid);
       setStatus('SOL transaction submitted.');
-    } catch (err: any) {
-      setStatus(err.message || 'SOL transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'SOL transaction failed.');
     }
   };
 

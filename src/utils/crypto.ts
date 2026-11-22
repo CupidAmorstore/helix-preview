@@ -6,7 +6,7 @@
   return btoa(binary);
 }
 
-export function fromBase64(value: string): Uint8Array {
+export function fromBase64(value: string): Uint8Array<ArrayBuffer> {
   const binary = atob(value);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i += 1) {
@@ -15,7 +15,7 @@ export function fromBase64(value: string): Uint8Array {
   return bytes;
 }
 
-export function randomBytes(length: number): Uint8Array {
+export function randomBytes(length: number): Uint8Array<ArrayBuffer> {
   const arr = new Uint8Array(length);
   crypto.getRandomValues(arr);
   return arr;
