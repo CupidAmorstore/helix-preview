@@ -43,3 +43,20 @@ describe('wallet derivation (known test vectors)', () => {
     expect(kp.publicKey.toBase58()).toBe(w.sol.address);
   });
 });
+
+describe('SOL transfer signing (offline, mirrors sendSolTransaction)', () => {
+  it('builds, signs and serialises a valid transfer without network access', async () => {
+    const { PublicKey, SystemProgram, Transaction } = await import('@solana/web3.js');
+    const w = await deriveAddresses(M, 'mainnet');
+    const kp = Keypair.fromSecretKey(Uint8Array.from(Buffer.from(w.sol.secretKey, 'hex')));
+    const to = new PublicKey('11111111111111111111111111111112');
+    const tx = new Transaction().add(SystemProgram.transfer({ fromPubkey: kp.publicKey, toPubkey: to, lamports: 1234 }));
+    tx.feePayer = kp.publicKey;
+    tx.recentBlockhash = 'EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k'; // any valid base58 32-byte hash
+    tx.sign(kp);
+    expect(tx.verifySignatures()).toBe(true);
+    const raw = tx.serialize();
+    expect(raw.length).toBeGreaterThan(100);
+    expect(Transaction.from(raw).instructions[0].programId.equals(SystemProgram.programId)).toBe(true);
+  });
+});
