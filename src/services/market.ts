@@ -2,18 +2,19 @@
   id: string;
   symbol: string;
   name: string;
-  binance: string;
+  /** Coinbase product id */
+  product: string;
 };
 
 export const MARKET_COINS: MarketCoin[] = [
-  { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', binance: 'BTCUSDT' },
-  { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', binance: 'ETHUSDT' },
-  { id: 'solana', symbol: 'SOL', name: 'Solana', binance: 'SOLUSDT' },
-  { id: 'binancecoin', symbol: 'BNB', name: 'BNB', binance: 'BNBUSDT' },
-  { id: 'ripple', symbol: 'XRP', name: 'XRP', binance: 'XRPUSDT' },
-  { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', binance: 'DOGEUSDT' },
-  { id: 'cardano', symbol: 'ADA', name: 'Cardano', binance: 'ADAUSDT' },
-  { id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche', binance: 'AVAXUSDT' }
+  { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', product: 'BTC-USD' },
+  { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', product: 'ETH-USD' },
+  { id: 'solana', symbol: 'SOL', name: 'Solana', product: 'SOL-USD' },
+  { id: 'chainlink', symbol: 'LINK', name: 'Chainlink', product: 'LINK-USD' },
+  { id: 'ripple', symbol: 'XRP', name: 'XRP', product: 'XRP-USD' },
+  { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', product: 'DOGE-USD' },
+  { id: 'cardano', symbol: 'ADA', name: 'Cardano', product: 'ADA-USD' },
+  { id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche', product: 'AVAX-USD' }
 ];
 
 const COINGECKO_BASE = 'https://api.coingecko.com/api/v3';
@@ -33,49 +34,49 @@ export async function fetchPriceMap(ids: string[]): Promise<Record<string, { usd
   return res.json();
 }
 
-export type BinanceKline = [number, string, string, string, string, string, number, string, number, string, string, string];
+// Live data: Coinbase Exchange public REST + WebSocket (keyless).
+// Binance was replaced: api.binance.com returns HTTP 451 (restricted location) in several regions.
+import { resample } from '../bot/candles';
+import type { Candle } from '../bot/types';
 
-export async function fetchBinanceKlines(symbol: string, interval: string, limit = 200): Promise<BinanceKline[]> {
-  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Binance kline fetch failed');
-  return res.json();
+const COINBASE_REST = 'https://api.exchange.coinbase.com';
+const COINBASE_WS = 'wss://ws-feed.exchange.coinbase.com';
+
+const NATIVE: Record<string, number> = { '1m': 60, '5m': 300, '15m': 900, '1h': 3600, '6h': 21600, '1d': 86400 };
+/** timeframes Coinbase lacks are built from complete smaller candles */
+const DERIVED: Record<string, { base: string; targetSec: number }> = {
+  '4h': { base: '1h', targetSec: 4 * 3600 },
+  '1w': { base: '1d', targetSec: 7 * 86400 }
+};
+
+/** Completed + forming candles for a chart, oldest first (max ~300 base candles). */
+export async function fetchCandles(product: string, timeframe: string): Promise<Candle[]> {
+  const derived = DERIVED[timeframe];
+  const gran = NATIVE[derived ? derived.base : timeframe] ?? 3600;
+  const res = await fetch(`${COINBASE_REST}/products/${product}/candles?granularity=${gran}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Coinbase candles failed (${res.status})`);
+  const rows = (await res.json()) as number[][];
+  const candles = rows
+    .map((r) => ({ t: r[0] * 1000, l: r[1], h: r[2], o: r[3], c: r[4], v: r[5] }))
+    .sort((a, b) => a.t - b.t);
+  return derived ? resample(candles, gran * 1000, derived.targetSec * 1000) : candles;
 }
 
-export function connectBinanceTicker(symbols: string[], onMessage: (symbol: string, price: number) => void): WebSocket {
-  const streams = symbols.map((s) => `${s.toLowerCase()}@miniTicker`).join('/');
-  const ws = new WebSocket(`wss://stream.binance.com:9443/stream?streams=${streams}`);
+/** Live last-trade prices via the public ticker channel. Callback receives the base symbol (e.g. BTC). */
+export function connectTicker(products: string[], onMessage: (symbol: string, price: number) => void): WebSocket {
+  const ws = new WebSocket(COINBASE_WS);
+  ws.onopen = () => ws.send(JSON.stringify({ type: 'subscribe', product_ids: products, channels: ['ticker'] }));
   ws.onmessage = (event) => {
     try {
-      const data = JSON.parse(event.data);
-      const payload = data.data ?? data;
-      if (!payload || !payload.s) return;
-      onMessage(payload.s.replace('USDT', ''), parseFloat(payload.c));
+      const m = JSON.parse(event.data);
+      if (m.type !== 'ticker' || !m.product_id) return;
+      const price = parseFloat(m.price);
+      if (Number.isFinite(price)) onMessage(String(m.product_id).split('-')[0], price);
     } catch {
-      // ignore
+      // ignore malformed frames
     }
   };
   return ws;
 }
 
-export function intervalLabelToBinance(tf: string): string {
-  switch (tf) {
-    case '1m':
-      return '1m';
-    case '5m':
-      return '5m';
-    case '15m':
-      return '15m';
-    case '1h':
-      return '1h';
-    case '4h':
-      return '4h';
-    case '1d':
-      return '1d';
-    case '1w':
-      return '1w';
-    default:
-      return '1h';
-  }
-}
-
+export const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d', '1w'];

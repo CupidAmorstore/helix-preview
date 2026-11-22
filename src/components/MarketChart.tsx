@@ -1,16 +1,17 @@
-﻿import { createChart, ColorType, LineData } from 'lightweight-charts';
+﻿import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData, type UTCTimestamp } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
-import { fetchBinanceKlines, intervalLabelToBinance } from '../services/market';
+import { fetchCandles } from '../services/market';
 
 type MarketChartProps = {
+  /** Coinbase product id, e.g. BTC-USD */
   symbol: string;
   timeframe: string;
 };
 
 export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const chartRef = useRef<ReturnType<typeof createChart> | null>(null);
-  const seriesRef = useRef<ReturnType<typeof chartRef.current.addAreaSeries> | null>(null);
+  const chartRef = useRef<IChartApi | null>(null);
+  const seriesRef = useRef<ISeriesApi<'Area'> | null>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
 
   useEffect(() => {
@@ -56,12 +57,11 @@ export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
     const load = async () => {
       setStatus('loading');
       try {
-        const interval = intervalLabelToBinance(timeframe);
-        const klines = await fetchBinanceKlines(symbol, interval, 300);
+        const candles = await fetchCandles(symbol, timeframe);
         if (!active) return;
-        const data: LineData[] = klines.map((kline) => ({
-          time: Math.floor(kline[0] / 1000),
-          value: parseFloat(kline[4])
+        const data: LineData[] = candles.map((k) => ({
+          time: Math.floor(k.t / 1000) as UTCTimestamp,
+          value: k.c
         }));
         seriesRef.current?.setData(data);
         chartRef.current?.timeScale().fitContent();

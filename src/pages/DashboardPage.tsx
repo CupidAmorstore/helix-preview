@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from 'react';
 import MarketChart from '../components/MarketChart';
-import { MARKET_COINS, fetchMarketOverview } from '../services/market';
+import { MARKET_COINS, TIMEFRAMES, fetchMarketOverview } from '../services/market';
 import { useLivePrices } from '../hooks/useLivePrices';
 
 export default function DashboardPage() {
@@ -9,7 +9,7 @@ export default function DashboardPage() {
   const [selected, setSelected] = useState(MARKET_COINS[0]);
   const [timeframe, setTimeframe] = useState('1h');
 
-  const symbols = useMemo(() => MARKET_COINS.map((coin) => coin.binance), []);
+  const symbols = useMemo(() => MARKET_COINS.map((coin) => coin.product), []);
   const livePrices = useLivePrices(symbols);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function DashboardPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Market</p>
         <h1 className="text-3xl font-semibold text-white">Live Market Intelligence</h1>
         <p className="max-w-2xl text-sm text-slate-400">
-          Real-time price streaming from Binance with CoinGecko market context. Signals are informational only.
+          Real-time prices from Coinbase with CoinGecko market context. Signals are informational only.
         </p>
       </section>
 
@@ -44,7 +44,7 @@ export default function DashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-200">Live Snapshot</h2>
-            <span className="text-xs text-slate-500">Binance WS</span>
+            <span className="text-xs text-slate-500">Coinbase WS</span>
           </div>
           <div className="space-y-2">
             {MARKET_COINS.map((coin) => {
@@ -78,10 +78,10 @@ export default function DashboardPage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-semibold text-slate-200">{selected.symbol} Price Action</h2>
-              <p className="text-xs text-slate-500">Chart data via Binance REST</p>
+              <p className="text-xs text-slate-500">Chart data via Coinbase REST</p>
             </div>
             <div className="flex gap-2 text-xs">
-              {['1m', '5m', '15m', '1h', '4h', '1d', '1w'].map((tf) => (
+              {TIMEFRAMES.map((tf) => (
                 <button
                   key={tf}
                   type="button"
@@ -96,7 +96,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <MarketChart symbol={selected.binance} timeframe={timeframe} />
+            <MarketChart symbol={selected.product} timeframe={timeframe} />
           </div>
         </div>
       </section>

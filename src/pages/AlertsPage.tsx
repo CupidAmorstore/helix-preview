@@ -12,7 +12,7 @@ export default function AlertsPage() {
   const [notifications, setNotifications] = useState<string[]>([]);
   const triggered = useRef<Record<string, boolean>>({});
 
-  const livePrices = useLivePrices(MARKET_COINS.map((coin) => coin.binance));
+  const livePrices = useLivePrices(MARKET_COINS.map((coin) => coin.product));
 
   useEffect(() => {
     listAlerts().then(setAlerts);

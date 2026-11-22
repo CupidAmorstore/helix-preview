@@ -1,13 +1,14 @@
 ﻿import { useEffect, useRef, useState } from 'react';
-import { connectBinanceTicker } from '../services/market';
+import { connectTicker } from '../services/market';
 
-export function useLivePrices(symbols: string[]) {
+/** Live prices keyed by base symbol (BTC, ETH, ...). `products` are Coinbase product ids. */
+export function useLivePrices(products: string[]) {
   const [prices, setPrices] = useState<Record<string, number>>({});
   const priceRef = useRef<Record<string, number>>({});
 
   useEffect(() => {
-    if (!symbols.length) return undefined;
-    const ws = connectBinanceTicker(symbols, (symbol, price) => {
+    if (!products.length) return undefined;
+    const ws = connectTicker(products, (symbol, price) => {
       priceRef.current = { ...priceRef.current, [symbol]: price };
     });
 
@@ -19,7 +20,8 @@ export function useLivePrices(symbols: string[]) {
       ws.close();
       clearInterval(interval);
     };
-  }, [symbols.join(',')]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed on the joined list, not the array identity
+  }, [products.join(',')]);
 
   return prices;
 }
