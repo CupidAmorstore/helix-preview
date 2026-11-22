@@ -52,3 +52,11 @@ If you want Stripe Checkout for access, configure the Netlify function env vars:
 ## Legal
 `/privacy`, `/terms`, and `/support` contain placeholder text with **[TODO: Legal review required]** markers.
 
+
+## Trading Bot (paper only)
+The **Trading Bot** section (`/bot`) researches, validates and paper-trades crypto strategies on free public data.
+Real-money trading is disabled and no order code exists. Docs: [`docs/trading-bot/`](docs/trading-bot/CURRENT_STATE.md).
+```bash
+npm run bot:research                 # fetch data, run new research, update paper accounts
+npm run bot:research -- --watch-only # refresh data, quotes and paper accounts only
+```
