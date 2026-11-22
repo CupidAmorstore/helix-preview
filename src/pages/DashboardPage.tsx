@@ -119,7 +119,8 @@ export default function DashboardPage() {
           </div>
           <span className="text-xs text-slate-500">Read-only</span>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-white/5">
+        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+          <div className="min-w-[520px]">
           <div className="grid grid-cols-4 gap-4 border-b border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.2em] text-slate-500">
             <div>Asset</div>
             <div>Price</div>
@@ -151,6 +152,7 @@ export default function DashboardPage() {
               <div>${coin.market_cap.toLocaleString()}</div>
             </div>
           ))}
+          </div>
         </div>
       </section>
     </div>
