@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { evaluateFamily, chronologicalSplit } from '../../bot/validation';
+import { evaluateFamily, chronologicalSplit, evaluatePooled } from '../../bot/validation';
 import { runResearchCycle, ALL_FAMILIES } from '../../bot/research';
 import { COST_PRESETS } from '../../bot/costs';
 import { HOUR, datasetHash } from '../../bot/candles';
@@ -104,5 +104,25 @@ describe('November 21 regression cases', () => {
     });
     expect(record.markets[0].candidates).toHaveLength(0);
     expect(record.markets[0].skipped[0].reason).toBe('data stale');
+  });
+});
+
+describe('pooled universe evaluation', () => {
+  const mk = (cs: ReturnType<typeof randomWalk>[]) => cs.map((candles, i) => ({ symbol: `M${i}-USD`, candles }));
+  it('uses common calendar cut-offs across markets with different start dates', () => {
+    const a = randomWalk(3000, 1);
+    const b = randomWalk(3000, 2).slice(500); // starts later
+    const r = evaluatePooled(mk([a, b]), 'sma_cross', COST_PRESETS.coinbase_taker, HOUR, 1);
+    expect(r.cutoffs.trainStart).toBeGreaterThanOrEqual(b[0].t);
+    expect(r.cutoffs.trainEnd).toBeLessThan(r.cutoffs.valEnd);
+  });
+  it('nothing qualifies on a universe of random walks', () => {
+    const u = mk([31, 32, 33, 34, 35, 36].map((s) => randomWalk(3000, s)));
+    for (const f of ALL_FAMILIES) expect(evaluatePooled(u, f, COST_PRESETS.coinbase_taker, HOUR, 7).status).toBe('rejected');
+  });
+  it('a genuine shared edge qualifies when pooled', () => {
+    const u = mk([7, 8, 9].map((s) => trendingRegimes(6000, s, 60)));
+    const r = evaluatePooled(u, 'ts_momentum', LOW, HOUR, 1);
+    expect(r.rejectionReasons).toEqual([]);
   });
 });

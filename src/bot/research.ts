@@ -1,7 +1,8 @@
 import type { CostModel, Dataset, StrategyFamily } from './types';
 import { validateCandles } from './candles';
 import { PARAM_GRID } from './strategies';
-import { CandidateReport, GATES, evaluateFamily } from './validation';
+import { CandidateReport, GATES, PooledReport, evaluateFamily, evaluatePooled } from './validation';
+import { fnv1a } from './candles';
 import { classifyRegime, scoreDataQuality, DataQuality, Regime } from './watchbot';
 import { COST_PRESETS } from './costs';
 import { accountFeasibility, DEFAULT_RISK, Feasibility } from './risk';
@@ -29,6 +30,8 @@ export type RunRecord = {
   riskPolicy: typeof DEFAULT_RISK;
   assumptions: string[];
   markets: MarketResult[];
+  /** one rule across all eligible markets of this interval (common calendar cut-offs) */
+  pooled: PooledReport[];
   totals: {
     markets: number;
     marketsEvaluated: number;
@@ -74,7 +77,10 @@ export function runResearchCycle(args: {
     return { d, v, contiguous, q, todo };
   });
   const eligible = prepared.filter((p) => p.contiguous.length >= minBars && !p.q.stale);
-  const oosCandidates = eligible.reduce((s, p) => s + p.todo.length, 0);
+  const intervalMs = args.datasets[0]?.intervalMs ?? 0;
+  const pooledId = fnv1a(eligible.map((p) => p.d.id).sort().join('|'));
+  const pooledTodo = eligible.length >= 3 ? families.filter((f) => !registry[registryKey(f, pooledId, 'POOLED', intervalMs)]) : [];
+  const oosCandidates = eligible.reduce((s, p) => s + p.todo.length, 0) + pooledTodo.length;
 
   const markets: MarketResult[] = prepared.map(({ d, contiguous, q, todo }) => {
     const barsPerYear = (365 * 86_400_000) / d.intervalMs;
@@ -109,7 +115,14 @@ export function runResearchCycle(args: {
     return res;
   });
 
-  const all = markets.flatMap((m) => m.candidates);
+  const series = eligible.map((p) => ({ symbol: p.d.market.symbol, candles: p.contiguous }));
+  const pooled: PooledReport[] = pooledTodo.map((f) => {
+    const rep = evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, oosCandidates);
+    registry[registryKey(f, pooledId, 'POOLED', intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
+    return rep;
+  });
+
+  const all = [...markets.flatMap((m) => m.candidates), ...pooled];
   const record: RunRecord = {
     runId,
     startedAt,
@@ -126,6 +139,7 @@ export function runResearchCycle(args: {
       'Research capital normalised to $1,000; account-size feasibility evaluated separately.'
     ],
     markets,
+    pooled,
     totals: {
       markets: markets.length,
       marketsEvaluated: markets.filter((m) => m.candidates.length).length,

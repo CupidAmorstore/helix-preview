@@ -1,0 +1,836 @@
+[
+ {
+  "id": "BTC-USD|86400000|sma_cross(fast=10,slow=100)",
+  "label": "BTC-USD 1d sma_cross(fast=10,slow=100)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "sma_cross",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|donchian_breakout(entry=20,exit=20)",
+  "label": "BTC-USD 1d donchian_breakout(entry=20,exit=20)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "donchian_breakout",
+   "params": {
+    "entry": 20,
+    "exit": 20
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|ts_momentum(lookback=24,threshold=0)",
+  "label": "BTC-USD 1d ts_momentum(lookback=24,threshold=0)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "ts_momentum",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|trend_filtered_momentum(filter=200,lookback=24)",
+  "label": "BTC-USD 1d trend_filtered_momentum(filter=200,lookback=24)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "trend_filtered_momentum",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|bollinger_reversion(k=2.5,maxHold=24,n=20)",
+  "label": "BTC-USD 1d bollinger_reversion(k=2.5,maxHold=24,n=20)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "bollinger_reversion",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+  "label": "BTC-USD 1d rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "rsi_reversion",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+  "label": "BTC-USD 1d vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "vol_compression_breakout",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|sma_cross(fast=10,slow=200)",
+  "label": "ETH-USD 1d sma_cross(fast=10,slow=200)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "sma_cross",
+   "params": {
+    "fast": 10,
+    "slow": 200
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|donchian_breakout(entry=20,exit=10)",
+  "label": "ETH-USD 1d donchian_breakout(entry=20,exit=10)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "donchian_breakout",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|ts_momentum(lookback=24,threshold=0)",
+  "label": "ETH-USD 1d ts_momentum(lookback=24,threshold=0)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "ts_momentum",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|trend_filtered_momentum(filter=200,lookback=24)",
+  "label": "ETH-USD 1d trend_filtered_momentum(filter=200,lookback=24)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "trend_filtered_momentum",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|bollinger_reversion(k=2,maxHold=24,n=20)",
+  "label": "ETH-USD 1d bollinger_reversion(k=2,maxHold=24,n=20)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "bollinger_reversion",
+   "params": {
+    "n": 20,
+    "k": 2,
+    "maxHold": 24
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+  "label": "ETH-USD 1d rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "rsi_reversion",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+  "label": "ETH-USD 1d vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "vol_compression_breakout",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ }
+]

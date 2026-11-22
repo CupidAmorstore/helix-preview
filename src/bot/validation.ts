@@ -143,7 +143,7 @@ export function evaluateFamily(
   const nbShare = nb.length ? nbPass / nb.length : 0;
 
   // The test window is only "opened" for candidates that survived validation.
-  if (report.status === 'rejected') {
+  if ((report.status as CandidateStatus) === 'rejected') {
     report.stress = { doubleCostTestNet: NaN, delayedTestNet: NaN, neighbourPassShare: nbShare };
     return report;
   }
@@ -174,4 +174,212 @@ export function evaluateFamily(
 
   if (report.status !== 'rejected') report.status = 'qualified_paper_strategy';
   return report;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Pooled (universe) evaluation: ONE rule applied to every market, equal-weight, COMMON calendar
+// cut-offs (no market's test period may overlap another market's training period).
+// Cross-market correlation is handled with a block bootstrap over calendar months.
+// ---------------------------------------------------------------------------------------------
+
+export type PooledReport = {
+  key: string;
+  spec: StrategySpec;
+  status: CandidateStatus;
+  rejectionReasons: string[];
+  markets: string[];
+  cutoffs: { trainStart: number; trainEnd: number; valEnd: number; testEnd: number };
+  train: PooledWindow;
+  validation?: PooledWindow;
+  test?: PooledWindow;
+  stress?: { doubleCostTestNet: number; delayedTestNet: number; neighbourPassShare: number };
+  ci?: { lo: number; hi: number; mean: number; alpha: number; n: number; blocks: number };
+  configsTriedOnTrain: number;
+};
+
+export type PooledWindow = {
+  trades: number;
+  netReturn: number; // equal-weight portfolio
+  grossReturn: number;
+  buyHoldReturn: number;
+  maxDrawdownBound: number; // max single-market DD — an upper bound on the equal-weight portfolio DD
+  profitFactor: number | null;
+  winRate: number | null;
+  totalCostUsd: number;
+  perMarketNet: Record<string, number>;
+};
+
+type Series = { symbol: string; candles: Candle[] };
+
+function indexAtOrAfter(c: Candle[], t: number): number {
+  let lo = 0;
+  let hi = c.length;
+  while (lo < hi) {
+    const m = (lo + hi) >> 1;
+    if (c[m].t < t) lo = m + 1;
+    else hi = m;
+  }
+  return lo;
+}
+
+/** Common calendar cut-offs from the period ALL markets cover (after warm-up). */
+export function commonCutoffs(series: Series[], warm: number, intervalMs: number) {
+  const start = Math.max(...series.map((s) => s.candles[Math.min(warm, s.candles.length - 1)].t));
+  const end = Math.min(...series.map((s) => s.candles[s.candles.length - 1].t)) + intervalMs;
+  const span = end - start;
+  const trainEnd = start + Math.floor(span * GATES.split.train / intervalMs) * intervalMs;
+  const valEnd = trainEnd + Math.floor(span * GATES.split.validation / intervalMs) * intervalMs;
+  return { trainStart: start, trainEnd, valEnd, testEnd: end };
+}
+
+function pooledWindow(
+  series: Series[],
+  spec: StrategySpec,
+  a: number,
+  b: number,
+  cost: CostModel,
+  delayBars = 0
+): { w: PooledWindow; trades: BacktestResult['trades'] } {
+  const all: BacktestResult['trades'] = [];
+  const per: Record<string, number> = {};
+  let net = 0;
+  let gross = 0;
+  let bh = 0;
+  let dd = 0;
+  let costUsd = 0;
+  for (const s of series) {
+    const r = backtest(s.candles, spec, {
+      start: indexAtOrAfter(s.candles, a),
+      end: indexAtOrAfter(s.candles, b),
+      cost,
+      capitalUsd: CAPITAL / series.length,
+      delayBars
+    });
+    per[s.symbol] = r.netReturn;
+    net += r.netReturn / series.length;
+    gross += r.grossReturn / series.length;
+    bh += r.buyHoldReturn / series.length;
+    dd = Math.max(dd, r.maxDrawdown);
+    costUsd += r.totalCostUsd;
+    all.push(...r.trades);
+  }
+  return {
+    w: {
+      trades: all.length,
+      netReturn: net,
+      grossReturn: gross,
+      buyHoldReturn: bh,
+      maxDrawdownBound: dd,
+      profitFactor: profitFactor(all),
+      winRate: winRate(all),
+      totalCostUsd: costUsd,
+      perMarketNet: per
+    },
+    trades: all
+  };
+}
+
+/** Block bootstrap of mean trade return, blocks = calendar month of trade entry. */
+export function monthBlockBootstrap(trades: { entryT: number; netRet: number }[], alpha: number, iterations = 4000, seed = 7) {
+  const blocks = new Map<string, number[]>();
+  for (const t of trades) {
+    const d = new Date(t.entryT);
+    const k = `${d.getUTCFullYear()}-${d.getUTCMonth()}`;
+    blocks.set(k, [...(blocks.get(k) ?? []), t.netRet]);
+  }
+  const B = [...blocks.values()];
+  if (B.length < 3) return { lo: NaN, hi: NaN, mean: NaN, blocks: B.length };
+  let a = seed >>> 0;
+  const rnd = () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const means: number[] = [];
+  for (let i = 0; i < iterations; i++) {
+    let s = 0;
+    let n = 0;
+    for (let j = 0; j < B.length; j++) {
+      const blk = B[Math.floor(rnd() * B.length)];
+      for (const x of blk) s += x;
+      n += blk.length;
+    }
+    means.push(n ? s / n : 0);
+  }
+  means.sort((x, y) => x - y);
+  const q = (p: number) => means[Math.min(iterations - 1, Math.max(0, Math.floor(p * iterations)))];
+  const all = trades.map((t) => t.netRet);
+  return { lo: q(alpha / 2), hi: q(1 - alpha / 2), mean: all.reduce((x, y) => x + y, 0) / all.length, blocks: B.length };
+}
+
+export function evaluatePooled(
+  series: Series[],
+  family: StrategyFamily,
+  cost: CostModel,
+  intervalMs: number,
+  oosCandidatesInRun: number
+): PooledReport {
+  const grid = PARAM_GRID[family];
+  const warm = Math.max(...grid.map((p) => warmup({ family, params: p })));
+  const cut = commonCutoffs(series, warm, intervalMs);
+  const minTrainTrades = GATES.minTradesValidation * 2;
+  let best: { spec: StrategySpec; w: PooledWindow } | null = null;
+  for (const params of grid) {
+    const spec = { family, params };
+    const { w } = pooledWindow(series, spec, cut.trainStart, cut.trainEnd, cost);
+    const ok = w.trades >= minTrainTrades;
+    const bestOk = best ? best.w.trades >= minTrainTrades : false;
+    if (!best || (ok && !bestOk) || (ok === bestOk && w.netReturn > best.w.netReturn)) best = { spec, w };
+  }
+  const spec = best!.spec;
+  const rep: PooledReport = {
+    key: `POOLED:${specKey(spec)}`,
+    spec,
+    status: 'backtested_candidate',
+    rejectionReasons: [],
+    markets: series.map((s) => s.symbol),
+    cutoffs: cut,
+    train: best!.w,
+    configsTriedOnTrain: grid.length
+  };
+  const reject = (why: string) => {
+    rep.rejectionReasons.push(why);
+    rep.status = 'rejected';
+  };
+  if (best!.w.netReturn <= 0) reject('best pooled training config is not profitable after costs');
+  const v = pooledWindow(series, spec, cut.trainEnd, cut.valEnd, cost);
+  rep.validation = v.w;
+  if (v.w.trades < GATES.minTradesValidation) reject(`validation trades ${v.w.trades} < ${GATES.minTradesValidation}`);
+  if (v.w.netReturn <= 0) reject('pooled validation net return <= 0 after costs');
+  const nb = neighbours(family, spec.params);
+  const nbShare = nb.length
+    ? nb.filter((p) => pooledWindow(series, { family, params: p }, cut.trainEnd, cut.valEnd, cost).w.netReturn > 0).length / nb.length
+    : 0;
+  if ((rep.status as CandidateStatus) === 'rejected') {
+    rep.stress = { doubleCostTestNet: NaN, delayedTestNet: NaN, neighbourPassShare: nbShare };
+    return rep;
+  }
+  const t = pooledWindow(series, spec, cut.valEnd, cut.testEnd, cost);
+  rep.test = t.w;
+  const t2 = pooledWindow(series, spec, cut.valEnd, cut.testEnd, scaleCosts(cost, GATES.costStressFactor)).w;
+  const td = pooledWindow(series, spec, cut.valEnd, cut.testEnd, cost, GATES.delayStressBars).w;
+  rep.stress = { doubleCostTestNet: t2.netReturn, delayedTestNet: td.netReturn, neighbourPassShare: nbShare };
+  if (t.w.trades < GATES.minTradesTest) reject(`test trades ${t.w.trades} < ${GATES.minTradesTest}`);
+  if (t.w.netReturn <= 0) reject('pooled test net return <= 0 after costs');
+  const pf = t.w.profitFactor;
+  if (!(pf === null ? t.trades.some((x) => x.netRet > 0) : pf > 1)) reject('test profit factor <= 1');
+  if (t.w.maxDrawdownBound > GATES.maxTestDrawdown) reject(`test drawdown bound ${(t.w.maxDrawdownBound * 100).toFixed(1)}% > 25%`);
+  if (t2.netReturn <= 0) reject('fails 2x cost stress');
+  if (td.netReturn <= 0) reject('fails +1 bar execution delay stress');
+  if (nbShare < GATES.minNeighbourPassShare) reject('parameter neighbours unstable on validation');
+  const oos = [...v.trades, ...t.trades];
+  const alpha = GATES.familyAlpha / Math.max(1, oosCandidatesInRun);
+  const ci = monthBlockBootstrap(oos, alpha);
+  rep.ci = { ...ci, alpha, n: oos.length };
+  if (oos.length < GATES.minTradesOos) reject(`out-of-sample trades ${oos.length} < ${GATES.minTradesOos}`);
+  if (!(ci.lo > 0)) reject('month-block bootstrap lower bound of mean OOS trade <= 0 (multiple-testing adjusted)');
+  if (rep.status !== 'rejected') rep.status = 'qualified_paper_strategy';
+  return rep;
 }
