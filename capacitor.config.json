@@ -1,4 +1,4 @@
-﻿{
+{
   "appId": "com.helix.app",
   "appName": "HELIX",
   "webDir": "dist",
@@ -11,7 +11,10 @@
       "backgroundColor": "#0F0F0D",
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP"
+    },
+    "SystemBars": {
+      "style": "DARK"
     }
-  }
+  },
+  "backgroundColor": "#0F0F0D"
 }
-

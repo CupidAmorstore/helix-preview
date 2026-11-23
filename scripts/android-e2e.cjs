@@ -60,23 +60,23 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   check('live Coinbase prices arrive', /Live Coinbase prices/.test(await text()), (await text()).slice(0, 160));
 
   // paper account + trade
-  await page.getByRole('button', { name: '$500' }).tap();
-  await page.getByRole('button', { name: 'Open paper account' }).tap();
+  await page.getByRole('button', { name: '$500' }).click();
+  await page.getByRole('button', { name: 'Open paper account' }).click();
   await sleep(1500);
   check('paper account opens', /\$500\.00/.test(await text()));
   await shot('home-account');
 
-  await tab('Markets').tap(); await sleep(4000);
+  await tab('Markets').click(); await sleep(4000);
   check('Markets tab', (await path()) === '/markets', await path());
   await shot('markets');
-  await page.locator('main ul li a').first().tap(); await sleep(5000);
+  await page.locator('main ul li a').first().click(); await sleep(5000);
   check('asset page opens from list', /^\/markets\//.test(await path()), await path());
   await shot('asset');
 
-  await page.getByRole('button', { name: 'Paper buy' }).tap(); await sleep(800);
+  await page.getByRole('button', { name: 'Paper buy' }).click(); await sleep(800);
   await page.locator('[role=dialog] input').first().fill('50');
   await shot('trade-sheet-keyboard');
-  await page.getByRole('button', { name: /Place paper buy/ }).tap(); await sleep(5000);
+  await page.getByRole('button', { name: /Place paper buy/ }).click(); await sleep(5000);
   const sheet = (await page.locator('[role=dialog]').innerText()).replace(/\s+/g, ' ');
   check('paper buy fills on device (order-book fill)', /filled/.test(sheet), sheet.slice(0, 200));
   await shot('trade-filled');
@@ -89,18 +89,18 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   check('Back returns to the previous screen', (await path()) === '/markets', await path());
 
   for (const [name, p] of [['Bot', '/bot'], ['Wallet', '/wallet'], ['More', '/more'], ['Home', '/']]) {
-    await tab(name).tap(); await sleep(3000);
+    await tab(name).click(); await sleep(3000);
     check(`${name} tab`, (await path()) === p, await path());
     await shot(name.toLowerCase());
   }
 
   // external link must open the system browser, not hijack/blank the app
-  await tab('More').tap(); await sleep(1500);
-  await page.getByRole('link', { name: /Support/ }).first().tap(); await sleep(1500);
+  await tab('More').click(); await sleep(1500);
+  await page.getByRole('link', { name: /Support/ }).first().click(); await sleep(1500);
   await shot('support');
 
   // Back from Home exits to the launcher (app no longer resumed)
-  await tab('Home').tap(); await sleep(1000);
+  await tab('Home').click(); await sleep(1000);
   await device.input.press('Back'); await sleep(2500);
   const after = await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"');
   check('Back on Home leaves the app', !/com\.helix\.app/.test(after), after);
