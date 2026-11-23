@@ -100,7 +100,7 @@ export function walkBook(levels: [number, number][], ref: number, side: 'buy' | 
 }
 
 const bookUsable = (q: Quote, maxAge: number, now: number) =>
-  !!q.book && now - q.book.ts <= maxAge && q.book.asks.length > 0 && q.book.bids.length > 0;
+  !!q.book && now - q.book.ts <= maxAge && q.book.ts <= now + 5_000 && q.book.asks.length > 0 && q.book.bids.length > 0;
 
 export type OrderRequest =
   | { clientId: string; side: 'buy'; symbol: string; product: string; notionalUsd: number }
@@ -178,6 +178,7 @@ export function placeOrder(acc: PaperAccount, req: OrderRequest, quote: Quote, n
   if (acc.halted) return reject(acc, req, quote, now, `Trading paused: ${acc.haltReason ?? 'paused by you'}`);
   if (quote.symbol !== req.symbol || !(quote.price > 0)) return reject(acc, req, quote, now, 'No valid live price for this coin');
   if (now - quote.ts > acc.limits.maxQuoteAgeMs) return reject(acc, req, quote, now, 'Price is out of date. Wait for a live price and try again.');
+  if (quote.ts > now + 5_000) return reject(acc, req, quote, now, 'Price time is in the future; check the device clock.');
 
   const feeFrac = PAPER_COST.takerFeeBps / 10_000;
   const impactFrac = sideCostFrac(PAPER_COST) - feeFrac; // half spread + slippage
