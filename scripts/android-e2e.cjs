@@ -107,10 +107,18 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-after-back-on-home.png` });
 
   // relaunch: data persisted on device storage
-  await sh('am start -W -n com.helix.app/.MainActivity'); await sleep(5000);
-  const wv2 = await device.webView({ pkg: 'com.helix.app' });
-  const p2 = await wv2.page();
-  await p2.waitForSelector('main'); await sleep(3000);
+  await sh('am start -W -n com.helix.app/.MainActivity'); await sleep(6000);
+  // the old WebView target is gone after the app left; attach to the new one (retry while it starts)
+  let p2 = null;
+  for (let i = 0; i < 8 && !p2; i++) {
+    try {
+      const wv = (await device.webViews()).find((w) => w.pkg() === 'com.helix.app');
+      if (wv) { const pg = await wv.page(); await pg.waitForSelector('main', { timeout: 8000 }); p2 = pg; }
+    } catch { /* not ready yet */ }
+    if (!p2) await sleep(3000);
+  }
+  if (!p2) throw new Error('could not attach to the relaunched app');
+  await sleep(3000);
   const t2 = (await p2.locator('main').innerText()).replace(/\s+/g, ' ');
   check('paper account persists after relaunch', /Paper buy/.test(t2) && /PAPER ACCOUNT|Paper account/i.test(t2), t2.slice(0, 160));
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-relaunch.png` });
