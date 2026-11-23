@@ -164,6 +164,7 @@ export default function ConnectionsPage() {
           <h2 className="text-sm font-semibold text-slate-200">On-chain Watchlist</h2>
           <div className="space-y-3">
             <select
+              aria-label="Blockchain of the address"
               value={chain}
               onChange={(e) => setChain(e.target.value as 'btc' | 'eth' | 'sol')}
               className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"

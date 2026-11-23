@@ -20,3 +20,18 @@ describe('bot insights from the real bundled results', () => {
     expect(dailyRegimes(S)).toHaveLength(10);
   });
 });
+
+describe('strategy catalogue evidence', () => {
+  it('covers all 7 families with 22 tests each, none qualified', async () => {
+    const { strategyEvidence } = await import('../../bot/insights');
+    const ev = strategyEvidence(S);
+    expect(ev).toHaveLength(7);
+    for (const e of ev) {
+      expect(e.tested).toBe(22);
+      expect(e.qualified).toBe(0);
+      expect(e.pooledDaily).toBeDefined();
+    }
+    const boll = ev.find((e) => e.info.family === 'bollinger_reversion')!;
+    expect(boll.pooledDaily!.testNet).toBeCloseTo(-0.382, 2);
+  });
+});

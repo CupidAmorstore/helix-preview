@@ -95,8 +95,12 @@ export default function HomePage() {
     if (value && feed.status === 'live' && !value.missingPrice) pts.push([Date.now(), value.equity]);
     if (pts.length < 2) return null;
     const v = pts.map((p) => p[1]);
-    const min = Math.min(...v, account.startingCash);
-    const max = Math.max(...v, account.startingCash);
+    // Vertical range spans at least 2% of the starting balance so tiny moves (e.g. fees) don't look like crashes.
+    const lo = Math.min(...v, account.startingCash);
+    const hi = Math.max(...v, account.startingCash);
+    const pad = Math.max(0, account.startingCash * 0.02 - (hi - lo)) / 2;
+    const min = lo - pad;
+    const max = hi + pad;
     const y = (x: number) => 84 - ((x - min) / (max - min || 1)) * 72;
     const t0 = pts[0][0];
     const t1 = pts[pts.length - 1][0];

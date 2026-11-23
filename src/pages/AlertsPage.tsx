@@ -70,6 +70,7 @@ export default function AlertsPage() {
         <h2 className="text-sm font-semibold text-slate-200">Create alert</h2>
         <div className="grid gap-3 md:grid-cols-4">
           <select
+            aria-label="Coin"
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
             className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
@@ -81,6 +82,7 @@ export default function AlertsPage() {
             ))}
           </select>
           <select
+            aria-label="Alert when price goes"
             value={direction}
             onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
             className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"

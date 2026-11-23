@@ -56,3 +56,45 @@ export function dailyRegimes(s: BotSummary): { base: string; regime: Regime }[] 
 export function snapshotAgeHours(s: BotSummary, now = Date.now()) {
   return Math.max(0, (now - new Date(s.generatedAt).getTime()) / 3_600_000);
 }
+
+// ---------------------------------------------------------------- strategy catalogue (plain language)
+export type StrategyInfo = { family: string; name: string; objective: string; risk: 'Medium' | 'Medium-high' | 'High'; style: string };
+
+export const STRATEGIES: StrategyInfo[] = [
+  { family: 'sma_cross', name: 'Trend following (moving averages)', objective: 'Hold a coin while its short-term average is above its long-term average.', risk: 'Medium', style: 'Trend' },
+  { family: 'trend_filtered_momentum', name: 'Momentum with trend filter', objective: 'Buy recent strength, but only when the long-term trend is up.', risk: 'Medium', style: 'Trend' },
+  { family: 'ts_momentum', name: 'Momentum', objective: 'Hold a coin after it has risen over a recent period.', risk: 'Medium-high', style: 'Trend' },
+  { family: 'donchian_breakout', name: 'Breakout', objective: 'Buy when price breaks above its recent range; exit when it breaks below.', risk: 'Medium-high', style: 'Trend' },
+  { family: 'vol_compression_breakout', name: 'Calm-before-the-move breakout', objective: 'Buy a breakout that follows an unusually quiet period.', risk: 'Medium-high', style: 'Volatility' },
+  { family: 'bollinger_reversion', name: 'Buy the dip (Bollinger bands)', objective: 'Buy after an unusually sharp drop and sell when price returns to average.', risk: 'High', style: 'Mean reversion' },
+  { family: 'rsi_reversion', name: 'Oversold bounce (RSI)', objective: 'Buy when the RSI says a coin is oversold; sell when it recovers.', risk: 'High', style: 'Mean reversion' }
+];
+
+export type StrategyEvidence = {
+  info: StrategyInfo;
+  tested: number;
+  reachedTest: number;
+  qualified: number;
+  /** one rule across all coins on daily bars: the most robust single summary */
+  pooledDaily?: { trainNet: number; valNet: number; valTrades: number; testNet?: number; testTrades?: number; reasons: string[] };
+  reasons: { text: string; count: number }[];
+};
+
+export function strategyEvidence(s: BotSummary): StrategyEvidence[] {
+  const all = allCandidates(s);
+  return STRATEGIES.map((info) => {
+    const mine = all.filter((c) => c.family === info.family);
+    const pooled = mine.find((c) => c.key.startsWith('POOLED:') && c.intervalMs === 86_400_000);
+    const sub: BotSummary = { ...s, runs: s.runs.map((r) => ({ ...r, markets: r.markets.map((m) => ({ ...m, candidates: m.candidates.filter((c) => c.family === info.family) })), pooled: (r.pooled ?? []).filter((c) => c.family === info.family) })) };
+    return {
+      info,
+      tested: mine.length,
+      reachedTest: mine.filter((c) => c.test).length,
+      qualified: mine.filter((c) => c.status === 'qualified_paper_strategy').length,
+      pooledDaily: pooled && pooled.validation
+        ? { trainNet: pooled.train.netReturn, valNet: pooled.validation.netReturn, valTrades: pooled.validation.trades, testNet: pooled.test?.netReturn, testTrades: pooled.test?.trades, reasons: pooled.rejectionReasons }
+        : undefined,
+      reasons: plainReasons(sub, 3)
+    };
+  });
+}

@@ -10,6 +10,7 @@ import { PaperProvider } from './paper/PaperProvider';
 const MarketsPage = lazy(() => import('./pages/MarketsPage'));
 const AssetPage = lazy(() => import('./pages/AssetPage'));
 const BotPage = lazy(() => import('./pages/BotPage'));
+const ResearchLabPage = lazy(() => import('./pages/ResearchLabPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const ConnectionsPage = lazy(() => import('./pages/ConnectionsPage'));
 const AlertsPage = lazy(() => import('./pages/AlertsPage'));
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/markets" element={<MarketsPage />} />
             <Route path="/markets/:symbol" element={<AssetPage />} />
             <Route path="/bot" element={<BotPage />} />
+            <Route path="/bot/research" element={<ResearchLabPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/more" element={<MorePage />} />
             <Route path="/connections" element={<ConnectionsPage />} />

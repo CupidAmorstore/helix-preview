@@ -190,7 +190,7 @@ export default function PortfolioPage() {
         )}
       </section>
 
-      <section className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+      <section tabIndex={0} aria-label="Holdings table (scrolls sideways)" className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
         <div className="min-w-[560px]">
         <div className="grid grid-cols-5 gap-4 border-b border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.2em] text-slate-500">
           <div>Asset</div>
