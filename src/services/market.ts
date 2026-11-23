@@ -62,6 +62,9 @@ export async function fetchCandles(product: string, timeframe: string): Promise<
   return derived ? resample(candles, gran * 1000, derived.targetSec * 1000) : candles;
 }
 
+/** No message (ticker or heartbeat) for this long on an open socket = connection lost. */
+export const HEARTBEAT_TIMEOUT_MS = 6000;
+
 export type FeedStatus = 'connecting' | 'live' | 'reconnecting' | 'offline';
 
 /** Delay before reconnect attempt n (0-based): 1 s, 2 s, 4 s, then every 5 s. Android WebView does not
@@ -84,6 +87,7 @@ export function connectTicker(
   let attempt = 0;
   let closed = false;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  let lastMsg = 0;
 
   const open = () => {
     if (closed) return;
@@ -91,10 +95,13 @@ export function connectTicker(
     ws = makeSocket(COINBASE_WS);
     ws.onopen = () => {
       attempt = 0;
-      ws?.send(JSON.stringify({ type: 'subscribe', product_ids: products, channels: ['ticker'] }));
+      // heartbeat: one message per product per second even when prices do not move, so silence = dead link
+      ws?.send(JSON.stringify({ type: 'subscribe', product_ids: products, channels: ['ticker', 'heartbeat'] }));
+      lastMsg = Date.now();
       onStatus('live');
     };
     ws.onmessage = (event) => {
+      lastMsg = Date.now();
       try {
         const m = JSON.parse(event.data);
         if (m.type !== 'ticker' || !m.product_id) return;
@@ -138,10 +145,20 @@ export function connectTicker(
     document.addEventListener('visibilitychange', onVisible);
   }
 
+  // Android WebView keeps a dead socket "open" when the network drops: detect silence and reconnect
+  const watchdog = setInterval(() => {
+    if (closed || !ws || ws.readyState !== 1) return;
+    if (Date.now() - lastMsg > HEARTBEAT_TIMEOUT_MS) {
+      onStatus('reconnecting');
+      ws.close();
+    }
+  }, 2000);
+
   open();
   return {
     close: () => {
       closed = true;
+      clearInterval(watchdog);
       if (typeof window !== 'undefined') {
         window.removeEventListener('offline', goOffline);
         window.removeEventListener('online', goOnline);
