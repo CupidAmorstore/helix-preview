@@ -2,37 +2,13 @@
 import { argon2id } from 'hash-wasm';
 import type { EncryptedPayload, VaultState } from '../types';
 import { fromBase64, randomBytes, toBase64 } from '../utils/crypto';
-import { getKeystore, getSetting, setSetting } from './storage';
+import { getKeystore, getSetting, listExchanges, setSetting } from './storage';
+import { failureDelayMs, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
 
 const VAULT_SALT_KEY = 'vault_salt';
 const VAULT_VERIFIER_KEY = 'vault_verifier';
-const VERIFIER_TEXT = 'helix-vault-ok';
-export const MIN_VAULT_PASSWORD = 10;
-
-async function encryptWith(key: CryptoKey, salt: Uint8Array, text: string): Promise<EncryptedPayload> {
-  const iv = randomBytes(12);
-  const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(text));
-  return { cipher: toBase64(new Uint8Array(cipher)), iv: toBase64(iv), salt: toBase64(salt), version: VAULT_VERSION };
-}
-
-async function canDecrypt(key: CryptoKey, payload: EncryptedPayload | null | undefined): Promise<boolean | null> {
-  if (!payload?.cipher || !payload.iv) return null;
-  try {
-    await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromBase64(payload.iv) }, key, fromBase64(payload.cipher));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Checks a password-derived key against what the vault already holds. AES-GCM fails on a wrong key. */
-export async function verifyVaultKey(key: CryptoKey, items: (EncryptedPayload | null | undefined)[]): Promise<boolean> {
-  for (const it of items) {
-    const ok = await canDecrypt(key, it);
-    if (ok !== null) return ok;
-  }
-  return true; // nothing encrypted yet: the first password sets the vault
-}
+const VAULT_FAILURES_KEY = 'vault_failures';
+export { MIN_VAULT_PASSWORD };
 const VAULT_VERSION = 1;
 
 async function deriveKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
@@ -91,32 +67,48 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const unlock = useCallback(async (password: string) => {
-    if (!vaultSalt) {
-      // creating a new vault
-      if (password.length < MIN_VAULT_PASSWORD) throw new Error(`Use at least ${MIN_VAULT_PASSWORD} characters.`);
-      const salt = randomBytes(16);
-      const key = await deriveKey(password, salt);
-      await setSetting(VAULT_VERIFIER_KEY, await encryptWith(key, salt, VERIFIER_TEXT));
-      await setSetting(VAULT_SALT_KEY, toBase64(salt));
-      setVaultSalt(salt);
-      setCryptoKey(key);
-      scheduleAutoLock();
-      return;
+    // throttle repeated wrong passwords (persisted, so a restart does not reset it)
+    const f = (await getSetting<{ n: number; at: number }>(VAULT_FAILURES_KEY)) ?? { n: 0, at: 0 };
+    const wait = f.at + failureDelayMs(f.n) - Date.now();
+    if (wait > 0) throw new VaultError('rate-limited', `Too many wrong passwords. Try again in ${Math.ceil(wait / 1000)} s.`);
+    const snapshot = {
+      salt: vaultSalt,
+      verifier: await getSetting<unknown>(VAULT_VERIFIER_KEY),
+      items: [
+        (await getKeystore())?.payload,
+        await getSetting<unknown>('etherscan_key'),
+        await getSetting<unknown>('eth_rpc'),
+        await getSetting<unknown>('sol_rpc'),
+        ...(await listExchanges().catch(() => [])).map((e) => e.payload)
+      ]
+    };
+    let res;
+    try {
+      res = await openVault(snapshot, password, deriveKey);
+    } catch (e) {
+      if (e instanceof VaultError && e.code === 'wrong-password') await setSetting(VAULT_FAILURES_KEY, { n: f.n + 1, at: Date.now() });
+      throw e;
     }
-    const key = await deriveKey(password, vaultSalt);
-    const verifier = await getSetting<EncryptedPayload>(VAULT_VERIFIER_KEY);
-    // older vaults have no verifier: check against anything already encrypted with the vault key
-    const items = verifier ? [verifier] : [
-      (await getKeystore())?.payload,
-      await getSetting<EncryptedPayload>('etherscan_key'),
-      await getSetting<EncryptedPayload>('eth_rpc'),
-      await getSetting<EncryptedPayload>('sol_rpc')
-    ];
-    if (!(await verifyVaultKey(key, items))) throw new Error('Wrong password.');
-    if (!verifier) await setSetting(VAULT_VERIFIER_KEY, await encryptWith(key, vaultSalt, VERIFIER_TEXT));
-    setCryptoKey(key);
+    // persist only after the password is proven; salt first so a half-finished write can never pair an old
+    // salt with a new verifier
+    if (res.write?.salt) await setSetting(VAULT_SALT_KEY, res.write.salt);
+    if (res.write) await setSetting(VAULT_VERIFIER_KEY, res.write.verifier);
+    if (f.n) await setSetting(VAULT_FAILURES_KEY, { n: 0, at: 0 });
+    setVaultSalt(res.salt);
+    setCryptoKey(res.key);
     scheduleAutoLock();
   }, [vaultSalt, scheduleAutoLock]);
+
+  // lock when the app has been in the background for a minute
+  useEffect(() => {
+    let t: number | null = null;
+    const onVis = () => {
+      if (document.visibilityState === 'hidden') t = window.setTimeout(() => setCryptoKey(null), 60_000);
+      else if (t) { window.clearTimeout(t); t = null; }
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => { document.removeEventListener('visibilitychange', onVis); if (t) window.clearTimeout(t); };
+  }, []);
 
   const lock = useCallback(() => {
     setCryptoKey(null);
