@@ -21,6 +21,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const shot = async (name) => { await sleep(600); await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-${name}.png` }); };
 
   check('Android version', true, `SDK ${await sh('getprop ro.build.version.sdk')} · WebView ${await sh("dumpsys package com.google.android.webview | grep versionName | head -1")}`);
+  // harness hygiene: emulator system dialogs (e.g. "Pixel Launcher isn't responding") must not swallow key presses
+  await sh('settings put global hide_error_dialogs 1; settings put global anr_show_background 0');
+  await sh('am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS');
   await sh('am force-stop com.helix.app');
   await sh('pm clear com.helix.app');
   await sh('am start -W -n com.helix.app/.MainActivity');
@@ -82,10 +85,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   await shot('trade-filled');
 
   // hardware BACK: closes the sheet first
-  await device.shell('input keyevent KEYCODE_BACK'); await sleep(1200);
+  await sh('am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS'); await device.shell('input keyevent KEYCODE_BACK'); await sleep(1200);
   check('Back closes the open sheet', (await page.locator('[role=dialog]').count()) === 0);
   // Back again: returns to Markets, not exit
-  await device.shell('input keyevent KEYCODE_BACK'); await sleep(1500);
+  await sh('am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS'); await device.shell('input keyevent KEYCODE_BACK'); await sleep(1500);
   check('Back returns to the previous screen', (await path()) === '/markets', await path());
 
   for (const [name, p] of [['Bot', '/bot'], ['Wallet', '/wallet'], ['More', '/more'], ['Home', '/']]) {
@@ -171,7 +174,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   // Back from Home exits to the launcher (app no longer resumed)
   await tab('Home').click(); await sleep(1000);
-  await device.shell('input keyevent KEYCODE_BACK'); await sleep(2500);
+  await sh('am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS'); await device.shell('input keyevent KEYCODE_BACK'); await sleep(2500);
   const after = await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"');
   check('Back on Home leaves the app', !/com\.helix\.app/.test(after), after);
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-after-back-on-home.png` });
