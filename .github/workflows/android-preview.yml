@@ -41,14 +41,31 @@ jobs:
       # the web inspection page (screenshots) is for the public site only
       - run: rm -rf dist/inspect
       - run: npx cap sync android
+      # Private QA signing key (owner-provided secrets). Without it the build is signed with the PUBLIC
+      # debug key and labelled as such.
+      - name: Prepare QA signing key (if configured)
+        env:
+          QA_KEYSTORE_B64: ${{ secrets.HELIX_QA_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$QA_KEYSTORE_B64" ]; then
+            echo "$QA_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/helix-qa.jks"
+            echo "HELIX_QA_KEYSTORE=$RUNNER_TEMP/helix-qa.jks" >> "$GITHUB_ENV"
+            echo "SIGNING=private QA key" >> "$GITHUB_ENV"
+          else
+            echo "SIGNING=PUBLIC debug key (testing only; anyone can sign an update with it)" >> "$GITHUB_ENV"
+          fi
       - name: Build debug APK
         working-directory: android
         env:
           VERSION_CODE: ${{ github.run_number }}
+          HELIX_QA_STORE_PASSWORD: ${{ secrets.HELIX_QA_STORE_PASSWORD }}
+          HELIX_QA_KEY_ALIAS: ${{ secrets.HELIX_QA_KEY_ALIAS }}
+          HELIX_QA_KEY_PASSWORD: ${{ secrets.HELIX_QA_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
           cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+          sha256sum ../helix-preview.apk
       - uses: actions/upload-artifact@v4
         with:
           name: helix-preview-apk
@@ -62,5 +79,5 @@ jobs:
           gh release create android-preview helix-preview.apk \
             --prerelease \
             --target "${GITHUB_SHA}" \
-            --title "HELIX Android preview (debug build #${{ github.run_number }})" \
-            --notes "Debug build of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Trading Bot is PAPER ONLY — no real-money orders. Install: open this page on your Android phone, tap helix-preview.apk, allow installing from your browser."
+            --title "HELIX private QA build #${{ github.run_number }} (debug, not for release)" \
+            --notes "PRIVATE QA BUILD — not a production release. Debug build of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Signed with: ${SIGNING}. sha256: $(sha256sum helix-preview.apk | cut -d' ' -f1). Paper trading only; wallet sending disabled; no real-money orders. Install: open this page on your Android phone, tap helix-preview.apk, allow installing from your browser."

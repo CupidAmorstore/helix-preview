@@ -117,9 +117,35 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await tab('Wallet').click(); await sleep(1500);
     const w3 = await text();
     check('wallet: after lock the phrase is gone and a password is required', /Enter your vault password/.test(w3) && !/tb1q6rz28/.test(w3));
+    // background for > 60 s must lock the vault again (automatic lock)
+    await page.locator('input[type=password]').fill('device test vault 123');
+    await page.getByRole('button', { name: 'Unlock' }).click(); await sleep(6000);
+    await page.getByRole('button', { name: 'Open wallet' }).click(); await sleep(4000);
+    const opened = /tb1q6rz28/.test(await text());
+    await sh('input keyevent KEYCODE_HOME'); await sleep(66000);
+    await sh('am start -n com.helix.app/.MainActivity'); await sleep(3000);
+    const w4 = await text();
+    check('wallet: 60 s in the background locks the vault again', opened && /Enter your vault password/.test(w4) && !/tb1q6rz28/.test(w4), opened ? '' : 'wallet did not open before backgrounding');
+    await shot('wallet-relocked-after-background');
   } catch (e) {
     check('wallet flow on device', false, String(e).split('\n')[0]);
   }
+
+  // paper orders history
+  await tab('More').click(); await sleep(1000);
+  await page.getByRole('link', { name: /Paper orders/ }).first().click(); await sleep(1500);
+  check('orders screen lists the paper buy', /Buy BTC/.test(await text()));
+  await shot('orders');
+
+  // rotation: landscape must not run content off-screen; back to portrait
+  await sh('settings put system accelerometer_rotation 0; settings put system user_rotation 1'); await sleep(2500);
+  await tab('Home').click(); await sleep(1500);
+  const land = await page.evaluate(() => ({ w: innerWidth, h: innerHeight, sw: document.documentElement.scrollWidth }));
+  check('landscape: no horizontal overflow', land.w > land.h && land.sw <= land.w + 1, JSON.stringify(land));
+  await shot('landscape-home');
+  await sh('settings put system user_rotation 0'); await sleep(2500);
+  const port = await page.evaluate(() => ({ w: innerWidth, h: innerHeight }));
+  check('portrait restored after rotation', port.h > port.w, JSON.stringify(port));
 
   // external link must open the system browser, not hijack/blank the app
   await tab('More').click(); await sleep(1500);
@@ -155,6 +181,24 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-relaunched-raw.png` });
   check('app is in the foreground again after relaunch', /com\.helix\.app/.test(await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"')));
   // (persistence is verified from the relaunch screenshot; the test driver cannot re-attach to a new WebView)
+
+  // crash recovery: kill the process and relaunch
+  await sh('am force-stop com.helix.app'); await sleep(1500);
+  await sh('am start -W -n com.helix.app/.MainActivity'); await sleep(6000);
+  check('relaunch after force-stop (crash recovery)', /com\.helix\.app/.test(await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"')));
+  await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-after-force-stop.png` });
+
+  // upgrade install over the existing app keeps its data (same signing key, adb install -r)
+  try {
+    require('child_process').execSync('adb install -r helix-e2e.apk', { stdio: 'pipe' });
+    await sh('am start -W -n com.helix.app/.MainActivity'); await sleep(6000);
+    const first = await sh('dumpsys package com.helix.app | grep -m1 firstInstallTime');
+    const upd = await sh('dumpsys package com.helix.app | grep -m1 lastUpdateTime');
+    check('upgrade install (adb install -r) relaunches', /com\.helix\.app/.test(await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"')), `${first} ${upd}`);
+    await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-after-upgrade.png` });
+  } catch (e) {
+    check('upgrade install (adb install -r) relaunches', false, String(e).split('\n')[0]);
+  }
 
   check('no uncaught JavaScript errors', errors.length === 0, errors.slice(0, 3).join(' | '));
   const logcat = await sh('logcat -d -s chromium:E Capacitor:E AndroidRuntime:E | tail -40');
