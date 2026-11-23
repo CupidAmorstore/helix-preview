@@ -7,6 +7,10 @@ on:
     branches:
       - ccr-8d17e0b5-yaqvtm
       - main
+    # documentation-only commits don't replace the APK being tested
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
   workflow_dispatch:
 
 permissions:
