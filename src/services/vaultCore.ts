@@ -92,6 +92,19 @@ export async function openVault(snap: VaultSnapshot, password: string, derive: D
   throw new VaultError('wrong-password', 'Wrong password.');
 }
 
+export const IDLE_LOCK_MS = 5 * 60_000;
+export const BACKGROUND_LOCK_MS = 60_000;
+
+/**
+ * Lock decision from wall-clock timestamps. Android pauses JavaScript timers while the app is in the
+ * background, so a setTimeout-based lock may never fire; this check runs when the app becomes visible
+ * again and periodically, and only compares times.
+ */
+export function shouldLock(now: number, lastActiveAt: number, hiddenAt: number | null): boolean {
+  if (hiddenAt !== null && now - hiddenAt >= BACKGROUND_LOCK_MS) return true;
+  return now - lastActiveAt >= IDLE_LOCK_MS;
+}
+
 /** Only one unlock attempt may run at a time: parallel attempts would all read the same failure counter
  *  and bypass the throttle. */
 export function createSingleFlight() {

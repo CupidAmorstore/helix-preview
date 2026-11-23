@@ -10,7 +10,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
 (async () => {
   const b = await chromium.launch();
   const mk = (vp = { width: 412, height: 915 }) => b.newContext({ viewport: vp, isMobile: true, hasTouch: true });
-  const ROUTES = ['/', '/markets', '/markets/BTC', '/bot', '/bot?tab=strategies', '/bot/research', '/wallet', '/more', '/alerts', '/connections', '/portfolio', '/access', '/privacy'];
+  const ROUTES = ['/', '/markets', '/markets/BTC', '/bot', '/bot?tab=strategies', '/bot/research', '/wallet', '/more', '/alerts', '/orders', '/connections', '/portfolio', '/access', '/privacy'];
 
   // ---------- 1. persistence across restart
   {

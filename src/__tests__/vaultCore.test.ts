@@ -137,3 +137,17 @@ describe('vault: single-flight unlock (REGRESSION: parallel attempts bypassed th
     await expect(gate(async () => 1)).resolves.toBe(1);
   });
 });
+
+describe('vault: lock decision from wall-clock time (REGRESSION: Android froze the background timer)', async () => {
+  const { shouldLock, BACKGROUND_LOCK_MS, IDLE_LOCK_MS } = await import('../services/vaultCore');
+  const T = 1_700_000_000_000;
+  it('locks after 60 s in the background even though no timer ran', () => {
+    expect(shouldLock(T + BACKGROUND_LOCK_MS, T, T)).toBe(true);
+    expect(shouldLock(T + 66_000, T + 60_000, T)).toBe(true);
+  });
+  it('a short trip to the background does not lock', () => expect(shouldLock(T + 20_000, T, T)).toBe(false));
+  it('idle for 5 minutes locks; recent activity does not', () => {
+    expect(shouldLock(T + IDLE_LOCK_MS, T, null)).toBe(true);
+    expect(shouldLock(T + IDLE_LOCK_MS - 1, T, null)).toBe(false);
+  });
+});

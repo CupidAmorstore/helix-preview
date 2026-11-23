@@ -3,7 +3,7 @@ import { argon2id } from 'hash-wasm';
 import type { EncryptedPayload, VaultState } from '../types';
 import { fromBase64, randomBytes, toBase64 } from '../utils/crypto';
 import { getKeystore, getSetting, listExchanges, setSetting } from './storage';
-import { createSingleFlight, failureDelayMs, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
+import { createSingleFlight, failureDelayMs, shouldLock, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
 
 const singleFlight = createSingleFlight();
 
@@ -41,14 +41,33 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [vaultSalt, setVaultSalt] = useState<Uint8Array | null>(null);
   const [ready, setReady] = useState(false);
   const lockTimer = useRef<number | null>(null);
+  const lastActive = useRef(Date.now());
+  const hiddenAt = useRef<number | null>(null);
 
+  // activity resets the idle clock; the lock itself is decided from timestamps (see shouldLock)
   const scheduleAutoLock = useCallback(() => {
-    if (lockTimer.current) {
-      window.clearTimeout(lockTimer.current);
-    }
-    lockTimer.current = window.setTimeout(() => {
-      setCryptoKey(null);
-    }, 5 * 60 * 1000);
+    lastActive.current = Date.now();
+  }, []);
+
+  useEffect(() => {
+    const check = () => {
+      if (shouldLock(Date.now(), lastActive.current, hiddenAt.current)) setCryptoKey(null);
+    };
+    const onVis = () => {
+      if (document.visibilityState === 'hidden') hiddenAt.current = Date.now();
+      else {
+        check(); // decide on return, even if timers were frozen in the background
+        hiddenAt.current = null;
+      }
+    };
+    lockTimer.current = window.setInterval(check, 10_000);
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('focus', check);
+    return () => {
+      if (lockTimer.current) window.clearInterval(lockTimer.current);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('focus', check);
+    };
   }, []);
 
   useEffect(() => {
@@ -101,23 +120,9 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     scheduleAutoLock();
   }), [vaultSalt, scheduleAutoLock]);
 
-  // lock when the app has been in the background for a minute
-  useEffect(() => {
-    let t: number | null = null;
-    const onVis = () => {
-      if (document.visibilityState === 'hidden') t = window.setTimeout(() => setCryptoKey(null), 60_000);
-      else if (t) { window.clearTimeout(t); t = null; }
-    };
-    document.addEventListener('visibilitychange', onVis);
-    return () => { document.removeEventListener('visibilitychange', onVis); if (t) window.clearTimeout(t); };
-  }, []);
-
+  // manual lock; the periodic expiry check keeps running so the idle lock still works after a re-unlock
   const lock = useCallback(() => {
     setCryptoKey(null);
-    if (lockTimer.current) {
-      window.clearTimeout(lockTimer.current);
-      lockTimer.current = null;
-    }
   }, []);
 
   const encrypt = useCallback(async (data: string): Promise<EncryptedPayload> => {
