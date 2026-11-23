@@ -61,7 +61,11 @@ function Overview() {
         <dl className="divide-y divide-ink-600">
           <Row k="Last research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
           <Row k="Research data age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 ? 'text-amber-400' : 'text-white'} />
-          <Row k="Where it runs" v="GitHub Actions, once a day (not this phone)" vClass="text-slate-200" />
+          <Row
+            k="Where it runs"
+            v={data.source === 'bundled' ? 'GitHub Actions, scheduled daily · no published run received yet' : 'GitHub Actions, once a day (not this phone)'}
+            vClass="text-slate-200"
+          />
           <Row
             k="Data on this phone"
             v={data.source === 'published' ? 'Daily feed' : data.source === 'cached' ? 'Saved copy of daily feed' : 'Built into the app'}

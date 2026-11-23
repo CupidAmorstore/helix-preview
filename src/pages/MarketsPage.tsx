@@ -76,7 +76,7 @@ export default function MarketsPage() {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search coins (400 Coinbase markets)"
+          placeholder="Search coins (all Coinbase markets)"
           className="min-h-[46px] flex-1 bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none"
         />
       </label>

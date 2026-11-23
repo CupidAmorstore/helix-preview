@@ -280,7 +280,7 @@ export default function WalletPage() {
         <section className="border-l-2 border-down bg-down/5 py-4 pl-4 pr-3 space-y-4">
           <h2 className="text-sm font-semibold text-rose-200">Mainnet Unlock Required</h2>
           <p className="text-xs text-rose-100">
-            Mainnet sends real funds. HELIX cannot recover lost keys or reversed transactions. Confirm you understand before enabling.
+            Mainnet shows your real balances and history. Sending on mainnet is disabled in this preview. HELIX cannot recover lost keys.
           </p>
           <label className="flex items-center gap-2 text-xs text-rose-100">
             <input
@@ -288,7 +288,7 @@ export default function WalletPage() {
               checked={mainnetConsent}
               onChange={(e) => setMainnetConsent(e.target.checked)}
             />
-            I understand that mainnet transactions are irreversible and use real funds.
+            I understand mainnet addresses hold real funds and that HELIX cannot recover lost keys.
           </label>
           <div className="flex gap-3">
             <button

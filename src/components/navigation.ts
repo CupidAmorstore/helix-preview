@@ -12,7 +12,7 @@ export const primaryNav: { label: string; path: string; icon: NavIcon }[] = [
 // Secondary destinations: listed on the More page (and in the desktop sidebar).
 export const secondaryNav = [
   { label: 'Holdings', path: '/portfolio', description: 'Balances of your watched addresses and cost basis' },
-  { label: 'Price alerts', path: '/alerts', description: 'Get told when a coin crosses a price' },
+  { label: 'Price alerts', path: '/alerts', description: 'In-app alert when a coin crosses a price (while HELIX is open)' },
   { label: 'Connections & vault', path: '/connections', description: 'Vault password, watched addresses, API settings' }
 ];
 

@@ -13,16 +13,18 @@ const content = {
   privacy: {
     title: 'Privacy Policy',
     body: [
-      'HELIX does not collect private keys, seed phrases, or financial data on any server.',
-      'This preview build stores settings locally in your browser (IndexedDB).',
+      'HELIX has no server and collects no personal data. Your paper account, alerts, watched addresses and the encrypted wallet vault stay on this device.',
+      'The app talks directly to public data providers from your device (Coinbase, CoinGecko, Blockstream / mempool.space, Etherscan, Solana RPC, and GitHub Pages for research results). Like any website, they can see your IP address.',
+      'On Android, app data is excluded from cloud backup and device transfer.',
       '[TODO: Legal review required] Replace this summary with a full privacy policy before launch.'
     ]
   },
   terms: {
     title: 'Terms of Service',
     body: [
-      'HELIX provides market intelligence and read-only portfolio tracking only.',
-      'No custody, no trading, and no financial advice is provided.',
+      'HELIX provides live market data, paper trading with simulated money, a research-only trading bot that places no orders, and a self-custody wallet whose keys stay encrypted on your device.',
+      'No real-money trading, no custody of your funds and no financial advice. In this preview the wallet can send only on test networks (coins with no value).',
+      'Simulated and backtested results are not earnings and do not predict future results.',
       '[TODO: Legal review required] Replace this summary with a full terms of service before launch.'
     ]
   },
