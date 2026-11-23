@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import raw from '../bot/data/latest.json';
-import type { BotSummary, CandidateRow, MarketRow } from '../bot/summary';
+import { bot, useBotData } from '../bot/botData';
+import type { CandidateRow, MarketRow } from '../bot/summary';
 import { Card, Pill, Stat } from '../components/bot/ui';
 import { PageHeader } from '../components/ui';
 import { STATUS_LABEL, date, dateTime, ivLabel, pct, usd } from '../components/bot/format';
@@ -12,7 +12,6 @@ import { crossVenueDiscrepancies, Discrepancy } from '../bot/watchbot';
 import { fetchQuote, KRAKEN_SYMBOLS, Quote } from '../bot/sources';
 import type { MarketRef } from '../bot/types';
 
-const S = raw as unknown as BotSummary;
 
 const TABS = [
   ['overview', 'Overview'],
@@ -26,6 +25,7 @@ const TABS = [
 type Tab = (typeof TABS)[number][0];
 
 export default function ResearchLabPage() {
+  useBotData();
   const [params, setParams] = useSearchParams();
   const tab = (params.get('tab') as Tab) || 'overview';
   return (
@@ -34,7 +34,7 @@ export default function ResearchLabPage() {
       <header className="space-y-1">
         <PageHeader back title="Research Lab" subtitle="Advanced · every test, dataset and run behind the bot" />
         <p className={`text-sm ${isStale() ? 'text-amber-400' : 'text-slate-400'}`}>
-          Research data from {dateTime(S.generatedAt)} · {ageLabel()}
+          Research data from {dateTime(bot().generatedAt)} · {ageLabel()}
           {isStale() && ' · not refreshed since'}
         </p>
       </header>
@@ -63,7 +63,7 @@ export default function ResearchLabPage() {
   );
 }
 
-const ageMs = () => Date.now() - new Date(S.generatedAt).getTime();
+const ageMs = () => Date.now() - new Date(bot().generatedAt).getTime();
 const isStale = () => ageMs() > 24 * 3600_000;
 /** Human age of the bundled research snapshot, e.g. "3 h old", "2 days old". */
 function ageLabel() {
@@ -83,7 +83,7 @@ function ModeBanner() {
 
 // ------------------------------------------------------------------ helpers over the summary
 function allCandidates(): (CandidateRow & { scope: string; intervalMs: number })[] {
-  return S.runs.flatMap((r) => {
+  return bot().runs.flatMap((r) => {
     const iv = r.markets[0]?.intervalMs ?? 0;
     return [
       ...r.markets.flatMap((m) => m.candidates.map((c) => ({ ...c, scope: m.symbol, intervalMs: m.intervalMs }))),
@@ -92,7 +92,7 @@ function allCandidates(): (CandidateRow & { scope: string; intervalMs: number })
   });
 }
 function allMarkets(): MarketRow[] {
-  return S.runs.flatMap((r) => r.markets);
+  return bot().runs.flatMap((r) => r.markets);
 }
 function topReasons(n = 4) {
   const counts = new Map<string, number>();
@@ -109,8 +109,8 @@ function Overview() {
   const cands = allCandidates();
   const qualified = cands.filter((c) => c.status === 'qualified_paper_strategy');
   const reachedTest = cands.filter((c) => c.test).length;
-  const paper = S.paper.filter((a) => a.kind === 'qualified');
-  const diagnostic = S.paper.filter((a) => a.kind === 'diagnostic');
+  const paper = bot().paper.filter((a) => a.kind === 'qualified');
+  const diagnostic = bot().paper.filter((a) => a.kind === 'diagnostic');
   const initial = paper.reduce((s, a) => s + a.initialCash, 0);
   const equity = paper.reduce((s, a) => s + a.equity, 0);
   const realized = paper.reduce((s, a) => s + a.realizedPnl, 0);
@@ -352,7 +352,7 @@ function Lab() {
     <div className="space-y-5">
       <Card title="Research runs">
         <div className="space-y-3">
-          {S.runs.map((r) => (
+          {bot().runs.map((r) => (
             <div key={r.runId} className="rounded-lg border border-white/10 p-3 text-xs">
               <div className="font-mono text-slate-200">{r.runId}</div>
               <div className="mt-1 text-slate-400">
@@ -364,7 +364,7 @@ function Lab() {
         </div>
         <details className="mt-3 text-xs text-slate-400">
           <summary className="cursor-pointer text-slate-300">Assumptions</summary>
-          <ul className="mt-2 list-inside list-disc space-y-1">{S.runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
+          <ul className="mt-2 list-inside list-disc space-y-1">{bot().runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
         </details>
       </Card>
       <Card title="Datasets">
@@ -407,7 +407,7 @@ function Watchbot() {
   const [live, setLive] = useState<Discrepancy[] | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [err, setErr] = useState('');
-  const shown = live ?? S.watchbot;
+  const shown = live ?? bot().watchbot;
   const costs = useMemo(
     () => ({ coinbase: COST_PRESETS.coinbase_taker, kraken: COST_PRESETS.kraken_taker, gemini: { ...COST_PRESETS.coinbase_taker, venue: 'gemini' as const, takerFeeBps: 40 } }),
     []
@@ -474,7 +474,7 @@ function Watchbot() {
                 </span>
               </div>
             ))}
-            <div className="pt-1 text-[11px] text-slate-500">{live ? `Live check ${dateTime(Date.now())}` : `Stored snapshot ${dateTime(S.generatedAt)}`}</div>
+            <div className="pt-1 text-[11px] text-slate-500">{live ? `Live check ${dateTime(Date.now())}` : `Stored snapshot ${dateTime(bot().generatedAt)}`}</div>
           </div>
         )}
       </Card>
@@ -507,7 +507,7 @@ function Watchbot() {
 
 // ------------------------------------------------------------------ Risk Center
 function Risk() {
-  const feas = S.runs[0]?.feasibility ?? [];
+  const feas = bot().runs[0]?.feasibility ?? [];
   const caps = [...new Set(feas.map((f) => f.capitalUsd))];
   const venues = [...new Set(feas.map((f) => f.note.split(':')[0]))];
   const p = DEFAULT_RISK;
@@ -516,7 +516,7 @@ function Risk() {
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Execution mode" value={EXECUTION_MODE.toUpperCase()} tone="warn" />
         <Stat label="Live trading" value={LIVE_TRADING_ENABLED ? 'ON' : 'LOCKED'} tone={LIVE_TRADING_ENABLED ? 'bad' : 'good'} sub="no order adapter exists" />
-        <Stat label="Kill switches tripped" value={S.paper.filter((a) => a.killSwitch).length} />
+        <Stat label="Kill switches tripped" value={bot().paper.filter((a) => a.killSwitch).length} />
         <Stat label="Leverage" value="1× (none)" sub="no margin, no shorting" />
       </div>
       <Card title="Enforced limits (per paper account)">
@@ -580,13 +580,13 @@ function Risk() {
 function Activity() {
   return (
     <div className="space-y-5">
-      <Card title={`Paper accounts (${S.paper.length})`}>
+      <Card title={`Paper accounts (${bot().paper.length})`}>
         <p className="mb-3 text-xs text-slate-500">
           Forward-only: an account never trades bars that opened before it was created. “Diagnostic” accounts track rejected candidates to
           check whether rejecting them was right — they are not strategies the bot endorses.
         </p>
         <div className="space-y-2">
-          {S.paper.map((a) => (
+          {bot().paper.map((a) => (
             <details key={a.id} className="rounded-lg border border-white/10 px-3 py-2 text-xs">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
                 <span className="min-w-0 truncate text-slate-200">{a.label}</span>
@@ -615,11 +615,11 @@ function Activity() {
       </Card>
       <Card title="Audit trail">
         <ul className="space-y-1.5 text-xs text-slate-400">
-          <li><span className="font-mono text-slate-500">{dateTime(S.generatedAt)}</span> snapshot written by code {S.codeVersion.slice(0, 12)}</li>
-          {S.runs.map((r) => (
+          <li><span className="font-mono text-slate-500">{dateTime(bot().generatedAt)}</span> snapshot written by code {bot().codeVersion.slice(0, 12)}</li>
+          {bot().runs.map((r) => (
             <li key={r.runId}><span className="font-mono text-slate-500">{r.runId}</span> — {r.totals.oosCandidates} evaluated, {r.totals.qualified} qualified</li>
           ))}
-          <li>{S.datasets.length} stored datasets in research/data</li>
+          <li>{bot().datasets.length} stored datasets in research/data</li>
         </ul>
       </Card>
     </div>
@@ -665,7 +665,7 @@ function Settings() {
 }
 
 function MeasuredCosts() {
-  const c = S.costs;
+  const c = bot().costs;
   const [size, setSize] = useState(1000);
   if (!c) return null;
   const rows = c.measured.filter((m) => m.notionalUsd === size).sort((a, b) => a.symbol.localeCompare(b.symbol) || a.venue.localeCompare(b.venue));

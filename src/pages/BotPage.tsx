@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import raw from '../bot/data/latest.json';
-import type { BotSummary } from '../bot/summary';
+import { bot, useBotData } from '../bot/botData';
 import { botHeadline, dailyRegimes, plainReasons, snapshotAgeHours, strategyEvidence } from '../bot/insights';
 import { DEFAULT_RISK, LIVE_TRADING_ENABLED } from '../bot/risk';
 import { usePaper } from '../paper/PaperProvider';
 import { Button, Note, Panel, Segmented } from '../components/ui';
 import { fmtAge } from '../services/marketData';
 
-const S = raw as unknown as BotSummary;
 type Tab = 'overview' | 'strategies' | 'activity';
 const pct = (x: number | undefined) => (x === undefined || !Number.isFinite(x) ? '—' : `${x >= 0 ? '▲ +' : '▼ −'}${Math.abs(x * 100).toFixed(1)}%`);
 const tone = (x: number | undefined) => (x === undefined ? 'text-slate-400' : x >= 0 ? 'text-up' : 'text-down');
@@ -23,13 +21,14 @@ function Row({ k, v, vClass = 'text-white' }: { k: string; v: React.ReactNode; v
 }
 
 function Overview() {
-  const head = botHeadline(S);
-  const reasons = plainReasons(S, 3);
-  const regimes = dailyRegimes(S);
-  const ageH = snapshotAgeHours(S);
-  const diag = S.paper;
+  const head = botHeadline(bot());
+  const reasons = plainReasons(bot(), 3);
+  const regimes = dailyRegimes(bot());
+  const ageH = snapshotAgeHours(bot());
+  const diag = bot().paper;
   const forwardBars = diag.reduce((s, a) => s + a.barsProcessed, 0);
   const { account, pause } = usePaper();
+  const data = useBotData();
 
   return (
     <div className="space-y-4">
@@ -44,12 +43,25 @@ function Overview() {
           </div>
         </div>
         <dl className="divide-y divide-ink-600">
-          <Row k="Last research run" v={`${new Date(S.generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
+          <Row k="Last research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
           <Row k="Research data age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 ? 'text-amber-400' : 'text-white'} />
-          <Row k="Where it runs" v="On a computer (not this phone)" vClass="text-slate-200" />
+          <Row k="Where it runs" v="GitHub Actions, once a day (not this phone)" vClass="text-slate-200" />
+          <Row
+            k="Data on this phone"
+            v={data.source === 'published' ? 'Daily feed' : data.source === 'cached' ? 'Saved copy of daily feed' : 'Built into the app'}
+            vClass="text-slate-200"
+          />
           <Row k="Data sources" v="Coinbase · Kraken · Gemini (public)" vClass="text-slate-200" />
           <Row k="Mode" v={LIVE_TRADING_ENABLED ? 'LIVE' : 'Paper only · real money locked'} vClass="text-paper" />
         </dl>
+        <div className="flex items-center justify-between gap-3 pt-2">
+          <p className="text-xs text-slate-400" aria-live="polite">
+            {data.loading ? 'Checking for new research…' : data.error ? `Feed not reachable (${data.error}) · showing the newest copy we have` : data.checkedAt ? `Checked ${fmtAge(data.checkedAt)}` : 'Not checked yet'}
+          </p>
+          <button type="button" onClick={() => void data.refresh()} disabled={data.loading} className="min-h-[44px] shrink-0 rounded-lg border border-ink-600 px-3 text-sm font-medium text-helix-400 disabled:opacity-50">
+            Check now
+          </button>
+        </div>
       </Panel>
 
       <Panel title="Bot capital & results">
@@ -116,7 +128,7 @@ function Overview() {
 }
 
 function Strategies() {
-  const ev = strategyEvidence(S);
+  const ev = strategyEvidence(bot());
   const [open, setOpen] = useState<string | null>(null);
   return (
     <div className="space-y-3">
@@ -165,7 +177,7 @@ function Strategies() {
 }
 
 function Activity() {
-  const runs = S.runs;
+  const runs = bot().runs;
   return (
     <div className="space-y-4">
       <Panel title="Bot trades">
@@ -180,20 +192,21 @@ function Activity() {
             </li>
           ))}
         </ul>
-        <Note>Last run {fmtAge(new Date(S.generatedAt).getTime())}.</Note>
+        <Note>Last run {fmtAge(new Date(bot().generatedAt).getTime())}.</Note>
       </Panel>
       <Panel title="Risk-control interventions">
         <p className="text-sm text-slate-300">None. No limit was hit because no trades were placed.</p>
       </Panel>
-      <Panel title={`Tracking accounts (${S.paper.length})`}>
+      <Panel title={`Tracking accounts (${bot().paper.length})`}>
         <p className="text-sm text-slate-300">Each follows one rejected strategy forward with $1,000 of simulated money, to check that rejecting it was right.</p>
-        <Note>{S.paper.reduce((s, a) => s + a.entries, 0)} entries so far · they act once each daily bar closes.</Note>
+        <Note>{bot().paper.reduce((s, a) => s + a.entries, 0)} entries so far · they act once each daily bar closes.</Note>
       </Panel>
     </div>
   );
 }
 
 export default function BotPage() {
+  useBotData();
   const [params, setParams] = useSearchParams();
   const tab = (['overview', 'strategies', 'activity'].includes(params.get('tab') ?? '') ? params.get('tab') : 'overview') as Tab;
   return (

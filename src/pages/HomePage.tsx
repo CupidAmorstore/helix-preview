@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import raw from '../bot/data/latest.json';
-import type { BotSummary } from '../bot/summary';
+import { bot, useBotData } from '../bot/botData';
 import { botHeadline, plainReasons, snapshotAgeHours } from '../bot/insights';
 import { MARKET_COINS, fetchCandles } from '../services/market';
 import { listAddresses, listSnapshots } from '../services/storage';
@@ -12,7 +11,6 @@ import { useWatchlist } from '../hooks/useWatchlist';
 import { Button, Change, CoinBadge, Money, Note, Panel } from '../components/ui';
 import { fmtAge, fmtUsd } from '../services/marketData';
 
-const S = raw as unknown as BotSummary;
 const RANGES = [
   { key: '1D', ms: 86_400_000 },
   { key: '1W', ms: 7 * 86_400_000 },
@@ -66,6 +64,7 @@ function OpenAccount() {
 }
 
 export default function HomePage() {
+  useBotData();
   const { account, loading, value, feed } = usePaper();
   const { list: watchlist } = useWatchlist();
   const [range, setRange] = useState<(typeof RANGES)[number]['key']>('1W');
@@ -118,9 +117,9 @@ export default function HomePage() {
     return r.length ? { top: r[0], bottom: r[r.length - 1] } : null;
   }, [feed.prices, feed.open24h]);
 
-  const head = botHeadline(S);
-  const reason = plainReasons(S, 1)[0];
-  const age = snapshotAgeHours(S);
+  const head = botHeadline(bot());
+  const reason = plainReasons(bot(), 1)[0];
+  const age = snapshotAgeHours(bot());
   const recent = account ? [...account.orders].reverse().slice(0, 4) : [];
   const positions = account ? Object.values(account.positions) : [];
   const showWatched = watched && (watched.addresses > 0 || (watched.snap && watched.snap.totalUsd > 0));

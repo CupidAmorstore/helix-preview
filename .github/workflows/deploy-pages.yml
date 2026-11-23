@@ -7,6 +7,10 @@ on:
       # owner-requested public preview of the current app (paper trading only)
       - ccr-8d17e0b5-yaqvtm
   workflow_dispatch:
+  # daily research refresh: fetch new public candles, re-run the validation pipeline, publish the
+  # result at /data/latest.json (the app checks it; the bundled snapshot remains the fallback)
+  schedule:
+    - cron: '41 4 * * *'
 
 permissions:
   contents: read
@@ -28,12 +32,25 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # research uses public market data only (no keys, no orders); on any failure the committed
+      # snapshot is published unchanged rather than a partial result
+      - name: Daily research run (paper only)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          cp src/bot/data/latest.json /tmp/latest.backup.json
+          timeout 15m npm run bot:research || cp /tmp/latest.backup.json src/bot/data/latest.json
       - run: npm run build
         env:
           # project site lives at https://cupidamorstore.github.io/helix-preview/
           VITE_BASE: /helix-preview/
       # single-page app: unknown paths (e.g. /markets/BTC) are served the app shell
       - run: cp dist/index.html dist/404.html
+      - name: Publish research feed
+        run: |
+          mkdir -p dist/data
+          cp src/bot/data/latest.json dist/data/latest.json
+          node -e "const s=require('./dist/data/latest.json'); if(s.mode!=='paper'||!Array.isArray(s.runs)) process.exit(1); console.log('feed', s.generatedAt)"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
