@@ -285,7 +285,7 @@ export default function HomePage() {
 
       {/* 4. Activity */}
       {account && (
-        <Panel title="Recent activity">
+        <Panel title="Recent activity" action={<Link to="/orders" className={more}>All orders</Link>}>
           {recent.length === 0 ? (
             <p className="text-sm text-slate-400">No paper orders yet. Open a coin in Markets and tap Paper buy.</p>
           ) : (

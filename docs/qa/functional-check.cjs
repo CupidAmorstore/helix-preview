@@ -125,6 +125,20 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     check('home: recent activity lists the orders (incl. refusals)', /Paper buy ETH/.test(home) && /Paper sell ETH/.test(home));
   });
 
+  // ---------- Paper orders history
+  await safe('orders', async () => {
+    await go('/orders', 1500);
+    const t = await p.locator('main').innerText();
+    check('orders: history lists filled and refused orders', /Buy ETH/.test(t) && /Sell ETH/.test(t) && /Refused/.test(t), t.split('\n').slice(0, 4).join(' | '));
+    await p.getByRole('radio', { name: 'Refused' }).click(); await wait(p, 300);
+    const r = await p.locator('main ul').innerText();
+    check('orders: Refused filter shows only refusals', /Refused/.test(r) && !/@ \$/.test(r));
+    await p.getByRole('radio', { name: 'Filled' }).click(); await wait(p, 300);
+    await p.locator('main ul li button').first().click(); await wait(p, 300);
+    check('orders: a filled order expands with fee and fill model', /Fee \(0\.60%\)/.test(await p.locator('main').innerText()) && /Fill model/.test(await p.locator('main').innerText()));
+    await p.screenshot({ path: `${SHOTS}/f_orders.png` });
+  });
+
   // ---------- Bot
   await safe('bot', async () => {
     await go('/bot');

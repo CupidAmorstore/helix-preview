@@ -29,6 +29,8 @@ const AccessPage = lazyScreen(loadAccessPage);
 const loadLegalPage = () => import('./pages/LegalPage');
 const LegalPage = lazyScreen(loadLegalPage);
 const loadMorePage = () => import('./pages/MorePage');
+const loadOrdersPage = () => import('./pages/OrdersPage');
+const OrdersPage = lazyScreen(loadOrdersPage);
 const MorePage = lazyScreen(loadMorePage);
 
 function Guarded({ children }: { children: ReactNode }) {
@@ -38,7 +40,7 @@ function Guarded({ children }: { children: ReactNode }) {
 
 export default function App() {
   // most-used screens are fetched in the background so they open offline later (wallet libraries are large: on demand)
-  useEffect(() => prefetchScreens([loadMarketsPage, loadAssetPage, loadBotPage, loadMorePage, loadAlertsPage, loadPortfolioPage, loadLegalPage]), []);
+  useEffect(() => prefetchScreens([loadMarketsPage, loadAssetPage, loadBotPage, loadMorePage, loadOrdersPage, loadAlertsPage, loadPortfolioPage, loadLegalPage]), []);
   const base = import.meta.env.BASE_URL;
   // Dark theme only until a complete, contrast-checked light token set exists: the old light mode left
   // dark cards with dark text in the Trading Bot (including the paper-mode warning).
@@ -69,6 +71,7 @@ export default function App() {
             <Route path="/more" element={<MorePage />} />
             <Route path="/connections" element={<ConnectionsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/access" element={<AccessPage />} />
             <Route path="/support" element={<LegalPage kind="support" />} />
