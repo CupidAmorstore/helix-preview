@@ -1,28 +1,51 @@
-﻿import { useEffect, useRef, useState } from 'react';
-import { connectTicker } from '../services/market';
+import { useEffect, useRef, useState } from 'react';
+import { connectTicker, type FeedStatus } from '../services/market';
 
-/** Live prices keyed by base symbol (BTC, ETH, ...). `products` are Coinbase product ids. */
-export function useLivePrices(products: string[]) {
-  const [prices, setPrices] = useState<Record<string, number>>({});
+export type LiveFeed = {
+  prices: Record<string, number>;
+  /** 'stale' = connected but no price update for STALE_MS */
+  status: FeedStatus | 'stale';
+  updatedAt: number | null;
+};
+
+export const STALE_MS = 30_000;
+
+/** Live prices keyed by base symbol (BTC, ETH, ...), with honest connection status. */
+export function useLiveFeed(products: string[]): LiveFeed {
+  const [feed, setFeed] = useState<LiveFeed>({ prices: {}, status: 'connecting', updatedAt: null });
   const priceRef = useRef<Record<string, number>>({});
+  const statusRef = useRef<FeedStatus>('connecting');
+  const updatedRef = useRef<number | null>(null);
+  const key = products.join(',');
 
   useEffect(() => {
-    if (!products.length) return undefined;
-    const ws = connectTicker(products, (symbol, price) => {
-      priceRef.current = { ...priceRef.current, [symbol]: price };
-    });
-
+    if (!key) return undefined;
+    const handle = connectTicker(
+      key.split(','),
+      (symbol, price) => {
+        priceRef.current = { ...priceRef.current, [symbol]: price };
+        updatedRef.current = Date.now();
+      },
+      (status) => {
+        statusRef.current = status;
+      }
+    );
     const interval = setInterval(() => {
-      setPrices({ ...priceRef.current });
+      const updatedAt = updatedRef.current;
+      const base = statusRef.current;
+      const stale = base === 'live' && updatedAt !== null && Date.now() - updatedAt > STALE_MS;
+      setFeed({ prices: { ...priceRef.current }, status: stale ? 'stale' : base, updatedAt });
     }, 500);
-
     return () => {
-      ws.close();
+      handle.close();
       clearInterval(interval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed on the joined list, not the array identity
-  }, [products.join(',')]);
+  }, [key]);
 
-  return prices;
+  return feed;
 }
 
+/** Backwards-compatible: prices only. */
+export function useLivePrices(products: string[]) {
+  return useLiveFeed(products).prices;
+}

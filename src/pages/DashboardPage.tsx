@@ -1,7 +1,9 @@
 ﻿import { useEffect, useMemo, useState } from 'react';
 import MarketChart from '../components/MarketChart';
 import { MARKET_COINS, TIMEFRAMES, fetchMarketOverview } from '../services/market';
-import { useLivePrices } from '../hooks/useLivePrices';
+import { useLiveFeed } from '../hooks/useLivePrices';
+
+const FEED_LABEL = { connecting: 'Connecting…', live: 'Live', reconnecting: 'Reconnecting…', stale: 'Delayed' } as const;
 
 type CoinGeckoMarket = {
   id: string;
@@ -20,7 +22,8 @@ export default function DashboardPage() {
   const [timeframe, setTimeframe] = useState('1h');
 
   const symbols = useMemo(() => MARKET_COINS.map((coin) => coin.product), []);
-  const livePrices = useLivePrices(symbols);
+  const { prices: livePrices, status: feedStatus } = useLiveFeed(symbols);
+  const feedTone = feedStatus === 'live' ? 'text-mint-400' : 'text-amber-400';
 
   useEffect(() => {
     let active = true;
@@ -43,8 +46,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-10 fade-in">
       <section className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Market</p>
-        <h1 className="text-3xl font-semibold text-white">Live Market Intelligence</h1>
+        <h1 className="text-2xl font-semibold text-white sm:text-3xl">Markets</h1>
         <p className="max-w-2xl text-sm text-slate-400">
           Real-time prices from Coinbase with CoinGecko market context. Signals are informational only.
         </p>
@@ -54,7 +56,7 @@ export default function DashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-200">Live Snapshot</h2>
-            <span className="text-xs text-slate-500">Coinbase WS</span>
+            <span className={`text-xs ${feedTone}`} role="status">{FEED_LABEL[feedStatus]} · Coinbase</span>
           </div>
           <div className="space-y-2">
             {MARKET_COINS.map((coin) => {
@@ -74,9 +76,9 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-slate-200">
-                      {live ? `$${live.toFixed(2)}` : '...'}
+                      {live ? `$${live.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: live < 1 ? 4 : 2 })}` : '…'}
                     </div>
-                    <div className="text-[11px] text-slate-500">live</div>
+                    {feedStatus !== 'live' && live ? <div className="text-[11px] text-amber-400">last price</div> : null}
                   </div>
                 </button>
               );

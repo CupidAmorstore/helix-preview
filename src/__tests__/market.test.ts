@@ -41,3 +41,38 @@ describe('market service (Coinbase)', () => {
     for (const c of MARKET_COINS) expect(c.product).toMatch(/^[A-Z]+-USD$/);
   });
 });
+
+describe('live ticker reconnection', () => {
+  it('backs off 1s, 2s, 4s… capped at 30s', async () => {
+    const { reconnectDelay } = await import('../services/market');
+    expect([0, 1, 2, 3, 4, 5, 6].map(reconnectDelay)).toEqual([1000, 2000, 4000, 8000, 16000, 30000, 30000]);
+  });
+
+  it('reconnects after the socket drops and stops after close()', async () => {
+    vi.useFakeTimers();
+    const { connectTicker } = await import('../services/market');
+    type Fake = { onopen?: () => void; onclose?: () => void; onmessage?: (e: { data: string }) => void; onerror?: () => void; send: () => void; close: () => void };
+    const sockets: Fake[] = [];
+    const make = () => {
+      const s: Fake = { send: vi.fn(), close: vi.fn(() => s.onclose?.()) };
+      sockets.push(s);
+      return s as unknown as WebSocket;
+    };
+    const statuses: string[] = [];
+    const got: string[] = [];
+    const h = connectTicker(['BTC-USD'], (sym, px) => got.push(`${sym}:${px}`), (st) => statuses.push(st), make);
+    sockets[0].onopen?.();
+    sockets[0].onmessage?.({ data: JSON.stringify({ type: 'ticker', product_id: 'BTC-USD', price: '60000.5' }) });
+    sockets[0].onclose?.(); // network drop
+    expect(statuses.at(-1)).toBe('reconnecting');
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(sockets).toHaveLength(2);
+    sockets[1].onopen?.();
+    expect(statuses.at(-1)).toBe('live');
+    h.close();
+    await vi.advanceTimersByTimeAsync(60_000);
+    expect(sockets).toHaveLength(2); // no reconnect after close()
+    expect(got).toEqual(['BTC:60000.5']);
+    vi.useRealTimers();
+  });
+});

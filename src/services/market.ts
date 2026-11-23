@@ -62,21 +62,64 @@ export async function fetchCandles(product: string, timeframe: string): Promise<
   return derived ? resample(candles, gran * 1000, derived.targetSec * 1000) : candles;
 }
 
-/** Live last-trade prices via the public ticker channel. Callback receives the base symbol (e.g. BTC). */
-export function connectTicker(products: string[], onMessage: (symbol: string, price: number) => void): WebSocket {
-  const ws = new WebSocket(COINBASE_WS);
-  ws.onopen = () => ws.send(JSON.stringify({ type: 'subscribe', product_ids: products, channels: ['ticker'] }));
-  ws.onmessage = (event) => {
-    try {
-      const m = JSON.parse(event.data);
-      if (m.type !== 'ticker' || !m.product_id) return;
-      const price = parseFloat(m.price);
-      if (Number.isFinite(price)) onMessage(String(m.product_id).split('-')[0], price);
-    } catch {
-      // ignore malformed frames
+export type FeedStatus = 'connecting' | 'live' | 'reconnecting';
+
+/** Delay before reconnect attempt n (0-based): 1 s, 2 s, 4 s … capped at 30 s. */
+export function reconnectDelay(attempt: number): number {
+  return Math.min(30_000, 1000 * 2 ** attempt);
+}
+
+/**
+ * Live last-trade prices via the public ticker channel, with automatic reconnection.
+ * Callback receives the base symbol (e.g. BTC). Returns a handle whose close() stops reconnecting.
+ */
+export function connectTicker(
+  products: string[],
+  onMessage: (symbol: string, price: number) => void,
+  onStatus: (status: FeedStatus) => void = () => undefined,
+  makeSocket: (url: string) => WebSocket = (url) => new WebSocket(url)
+): { close: () => void } {
+  let ws: WebSocket | null = null;
+  let attempt = 0;
+  let closed = false;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+
+  const open = () => {
+    if (closed) return;
+    onStatus(attempt === 0 ? 'connecting' : 'reconnecting');
+    ws = makeSocket(COINBASE_WS);
+    ws.onopen = () => {
+      attempt = 0;
+      ws?.send(JSON.stringify({ type: 'subscribe', product_ids: products, channels: ['ticker'] }));
+      onStatus('live');
+    };
+    ws.onmessage = (event) => {
+      try {
+        const m = JSON.parse(event.data);
+        if (m.type !== 'ticker' || !m.product_id) return;
+        const price = parseFloat(m.price);
+        if (Number.isFinite(price)) onMessage(String(m.product_id).split('-')[0], price);
+      } catch {
+        // ignore malformed frames
+      }
+    };
+    ws.onclose = () => {
+      if (closed) return;
+      onStatus('reconnecting');
+      timer = setTimeout(open, reconnectDelay(attempt));
+      attempt += 1;
+    };
+    ws.onerror = () => ws?.close();
+  };
+
+  open();
+  return {
+    close: () => {
+      closed = true;
+      if (timer) clearTimeout(timer);
+      ws?.close();
     }
   };
-  return ws;
 }
 
 export const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d', '1w'];

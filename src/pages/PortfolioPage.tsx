@@ -23,7 +23,6 @@ type AssetRow = {
   price: number;
   usdValue: number;
   costBasis: number;
-  pnl: number;
 };
 
 export default function PortfolioPage() {
@@ -126,8 +125,7 @@ export default function PortfolioPage() {
           quantity,
           price,
           usdValue,
-          costBasis,
-          pnl: usdValue - costBasis
+          costBasis
         };
       });
 
@@ -195,7 +193,8 @@ export default function PortfolioPage() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-white/5">
+      <section className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+        <div className="min-w-[560px]">
         <div className="grid grid-cols-5 gap-4 border-b border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.2em] text-slate-500">
           <div>Asset</div>
           <div>Quantity</div>
@@ -212,7 +211,12 @@ export default function PortfolioPage() {
         {status === 'idle' && rows.length === 0 && (
           <div className="px-4 py-6 text-sm text-slate-400">No balances found. Add exchanges or addresses.</div>
         )}
-        {rows.map((row) => (
+        {rows.map((row) => {
+          // P&L is only meaningful once the user has entered what they paid. Never treat a missing
+          // cost basis as zero, which would show the whole holding as profit.
+          const costBasis = costBasisMap[row.symbol] ?? 0;
+          const pnl = costBasis > 0 ? row.usdValue - costBasis : null;
+          return (
           <div key={row.symbol} className="grid grid-cols-5 gap-4 border-b border-white/5 px-4 py-3 text-sm text-slate-200">
             <div className="font-semibold text-white">{row.symbol}</div>
             <div>{row.quantity.toFixed(6)}</div>
@@ -220,16 +224,25 @@ export default function PortfolioPage() {
             <div>
               <input
                 type="number"
-                value={row.costBasis}
-                onChange={(e) => updateCostBasis(row.symbol, Number(e.target.value))}
+                min={0}
+                placeholder="What you paid"
+                aria-label={`Cost basis for ${row.symbol} in US dollars`}
+                value={costBasis || ''}
+                onChange={(e) => updateCostBasis(row.symbol, Math.max(0, Number(e.target.value) || 0))}
                 className="w-28 rounded-md border border-white/10 bg-transparent px-2 py-1 text-xs text-slate-200"
               />
             </div>
-            <div className={row.pnl >= 0 ? 'text-mint-300' : 'text-rose-400'}>
-              {row.pnl >= 0 ? '+' : ''}${row.pnl.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-            </div>
+            {pnl === null ? (
+              <div className="text-slate-500">Set cost basis</div>
+            ) : (
+              <div className={pnl >= 0 ? 'text-mint-300' : 'text-rose-400'}>
+                {pnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(pnl).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              </div>
+            )}
           </div>
-        ))}
+          );
+        })}
+        </div>
       </section>
     </div>
   );

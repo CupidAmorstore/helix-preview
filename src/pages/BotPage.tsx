@@ -31,11 +31,10 @@ export default function BotPage() {
     <div className="mx-auto max-w-6xl space-y-5 fade-in">
       <ModeBanner />
       <header className="space-y-1">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Trading Bot</p>
-        <h1 className="text-2xl font-semibold text-white sm:text-3xl">Strategy research & paper trading</h1>
-        <p className="text-sm text-slate-400">
-          Evidence as of {dateTime(S.generatedAt)} · code <span className="font-mono">{S.codeVersion.slice(0, 7)}</span>
-          {isStale() && <span className="ml-2 text-amber-500">· snapshot older than 24h — rerun research</span>}
+        <h1 className="text-2xl font-semibold text-white sm:text-3xl">Trading Bot</h1>
+        <p className={`text-sm ${isStale() ? 'text-amber-400' : 'text-slate-400'}`}>
+          Research data from {dateTime(S.generatedAt)} · {ageLabel()}
+          {isStale() && ' · not refreshed since'}
         </p>
       </header>
       <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label="Trading bot sections">
@@ -63,14 +62,21 @@ export default function BotPage() {
   );
 }
 
-const isStale = () => Date.now() - new Date(S.generatedAt).getTime() > 24 * 3600_000;
+const ageMs = () => Date.now() - new Date(S.generatedAt).getTime();
+const isStale = () => ageMs() > 24 * 3600_000;
+/** Human age of the bundled research snapshot, e.g. "3 h old", "2 days old". */
+function ageLabel() {
+  const h = Math.max(0, Math.floor(ageMs() / 3600_000));
+  if (h < 1) return 'less than 1 h old';
+  if (h < 48) return `${h} h old`;
+  return `${Math.floor(h / 24)} days old`;
+}
 
 function ModeBanner() {
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-      <Pill status="paper">PAPER MODE</Pill>
-      <span>Simulated money only. Real-money trading is disabled and has no order code. Simulated results are not earnings.</span>
-    </div>
+    <p className="rounded-lg border border-dashed border-amber-500/50 px-3 py-2 text-xs text-amber-200">
+      Simulated money only. Simulated results are not earnings. Real-money trading is disabled.
+    </p>
   );
 }
 

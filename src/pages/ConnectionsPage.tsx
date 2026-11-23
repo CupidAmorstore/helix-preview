@@ -1,8 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
-import { listAddresses, listExchanges, saveAddress, saveExchange, deleteAddress, deleteExchange, getSetting, setSetting } from '../services/storage';
+import { listAddresses, listExchanges, saveAddress, deleteAddress, deleteExchange, getSetting, setSetting } from '../services/storage';
 import { useVault } from '../services/vault';
-import type { AddressRecord, EncryptedPayload, ExchangeId, ExchangeRecord } from '../types';
-import { EXCHANGE_LABELS } from '../services/exchanges';
+import type { AddressRecord, EncryptedPayload, ExchangeRecord } from '../types';
 
 export default function ConnectionsPage() {
   const vault = useVault();
@@ -10,12 +9,6 @@ export default function ConnectionsPage() {
   const [vaultNote, setVaultNote] = useState('');
   const [exchanges, setExchanges] = useState<ExchangeRecord[]>([]);
   const [addresses, setAddresses] = useState<AddressRecord[]>([]);
-
-  const [exchangeId, setExchangeId] = useState<ExchangeId>('binance');
-  const [exchangeLabel, setExchangeLabel] = useState('');
-  const [apiKey, setApiKey] = useState('');
-  const [secret, setSecret] = useState('');
-  const [passphrase, setPassphrase] = useState('');
 
   const [chain, setChain] = useState<'btc' | 'eth' | 'sol'>('btc');
   const [address, setAddress] = useState('');
@@ -61,27 +54,6 @@ export default function ConnectionsPage() {
     } catch {
       setVaultNote('Unable to unlock vault.');
     }
-  };
-
-  const addExchange = async () => {
-    if (vault.locked) {
-      setVaultNote('Unlock the vault before saving exchange keys.');
-      return;
-    }
-    const payload = await vault.encrypt(JSON.stringify({ apiKey, secret, passphrase }));
-    const record: ExchangeRecord = {
-      id: crypto.randomUUID(),
-      exchange: exchangeId,
-      label: exchangeLabel || EXCHANGE_LABELS[exchangeId],
-      createdAt: new Date().toISOString(),
-      payload
-    };
-    await saveExchange(record);
-    setExchanges((prev) => [...prev, record]);
-    setExchangeLabel('');
-    setApiKey('');
-    setSecret('');
-    setPassphrase('');
   };
 
   const addAddress = async () => {
@@ -160,55 +132,15 @@ export default function ConnectionsPage() {
       <section className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
           <h2 className="text-sm font-semibold text-slate-200">Exchange Connections</h2>
-          <div className="space-y-3">
-            <select
-              value={exchangeId}
-              onChange={(e) => setExchangeId(e.target.value as ExchangeId)}
-              className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
-            >
-              {Object.entries(EXCHANGE_LABELS).map(([id, label]) => (
-                <option key={id} value={id} className="text-black">
-                  {label}
-                </option>
-              ))}
-            </select>
-            <input
-              value={exchangeLabel}
-              onChange={(e) => setExchangeLabel(e.target.value)}
-              placeholder="Label (optional)"
-              className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
-            />
-            <input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="API key"
-              className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
-            />
-            <input
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
-              placeholder="API secret"
-              type="password"
-              className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
-            />
-            <input
-              value={passphrase}
-              onChange={(e) => setPassphrase(e.target.value)}
-              placeholder="Passphrase (Coinbase/Kraken)"
-              type="password"
-              className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
-            />
-            <button
-              type="button"
-              onClick={addExchange}
-              className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
-            >
-              Save exchange
-            </button>
-            <p className="text-xs text-slate-500">
-              Keys must be read-only. If CORS blocks a request, use a local proxy.
+          <p className="text-sm text-slate-400">
+            Syncing exchange balances needs a secure server connector, which this app doesn&apos;t have yet. To keep your
+            accounts safe, HELIX no longer accepts exchange API keys.
+          </p>
+          {exchanges.length > 0 && (
+            <p className="text-xs text-amber-400">
+              Keys saved by an earlier version are still stored encrypted on this phone. Remove them below.
             </p>
-          </div>
+          )}
           <div className="space-y-2">
             {exchanges.map((exchange) => (
               <div key={exchange.id} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2 text-xs text-slate-300">
