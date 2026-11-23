@@ -2,6 +2,8 @@
 import { argon2id } from 'hash-wasm';
 import type { EncryptedPayload, VaultState } from '../types';
 import { fromBase64, randomBytes, toBase64 } from '../utils/crypto';
+import { Capacitor } from '@capacitor/core';
+import { App } from '@capacitor/app';
 import { getKeystore, getSetting, listExchanges, setSetting } from './storage';
 import { createSingleFlight, failureDelayMs, shouldLock, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
 
@@ -53,20 +55,36 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const check = () => {
       if (shouldLock(Date.now(), lastActive.current, hiddenAt.current)) setCryptoKey(null);
     };
-    const onVis = () => {
-      if (document.visibilityState === 'hidden') hiddenAt.current = Date.now();
-      else {
-        check(); // decide on return, even if timers were frozen in the background
-        hiddenAt.current = null;
-      }
+    const toBackground = () => {
+      if (hiddenAt.current === null) hiddenAt.current = Date.now();
     };
+    const toForeground = () => {
+      check(); // decide on return, even if timers were frozen in the background
+      hiddenAt.current = null;
+    };
+    const onVis = () => (document.visibilityState === 'hidden' ? toBackground() : toForeground());
     lockTimer.current = window.setInterval(check, 10_000);
     document.addEventListener('visibilitychange', onVis);
+    // Capacitor (Android) fires these from the native onPause/onResume; the WebView may not change visibilityState
+    document.addEventListener('pause', toBackground);
+    document.addEventListener('resume', toForeground);
     window.addEventListener('focus', check);
+    let native: { remove: () => Promise<void> } | null = null;
+    let disposed = false;
+    if (Capacitor.isNativePlatform()) {
+      void App.addListener('appStateChange', ({ isActive }) => (isActive ? toForeground() : toBackground())).then((h) => {
+        if (disposed) void h.remove();
+        else native = h;
+      });
+    }
     return () => {
+      disposed = true;
       if (lockTimer.current) window.clearInterval(lockTimer.current);
       document.removeEventListener('visibilitychange', onVis);
+      document.removeEventListener('pause', toBackground);
+      document.removeEventListener('resume', toForeground);
       window.removeEventListener('focus', check);
+      void native?.remove();
     };
   }, []);
 
