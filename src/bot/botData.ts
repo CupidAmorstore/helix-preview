@@ -5,6 +5,7 @@ import { useEffect, useSyncExternalStore } from 'react';
 import raw from './data/latest.json';
 import type { BotSummary } from './summary';
 import { getSetting, setSetting } from '../services/storage';
+import { MAX_FEED_BYTES, validateSummary } from './feedValidation';
 
 export const REMOTE_SUMMARY_URL = 'https://cupidamorstore.github.io/helix-preview/data/latest.json';
 const CACHE_KEY = 'bot.summary.v1';
@@ -29,19 +30,14 @@ const set = (patch: Partial<BotDataState>) => {
 /** Current summary (for render code). Components re-render through useBotData(). */
 export const bot = () => state.summary;
 
-export function isValidSummary(x: unknown): x is BotSummary {
-  const s = x as BotSummary;
-  return (
-    !!s && typeof s === 'object' && s.mode === 'paper' && typeof s.generatedAt === 'string' &&
-    Number.isFinite(new Date(s.generatedAt).getTime()) && Array.isArray(s.runs) && Array.isArray(s.paper) &&
-    s.runs.every((r) => Array.isArray(r.markets) && r.totals && typeof r.totals.qualified === 'number')
-  );
+export function isValidSummary(x: unknown, now = Date.now(), bytes?: number): x is BotSummary {
+  return validateSummary(x, now, bytes).length === 0;
 }
 
 const ts = (s: BotSummary) => new Date(s.generatedAt).getTime();
 /** Accept a candidate only if it is valid, newer than what we show, and not dated in the future. */
 export function shouldReplace(current: BotSummary, candidate: unknown, now = Date.now()): candidate is BotSummary {
-  return isValidSummary(candidate) && ts(candidate) > ts(current) && ts(candidate) <= now + 5 * 60_000;
+  return isValidSummary(candidate, now) && ts(candidate) > ts(current) && ts(candidate) <= now + 5 * 60_000;
 }
 
 export async function refreshBotData(fetchImpl: typeof fetch = fetch): Promise<void> {
@@ -50,8 +46,11 @@ export async function refreshBotData(fetchImpl: typeof fetch = fetch): Promise<v
   try {
     const res = await fetchImpl(`${REMOTE_SUMMARY_URL}?t=${Math.floor(Date.now() / 60_000)}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`feed HTTP ${res.status}`);
-    const json: unknown = await res.json();
-    if (!isValidSummary(json)) throw new Error('feed failed validation');
+    const text = await res.text();
+    if (text.length > MAX_FEED_BYTES) throw new Error('feed too large');
+    const json: unknown = JSON.parse(text);
+    const problems = validateSummary(json, Date.now(), text.length);
+    if (problems.length) throw new Error(`feed failed validation (${problems[0]})`);
     if (shouldReplace(state.summary, json)) {
       set({ summary: json, source: 'published' });
       void setSetting(CACHE_KEY, json).catch(() => undefined);

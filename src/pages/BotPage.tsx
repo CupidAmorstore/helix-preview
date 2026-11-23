@@ -59,7 +59,7 @@ function Overview() {
 
       <Panel title="Research data">
         <dl className="divide-y divide-ink-600">
-          <Row k="Last research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
+          <Row k="Last successful research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
           <Row k="Research data age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 ? 'text-amber-400' : 'text-white'} />
           <Row
             k="Where it runs"

@@ -6,7 +6,7 @@ vi.mock('../../services/storage', () => ({ getSetting: async () => null, setSett
 const mod = await import('../../bot/botData');
 const B = raw as unknown as BotSummary;
 const later = (h: number) => ({ ...B, generatedAt: new Date(new Date(B.generatedAt).getTime() + h * 3_600_000).toISOString() });
-const ok = (body: unknown) => (async () => ({ ok: true, status: 200, json: async () => body })) as unknown as typeof fetch;
+const ok = (body: unknown) => (async () => ({ ok: true, status: 200, json: async () => body, text: async () => JSON.stringify(body) })) as unknown as typeof fetch;
 
 describe('bot data feed', () => {
   beforeEach(() => mod.__resetBotData());

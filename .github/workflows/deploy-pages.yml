@@ -38,7 +38,13 @@ jobs:
         continue-on-error: true
         run: |
           cp src/bot/data/latest.json /tmp/latest.backup.json
-          timeout 15m npm run bot:research || cp /tmp/latest.backup.json src/bot/data/latest.json
+          # publish only a validated, strictly newer result; anything else restores the last good snapshot
+          if timeout 15m npm run bot:research && npx vite-node --config scripts/vite.node.config.ts scripts/validate-feed.ts src/bot/data/latest.json /tmp/latest.backup.json; then
+            echo "new research run validated"
+          else
+            echo "::warning::research run failed or invalid; republishing the previous snapshot"
+            cp /tmp/latest.backup.json src/bot/data/latest.json
+          fi
       - run: npm run build
         env:
           # project site lives at https://cupidamorstore.github.io/helix-preview/
@@ -49,7 +55,7 @@ jobs:
         run: |
           mkdir -p dist/data
           cp src/bot/data/latest.json dist/data/latest.json
-          node -e "const s=require('./dist/data/latest.json'); if(s.mode!=='paper'||!Array.isArray(s.runs)) process.exit(1); console.log('feed', s.generatedAt)"
+          npx vite-node --config scripts/vite.node.config.ts scripts/validate-feed.ts dist/data/latest.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
