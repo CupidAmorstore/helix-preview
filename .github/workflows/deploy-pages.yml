@@ -3,9 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
+      # the github-pages environment only accepts main; branch pushes are rejected before running
       - main
-      # owner-requested public preview of the current app (paper trading only)
-      - ccr-8d17e0b5-yaqvtm
   workflow_dispatch:
   # daily research refresh: fetch new public candles, re-run the validation pipeline, publish the
   # result at /data/latest.json (the app checks it; the bundled snapshot remains the fallback)
