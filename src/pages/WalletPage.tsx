@@ -2,7 +2,7 @@
 import VaultGate from '../components/VaultGate';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
-import { MAINNET_SEND_DISABLED_MSG, WALLET_MAINNET_SEND_ENABLED, buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
+import { SEND_DISABLED_MSG, WALLET_MAINNET_SEND_ENABLED, WALLET_SEND_ENABLED, buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
 import type { EncryptedPayload, KeystoreRecord, WalletNetwork } from '../types';
 import { PageHeader } from '../components/ui';
 import { WalletAccounts, WalletGuide } from '../components/WalletParts';
@@ -280,7 +280,7 @@ export default function WalletPage() {
         <section className="border-l-2 border-down bg-down/5 py-4 pl-4 pr-3 space-y-4">
           <h2 className="text-sm font-semibold text-rose-200">Mainnet Unlock Required</h2>
           <p className="text-xs text-rose-100">
-            Mainnet shows your real balances and history. Sending on mainnet is disabled in this preview. HELIX cannot recover lost keys.
+            Mainnet shows your real balances and history. Sending is disabled in this private beta. HELIX cannot recover lost keys.
           </p>
           <label className="flex items-center gap-2 text-xs text-rose-100">
             <input
@@ -444,13 +444,13 @@ export default function WalletPage() {
       {mnemonic && <WalletAccounts addresses={addresses} network={network} rpc={{ eth: ethRpc, sol: solRpc }} />}
       {!keystore && <WalletGuide />}
 
-      {mnemonic && network === 'mainnet' && !WALLET_MAINNET_SEND_ENABLED && (
+      {mnemonic && !WALLET_SEND_ENABLED && (
         <section className="border-t border-ink-600 pt-5" aria-label="Send">
           <h2 className="eyebrow text-slate-400">Send</h2>
-          <p className="mt-2 text-sm text-slate-300">{MAINNET_SEND_DISABLED_MSG} Balances, history and receiving work on mainnet.</p>
+          <p className="mt-2 text-sm text-slate-300">{SEND_DISABLED_MSG} Addresses, balances, history and receiving work normally.</p>
         </section>
       )}
-      {mnemonic && (network === 'testnet' || WALLET_MAINNET_SEND_ENABLED) && (
+      {mnemonic && WALLET_SEND_ENABLED && (network === 'testnet' || WALLET_MAINNET_SEND_ENABLED) && (
         <section className="grid gap-4 lg:grid-cols-3" aria-label="Send">
           <div className="border-t border-ink-600 pt-5 space-y-3">
             <h3 className="text-sm font-semibold text-slate-200">Send BTC</h3>

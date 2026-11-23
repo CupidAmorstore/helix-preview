@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { failureDelayMs, isWellFormed, openVault, sealVerifier, VaultError, VERIFIER_TEXT, type DeriveFn, type VaultSnapshot } from '../services/vaultCore';
+import { createSingleFlight, failureDelayMs, isWellFormed, openVault, sealVerifier, VaultError, VERIFIER_TEXT, type DeriveFn, type VaultSnapshot } from '../services/vaultCore';
 import { toBase64 } from '../utils/crypto';
 
 // fast deterministic KDF for tests (the app uses argon2id); same password+salt → same key
@@ -118,5 +118,22 @@ describe('vault: existing vault never opens with an unverified password', () => 
 describe('vault: throttling', () => {
   it('no delay for the first 5 failures, then grows and caps at 5 min', () => {
     expect([0, 4, 5, 6, 7, 20].map(failureDelayMs)).toEqual([0, 0, 30_000, 60_000, 120_000, 300_000]);
+  });
+});
+
+describe('vault: single-flight unlock (REGRESSION: parallel attempts bypassed the throttle)', () => {
+  it('a second attempt while one is running is refused, and the gate reopens afterwards', async () => {
+    const gate = createSingleFlight();
+    let release!: () => void;
+    const first = gate(() => new Promise<string>((r) => { release = () => r('done'); }));
+    await expect(gate(async () => 'second')).rejects.toBeInstanceOf(VaultError);
+    release();
+    await expect(first).resolves.toBe('done');
+    await expect(gate(async () => 'third')).resolves.toBe('third');
+  });
+  it('a failing attempt also reopens the gate', async () => {
+    const gate = createSingleFlight();
+    await expect(gate(async () => { throw new Error('x'); })).rejects.toThrow('x');
+    await expect(gate(async () => 1)).resolves.toBe(1);
   });
 });

@@ -3,7 +3,9 @@ import { argon2id } from 'hash-wasm';
 import type { EncryptedPayload, VaultState } from '../types';
 import { fromBase64, randomBytes, toBase64 } from '../utils/crypto';
 import { getKeystore, getSetting, listExchanges, setSetting } from './storage';
-import { failureDelayMs, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
+import { createSingleFlight, failureDelayMs, MIN_VAULT_PASSWORD, openVault, VaultError } from './vaultCore';
+
+const singleFlight = createSingleFlight();
 
 const VAULT_SALT_KEY = 'vault_salt';
 const VAULT_VERIFIER_KEY = 'vault_verifier';
@@ -66,7 +68,7 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
-  const unlock = useCallback(async (password: string) => {
+  const unlock = useCallback((password: string) => singleFlight(async () => {
     // throttle repeated wrong passwords (persisted, so a restart does not reset it)
     const f = (await getSetting<{ n: number; at: number }>(VAULT_FAILURES_KEY)) ?? { n: 0, at: 0 };
     const wait = f.at + failureDelayMs(f.n) - Date.now();
@@ -97,7 +99,7 @@ export const VaultProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setVaultSalt(res.salt);
     setCryptoKey(res.key);
     scheduleAutoLock();
-  }, [vaultSalt, scheduleAutoLock]);
+  }), [vaultSalt, scheduleAutoLock]);
 
   // lock when the app has been in the background for a minute
   useEffect(() => {

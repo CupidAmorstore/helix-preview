@@ -92,6 +92,21 @@ export async function openVault(snap: VaultSnapshot, password: string, derive: D
   throw new VaultError('wrong-password', 'Wrong password.');
 }
 
+/** Only one unlock attempt may run at a time: parallel attempts would all read the same failure counter
+ *  and bypass the throttle. */
+export function createSingleFlight() {
+  let busy = false;
+  return async <T,>(fn: () => Promise<T>): Promise<T> => {
+    if (busy) throw new VaultError('rate-limited', 'An unlock attempt is already in progress.');
+    busy = true;
+    try {
+      return await fn();
+    } finally {
+      busy = false;
+    }
+  };
+}
+
 /** Delay before the next attempt after n consecutive failures (argon2id already costs ~0.5–1 s per try). */
 export function failureDelayMs(failures: number): number {
   return failures < 5 ? 0 : Math.min(5 * 60_000, 30_000 * 2 ** (failures - 5));

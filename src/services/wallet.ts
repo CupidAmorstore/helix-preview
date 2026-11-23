@@ -11,14 +11,19 @@ import { btcFetch } from './btcApi';
 import { ETH_CHAIN_ID, SOL_GENESIS } from './walletSafety';
 
 /**
- * Real-money isolation. Sending on MAINNET moves real funds and is disabled in this preview until the owner
- * explicitly authorizes it (change requires a code change + review, not a setting). Testnet sends (no value),
- * balances, history and receive keep working. Every transaction function checks this itself.
+ * Transaction isolation (private paper-trading beta): no transaction is signed or broadcast on ANY network
+ * until the owner separately authorizes wallet broadcasts. Enabling requires a code change + review, not a
+ * setting. Addresses, balances, history and receive keep working. Every transaction function checks this
+ * itself (fail-closed), so hidden buttons are not the security boundary.
  */
+export const WALLET_SEND_ENABLED = false as const;
+/** Even when sending is authorized, mainnet stays off unless this is also enabled. */
 export const WALLET_MAINNET_SEND_ENABLED = false as const;
-export const MAINNET_SEND_DISABLED_MSG = 'Sending on mainnet is disabled in this preview. Only testnet coins (no real value) can be sent.';
+export const SEND_DISABLED_MSG = 'Sending is disabled in this private beta. No transaction is signed or broadcast on any network.';
+export const MAINNET_SEND_DISABLED_MSG = SEND_DISABLED_MSG;
 export function assertSendAllowed(network: WalletNetwork) {
-  if (network !== 'testnet' && !(WALLET_MAINNET_SEND_ENABLED as boolean)) throw new Error(MAINNET_SEND_DISABLED_MSG);
+  if (!(WALLET_SEND_ENABLED as boolean)) throw new Error(SEND_DISABLED_MSG);
+  if (network !== 'testnet' && !(WALLET_MAINNET_SEND_ENABLED as boolean)) throw new Error(SEND_DISABLED_MSG);
 }
 
 const bip32 = BIP32Factory(ecc);

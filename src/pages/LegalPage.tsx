@@ -23,7 +23,7 @@ const content = {
     title: 'Terms of Service',
     body: [
       'HELIX provides live market data, paper trading with simulated money, a research-only trading bot that places no orders, and a self-custody wallet whose keys stay encrypted on your device.',
-      'No real-money trading, no custody of your funds and no financial advice. In this preview the wallet can send only on test networks (coins with no value).',
+      'No real-money trading, no custody of your funds and no financial advice. In this private beta the wallet does not sign or broadcast any transaction.',
       'Simulated and backtested results are not earnings and do not predict future results.',
       '[TODO: Legal review required] Replace this summary with a full terms of service before launch.'
     ]

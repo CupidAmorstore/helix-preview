@@ -108,7 +108,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await page.locator('input[type=checkbox]').first().check();
     await page.getByRole('button', { name: /Enable mainnet/ }).click(); await sleep(2500);
     const w2 = await text();
-    check('wallet: mainnet sending is disabled (no send form)', /Sending on mainnet is disabled/.test(w2) && !/Send BTC/.test(w2));
+    check('wallet: sending disabled on mainnet (no send form, no signing)', /Sending is disabled/.test(w2) && !/Send BTC/.test(w2));
     await shot('wallet-mainnet-send-disabled');
     await page.getByRole('button', { name: 'testnet', exact: true }).click(); await sleep(800);
     await tab('More').click(); await sleep(1000);

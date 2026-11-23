@@ -11,7 +11,7 @@ const GUIDE = [
   ['Creating a wallet', 'You get 12 or 24 recovery words. HELIX asks you to confirm some of them so you know you wrote them down.'],
   ['Recovery and backup', 'The recovery words are the only backup. Write them on paper and keep them offline. Anyone with them can take the coins.'],
   ['Network fees', 'Every transfer pays a small fee to the network, not to HELIX. Fees depend on how busy the network is.'],
-  ['Sending', 'Transfers cannot be reversed. HELIX checks the address and network before signing and shows a review step first. In this preview, sending works on testnet only.']
+  ['Sending', 'Transfers cannot be reversed. HELIX checks the address and network before signing and shows a review step first. Sending is disabled in this private beta build.']
 ];
 
 export function WalletGuide() {
