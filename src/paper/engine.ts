@@ -312,3 +312,37 @@ export function recordEquity(acc: PaperAccount, equity: number, now: number): Pa
   if (last && now - last[0] < 3_600_000) return acc;
   return { ...acc, equity: [...acc.equity, [now, equity]].slice(-2000) as [number, number][] };
 }
+
+/**
+ * Ledger reconciliation: recompute cash and quantities from the order history and compare with the stored
+ * balances. Returns problems (empty = consistent). Used on every load; a failing ledger is paused (fail-closed).
+ */
+export function reconcileAccount(a: PaperAccount): string[] {
+  const errs: string[] = [];
+  const fin = (x: unknown) => typeof x === 'number' && Number.isFinite(x);
+  if (!fin(a.startingCash) || a.startingCash <= 0) errs.push('starting cash invalid');
+  if (!fin(a.cash) || a.cash < -1e-6) errs.push('cash invalid or negative');
+  const ids = new Set<string>();
+  let cash = a.startingCash;
+  const qty: Record<string, number> = {};
+  for (const o of a.orders ?? []) {
+    if (ids.has(o.clientId)) errs.push(`duplicate order ${o.clientId}`);
+    ids.add(o.clientId);
+    if (o.status !== 'filled') continue;
+    if (![o.qty, o.cashUsd, o.feeUsd, o.fillPx].every(fin) || o.qty < 0 || o.cashUsd < 0 || o.feeUsd < 0) {
+      errs.push(`order ${o.clientId} has invalid numbers`);
+      continue;
+    }
+    cash += o.side === 'buy' ? -o.cashUsd : o.cashUsd;
+    qty[o.symbol] = (qty[o.symbol] ?? 0) + (o.side === 'buy' ? o.qty : -o.qty);
+  }
+  if (fin(a.cash) && Math.abs(cash - a.cash) > 1e-6 * Math.max(1, a.startingCash)) errs.push(`cash ${a.cash.toFixed(2)} ≠ order history ${cash.toFixed(2)}`);
+  const syms = new Set([...Object.keys(qty), ...Object.keys(a.positions ?? {})]);
+  for (const s of syms) {
+    const p = a.positions?.[s];
+    const held = p?.qty ?? 0;
+    if (p && (!fin(p.qty) || p.qty < 0 || !fin(p.costUsd) || p.costUsd < -1e-9)) errs.push(`position ${s} invalid`);
+    if (Math.abs(held - (qty[s] ?? 0)) > 1e-7) errs.push(`${s} quantity ${held} ≠ order history ${(qty[s] ?? 0).toFixed(8)}`);
+  }
+  return errs;
+}

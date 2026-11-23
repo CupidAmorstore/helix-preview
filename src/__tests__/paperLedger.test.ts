@@ -146,3 +146,34 @@ describe('paper ledger: concurrency (REGRESSION: lost update between overlapping
     expect(store.get()).toBe(1);
   });
 });
+
+describe('paper ledger: reconciliation on load (fail-closed)', async () => {
+  const { reconcileAccount } = await import('../paper/engine');
+  const build = () => {
+    let a = createAccount(500, NOW);
+    a = placeOrder(a, { clientId: 'r1', side: 'buy', symbol: 'BTC', product: 'BTC-USD', notionalUsd: 100 }, q('BTC', 60000), NOW).account;
+    a = placeOrder(a, { clientId: 'r2', side: 'sell', symbol: 'BTC', product: 'BTC-USD', qty: a.positions.BTC.qty / 2 }, q('BTC', 61000), NOW).account;
+    return a;
+  };
+  it('a consistent ledger reconciles', () => expect(reconcileAccount(build())).toEqual([]));
+  it('detects edited cash, edited quantity, NaN and duplicate orders', () => {
+    const a = build();
+    expect(reconcileAccount({ ...a, cash: a.cash + 100 })[0]).toMatch(/cash/);
+    expect(reconcileAccount({ ...a, positions: { BTC: { ...a.positions.BTC, qty: a.positions.BTC.qty * 2 } } }).join()).toMatch(/BTC quantity/);
+    expect(reconcileAccount({ ...a, cash: Number.NaN }).join()).toMatch(/cash invalid/);
+    expect(reconcileAccount({ ...a, orders: [...a.orders, a.orders[0]] }).join()).toMatch(/duplicate/);
+    expect(reconcileAccount({ ...a, positions: { ...a.positions, ETH: { symbol: 'ETH', product: 'ETH-USD', qty: 5, costUsd: 0 } } }).join()).toMatch(/ETH quantity/);
+  });
+  it('every randomized ledger from the invariant run reconciles', () => {
+    for (let seed = 1; seed <= 50; seed++) {
+      const r = rng(seed);
+      let a = createAccount(1000, NOW);
+      for (let i = 0; i < 30; i++) {
+        const held = a.positions.ETH?.qty ?? 0;
+        const req = r() < 0.6 || !held ? { clientId: `${seed}-${i}`, side: 'buy' as const, symbol: 'ETH', product: 'ETH-USD', notionalUsd: Math.round(r() * a.cash * 50) / 100 } : { clientId: `${seed}-${i}`, side: 'sell' as const, symbol: 'ETH', product: 'ETH-USD', qty: held * r() };
+        a = placeOrder(a, req, q('ETH', 1700 * (1 + (r() - 0.5) * 0.1), r() < 0.5 ? bookAt(1700, r) : undefined), NOW).account;
+      }
+      expect(reconcileAccount(a)).toEqual([]);
+    }
+  });
+});

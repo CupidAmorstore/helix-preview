@@ -4,7 +4,7 @@ import { MARKET_COINS } from '../services/market';
 import { useLiveFeed, type LiveFeed } from '../hooks/useLivePrices';
 import { fetchBook } from './book';
 import { createSerialStore, type Mutation } from './serialStore';
-import { createAccount, placeOrder, recordEquity, setHalted, valueAccount, type OrderRequest, type PaperAccount, type PaperOrder } from './engine';
+import { createAccount, placeOrder, reconcileAccount, recordEquity, setHalted, valueAccount, type OrderRequest, type PaperAccount, type PaperOrder } from './engine';
 
 const KEY = 'paper_account_v1';
 const CORE_PRODUCTS = MARKET_COINS.map((c) => c.product);
@@ -35,7 +35,12 @@ export function PaperProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     getSetting<PaperAccount>(KEY)
-      .then((a) => store.hydrate(a && a.version === 1 ? a : null))
+      .then((a) => {
+        const acc = a && a.version === 1 ? a : null;
+        // fail-closed: a ledger that does not reconcile with its own order history is paused, not used
+        const problems = acc ? reconcileAccount(acc) : [];
+        store.hydrate(acc && problems.length ? setHalted(acc, true, `ledger check failed (${problems[0]})`) : acc);
+      })
       .catch(() => setAccount(null))
       .finally(() => setLoading(false));
   }, [store]);
@@ -82,7 +87,12 @@ export function PaperProvider({ children }: { children: React.ReactNode }) {
   );
 
   const pause = useCallback(async (halted: boolean) => {
-    await mutate((a) => (a ? { next: setHalted(a, halted), result: undefined } : null));
+    await mutate((a) => {
+      if (!a) return null;
+      // resuming is refused while the ledger does not reconcile
+      if (!halted && reconcileAccount(a).length) return { next: setHalted(a, true, `ledger check failed (${reconcileAccount(a)[0]})`), result: undefined };
+      return { next: setHalted(a, halted), result: undefined };
+    });
   }, [mutate]);
 
   const value = useMemo(() => (account ? valueAccount(account, feed.prices) : null), [account, feed.prices]);

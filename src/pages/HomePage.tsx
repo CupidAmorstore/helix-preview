@@ -146,6 +146,11 @@ export default function HomePage() {
               <span className="text-slate-400">since you started with ${account.startingCash.toLocaleString()}</span>
             </div>
             {value.missingPrice && <Note tone="warn">Some positions are valued at cost until live prices arrive.</Note>}
+            {account.halted && account.haltReason?.startsWith('ledger') && (
+              <p role="alert" className="mt-2 border-l-2 border-down pl-3 text-sm text-slate-200">
+                Paper trading is paused: the saved account did not match its own order history ({account.haltReason}). No new paper orders are accepted until this is resolved.
+              </p>
+            )}
           </div>
           {chart ? (
             <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" role="img" aria-label={`Paper account value, ${range}`}>
@@ -169,7 +174,7 @@ export default function HomePage() {
             {[
               ['Cash available', value.cash],
               ['Invested', value.positionsValue],
-              ['Realized P&L', value.realized],
+              ['Realized P&L (paper)', value.realized],
               ['Fees paid', value.fees]
             ].map(([l, v]) => (
               <div key={l as string} className="border-b border-ink-600 py-2.5 odd:pr-3 even:border-l even:pl-3">
