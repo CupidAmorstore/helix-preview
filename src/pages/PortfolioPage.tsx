@@ -1,6 +1,6 @@
 ﻿import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchPriceMap } from '../services/market';
-import { listAddresses, listExchanges, listSnapshots, saveSnapshot, getSetting, setSetting } from '../services/storage';
+import { listAddresses, listExchanges, saveSnapshot, getSetting, setSetting } from '../services/storage';
 import { useVault } from '../services/vault';
 import { fetchExchangeBalances } from '../services/exchanges';
 import { fetchBtcBalance, fetchEthBalance, fetchSolBalance } from '../services/onchain';
@@ -132,17 +132,14 @@ export default function PortfolioPage() {
       setRows(data.sort((a, b) => b.usdValue - a.usdValue));
       setNotes(localNotes);
 
+      // One snapshot per day, overwritten on each refresh so Home always shows the latest value.
       const today = new Date().toISOString().slice(0, 10);
-      const snapshots = await listSnapshots();
-      const exists = snapshots.find((s) => s.date === today);
-      if (!exists) {
-        await saveSnapshot({
-          id: `snap_${today}`,
-          date: today,
-          totalUsd: data.reduce((sum, r) => sum + r.usdValue, 0),
-          assets: Object.fromEntries(Array.from(assetTotals.entries()))
-        });
-      }
+      await saveSnapshot({
+        id: `snap_${today}`,
+        date: today,
+        totalUsd: data.reduce((sum, r) => sum + r.usdValue, 0),
+        assets: Object.fromEntries(Array.from(assetTotals.entries()))
+      });
 
       setStatus('idle');
     } catch {

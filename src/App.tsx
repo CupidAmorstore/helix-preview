@@ -1,11 +1,12 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import AppShell from './components/AppShell';
-import DashboardPage from './pages/DashboardPage';
+import HomePage from './pages/HomePage';
 import { VaultProvider } from './services/vault';
 
-// Markets (home) loads eagerly; every other page is code-split so the wallet/crypto
+// Home loads eagerly; every other page is code-split so the wallet/crypto
 // libraries only download when the Wallet page is opened.
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const BotPage = lazy(() => import('./pages/BotPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const ConnectionsPage = lazy(() => import('./pages/ConnectionsPage'));
@@ -35,7 +36,8 @@ export default function App() {
         <AppShell>
           <Suspense fallback={<div className="text-sm text-slate-500">Loading…</div>}>
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/markets" element={<DashboardPage />} />
             <Route path="/bot" element={<BotPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/more" element={<MorePage />} />

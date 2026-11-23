@@ -75,7 +75,7 @@ export function reconnectDelay(attempt: number): number {
  */
 export function connectTicker(
   products: string[],
-  onMessage: (symbol: string, price: number) => void,
+  onMessage: (symbol: string, price: number, open24h?: number) => void,
   onStatus: (status: FeedStatus) => void = () => undefined,
   makeSocket: (url: string) => WebSocket = (url) => new WebSocket(url)
 ): { close: () => void } {
@@ -98,7 +98,8 @@ export function connectTicker(
         const m = JSON.parse(event.data);
         if (m.type !== 'ticker' || !m.product_id) return;
         const price = parseFloat(m.price);
-        if (Number.isFinite(price)) onMessage(String(m.product_id).split('-')[0], price);
+        const open24h = parseFloat(m.open_24h);
+        if (Number.isFinite(price)) onMessage(String(m.product_id).split('-')[0], price, Number.isFinite(open24h) ? open24h : undefined);
       } catch {
         // ignore malformed frames
       }
