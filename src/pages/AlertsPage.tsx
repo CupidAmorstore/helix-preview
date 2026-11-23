@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { listAlerts, saveAlert, deleteAlert } from '../services/storage';
 import { useLivePrices } from '../hooks/useLivePrices';
 import { MARKET_COINS } from '../services/market';
@@ -6,7 +7,9 @@ import type { AlertRecord } from '../types';
 
 export default function AlertsPage() {
   const [alerts, setAlerts] = useState<AlertRecord[]>([]);
-  const [symbol, setSymbol] = useState('BTC');
+  const [params] = useSearchParams();
+  const preset = (params.get('symbol') || '').toUpperCase();
+  const [symbol, setSymbol] = useState(MARKET_COINS.some((c) => c.symbol === preset) ? preset : 'BTC');
   const [direction, setDirection] = useState<'above' | 'below'>('above');
   const [threshold, setThreshold] = useState('');
   const [notifications, setNotifications] = useState<string[]>([]);
