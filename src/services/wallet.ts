@@ -8,6 +8,18 @@ import { Buffer } from 'buffer';
 import { Keypair, Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import { HDNodeWallet, Wallet, JsonRpcProvider, parseEther } from 'ethers';
 import { btcFetch } from './btcApi';
+import { ETH_CHAIN_ID, SOL_GENESIS } from './walletSafety';
+
+/**
+ * Real-money isolation. Sending on MAINNET moves real funds and is disabled in this preview until the owner
+ * explicitly authorizes it (change requires a code change + review, not a setting). Testnet sends (no value),
+ * balances, history and receive keep working. Every transaction function checks this itself.
+ */
+export const WALLET_MAINNET_SEND_ENABLED = false as const;
+export const MAINNET_SEND_DISABLED_MSG = 'Sending on mainnet is disabled in this preview. Only testnet coins (no real value) can be sent.';
+export function assertSendAllowed(network: WalletNetwork) {
+  if (network !== 'testnet' && !(WALLET_MAINNET_SEND_ENABLED as boolean)) throw new Error(MAINNET_SEND_DISABLED_MSG);
+}
 
 const bip32 = BIP32Factory(ecc);
 const ECPair = ECPairFactory(ecc);
@@ -71,6 +83,7 @@ export async function buildAndSignBtcTx(params: {
   network: WalletNetwork;
 }) {
   const { mnemonic, toAddress, amountSats, feeRate, network } = params;
+  assertSendAllowed(network);
   const { btc } = await deriveAddresses(mnemonic, network);
   const utxos = await fetchBtcUtxos(btc.address, network);
   if (!utxos.length) throw new Error('No UTXOs found');
@@ -106,6 +119,7 @@ export async function buildAndSignBtcTx(params: {
 }
 
 export async function broadcastBtcTx(rawTx: string, network: WalletNetwork) {
+  assertSendAllowed(network);
   const res = await btcFetch(network, `/tx`, { method: 'POST', body: rawTx });
   if (!res.ok) throw new Error('Broadcast failed');
   return res.text();
@@ -116,8 +130,14 @@ export async function sendEthTransaction(params: {
   toAddress: string;
   amountEth: string;
   rpcUrl: string;
+  network: WalletNetwork;
 }) {
+  assertSendAllowed(params.network);
   const provider = new JsonRpcProvider(params.rpcUrl);
+  // the RPC decides which chain is used: verify it really is the expected (test) chain before signing
+  const chainId = (await provider.getNetwork()).chainId;
+  if (chainId !== ETH_CHAIN_ID[params.network]) throw new Error(`RPC is on chain ${chainId}, not the selected network. Nothing was sent.`);
+  assertSendAllowed(chainId === ETH_CHAIN_ID.mainnet ? 'mainnet' : 'testnet');
   const wallet = Wallet.fromPhrase(params.mnemonic).connect(provider);
   const tx = await wallet.sendTransaction({
     to: params.toAddress,
@@ -131,11 +151,16 @@ export async function sendSolTransaction(params: {
   toAddress: string;
   amountSol: number;
   rpcUrl: string;
+  network: WalletNetwork;
 }) {
+  assertSendAllowed(params.network);
   const seed = await bip39.mnemonicToSeed(params.mnemonic);
   const derived = derivePath("m/44'/501'/0'/0'", seed.toString('hex'));
   const keypair = Keypair.fromSeed(derived.key);
   const connection = new Connection(params.rpcUrl, 'confirmed');
+  const genesis = await connection.getGenesisHash();
+  if (genesis !== SOL_GENESIS[params.network]) throw new Error('RPC is not on the selected Solana network. Nothing was sent.');
+  assertSendAllowed(genesis === SOL_GENESIS.mainnet ? 'mainnet' : 'testnet');
   const tx = new Transaction().add(
     SystemProgram.transfer({
       fromPubkey: keypair.publicKey,

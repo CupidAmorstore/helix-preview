@@ -2,7 +2,7 @@
 import VaultGate from '../components/VaultGate';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
-import { buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
+import { MAINNET_SEND_DISABLED_MSG, WALLET_MAINNET_SEND_ENABLED, buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
 import type { EncryptedPayload, KeystoreRecord, WalletNetwork } from '../types';
 import { PageHeader } from '../components/ui';
 import { WalletAccounts, WalletGuide } from '../components/WalletParts';
@@ -201,6 +201,7 @@ export default function WalletPage() {
     if (!(await preflight('eth', ethTo, ethAmount))) return;
     try {
       const txid = await sendEthTransaction({
+        network,
         mnemonic,
         toAddress: ethTo,
         amountEth: ethAmount,
@@ -219,6 +220,7 @@ export default function WalletPage() {
     if (!(await preflight('sol', solTo, solAmount))) return;
     try {
       const txid = await sendSolTransaction({
+        network,
         mnemonic,
         toAddress: solTo,
         amountSol: Number(solAmount),
@@ -442,7 +444,13 @@ export default function WalletPage() {
       {mnemonic && <WalletAccounts addresses={addresses} network={network} rpc={{ eth: ethRpc, sol: solRpc }} />}
       {!keystore && <WalletGuide />}
 
-      {mnemonic && (
+      {mnemonic && network === 'mainnet' && !WALLET_MAINNET_SEND_ENABLED && (
+        <section className="border-t border-ink-600 pt-5" aria-label="Send">
+          <h2 className="eyebrow text-slate-400">Send</h2>
+          <p className="mt-2 text-sm text-slate-300">{MAINNET_SEND_DISABLED_MSG} Balances, history and receiving work on mainnet.</p>
+        </section>
+      )}
+      {mnemonic && (network === 'testnet' || WALLET_MAINNET_SEND_ENABLED) && (
         <section className="grid gap-4 lg:grid-cols-3" aria-label="Send">
           <div className="border-t border-ink-600 pt-5 space-y-3">
             <h3 className="text-sm font-semibold text-slate-200">Send BTC</h3>

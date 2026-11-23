@@ -19,8 +19,8 @@ export const NETWORK_LABEL: Record<Chain, Record<WalletNetwork, string>> = {
   sol: { testnet: 'Solana devnet (test)', mainnet: 'Solana mainnet' }
 };
 
-const ETH_CHAIN_ID: Record<WalletNetwork, bigint> = { testnet: 11155111n, mainnet: 1n };
-const SOL_GENESIS: Record<WalletNetwork, string> = {
+export const ETH_CHAIN_ID: Record<WalletNetwork, bigint> = { testnet: 11155111n, mainnet: 1n };
+export const SOL_GENESIS: Record<WalletNetwork, string> = {
   testnet: 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG', // devnet
   mainnet: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 };
