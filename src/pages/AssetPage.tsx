@@ -99,7 +99,7 @@ export default function AssetPage() {
 
       {product ? (
         <Panel>
-          <MarketChart symbol={product} timeframe={tf} />
+          <MarketChart symbol={product} timeframe={tf} livePrice={live ? price : null} />
           <div role="radiogroup" aria-label="Chart timeframe" className="flex justify-between">
             {TIMEFRAMES.map((t) => (
               <button key={t} type="button" role="radio" aria-checked={tf === t} onClick={() => setTf(t)}

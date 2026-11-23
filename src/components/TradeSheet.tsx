@@ -84,7 +84,7 @@ export default function TradeSheet({
             <dt className="text-slate-400">{result.side === 'buy' ? 'Cash spent' : 'Cash received'}</dt>
             <dd className="text-right"><Money v={result.cashUsd} className="text-white" /></dd>
             <dt className="text-slate-400">Spread &amp; price impact</dt>
-            <dd className="text-right"><Money v={result.slippageUsd} className="text-white" /></dd>
+            <dd className="text-right text-white">{result.slippageUsd > 0.005 ? <Money v={result.slippageUsd} /> : result.slippageUsd < -0.005 ? <>Better than last price</> : <>Under 1¢</>}</dd>
             {result.realizedPnl !== undefined && (
               <>
                 <dt className="text-slate-400">Realized P&amp;L</dt>
@@ -143,8 +143,8 @@ export default function TradeSheet({
               </dd>
               <dt className="text-slate-400">Fee (0.60%)</dt>
               <dd className="text-right"><Money v={preview.fee} className="text-white" /></dd>
-              <dt className="text-slate-400">Spread + slippage</dt>
-              <dd className="text-right text-white">≈ 0.05%</dd>
+              <dt className="text-slate-400">Spread &amp; price impact</dt>
+              <dd className="text-right text-white">From the live order book</dd>
             </dl>
           )}
 

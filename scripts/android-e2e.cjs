@@ -82,10 +82,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   await shot('trade-filled');
 
   // hardware BACK: closes the sheet first
-  await device.input.press('Back'); await sleep(1200);
+  await device.shell('input keyevent KEYCODE_BACK'); await sleep(1200);
   check('Back closes the open sheet', (await page.locator('[role=dialog]').count()) === 0);
   // Back again: returns to Markets, not exit
-  await device.input.press('Back'); await sleep(1500);
+  await device.shell('input keyevent KEYCODE_BACK'); await sleep(1500);
   check('Back returns to the previous screen', (await path()) === '/markets', await path());
 
   for (const [name, p] of [['Bot', '/bot'], ['Wallet', '/wallet'], ['More', '/more'], ['Home', '/']]) {
@@ -101,7 +101,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   // Back from Home exits to the launcher (app no longer resumed)
   await tab('Home').click(); await sleep(1000);
-  await device.input.press('Back'); await sleep(2500);
+  await device.shell('input keyevent KEYCODE_BACK'); await sleep(2500);
   const after = await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"');
   check('Back on Home leaves the app', !/com\.helix\.app/.test(after), after);
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-after-back-on-home.png` });
