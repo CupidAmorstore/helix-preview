@@ -1,5 +1,5 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import AppShell from './components/AppShell';
 import DashboardPage from './pages/DashboardPage';
 import { VaultProvider } from './services/vault';
@@ -13,32 +13,32 @@ const AlertsPage = lazy(() => import('./pages/AlertsPage'));
 const WalletPage = lazy(() => import('./pages/WalletPage'));
 const AccessPage = lazy(() => import('./pages/AccessPage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
+const MorePage = lazy(() => import('./pages/MorePage'));
 
 export default function App() {
   const base = import.meta.env.BASE_URL;
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const stored = localStorage.getItem('helix_theme');
-    return stored === 'light' ? 'light' : 'dark';
-  });
-
+  // Dark theme only until a complete, contrast-checked light token set exists: the old light mode left
+  // dark cards with dark text in the Trading Bot (including the paper-mode warning).
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.classList.toggle('light', theme === 'light');
-    localStorage.setItem('helix_theme', theme);
-  }, [theme]);
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    try {
+      localStorage.removeItem('helix_theme');
+    } catch {
+      // storage unavailable: nothing to clean up
+    }
+  }, []);
 
   return (
     <BrowserRouter basename={base}>
       <VaultProvider>
-        <AppShell
-          theme={theme}
-          onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
-        >
+        <AppShell>
           <Suspense fallback={<div className="text-sm text-slate-500">Loading…</div>}>
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/bot" element={<BotPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/more" element={<MorePage />} />
             <Route path="/connections" element={<ConnectionsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/wallet" element={<WalletPage />} />
