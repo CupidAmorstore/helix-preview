@@ -94,6 +94,33 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await shot(name.toLowerCase());
   }
 
+  // wallet on the device: vault, import (public BIP39 test vector), mainnet send disabled, lock clears the phrase
+  try {
+    await tab('Wallet').click(); await sleep(2000);
+    await page.locator('input[type=password]').fill('device test vault 123');
+    await page.getByRole('button', { name: 'Create vault' }).click(); await sleep(6000);
+    await page.getByPlaceholder(/12 or 24 word/).fill('abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about');
+    await page.getByRole('button', { name: 'Import wallet' }).click(); await sleep(6000);
+    const w1 = (await text());
+    check('wallet: vault + import on device; BTC testnet address = BIP84 vector', /tb1q6rz28mcfaxtmd6v789l9rrlrusdprr9pqcpvkl/.test(w1), (w1.match(/tb1q\w+/) || [''])[0]);
+    await shot('wallet-imported');
+    await page.getByRole('button', { name: 'mainnet', exact: true }).click(); await sleep(800);
+    await page.locator('input[type=checkbox]').first().check();
+    await page.getByRole('button', { name: /Enable mainnet/ }).click(); await sleep(2500);
+    const w2 = await text();
+    check('wallet: mainnet sending is disabled (no send form)', /Sending on mainnet is disabled/.test(w2) && !/Send BTC/.test(w2));
+    await shot('wallet-mainnet-send-disabled');
+    await page.getByRole('button', { name: 'testnet', exact: true }).click(); await sleep(800);
+    await tab('More').click(); await sleep(1000);
+    await page.getByRole('link', { name: /Connections/ }).first().click(); await sleep(1500);
+    await page.getByRole('button', { name: 'Lock vault' }).click(); await sleep(800);
+    await tab('Wallet').click(); await sleep(1500);
+    const w3 = await text();
+    check('wallet: after lock the phrase is gone and a password is required', /Enter your vault password/.test(w3) && !/tb1q6rz28/.test(w3));
+  } catch (e) {
+    check('wallet flow on device', false, String(e).split('\n')[0]);
+  }
+
   // external link must open the system browser, not hijack/blank the app
   await tab('More').click(); await sleep(1500);
   await page.getByRole('link', { name: /Support/ }).first().click(); await sleep(1500);

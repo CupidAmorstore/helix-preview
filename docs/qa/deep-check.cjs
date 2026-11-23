@@ -67,7 +67,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     await p.goto(B + '/'); await wait(p, 2000);
     await ctx.setOffline(true); await wait(p, 8000);
     const off = await p.locator('main').innerText();
-    check('offline', 'home tells the user prices are not live while offline', /delayed|Connecting|offline|not live|reconnect/i.test(off), off.match(/.*(Live Coinbase|delayed|Connecting|offline).*/i)?.[0]);
+    check('offline', 'home tells the user prices are not live while offline', /No connection|Connection lost|delayed|Connecting|offline|not live|reconnect/i.test(off), off.match(/.*(Live Coinbase|delayed|Connecting|offline).*/i)?.[0]);
     await ctx.setOffline(false); await wait(p, 15000);
     const on = await p.locator('main').innerText();
     check('offline', 'prices recover after the connection returns', /Live Coinbase prices/.test(on), on.match(/.*(Live Coinbase|delayed|Connecting).*/i)?.[0]);
