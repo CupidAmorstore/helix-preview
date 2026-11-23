@@ -108,13 +108,22 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   // relaunch: data persisted on device storage
   await sh('am start -W -n com.helix.app/.MainActivity'); await sleep(6000);
-  // the old WebView target is gone after the app left; attach to the new one (retry while it starts)
+  await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-relaunched-raw.png` });
+  check('app is in the foreground again after relaunch', /com\.helix\.app/.test(await sh('dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity"')));
+  // attach straight to the new WebView's DevTools socket (the Android helper caches the old one)
   let p2 = null;
-  for (let i = 0; i < 8 && !p2; i++) {
+  const { chromium } = require('playwright-core');
+  for (let i = 0; i < 10 && !p2; i++) {
     try {
-      const wv = (await device.webViews()).find((w) => w.pkg() === 'com.helix.app');
-      if (wv) { const pg = await wv.page(); await pg.waitForSelector('main', { timeout: 8000 }); p2 = pg; }
-    } catch { /* not ready yet */ }
+      const pid = await sh('pidof com.helix.app');
+      const sock = (await sh('cat /proc/net/unix')).split('\n').map((l) => l.trim().split(/\s+/).pop()).find((x) => x && x.includes(`webview_devtools_remote_${pid}`));
+      if (pid && sock) {
+        require('child_process').execSync(`adb forward tcp:9333 localabstract:${sock.replace(/^@/, '')}`);
+        const browser = await chromium.connectOverCDP('http://127.0.0.1:9333');
+        const pg = browser.contexts()[0]?.pages().find((x) => /localhost/.test(x.url()));
+        if (pg) { await pg.waitForSelector('main', { timeout: 8000 }); p2 = pg; }
+      }
+    } catch (e) { console.log('attach retry', String(e).slice(0, 120)); }
     if (!p2) await sleep(3000);
   }
   if (!p2) throw new Error('could not attach to the relaunched app');
