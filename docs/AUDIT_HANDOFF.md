@@ -1,4 +1,20 @@
-# HELIX — independent audit handoff (PR #3)
+# HELIX — independent audit handoff (PR #3) — RE-AUDIT EDITION
+
+> **Re-audit (2026-11-23):** remediation is complete on the branch. Start with
+> `docs/AUDIT_REMEDIATION_REPORT.md` (every finding, root cause, file:line, tests, status), then
+> `SECURITY_VERIFICATION.md`, `PAPER_ACCOUNTING_VERIFICATION.md`, `RESEARCH_VALIDATION_REPORT.md`, `ANDROID_E2E_RESULTS.md`.
+> Remediation code head `7038621` (APK debug build #25, sha256 `ebce6528…4815`), 158 unit tests, Android emulator 24/24.
+> Diff of the remediation only: https://github.com/CupidAmorstore/helix-preview/compare/4a1b958...ccr-8d17e0b5-yaqvtm
+>
+> Changes since the first handoff that most need independent checking:
+> 1. Vault opening logic moved to `src/services/vaultCore.ts` (`openVault`). The earlier fail-open is closed; please attack
+>    the `reset-empty` branch (salt present, nothing encrypted) and the migration branch.
+> 2. Mainnet wallet sending is now **disabled at the source** (`WALLET_MAINNET_SEND_ENABLED = false`).
+> 3. Paper ledger writes are serialized (`src/paper/serialStore.ts`); 12,000 randomized orders check the ledger identities.
+> 4. Cross-sectional simulator rewritten with real accounting; holdout reuse is now blocked per market+timeframe.
+> 5. Research feed validated in the app and before publishing.
+>
+> The sections below are the original handoff, kept for reference; where they conflict, the remediation report wins.
 
 **For:** an independent reviewer (e.g. ChatGPT) auditing the changes made in this cycle.
 **Repo:** https://github.com/CupidAmorstore/helix-preview (public)
