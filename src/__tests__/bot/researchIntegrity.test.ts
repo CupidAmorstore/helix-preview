@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { guardReusedHoldout, priorHoldoutLooks, type Registry } from '../../bot/research';
+import { guardReusedHoldout, priorHoldoutLooks, survivorshipGate, type Registry } from '../../bot/research';
 import { evaluateFamily } from '../../bot/validation';
 import { COST_PRESETS } from '../../bot/costs';
 import { PARAM_GRID } from '../../bot/strategies';
@@ -29,5 +29,20 @@ describe('null data: the pipeline does not qualify strategies on random walks', 
     for (const f of Object.keys(PARAM_GRID) as StrategyFamily[])
       for (const seed of [11, 23, 37]) if (evaluateFamily(randomWalk(2000, seed, 0.03), f, cost, 1).status === 'qualified_paper_strategy') q++;
     expect(q).toBe(0);
+  });
+});
+
+describe('survivorship gate', () => {
+  const q = () => ({ status: 'qualified_paper_strategy', rejectionReasons: [] as string[] });
+  it('no study, too few delisted markets, or losing on delisted markets → not promoted', () => {
+    expect(survivorshipGate(q(), 'sma_cross', null).status).toBe('backtested_candidate');
+    expect(survivorshipGate(q(), 'sma_cross', [{ family: 'sma_cross', delisted: { n: 5, median: 0.2 } }]).status).toBe('backtested_candidate');
+    const r = survivorshipGate(q(), 'sma_cross', [{ family: 'sma_cross', delisted: { n: 30, median: -0.34 } }]);
+    expect(r.status).toBe('backtested_candidate');
+    expect(r.rejectionReasons[0]).toMatch(/survivorship/);
+  });
+  it('non-negative median on enough delisted markets passes; rejected stays rejected', () => {
+    expect(survivorshipGate(q(), 'x', [{ family: 'x', delisted: { n: 30, median: 0.01 } }]).status).toBe('qualified_paper_strategy');
+    expect(survivorshipGate({ status: 'rejected', rejectionReasons: ['a'] }, 'x', null).status).toBe('rejected');
   });
 });

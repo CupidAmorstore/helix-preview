@@ -126,7 +126,8 @@ async function main() {
     };
     allDatasets.push(...datasets);
     if (watchOnly) continue;
-    const { record, registry: next } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars });
+    const survivorship = existsSync(R('survivorship-study.json')) ? JSON.parse(readFileSync(R('survivorship-study.json'), 'utf8')).families : null;
+    const { record, registry: next } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars, survivorship });
     reg = next;
     record.runId += `-${iv.label}`;
     records.push(record);

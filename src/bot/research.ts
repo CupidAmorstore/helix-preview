@@ -67,6 +67,21 @@ export const priorHoldoutLooks = (registry: Registry, symbol: string, intervalMs
 export const REUSED_HOLDOUT_REASON = (n: number) =>
   `recent history already inspected by ${n} earlier test(s) on this market/timeframe: not fresh evidence, needs forward paper results before qualifying`;
 
+/** Result of scripts/survivorship-study.ts for one family (full-life backtests on delisted markets). */
+export type SurvivorshipRow = { family: string; delisted: { n: number; median: number } };
+
+/**
+ * Survivorship gate: the research universe holds only coins that survived to today. A qualified candidate whose
+ * family loses money (median) on delisted markets, or that has no delisted evidence at all, is not promoted.
+ */
+export function survivorshipGate<T extends { status: string; rejectionReasons: string[]; family?: string }>(rep: T, family: string, study: SurvivorshipRow[] | null): T {
+  if (rep.status !== 'qualified_paper_strategy') return rep;
+  const row = study?.find((r) => r.family === family);
+  if (!row || row.delisted.n < 10) return { ...rep, status: 'backtested_candidate', rejectionReasons: [...rep.rejectionReasons, 'no survivorship evidence (delisted-market study missing or < 10 markets)'] };
+  if (!(row.delisted.median >= 0)) return { ...rep, status: 'backtested_candidate', rejectionReasons: [...rep.rejectionReasons, `loses on delisted markets (median ${(row.delisted.median * 100).toFixed(1)}%, n=${row.delisted.n}): survivorship bias`] };
+  return rep;
+}
+
 /** A candidate whose test window was already inspected can never qualify from that window alone. */
 export function guardReusedHoldout<T extends { status: string; rejectionReasons: string[] }>(rep: T, looks: number): T {
   if (looks > 0 && rep.status === 'qualified_paper_strategy') {
@@ -87,6 +102,8 @@ export function runResearchCycle(args: {
   registry: Registry;
   minBars?: number;
   families?: StrategyFamily[];
+  /** rows of research/survivorship-study.json; null/absent → no candidate can be promoted */
+  survivorship?: SurvivorshipRow[] | null;
 }): { record: RunRecord; registry: Registry } {
   const startedAt = new Date().toISOString();
   const runId = `run-${new Date(args.nowMs).toISOString().replace(/[:.]/g, '-')}`;
@@ -140,7 +157,7 @@ export function runResearchCycle(args: {
         res.skipped.push({ family: f, reason: `contiguous history ${contiguous.length} < ${minBars} bars` });
         continue;
       }
-      const rep = guardReusedHoldout(evaluateFamily(contiguous, f, cost, bonferroniN), priorHoldoutLooks(args.registry, d.market.symbol, d.intervalMs));
+      const rep = survivorshipGate(guardReusedHoldout(evaluateFamily(contiguous, f, cost, bonferroniN), priorHoldoutLooks(args.registry, d.market.symbol, d.intervalMs)), f, args.survivorship ?? null);
       res.candidates.push(rep);
       registry[registryKey(f, d.id, d.market.symbol, d.intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
     }
@@ -149,14 +166,14 @@ export function runResearchCycle(args: {
 
   const series = eligible.map((p) => ({ symbol: p.d.market.symbol, candles: p.contiguous }));
   const pooled: PooledReport[] = pooledTodo.map((f) => {
-    const rep = guardReusedHoldout(evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'POOLED', intervalMs));
+    const rep = survivorshipGate(guardReusedHoldout(evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), f, args.survivorship ?? null);
     registry[registryKey(f, pooledId, 'POOLED', intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
     return rep;
   });
 
   let crossSectional: XsReport | undefined;
   if (xsTodo) {
-    crossSectional = guardReusedHoldout(evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'XS', intervalMs) + priorHoldoutLooks(args.registry, 'POOLED', intervalMs));
+    crossSectional = survivorshipGate(guardReusedHoldout(evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'XS', intervalMs) + priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), 'xs_momentum', args.survivorship ?? null);
     registry[xsKey] = { runId, status: crossSectional.status, reasons: crossSectional.rejectionReasons };
   }
   const all = [...markets.flatMap((m) => m.candidates), ...pooled, ...(crossSectional ? [crossSectional] : [])];
@@ -174,7 +191,7 @@ export function runResearchCycle(args: {
       'Historical candles are indicative; executable depth was not verified.',
       'Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).',
       'Recent history already inspected by earlier tests on the same market/timeframe (even with refreshed data) is not fresh evidence: such candidates cannot qualify without forward paper results.',
-      'Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).',
+      'Universe = coins that are large and listed today (survivorship bias). Measured in research/survivorship-study.json; qualification also requires a non-negative median on delisted markets.',
       'Research capital normalised to $1,000; account-size feasibility evaluated separately.'
     ],
     markets,
