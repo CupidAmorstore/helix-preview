@@ -231,7 +231,7 @@ export default function WalletPage() {
     <div className="space-y-8 slide-up">
       <PageHeader title="Wallet" subtitle="Self-custody · keys stay on this phone, encrypted" />
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
+      <section className="border-t border-ink-600 pt-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold text-slate-200">Network</h2>
@@ -250,7 +250,7 @@ export default function WalletPage() {
                   setNetwork(mode);
                 }}
                 className={`rounded-full border px-3 py-1 text-xs ${
-                  network === mode ? 'border-mint-500/50 text-mint-300' : 'border-white/10 text-slate-400'
+                  network === mode ? 'border-white bg-white text-ink-900' : 'border-ink-600 text-slate-400'
                 }`}
               >
                 {mode}
@@ -261,16 +261,16 @@ export default function WalletPage() {
         {status && <div className="text-xs text-amber-400">{status}</div>}
         {network === 'testnet' && (
           <div className="text-xs text-slate-400">
-            Faucets: BTC testnet <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://bitcoinfaucet.uo1.net/">uo1</a>, ETH Sepolia <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://sepoliafaucet.com/">sepoliafaucet</a>, SOL devnet <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://solfaucet.com/">solfaucet</a>.
+            Faucets: BTC testnet <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://bitcoinfaucet.uo1.net/">uo1</a>, ETH Sepolia <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://sepoliafaucet.com/">sepoliafaucet</a>, SOL devnet <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://solfaucet.com/">solfaucet</a>.
           </div>
         )}
       </section>
 
       {showMainnetGate && (
-        <section className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-6 space-y-4">
+        <section className="border-l-2 border-down bg-down/5 py-4 pl-4 pr-3 space-y-4">
           <h2 className="text-sm font-semibold text-rose-200">Mainnet Unlock Required</h2>
           <p className="text-xs text-rose-100">
-            Mainnet sends real funds. HELIX (Apex App) cannot recover lost keys or reversed transactions. Confirm you understand before enabling.
+            Mainnet sends real funds. HELIX cannot recover lost keys or reversed transactions. Confirm you understand before enabling.
           </p>
           <label className="flex items-center gap-2 text-xs text-rose-100">
             <input
@@ -289,14 +289,14 @@ export default function WalletPage() {
                 setShowMainnetGate(false);
               }}
               disabled={!mainnetConsent}
-              className={`rounded-lg border px-4 py-2 text-sm ${mainnetConsent ? 'border-rose-400 text-rose-200' : 'border-white/10 text-slate-500'}`}
+              className={`rounded-lg border px-4 py-2 text-sm ${mainnetConsent ? 'border-rose-400 text-rose-200' : 'border-ink-600 text-slate-500'}`}
             >
               Enable mainnet
             </button>
             <button
               type="button"
               onClick={() => setShowMainnetGate(false)}
-              className="rounded-lg border border-white/10 px-4 py-2 text-sm text-slate-300"
+              className="min-h-[44px] rounded-full border border-ink-500 px-5 text-sm text-white"
             >
               Stay on testnet
             </button>
@@ -304,7 +304,7 @@ export default function WalletPage() {
         </section>
       )}
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
+      <section className="border-t border-ink-600 pt-5 space-y-4">
         <h2 className="text-sm font-semibold text-slate-200">Wallet Access</h2>
         {!keystore && <p className="text-sm text-slate-400">New to self-custody? Read the guide below first.</p>}
         {keystore ? (
@@ -313,7 +313,7 @@ export default function WalletPage() {
             <button
               type="button"
               onClick={unlockWallet}
-              className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+              className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
             >
               Unlock wallet
             </button>
@@ -335,14 +335,14 @@ export default function WalletPage() {
               <button
                 type="button"
                 onClick={() => startCreate(12)}
-                className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+                className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
               >
                 Create 12-word wallet
               </button>
               <button
                 type="button"
                 onClick={() => startCreate(24)}
-                className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+                className="min-h-[44px] rounded-full border border-ink-500 px-5 text-sm text-white disabled:opacity-40"
               >
                 Create 24-word wallet
               </button>
@@ -352,43 +352,43 @@ export default function WalletPage() {
         )}
 
         {createMnemonic && !keystore && (
-          <div className="rounded-xl border border-white/10 bg-ink-800/80 p-4 space-y-3">
-            <div className="text-xs uppercase tracking-[0.2em] text-slate-500">Mnemonic (write this down)</div>
+          <div className="rounded-lg border border-ink-600 p-4 space-y-3">
+            <div className="text-xs eyebrow text-slate-500">Mnemonic (write this down)</div>
             <div className="grid grid-cols-2 gap-2 text-xs text-slate-200">
               {createMnemonic.split(' ').map((word, idx) => (
-                <div key={word + idx} className="rounded-md border border-white/10 px-2 py-1">
+                <div key={word + idx} className="rounded-md border border-ink-600 px-2 py-1">
                   {idx + 1}. {word}
                 </div>
               ))}
             </div>
-            <div className="text-xs text-amber-400">Never share this phrase. HELIX (Apex App) cannot recover it.</div>
+            <div className="text-xs text-amber-400">Never share this phrase. HELIX cannot recover it.</div>
           </div>
         )}
 
         {createMnemonic && verifyIndexes.length > 0 && !keystore && (
-          <div className="rounded-xl border border-white/10 bg-ink-800/80 p-4 space-y-3">
-            <div className="text-xs uppercase tracking-[0.2em] text-slate-500">Verify backup</div>
+          <div className="rounded-lg border border-ink-600 p-4 space-y-3">
+            <div className="text-xs eyebrow text-slate-500">Verify backup</div>
             {verifyIndexes.map((idx) => (
               <input
                 key={idx}
                 value={verifyInput[idx] || ''}
                 onChange={(e) => setVerifyInput({ ...verifyInput, [idx]: e.target.value })}
                 placeholder={`Word #${idx + 1}`}
-                className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
+                className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
               />
             ))}
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={confirmCreate}
-                className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+                className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
               >
                 Confirm backup
               </button>
               <button
                 type="button"
                 onClick={importWallet}
-                className="rounded-lg border border-white/10 px-4 py-2 text-sm text-slate-400"
+                className="min-h-[44px] rounded-full border border-ink-500 px-5 text-sm text-white"
               >
                 Import instead
               </button>
@@ -397,18 +397,18 @@ export default function WalletPage() {
         )}
 
         {!keystore && (
-          <div className="rounded-xl border border-white/10 bg-ink-800/80 p-4 space-y-3">
-            <div className="text-xs uppercase tracking-[0.2em] text-slate-500">Import mnemonic</div>
+          <div className="rounded-lg border border-ink-600 p-4 space-y-3">
+            <div className="text-xs eyebrow text-slate-500">Import mnemonic</div>
             <textarea
               value={createMnemonic}
               onChange={(e) => setCreateMnemonic(e.target.value)}
               placeholder="Enter your 12 or 24 word mnemonic"
-              className="h-24 w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
+              className="h-24 w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
             />
             <button
               type="button"
               onClick={importWallet}
-              className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+              className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
             >
               Import wallet
             </button>
@@ -421,34 +421,34 @@ export default function WalletPage() {
 
       {mnemonic && (
         <section className="grid gap-4 lg:grid-cols-3" aria-label="Send">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
+          <div className="border-t border-ink-600 pt-5 space-y-3">
             <h3 className="text-sm font-semibold text-slate-200">Send BTC</h3>
             <p className="text-xs text-slate-400">{NETWORK_LABEL.btc[network]}</p>
-            <input value={btcTo} onChange={(e) => setBtcTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={btcAmount} onChange={(e) => setBtcAmount(e.target.value)} placeholder="Amount (BTC)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={btcFeeRate} onChange={(e) => setBtcFeeRate(e.target.value)} placeholder="Fee rate (sats/vbyte)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
+            <input value={btcTo} onChange={(e) => setBtcTo(e.target.value)} placeholder="Recipient address" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={btcAmount} onChange={(e) => setBtcAmount(e.target.value)} placeholder="Amount (BTC)" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={btcFeeRate} onChange={(e) => setBtcFeeRate(e.target.value)} placeholder="Fee rate (sats/vbyte)" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
             {review === 'btc' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {btcAmount} BTC on {NETWORK_LABEL.btc[network]} to {btcTo}? This cannot be undone.</div>}
-            <button type="button" onClick={() => (review === 'btc' ? sendBtc() : startReview('btc', btcTo, btcAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'btc' ? 'Confirm send' : 'Review send'}</button>
+            <button type="button" onClick={() => (review === 'btc' ? sendBtc() : startReview('btc', btcTo, btcAmount))} className="min-h-[48px] w-full rounded-full bg-white px-4 text-sm font-semibold text-ink-900">{review === 'btc' ? 'Confirm send' : 'Review send'}</button>
             {btcTxid && <div className="text-xs text-slate-400 break-all">TXID: {btcTxid}</div>}
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
+          <div className="border-t border-ink-600 pt-5 space-y-3">
             <h3 className="text-sm font-semibold text-slate-200">Send ETH</h3>
             <p className="text-xs text-slate-400">{NETWORK_LABEL.eth[network]}</p>
-            <input value={ethTo} onChange={(e) => setEthTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={ethAmount} onChange={(e) => setEthAmount(e.target.value)} placeholder="Amount (ETH)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={ethRpc} onChange={(e) => setEthRpc(e.target.value)} placeholder="RPC URL" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-xs text-slate-400" />
+            <input value={ethTo} onChange={(e) => setEthTo(e.target.value)} placeholder="Recipient address" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={ethAmount} onChange={(e) => setEthAmount(e.target.value)} placeholder="Amount (ETH)" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={ethRpc} onChange={(e) => setEthRpc(e.target.value)} placeholder="RPC URL" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-xs text-slate-400" />
             {review === 'eth' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {ethAmount} ETH on {NETWORK_LABEL.eth[network]} to {ethTo}? This cannot be undone.</div>}
-            <button type="button" onClick={() => (review === 'eth' ? sendEth() : startReview('eth', ethTo, ethAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'eth' ? 'Confirm send' : 'Review send'}</button>
+            <button type="button" onClick={() => (review === 'eth' ? sendEth() : startReview('eth', ethTo, ethAmount))} className="min-h-[48px] w-full rounded-full bg-white px-4 text-sm font-semibold text-ink-900">{review === 'eth' ? 'Confirm send' : 'Review send'}</button>
             {ethTxid && <div className="text-xs text-slate-400 break-all">TXID: {ethTxid}</div>}
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
+          <div className="border-t border-ink-600 pt-5 space-y-3">
             <h3 className="text-sm font-semibold text-slate-200">Send SOL</h3>
             <p className="text-xs text-slate-400">{NETWORK_LABEL.sol[network]}</p>
-            <input value={solTo} onChange={(e) => setSolTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={solAmount} onChange={(e) => setSolAmount(e.target.value)} placeholder="Amount (SOL)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <input value={solRpc} onChange={(e) => setSolRpc(e.target.value)} placeholder="RPC URL" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-xs text-slate-400" />
+            <input value={solTo} onChange={(e) => setSolTo(e.target.value)} placeholder="Recipient address" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={solAmount} onChange={(e) => setSolAmount(e.target.value)} placeholder="Amount (SOL)" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200" />
+            <input value={solRpc} onChange={(e) => setSolRpc(e.target.value)} placeholder="RPC URL" className="w-full min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-xs text-slate-400" />
             {review === 'sol' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {solAmount} SOL on {NETWORK_LABEL.sol[network]} to {solTo}? This cannot be undone.</div>}
-            <button type="button" onClick={() => (review === 'sol' ? sendSol() : startReview('sol', solTo, solAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'sol' ? 'Confirm send' : 'Review send'}</button>
+            <button type="button" onClick={() => (review === 'sol' ? sendSol() : startReview('sol', solTo, solAmount))} className="min-h-[48px] w-full rounded-full bg-white px-4 text-sm font-semibold text-ink-900">{review === 'sol' ? 'Confirm send' : 'Review send'}</button>
             {solTxid && <div className="text-xs text-slate-400 break-all">TXID: {solTxid}</div>}
           </div>
         </section>

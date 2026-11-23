@@ -59,21 +59,21 @@ export default function AlertsPage() {
   return (
     <div className="space-y-8 slide-up">
       <header className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Alerts</p>
+        <p className="text-xs eyebrow text-slate-500">Alerts</p>
         <h1 className="text-3xl font-semibold text-white">Price Alert Center</h1>
         <p className="text-sm text-slate-400">
           Create read-only alerts on live prices. Notifications stay local to your browser.
         </p>
       </header>
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
+      <section className="border-t border-ink-600 pt-5 space-y-4">
         <h2 className="text-sm font-semibold text-slate-200">Create alert</h2>
         <div className="grid gap-3 md:grid-cols-4">
           <select
             aria-label="Coin"
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
-            className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
+            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
           >
             {MARKET_COINS.map((coin) => (
               <option key={coin.symbol} value={coin.symbol} className="text-black">
@@ -85,7 +85,7 @@ export default function AlertsPage() {
             aria-label="Alert when price goes"
             value={direction}
             onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
-            className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
+            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
           >
             <option value="above" className="text-black">Above</option>
             <option value="below" className="text-black">Below</option>
@@ -94,12 +94,12 @@ export default function AlertsPage() {
             value={threshold}
             onChange={(e) => setThreshold(e.target.value)}
             placeholder="Price threshold"
-            className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
+            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
           />
           <button
             type="button"
             onClick={addAlert}
-            className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300"
+            className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
           >
             Save alert
           </button>
@@ -107,8 +107,8 @@ export default function AlertsPage() {
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-        <div className="rounded-2xl border border-white/10 bg-white/5">
-          <div className="border-b border-white/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-slate-500">Active Alerts</div>
+        <div className="border-t border-ink-600">
+          <div className="border-b border-ink-600 px-4 py-3 text-xs eyebrow text-slate-500">Active Alerts</div>
           {alerts.length === 0 && <div className="px-4 py-6 text-sm text-slate-400">No alerts yet.</div>}
           {alerts.map((alert) => (
             <div key={alert.id} className="flex items-center justify-between border-b border-white/5 px-4 py-3 text-sm text-slate-200">
@@ -130,8 +130,8 @@ export default function AlertsPage() {
           ))}
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5">
-          <div className="border-b border-white/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-slate-500">Notifications</div>
+        <div className="border-t border-ink-600">
+          <div className="border-b border-ink-600 px-4 py-3 text-xs eyebrow text-slate-500">Notifications</div>
           {notifications.length === 0 && <div className="px-4 py-6 text-sm text-slate-400">No alerts triggered yet.</div>}
           {notifications.map((note, idx) => (
             <div key={`${note}-${idx}`} className="border-b border-white/5 px-4 py-3 text-xs text-slate-300">

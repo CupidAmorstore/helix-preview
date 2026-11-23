@@ -4,6 +4,7 @@ import { CoinBadge, Change, Segmented, Note } from '../components/ui';
 import { fetchCoinbaseProducts, fetchTopCoins, fmtAge, fmtUsd, type CoinbaseProduct, type CoinGeckoCoin, type Sourced } from '../services/marketData';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { usePaper } from '../paper/PaperProvider';
+import { MARKET_COINS } from '../services/market';
 
 type Tab = 'all' | 'watch' | 'gainers' | 'losers';
 type Sort = 'cap' | 'volume' | 'change';
@@ -20,15 +21,22 @@ export default function MarketsPage() {
   const { list: watch } = useWatchlist();
   const { feed } = usePaper();
 
-  useEffect(() => {
+  const loadTop = () => {
+    setTopErr('');
     fetchTopCoins().then(setTop).catch((e) => setTopErr((e as Error).message));
+  };
+  useEffect(() => {
+    loadTop();
     fetchCoinbaseProducts().then((p) => setProducts(p.data)).catch(() => undefined);
   }, []);
 
   const tradable = useMemo(() => new Set(products.map((p) => p.base)), [products]);
 
   const rows: Row[] = useMemo(() => {
-    const base: Row[] = (top?.data ?? []).map((c) => {
+    // When the ranked list is unavailable, fall back to the main coins with live Coinbase prices
+    // instead of an empty screen. Nothing is estimated: missing fields stay empty.
+    const src = top?.data ?? (topErr ? MARKET_COINS.map((c) => ({ symbol: c.symbol, name: c.name, image: undefined, current_price: null, price_change_percentage_24h: null, market_cap: null, total_volume: null })) : []);
+    const base: Row[] = src.map((c) => {
       const live = feed.prices[c.symbol];
       const open = feed.open24h[c.symbol];
       return {
@@ -45,7 +53,7 @@ export default function MarketsPage() {
       for (const p of products) if (!known.has(p.base) && p.base.includes(s)) base.push({ symbol: p.base, name: p.base, price: null, change: null, cap: null, volume: null, tradable: true, live: false });
     }
     return base;
-  }, [top, feed.prices, feed.open24h, tradable, products, q]);
+  }, [top, topErr, feed.prices, feed.open24h, tradable, products, q]);
 
   const shown = useMemo(() => {
     const s = q.trim().toUpperCase();
@@ -59,9 +67,9 @@ export default function MarketsPage() {
   }, [rows, q, tab, sort, watch]);
 
   return (
-    <div className="mx-auto max-w-xl space-y-4 fade-in">
-      <h1 className="text-xl font-semibold text-white">Markets</h1>
-      <label className="flex min-h-[48px] items-center gap-2 rounded-xl border border-ink-600 bg-ink-800 px-3">
+    <div className="mx-auto max-w-xl space-y-4">
+      <h1 className="text-[26px] font-semibold tracking-tight text-white">Markets</h1>
+      <label className="flex min-h-[48px] items-center gap-2 rounded-full border border-ink-500 bg-ink-800 px-4">
         <span aria-hidden="true" className="text-slate-400">⌕</span>
         <span className="sr-only">Search coins</span>
         <input
@@ -84,7 +92,7 @@ export default function MarketsPage() {
           <div role="radiogroup" aria-labelledby="sort-label" className="flex gap-1">
             {([['cap', 'Market cap'], ['volume', 'Volume'], ['change', '24h change']] as const).map(([v, l]) => (
               <button key={v} type="button" role="radio" aria-checked={sort === v} onClick={() => setSort(v)}
-                className={`min-h-[36px] rounded-full px-3 ${sort === v ? 'bg-helix-400/15 text-helix-300' : 'text-slate-400'}`}>
+                className={`min-h-[44px] px-2 ${sort === v ? 'font-semibold text-white underline decoration-1 underline-offset-4' : 'text-slate-400'}`}>
                 {l}
               </button>
             ))}
@@ -92,15 +100,20 @@ export default function MarketsPage() {
         </div>
       )}
 
-      {!top && !topErr && <div className="space-y-2" aria-label="Loading markets">{[0, 1, 2, 3, 4].map((i) => <div key={i} className="h-14 animate-pulse rounded-xl bg-ink-800" />)}</div>}
-      {topErr && !top && <p role="alert" className="rounded-xl bg-down/15 p-3 text-sm text-[#F7A3A3]">Market list unavailable: {topErr}. Live prices for the main coins still work below in Home.</p>}
+      {!top && !topErr && <div className="space-y-2" aria-label="Loading markets">{[0, 1, 2, 3, 4].map((i) => <div key={i} className="h-14 animate-pulse border-b border-ink-600 bg-ink-800/60" />)}</div>}
+      {topErr && !top && (
+        <div role="status" className="flex items-start justify-between gap-3 border-l-2 border-paper py-1 pl-3">
+          <p className="text-sm text-slate-300">The full ranked list is busy right now. Showing the main coins with live prices; search still finds every Coinbase market.</p>
+          <button type="button" onClick={loadTop} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm text-white">Retry</button>
+        </div>
+      )}
 
-      {top && (
-        <ul className="divide-y divide-ink-600 rounded-2xl border border-ink-600 bg-ink-800">
+      {(top || topErr) && (
+        <ul className="divide-y divide-ink-600 border-t border-ink-600">
           {shown.length === 0 && <li className="p-4 text-sm text-slate-400">{tab === 'watch' ? 'Your watchlist is empty. Open a coin and tap ☆ to add it.' : 'No coins match.'}</li>}
           {shown.map((r) => (
             <li key={r.symbol}>
-              <Link to={`/markets/${r.symbol}`} className="flex min-h-[60px] items-center gap-3 px-3 py-2">
+              <Link to={`/markets/${r.symbol}`} className="flex min-h-[60px] items-center gap-3 py-2">
                 <CoinBadge symbol={r.symbol} image={r.image} size={34} />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-semibold text-white">{r.name}</span>

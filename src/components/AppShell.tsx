@@ -9,9 +9,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="app-shell bg-ink-900 text-slate-100">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col gap-6 border-r border-white/10 px-6 py-8">
+      <aside className="hidden lg:flex flex-col gap-6 border-r border-ink-600 px-6 py-8">
         <div className="flex items-center gap-3">
-          <img src={`${import.meta.env.BASE_URL}assets/helix_logo.png`} alt="" className="h-8 w-8" />
+          <img src={`${import.meta.env.BASE_URL}assets/helix-mark.svg`} alt="" className="h-7 w-7" />
           <div className="text-lg font-semibold tracking-wide">HELIX</div>
         </div>
         <nav className="flex flex-col gap-1 text-sm" aria-label="Main">
@@ -26,7 +26,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto rounded-lg border border-white/10 px-3 py-2 text-xs">
+        <div className="mt-auto rounded-lg border border-ink-600 px-3 py-2 text-xs">
           <div className="text-slate-300">Mode</div>
           <div className="text-amber-400">Paper trading only · no custody</div>
         </div>
@@ -34,7 +34,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-h-screen min-w-0 flex-col">
         <TopBar />
-        <main className="min-w-0 flex-1 px-4 pb-28 pt-6 sm:px-6 sm:pt-8 lg:px-10 lg:pb-8">{children}</main>
+        <main className="min-w-0 flex-1 px-4 pb-28 pt-5 sm:px-6 sm:pt-8 lg:px-10 lg:pb-8">{children}</main>
         <footer className="section-divider hidden px-6 py-6 text-xs text-slate-400 lg:block lg:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>HELIX is a market intelligence app. No custody. The Trading Bot runs in paper mode only — no real-money orders.</div>
@@ -52,7 +52,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {/* Phone bottom navigation: every primary area one tap away, in thumb reach */}
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-white/10 bg-ink-800/95 backdrop-blur lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-ink-600 bg-ink-900 lg:hidden"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         {primaryNav.map((item) => {
@@ -64,8 +64,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               key={item.path}
               to={item.path}
               aria-current={active ? 'page' : undefined}
-              className={`flex min-h-[56px] flex-col items-center justify-center gap-1 text-[11px] ${active ? 'text-mint-400' : 'text-slate-300'}`}
+              className={`relative flex min-h-[56px] flex-col items-center justify-center gap-1 text-[11px] ${active ? 'text-white' : 'text-slate-500'}`}
             >
+              {active && <span className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-white" aria-hidden="true" />}
               <NavIcon name={item.icon} />
               <span className={active ? 'font-semibold' : ''}>{item.label}</span>
             </Link>

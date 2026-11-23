@@ -160,14 +160,14 @@ export default function PortfolioPage() {
   return (
     <div className="space-y-8 slide-up">
       <header className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Portfolio</p>
+        <p className="text-xs eyebrow text-slate-500">Portfolio</p>
         <h1 className="text-3xl font-semibold text-white">Read-only Portfolio View</h1>
         <p className="text-sm text-slate-400">
           Aggregates exchange balances and public address holdings. No keys stored on servers.
         </p>
       </header>
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <section className="border-t border-ink-600 pt-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="text-xs text-slate-500">Total value</div>
@@ -176,7 +176,7 @@ export default function PortfolioPage() {
           <button
             type="button"
             onClick={refresh}
-            className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300"
+            className="rounded-full border border-ink-600 px-4 py-2 text-xs text-slate-300"
           >
             Refresh balances
           </button>
@@ -190,9 +190,9 @@ export default function PortfolioPage() {
         )}
       </section>
 
-      <section tabIndex={0} aria-label="Holdings table (scrolls sideways)" className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+      <section tabIndex={0} aria-label="Holdings table (scrolls sideways)" className="overflow-x-auto border-t border-ink-600">
         <div className="min-w-[560px]">
-        <div className="grid grid-cols-5 gap-4 border-b border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.2em] text-slate-500">
+        <div className="grid grid-cols-5 gap-4 border-b border-ink-600 px-4 py-3 text-[11px] eyebrow text-slate-500">
           <div>Asset</div>
           <div>Quantity</div>
           <div>Price</div>
@@ -226,13 +226,13 @@ export default function PortfolioPage() {
                 aria-label={`Cost basis for ${row.symbol} in US dollars`}
                 value={costBasis || ''}
                 onChange={(e) => updateCostBasis(row.symbol, Math.max(0, Number(e.target.value) || 0))}
-                className="w-28 rounded-md border border-white/10 bg-transparent px-2 py-1 text-xs text-slate-200"
+                className="w-28 rounded-md border border-ink-600 bg-transparent px-2 py-1 text-xs text-slate-200"
               />
             </div>
             {pnl === null ? (
               <div className="text-slate-500">Set cost basis</div>
             ) : (
-              <div className={pnl >= 0 ? 'text-mint-300' : 'text-rose-400'}>
+              <div className={pnl >= 0 ? 'text-helix-400' : 'text-rose-400'}>
                 {pnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(pnl).toLocaleString(undefined, { maximumFractionDigits: 2 })}
               </div>
             )}

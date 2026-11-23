@@ -99,3 +99,56 @@ describe('paper account', () => {
     expect(r.order.feeUsd).toBeCloseTo(p.fee, 10);
   });
 });
+
+describe('order-book fills (liquidity model)', async () => {
+  const { createAccount, placeOrder, walkBook, MAX_BOOK_BAND } = await import('../paper/engine');
+  const now = 1_700_000_000_000;
+  const book = { ts: now, bids: [[99.9, 1], [99.5, 2], [97, 100]] as [number, number][], asks: [[100.1, 1], [100.5, 2], [103, 100]] as [number, number][] };
+  const q = { symbol: 'BTC', product: 'BTC-USD', price: 100, ts: now, book };
+
+  it('walks levels to a volume-weighted price', () => {
+    const w = walkBook(book.asks, 100, 'buy', 150);
+    expect(w.complete).toBe(true);
+    expect(w.vwap).toBeCloseTo(150 / (1 + 49.9 / 100.5), 6);
+  });
+
+  it('never fills beyond the price band: a large buy is partly filled and only charged for what filled', () => {
+    const acc = createAccount(1000, now);
+    const { account, order } = placeOrder(acc, { clientId: 'b1', side: 'buy', symbol: 'BTC', product: 'BTC-USD', notionalUsd: 500 }, q, now);
+    const depth = 100.1 * 1 + 100.5 * 2; // levels within 2%
+    expect(order.status).toBe('filled');
+    expect(order.partial).toBe(true);
+    expect(order.fillModel).toBe('book');
+    expect(order.qty).toBeCloseTo(3, 8);
+    expect(order.cashUsd).toBeCloseTo(depth / (1 - 0.006), 6);
+    expect(account.cash).toBeCloseTo(1000 - order.cashUsd, 6);
+    expect(order.fillPx).toBeLessThanOrEqual(100 * (1 + MAX_BOOK_BAND));
+  });
+
+  it('a sell into thin bids sells only what the band allows and keeps the rest', () => {
+    let acc = createAccount(1000, now);
+    acc = placeOrder(acc, { clientId: 'b2', side: 'buy', symbol: 'BTC', product: 'BTC-USD', notionalUsd: 200 }, { ...q, book: undefined }, now).account;
+    const held = acc.positions.BTC.qty;
+    const thin = { ...q, book: { ...book, bids: [[99.9, 0.5], [90, 100]] as [number, number][] } };
+    const { account, order } = placeOrder(acc, { clientId: 's1', side: 'sell', symbol: 'BTC', product: 'BTC-USD', qty: held }, thin, now);
+    expect(order.partial).toBe(true);
+    expect(order.qty).toBeCloseTo(0.5, 8);
+    expect(account.positions.BTC.qty).toBeCloseTo(held - 0.5, 8);
+  });
+
+  it('no liquidity within the band → refused with a reason, nothing changes', () => {
+    const acc = createAccount(1000, now);
+    const empty = { ...q, book: { ...book, asks: [[110, 5]] as [number, number][] } };
+    const { account, order } = placeOrder(acc, { clientId: 'b3', side: 'buy', symbol: 'BTC', product: 'BTC-USD', notionalUsd: 50 }, empty, now);
+    expect(order.status).toBe('rejected');
+    expect(account.cash).toBe(1000);
+  });
+
+  it('stale book falls back to the cost model and says so', () => {
+    const acc = createAccount(1000, now);
+    const old = { ...q, book: { ...book, ts: now - 120_000 } };
+    const { order } = placeOrder(acc, { clientId: 'b4', side: 'buy', symbol: 'BTC', product: 'BTC-USD', notionalUsd: 50 }, old, now);
+    expect(order.fillModel).toBe('model');
+    expect(order.partial).toBeUndefined();
+  });
+});

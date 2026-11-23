@@ -116,7 +116,7 @@ export function WalletAccounts({ addresses, network, rpc }: { addresses: Partial
         {receive && addresses[receive] && (
           <div className="space-y-3">
             <p className="rounded-xl bg-amber-500/10 p-3 text-sm text-amber-300">Only send {NETWORK_LABEL[receive][network]} coins to this address. Coins from another network can be lost.</p>
-            <p className="break-all rounded-xl bg-ink-900 p-3 font-mono text-sm text-white" aria-label="Your address">{addresses[receive]}</p>
+            <p className="break-all rounded-xl bg-ink-900 p-3 font-code text-sm text-white" aria-label="Your address">{addresses[receive]}</p>
             <Button kind="primary" className="w-full" onClick={() => doCopy(addresses[receive]!)}>{copied === addresses[receive] ? 'Copied ✓' : 'Copy address'}</Button>
             <a href={explorerAddressUrl(receive, addresses[receive]!, network)} target="_blank" rel="noreferrer" className="flex min-h-[44px] items-center justify-center text-sm text-helix-400">View on block explorer</a>
           </div>
@@ -138,7 +138,7 @@ export function WalletAccounts({ addresses, network, rpc }: { addresses: Partial
                   <li key={t.id}>
                     <a href={t.url} target="_blank" rel="noreferrer" className="flex min-h-[52px] items-center justify-between gap-3 py-2 text-sm">
                       <span>
-                        <span className="block font-mono text-xs text-slate-300">{t.id.slice(0, 10)}…{t.id.slice(-6)}</span>
+                        <span className="block font-code text-xs text-slate-300">{t.id.slice(0, 10)}…{t.id.slice(-6)}</span>
                         <span className="block text-xs text-slate-500">{t.confirmed ? 'Confirmed' : 'Pending'}{t.when ? ` · ${fmtAge(t.when)}` : ''}</span>
                       </span>
                       {t.amount !== null && <span className={`font-mono ${t.amount >= 0 ? 'text-up' : 'text-down'}`}>{t.amount >= 0 ? '▲ +' : '▼ −'}{Math.abs(t.amount)}</span>}

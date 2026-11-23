@@ -57,20 +57,23 @@ export default function TradeSheet({
   return (
     <Sheet open={open} onClose={onClose} title={`${side === 'buy' ? 'Buy' : 'Sell'} ${name}`}>
       <div className="flex items-center gap-2">
-        <span className="rounded-md border border-dashed border-paper px-2 py-0.5 text-[11px] font-bold tracking-wider text-paper">PAPER ORDER</span>
+        <span className="eyebrow text-paper">Paper order</span>
         <span className="text-xs text-slate-400">Simulated. No real order is sent.</span>
       </div>
 
       {!account ? (
         <div className="space-y-3">
           <p className="text-sm text-slate-300">Open a paper account first to practise trading with simulated money.</p>
-          <Link to="/" onClick={onClose} className="flex min-h-[48px] items-center justify-center rounded-xl bg-helix-400 text-sm font-semibold text-ink-900">
+          <Link to="/" onClick={onClose} className="flex min-h-[48px] items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">
             Open paper account on Home
           </Link>
         </div>
       ) : result?.status === 'filled' ? (
         <div className="space-y-3" role="status">
-          <p className="text-base font-semibold text-up">✓ Paper {result.side === 'buy' ? 'buy' : 'sell'} filled</p>
+          <p className={`text-base font-semibold ${result.partial ? 'text-paper' : 'text-up'}`}>
+            ✓ Paper {result.side === 'buy' ? 'buy' : 'sell'} {result.partial ? 'partly filled' : 'filled'}
+          </p>
+          {result.partial && <p className="text-sm text-slate-300">{result.reason}. The rest was not filled and no money was taken for it.</p>}
           <dl className="grid grid-cols-2 gap-y-1 text-sm">
             <dt className="text-slate-400">Amount</dt>
             <dd className="text-right font-mono text-white">{result.qty.toFixed(8)} {symbol}</dd>
@@ -80,6 +83,8 @@ export default function TradeSheet({
             <dd className="text-right"><Money v={result.feeUsd} className="text-white" /></dd>
             <dt className="text-slate-400">{result.side === 'buy' ? 'Cash spent' : 'Cash received'}</dt>
             <dd className="text-right"><Money v={result.cashUsd} className="text-white" /></dd>
+            <dt className="text-slate-400">Spread &amp; price impact</dt>
+            <dd className="text-right"><Money v={result.slippageUsd} className="text-white" /></dd>
             {result.realizedPnl !== undefined && (
               <>
                 <dt className="text-slate-400">Realized P&amp;L</dt>
@@ -89,6 +94,11 @@ export default function TradeSheet({
               </>
             )}
           </dl>
+          <p className="text-xs text-slate-500">
+            {result.fillModel === 'book'
+              ? 'Simulated against the live Coinbase order book at the time of your order. No real order was sent.'
+              : 'Order book unavailable, so the standard cost assumption was used (0.05% spread and slippage). No real order was sent.'}
+          </p>
           <Button kind="primary" className="w-full" onClick={onClose}>Done</Button>
         </div>
       ) : (
@@ -139,7 +149,7 @@ export default function TradeSheet({
           )}
 
           {result?.status === 'rejected' && (
-            <p role="alert" className="rounded-xl bg-down/15 p-3 text-sm text-[#F7A3A3]">{result.reason}</p>
+            <p role="alert" className="border-l-2 border-down py-1 pl-3 text-sm text-slate-200">{result.reason}</p>
           )}
           {stale && <Note tone="warn">Waiting for a live price{priceTs ? ` (last ${fmtAge(priceTs)})` : ''}…</Note>}
           {value && account.halted && <Note tone="warn">Paper trading is paused. Resume it in Bot → Risk.</Note>}
@@ -147,7 +157,7 @@ export default function TradeSheet({
           <Button kind="primary" className="w-full" onClick={submit} disabled={busy || !num || stale}>
             {busy ? 'Placing…' : `Place paper ${side}`}
           </Button>
-          <Note>Fills at the live Coinbase price plus a 0.05% spread/slippage estimate and a 0.60% fee. Limits: $1 minimum; one coin up to 50% of your paper account.</Note>
+          <Note>Fills against the live Coinbase order book (never more than 2% from the price; anything beyond that stays unfilled) plus a 0.60% fee. If the book cannot be loaded, a 0.05% spread/slippage estimate is used. Limits: $1 minimum; one coin up to 50% of your paper account.</Note>
         </div>
       )}
     </Sheet>

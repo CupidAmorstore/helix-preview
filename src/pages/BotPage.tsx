@@ -15,7 +15,7 @@ function Row({ k, v, vClass = 'text-white' }: { k: string; v: React.ReactNode; v
   return (
     <div className="flex items-baseline justify-between gap-3 py-1.5 text-sm">
       <dt className="text-slate-400">{k}</dt>
-      <dd className={`text-right font-mono tabular-nums ${vClass}`}>{v}</dd>
+      <dd className={`text-right font-mono ${vClass}`}>{v}</dd>
     </div>
   );
 }
@@ -31,17 +31,33 @@ function Overview() {
   const data = useBotData();
 
   return (
-    <div className="space-y-4">
-      <Panel>
-        <div className="flex items-start gap-3">
-          <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full bg-paper" aria-hidden="true" />
-          <div className="space-y-1">
-            <p className="text-lg font-semibold text-white">Stopped · no approved strategy</p>
-            <p className="text-sm text-slate-300">
-              The bot researched {head.tested} strategies. {head.qualified === 0 ? 'None passed every safety test, so it holds 100% cash and places no trades.' : `${head.qualified} passed.`}
-            </p>
-          </div>
+    <div className="space-y-8">
+      <section className="space-y-4" aria-labelledby="bot-state">
+        <div className="space-y-2">
+          <p className="eyebrow flex items-center gap-2 text-paper"><span className="h-1.5 w-1.5 rounded-full bg-paper" aria-hidden="true" />Holding cash</p>
+          <h2 id="bot-state" className="text-[26px] font-semibold leading-tight tracking-tight text-white">
+            {head.qualified === 0 ? 'No strategy has earned the right to trade yet.' : `${head.qualified} strategies approved for paper trading.`}
+          </h2>
+          <p className="text-[15px] leading-relaxed text-slate-400">
+            Every idea is tested on data it has never seen, with real fees. {head.qualified === 0 ? 'None passed every test, so the bot places no trades.' : ''}
+          </p>
         </div>
+        {/* research funnel: the one number set that explains the bot */}
+        <dl className="grid grid-cols-3 border-y border-ink-600">
+          {[
+            ['Tested', head.tested, 'text-white'],
+            ['Reached unseen test', head.reachedTest, 'text-white'],
+            ['Approved', head.qualified, head.qualified ? 'text-up' : 'text-paper']
+          ].map(([k, v, c]) => (
+            <div key={k as string} className="py-3 [&:not(:first-child)]:border-l [&:not(:first-child)]:border-ink-600 [&:not(:first-child)]:pl-3">
+              <dd className={`font-mono text-[28px] font-semibold leading-none ${c}`}>{v as number}</dd>
+              <dt className="mt-1.5 text-xs text-slate-500">{k as string}</dt>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <Panel title="Research data">
         <dl className="divide-y divide-ink-600">
           <Row k="Last research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
           <Row k="Research data age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 ? 'text-amber-400' : 'text-white'} />
@@ -56,9 +72,15 @@ function Overview() {
         </dl>
         <div className="flex items-center justify-between gap-3 pt-2">
           <p className="text-xs text-slate-400" aria-live="polite">
-            {data.loading ? 'Checking for new research…' : data.error ? `Feed not reachable (${data.error}) · showing the newest copy we have` : data.checkedAt ? `Checked ${fmtAge(data.checkedAt)}` : 'Not checked yet'}
+            {data.loading
+              ? 'Checking for new research…'
+              : data.error
+                ? 'No newer research online right now. Showing the latest copy on this phone.'
+                : data.checkedAt
+                  ? `Up to date · checked ${fmtAge(data.checkedAt)}`
+                  : 'Not checked yet'}
           </p>
-          <button type="button" onClick={() => void data.refresh()} disabled={data.loading} className="min-h-[44px] shrink-0 rounded-lg border border-ink-600 px-3 text-sm font-medium text-helix-400 disabled:opacity-50">
+          <button type="button" onClick={() => void data.refresh()} disabled={data.loading} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm font-medium text-white disabled:opacity-50">
             Check now
           </button>
         </div>
@@ -99,7 +121,7 @@ function Overview() {
           <Row k="Leverage · borrowing" v="None" />
         </dl>
         {account && (
-          <div className="space-y-2 rounded-xl bg-ink-900 p-3">
+          <div className="space-y-2 pt-2">
             <p className="text-sm text-white">Your paper account: {account.halted ? 'trading paused' : 'trading allowed'}</p>
             <Button kind={account.halted ? 'primary' : 'danger'} className="w-full" onClick={() => pause(!account.halted)}>
               {account.halted ? 'Resume paper trading' : 'Pause all paper trading'}
@@ -109,17 +131,20 @@ function Overview() {
       </Panel>
 
       <Panel title="Market mood · daily">
-        <div className="flex flex-wrap gap-2">
+        <ul className="grid grid-cols-2 gap-x-6">
           {regimes.map(({ base, regime }) => (
-            <span key={base} className={`rounded-full px-3 py-1.5 text-xs ${regime.trend === 'down' ? 'bg-down/15 text-[#F7A3A3]' : regime.trend === 'up' ? 'bg-up/15 text-[#7EE0B8]' : 'bg-ink-700 text-slate-300'}`}>
-              {base} {regime.trend === 'up' ? '▲ uptrend' : regime.trend === 'down' ? '▼ downtrend' : 'range'}
-            </span>
+            <li key={base} className="flex min-h-[36px] items-center justify-between border-b border-ink-600 text-sm">
+              <span className="font-semibold text-white">{base}</span>
+              <span className={regime.trend === 'down' ? 'text-down' : regime.trend === 'up' ? 'text-up' : 'text-slate-400'}>
+                {regime.trend === 'up' ? '▲ Up' : regime.trend === 'down' ? '▼ Down' : '— Sideways'}
+              </span>
+            </li>
           ))}
-        </div>
+        </ul>
         <Note>From the last research run. The strategies only buy (no short selling), so downtrends mean fewer entries.</Note>
       </Panel>
 
-      <Link to="/bot/research" className="flex min-h-[52px] items-center justify-between rounded-2xl border border-ink-600 bg-ink-800 px-4 text-sm text-white">
+      <Link to="/bot/research" className="flex min-h-[52px] items-center justify-between border-y border-ink-600 text-sm text-white">
         <span>Research Lab <span className="text-slate-400">· advanced: every test, dataset and run</span></span>
         <span aria-hidden="true" className="text-slate-400">›</span>
       </Link>
@@ -131,23 +156,25 @@ function Strategies() {
   const ev = strategyEvidence(bot());
   const [open, setOpen] = useState<string | null>(null);
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <Note>Each strategy was tested on 10 coins (daily and hourly data) with 0.60% fees plus spread, on data split into training, validation and a final unseen test. None qualified for paper trading.</Note>
       {ev.map((e) => {
         const p = e.pooledDaily;
         const isOpen = open === e.info.family;
         return (
-          <section key={e.info.family} className="rounded-2xl border border-ink-600 bg-ink-800">
-            <button type="button" onClick={() => setOpen(isOpen ? null : e.info.family)} aria-expanded={isOpen} className="flex w-full items-start gap-3 p-4 text-left">
+          <section key={e.info.family} className="border-t border-ink-600 last-of-type:border-b">
+            <button type="button" onClick={() => setOpen(isOpen ? null : e.info.family)} aria-expanded={isOpen} className="flex w-full items-start gap-3 py-4 text-left">
               <span className="min-w-0 flex-1 space-y-1">
                 <span className="block text-sm font-semibold text-white">{e.info.name}</span>
                 <span className="block text-xs text-slate-400">{e.info.objective}</span>
                 <span className="block text-xs text-slate-500">{e.info.style} · risk {e.info.risk} · {e.tested} tests · {e.reachedTest} reached the final test</span>
               </span>
-              <span className="shrink-0 rounded-full bg-down/15 px-2 py-0.5 text-xs text-[#F7A3A3]">{e.qualified ? 'Approved' : 'Rejected'}</span>
+              <span className={`shrink-0 text-xs font-semibold ${e.qualified ? 'text-up' : e.tested ? 'text-down' : 'text-slate-400'}`}>
+                {e.qualified ? 'Approved' : e.tested ? 'Rejected' : 'Not tested'} <span aria-hidden="true" className="text-slate-500">{isOpen ? '−' : '+'}</span>
+              </span>
             </button>
             {isOpen && (
-              <div className="space-y-3 border-t border-ink-600 p-4">
+              <div className="space-y-3 pb-4">
                 {p && (
                   <dl className="divide-y divide-ink-600">
                     <Row k="Training (all 10 coins, daily)" v={pct(p.trainNet)} vClass={tone(p.trainNet)} />
@@ -158,7 +185,7 @@ function Strategies() {
                   </dl>
                 )}
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-slate-400">Why it was rejected</p>
+                  <p className="eyebrow text-slate-500">Why it was rejected</p>
                   <ul className="mt-1 space-y-1 text-sm">
                     {e.reasons.map((r) => (
                       <li key={r.text} className="flex gap-3"><span className="w-10 shrink-0 font-mono text-slate-400">{r.count}×</span><span className="text-slate-200">{r.text}</span></li>
@@ -179,7 +206,7 @@ function Strategies() {
 function Activity() {
   const runs = bot().runs;
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       <Panel title="Bot trades">
         <p className="text-sm text-slate-300">No bot trades yet. The bot only trades strategies that pass every test, and none has.</p>
       </Panel>
@@ -197,9 +224,24 @@ function Activity() {
       <Panel title="Risk-control interventions">
         <p className="text-sm text-slate-300">None. No limit was hit because no trades were placed.</p>
       </Panel>
-      <Panel title={`Tracking accounts (${bot().paper.length})`}>
-        <p className="text-sm text-slate-300">Each follows one rejected strategy forward with $1,000 of simulated money, to check that rejecting it was right.</p>
-        <Note>{bot().paper.reduce((s, a) => s + a.entries, 0)} entries so far · they act once each daily bar closes.</Note>
+      <Panel title={`Forward experiments (${bot().paper.length})`}>
+        <p className="text-sm text-slate-300">Each follows one rejected strategy forward with $1,000 of simulated money, to check that rejecting it was right. They act once each daily bar closes.</p>
+        <ul className="divide-y divide-ink-600">
+          {bot().paper.map((a) => (
+            <li key={a.id} className="flex min-h-[52px] items-center justify-between gap-3 py-2 text-sm">
+              <span className="min-w-0">
+                <span className="block truncate text-slate-200">{a.label}</span>
+                <span className="block text-xs text-slate-500">
+                  {a.barsProcessed} bars · {a.trades} trades · {a.openPosition ? 'in a position' : 'in cash'}{a.killSwitch ? ' · stopped by kill switch' : ''}
+                </span>
+              </span>
+              <span className={`shrink-0 font-mono ${a.netReturnPct > 0 ? 'text-up' : a.netReturnPct < 0 ? 'text-down' : 'text-slate-400'}`}>
+                {a.netReturnPct === 0 ? '0.00%' : `${a.netReturnPct > 0 ? '+' : '−'}${Math.abs(a.netReturnPct).toFixed(2)}%`}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <Note>Forward results after fees. Not real trades.</Note>
       </Panel>
     </div>
   );
@@ -210,8 +252,8 @@ export default function BotPage() {
   const [params, setParams] = useSearchParams();
   const tab = (['overview', 'strategies', 'activity'].includes(params.get('tab') ?? '') ? params.get('tab') : 'overview') as Tab;
   return (
-    <div className="mx-auto max-w-xl space-y-4 fade-in">
-      <h1 className="text-xl font-semibold text-white">Trading Bot</h1>
+    <div className="mx-auto max-w-xl space-y-5">
+      <h1 className="text-[26px] font-semibold tracking-tight text-white">Trading Bot</h1>
       <Segmented
         label="Bot sections"
         value={tab}

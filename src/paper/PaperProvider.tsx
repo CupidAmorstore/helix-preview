@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { getSetting, setSetting } from '../services/storage';
 import { MARKET_COINS } from '../services/market';
 import { useLiveFeed, type LiveFeed } from '../hooks/useLivePrices';
+import { fetchBook } from './book';
 import { createAccount, placeOrder, recordEquity, setHalted, valueAccount, type OrderRequest, type PaperAccount, type PaperOrder } from './engine';
 
 const KEY = 'paper_account_v1';
@@ -66,7 +67,8 @@ export function PaperProvider({ children }: { children: React.ReactNode }) {
     async (req: OrderRequest, price: number, ts: number) => {
       const acc = accRef.current;
       if (!acc) throw new Error('Open a paper account first');
-      const r = placeOrder(acc, req, { symbol: req.symbol, product: req.product, price, ts }, Date.now());
+      const book = await fetchBook(req.product);
+      const r = placeOrder(accRef.current ?? acc, req, { symbol: req.symbol, product: req.product, price, ts, book: book ?? undefined }, Date.now());
       if (!r.duplicate) await persist(r.account);
       return r.order;
     },

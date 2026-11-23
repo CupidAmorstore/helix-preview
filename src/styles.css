@@ -36,8 +36,25 @@ body {
 }
 
 .app-topbar {
-  backdrop-filter: blur(18px);
-  background: rgba(9, 13, 20, 0.75);
+  background: #0F0F0D;
+}
+
+/* figures: tabular, slightly tightened; never monospace */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.005em;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+:focus-visible {
+  outline: 2px solid #B6C3FF;
+  outline-offset: 2px;
 }
 
 .light .app-topbar {
@@ -54,7 +71,7 @@ body {
 }
 
 .glow-ring {
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35), 0 0 18px rgba(16, 185, 129, 0.4);
+  box-shadow: none;
 }
 
 .fade-in {

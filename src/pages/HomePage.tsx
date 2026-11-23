@@ -25,32 +25,32 @@ function Sparkline({ values, up }: { values: number[]; up: boolean }) {
   const pts = values.map((v, i) => `${(i / (values.length - 1)) * 56},${22 - ((v - min) / (max - min || 1)) * 20}`).join(' ');
   return (
     <svg viewBox="0 0 56 24" className="h-6 w-14" aria-hidden="true">
-      <polyline fill="none" stroke={up ? '#35C48F' : '#F26E6E'} strokeWidth="1.6" points={pts} />
+      <polyline fill="none" stroke={up ? '#4CC38A' : '#F07A6A'} strokeWidth="1.4" points={pts} />
     </svg>
   );
 }
 
-const more = 'inline-flex min-h-[44px] items-center text-sm font-medium text-helix-400';
+const more = 'inline-flex min-h-[44px] items-center text-sm font-medium text-helix-400 underline-offset-4 hover:underline';
 
 function OpenAccount() {
   const { start } = usePaper();
   const [cap, setCap] = useState<number>(1000);
   const [busy, setBusy] = useState(false);
   return (
-    <section className="space-y-4 rounded-2xl border border-ink-600 bg-ink-800 p-4">
-      <div className="space-y-1">
-        <span className="rounded-md border border-dashed border-paper px-2 py-0.5 text-[11px] font-bold tracking-wider text-paper">PAPER MONEY</span>
-        <h1 className="pt-2 text-xl font-semibold text-white">Practise trading without risking money</h1>
-        <p className="text-sm text-slate-400">
+    <section className="space-y-5 pb-2">
+      <div className="space-y-2">
+        <p className="eyebrow text-paper">Paper account</p>
+        <h1 className="text-[30px] font-semibold leading-[1.1] tracking-tight text-white">Practise trading without risking money.</h1>
+        <p className="text-[15px] leading-relaxed text-slate-400">
           A paper account uses simulated dollars at live prices, with real fees modelled. Nothing is sent to an exchange.
         </p>
       </div>
       <fieldset className="space-y-2">
-        <legend className="text-sm text-slate-300">Starting balance</legend>
-        <div className="grid grid-cols-3 gap-2">
+        <legend className="eyebrow pb-1 text-slate-400">Starting balance</legend>
+        <div className="grid grid-cols-3 border-l border-t border-ink-600">
           {STARTING_CAPITAL_OPTIONS.map((c) => (
             <button key={c} type="button" aria-pressed={cap === c} onClick={() => setCap(c)}
-              className={`min-h-[48px] rounded-xl border font-mono text-sm ${cap === c ? 'border-helix-400 bg-helix-400/15 text-helix-300' : 'border-ink-600 text-slate-300'}`}>
+              className={`min-h-[52px] border-b border-r border-ink-600 font-mono text-[15px] ${cap === c ? 'bg-white text-ink-900 font-semibold' : 'text-slate-300'}`}>
               ${c.toLocaleString()}
             </button>
           ))}
@@ -125,20 +125,20 @@ export default function HomePage() {
   const showWatched = watched && (watched.addresses > 0 || (watched.snap && watched.snap.totalUsd > 0));
 
   return (
-    <div className="mx-auto max-w-xl space-y-4 fade-in">
+    <div className="mx-auto max-w-xl space-y-7">
       {/* 1. Paper account: what you have, what it did, what you can do */}
       {loading ? (
-        <div className="h-48 animate-pulse rounded-2xl bg-ink-800" aria-label="Loading account" />
+        <div className="h-48 animate-pulse bg-ink-800" aria-label="Loading account" />
       ) : !account || !value ? (
         <OpenAccount />
       ) : (
         <section className="space-y-3" aria-labelledby="acct">
           <div className="flex items-center justify-between">
-            <h1 id="acct" className="text-sm text-slate-400">Paper account · simulated money</h1>
+            <h1 id="acct" className="eyebrow text-slate-400">Paper account · simulated money</h1>
             {account.halted && <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-400">Paused</span>}
           </div>
           <div>
-            <div className="font-mono text-4xl font-medium tracking-tight text-white tabular-nums">
+            <div className="font-mono text-[44px] font-semibold leading-none tracking-tight text-white">
               <Money v={value.equity} />
             </div>
             <div className="mt-1 flex flex-wrap items-center gap-x-2 text-sm">
@@ -149,39 +149,39 @@ export default function HomePage() {
           </div>
           {chart ? (
             <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" role="img" aria-label={`Paper account value, ${range}`}>
-              <line x1="0" x2="300" y1={chart.base} y2={chart.base} stroke="#253142" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-              <polyline fill="none" stroke={chart.up ? '#35C48F' : '#F26E6E'} strokeWidth="2" points={chart.line} vectorEffect="non-scaling-stroke" />
+              <line x1="0" x2="300" y1={chart.base} y2={chart.base} stroke="#46443D" strokeDasharray="3 5" vectorEffect="non-scaling-stroke" />
+              <polyline fill="none" stroke={chart.up ? '#4CC38A' : '#F07A6A'} strokeWidth="1.75" points={chart.line} vectorEffect="non-scaling-stroke" />
             </svg>
           ) : (
-            <p className="rounded-xl border border-dashed border-ink-600 p-3 text-xs text-slate-400">
+            <p className="border-y border-ink-600 py-3 text-xs text-slate-400">
               The value chart builds up as your account is valued (about once an hour while the app is open).
             </p>
           )}
-          <div role="radiogroup" aria-label="Chart range" className="flex gap-1">
+          <div role="radiogroup" aria-label="Chart range" className="flex gap-6">
             {RANGES.map((r) => (
               <button key={r.key} type="button" role="radio" aria-checked={range === r.key} onClick={() => setRange(r.key)}
-                className={`min-h-[36px] flex-1 rounded-lg font-mono text-xs ${range === r.key ? 'bg-ink-700 text-white' : 'text-slate-400'}`}>
+                className={`min-h-[44px] font-mono text-xs ${range === r.key ? 'font-semibold text-white underline decoration-2 underline-offset-[10px]' : 'text-slate-500'}`}>
                 {r.key}
               </button>
             ))}
           </div>
-          <dl className="grid grid-cols-2 gap-2 text-sm">
+          <dl className="grid grid-cols-2 border-t border-ink-600 text-sm">
             {[
               ['Cash available', value.cash],
               ['Invested', value.positionsValue],
               ['Realized P&L', value.realized],
               ['Fees paid', value.fees]
             ].map(([l, v]) => (
-              <div key={l as string} className="rounded-xl bg-ink-800 px-3 py-2">
-                <dt className="text-xs text-slate-400">{l}</dt>
-                <dd className="font-mono text-white"><Money v={v as number} /></dd>
+              <div key={l as string} className="border-b border-ink-600 py-2.5 odd:pr-3 even:border-l even:pl-3">
+                <dt className="text-xs text-slate-500">{l}</dt>
+                <dd className="font-mono text-base text-white"><Money v={v as number} /></dd>
               </div>
             ))}
           </dl>
-          <div className="grid grid-cols-3 gap-2">
-            <Link to="/markets" className="flex min-h-[48px] items-center justify-center rounded-xl bg-helix-400 text-sm font-semibold text-ink-900">Trade</Link>
-            <Link to="/alerts" className="flex min-h-[48px] items-center justify-center rounded-xl bg-ink-700 text-sm font-semibold text-white">Set alert</Link>
-            <Link to="/wallet" className="flex min-h-[48px] items-center justify-center rounded-xl bg-ink-700 text-sm font-semibold text-white">Wallet</Link>
+          <div className="flex gap-2">
+            <Link to="/markets" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">Trade</Link>
+            <Link to="/alerts" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">Set alert</Link>
+            <Link to="/wallet" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">Wallet</Link>
           </div>
         </section>
       )}
@@ -214,18 +214,20 @@ export default function HomePage() {
 
       {/* 2. Market: highlights + watchlist */}
       {movers && (
-        <div className="grid grid-cols-2 gap-2">
-          {[['Top mover', movers.top], ['Weakest', movers.bottom]].map(([label, m]) => {
+        <section aria-label="Market today" className="grid grid-cols-2 border-y border-ink-600">
+          {[['Strongest 24h', movers.top], ['Weakest 24h', movers.bottom]].map(([label, m]) => {
             const x = m as { sym: string; name: string; pct: number };
             return (
-              <Link key={label as string} to={`/markets/${x.sym}`} className="min-h-[64px] rounded-2xl border border-ink-600 bg-ink-800 p-3">
-                <span className="block text-xs text-slate-400">{label as string} · 24h</span>
-                <span className="block text-sm font-semibold text-white">{x.name}</span>
-                <Change pct={x.pct} className="text-sm" />
+              <Link key={label as string} to={`/markets/${x.sym}`} className="min-h-[64px] py-3 even:border-l even:border-ink-600 even:pl-4">
+                <span className="eyebrow block text-slate-500">{label as string}</span>
+                <span className="mt-1 flex items-baseline gap-2">
+                  <span className="text-[15px] font-semibold text-white">{x.sym}</span>
+                  <Change pct={x.pct} className="text-sm" />
+                </span>
               </Link>
             );
           })}
-        </div>
+        </section>
       )}
 
       <Panel title="Watchlist" action={<Link to="/markets" className={more}>All markets</Link>}>

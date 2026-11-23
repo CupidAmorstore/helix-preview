@@ -39,7 +39,7 @@ export default function ResearchLabPage() {
         </p>
       </header>
       <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label="Trading bot sections">
-        <div className="flex w-max gap-1 rounded-xl border border-white/10 bg-ink-800/60 p-1">
+        <div className="flex w-max gap-1 rounded-xl border border-ink-600 bg-ink-800/60 p-1">
           {TABS.map(([id, label]) => (
             <button
               key={id}
@@ -75,7 +75,7 @@ function ageLabel() {
 
 function ModeBanner() {
   return (
-    <p className="rounded-lg border border-dashed border-amber-500/50 px-3 py-2 text-xs text-amber-200">
+    <p className="border-l-2 border-paper py-1 pl-3 text-xs text-slate-300">
       Simulated money only. Simulated results are not earnings. Real-money trading is disabled.
     </p>
   );
@@ -167,9 +167,9 @@ function Overview() {
         <Card title="Market conditions (daily, last 48 bars)">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {regimes.map((m) => (
-              <div key={m.symbol} className="rounded-lg border border-white/10 px-3 py-2 text-xs">
+              <div key={m.symbol} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
                 <div className="font-semibold text-slate-200">{m.base}</div>
-                <div className={m.regime!.trend === 'up' ? 'text-mint-400' : m.regime!.trend === 'down' ? 'text-rose-400' : 'text-slate-400'}>
+                <div className={m.regime!.trend === 'up' ? 'text-up' : m.regime!.trend === 'down' ? 'text-rose-400' : 'text-slate-400'}>
                   {m.regime!.trend === 'range' ? 'Range' : m.regime!.trend === 'up' ? 'Uptrend' : 'Downtrend'}
                 </div>
                 <div className="text-slate-500">vol {m.regime!.volatility} · {m.regime!.realizedVolAnnPct.toFixed(0)}% ann.</div>
@@ -205,7 +205,7 @@ function Funnel() {
             <span className="text-slate-300">{label}</span>
             <span className="font-mono text-slate-400">{n}</span>
           </div>
-          <div className="h-2 rounded-full bg-white/5">
+          <div className="h-2 rounded-full bg-ink-800">
             <div className="h-2 rounded-full bg-mint-500/70" style={{ width: `${Math.max(1, (n / max) * 100)}%` }} />
           </div>
         </div>
@@ -242,7 +242,7 @@ function Strategies() {
         {rows.slice(0, 200).map((c) => {
           const id = `${c.scope}|${c.intervalMs}|${c.key}`;
           return (
-            <div key={id} className="rounded-xl border border-white/10 bg-ink-800/60">
+            <div key={id} className="rounded-xl border border-ink-600 bg-ink-800/60">
               <button type="button" onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm text-slate-100">{c.key.replace('POOLED:', '')}</div>
@@ -264,7 +264,7 @@ function Strategies() {
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" onClick={onClick} className={`rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-mint-300' : 'border-white/10 text-slate-400'}`}>
+    <button type="button" onClick={onClick} className={`rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-helix-400' : 'border-ink-600 text-slate-400'}`}>
       {children}
     </button>
   );
@@ -283,7 +283,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
   ] as const;
   const dd = (w?: CandidateRow['train']) => (w ? (w.maxDrawdown ?? w.maxDrawdownBound) : undefined);
   return (
-    <div className="space-y-3 border-t border-white/10 px-4 py-3 text-xs">
+    <div className="space-y-3 border-t border-ink-600 px-4 py-3 text-xs">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[520px] text-left">
           <thead className="text-slate-500">
@@ -339,7 +339,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
             {c.rejectionReasons.map((r) => <li key={r}>{r}</li>)}
           </ul>
         ) : (
-          <div className="text-mint-300">Passed all gates → forward paper trading. Not approved for real money.</div>
+          <div className="text-helix-400">Passed all gates → forward paper trading. Not approved for real money.</div>
         )}
       </div>
     </div>
@@ -353,11 +353,11 @@ function Lab() {
       <Card title="Research runs">
         <div className="space-y-3">
           {bot().runs.map((r) => (
-            <div key={r.runId} className="rounded-lg border border-white/10 p-3 text-xs">
-              <div className="font-mono text-slate-200">{r.runId}</div>
+            <div key={r.runId} className="rounded-lg border border-ink-600 p-3 text-xs">
+              <div className="font-code text-slate-200">{r.runId}</div>
               <div className="mt-1 text-slate-400">
                 {r.totals.markets} markets · {r.totals.oosCandidates} new candidates · {r.totals.configsTried} parameter sets on training ·{' '}
-                <span className={r.totals.qualified ? 'text-mint-400' : 'text-amber-400'}>{r.totals.qualified} qualified</span> · gates {r.gates}
+                <span className={r.totals.qualified ? 'text-up' : 'text-amber-400'}>{r.totals.qualified} qualified</span> · gates {r.gates}
               </div>
             </div>
           ))}
@@ -379,8 +379,8 @@ function Lab() {
                   <td className="py-1.5">{m.symbol}</td>
                   <td>{ivLabel(m.intervalMs)}</td>
                   <td className="font-mono">{m.quality.bars}</td>
-                  <td className={`font-mono ${m.quality.score >= 90 ? 'text-mint-400' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
-                  <td className="font-mono text-slate-500">{m.datasetId}</td>
+                  <td className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
+                  <td className="font-code text-slate-500">{m.datasetId}</td>
                   <td className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
                 </tr>
               ))}
@@ -389,7 +389,7 @@ function Lab() {
         </div>
         <p className="mt-3 text-xs text-slate-500">
           Source: Coinbase Exchange public candles (no key). Gaps are never filled; only the trailing contiguous run is tested. Datasets are
-          stored in <span className="font-mono">research/data/</span> with content hashes for reproducibility.
+          stored in <span className="font-code">research/data/</span> with content hashes for reproducibility.
         </p>
       </Card>
       <Card title="Run research yourself">
@@ -449,7 +449,7 @@ function Watchbot() {
       <Card
         title="Cross-venue price check"
         right={
-          <button type="button" onClick={refresh} disabled={state === 'loading'} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-slate-200">
+          <button type="button" onClick={refresh} disabled={state === 'loading'} className="rounded-lg border border-ink-600 px-3 py-1.5 text-xs text-slate-200">
             {state === 'loading' ? 'Checking…' : 'Check live quotes'}
           </button>
         }
@@ -558,7 +558,7 @@ function Risk() {
                   <td className="py-1.5 font-mono text-slate-200">${cap}</td>
                   {venues.map((v) => {
                     const f = feas.find((x) => x.capitalUsd === cap && x.note.startsWith(v + ':'))!;
-                    const tone = f.verdict === 'tradable' ? 'text-mint-400' : f.verdict === 'single_position_only' ? 'text-amber-400' : 'text-rose-400';
+                    const tone = f.verdict === 'tradable' ? 'text-up' : f.verdict === 'single_position_only' ? 'text-amber-400' : 'text-rose-400';
                     return (
                       <td key={v} className={tone}>
                         {f.verdict.replace(/_/g, ' ')}
@@ -587,7 +587,7 @@ function Activity() {
         </p>
         <div className="space-y-2">
           {bot().paper.map((a) => (
-            <details key={a.id} className="rounded-lg border border-white/10 px-3 py-2 text-xs">
+            <details key={a.id} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
                 <span className="min-w-0 truncate text-slate-200">{a.label}</span>
                 <span className="flex shrink-0 items-center gap-2">
@@ -617,7 +617,7 @@ function Activity() {
         <ul className="space-y-1.5 text-xs text-slate-400">
           <li><span className="font-mono text-slate-500">{dateTime(bot().generatedAt)}</span> snapshot written by code {bot().codeVersion.slice(0, 12)}</li>
           {bot().runs.map((r) => (
-            <li key={r.runId}><span className="font-mono text-slate-500">{r.runId}</span> — {r.totals.oosCandidates} evaluated, {r.totals.qualified} qualified</li>
+            <li key={r.runId}><span className="font-code text-slate-500">{r.runId}</span> — {r.totals.oosCandidates} evaluated, {r.totals.qualified} qualified</li>
           ))}
           <li>{bot().datasets.length} stored datasets in research/data</li>
         </ul>
@@ -632,11 +632,11 @@ function Settings() {
     <div className="space-y-5">
       <Card title="Mode">
         <div className="space-y-2 text-sm text-slate-300">
-          <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
+          <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
             <span>Paper trading</span>
             <Pill status="qualified">On (locked)</Pill>
           </div>
-          <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
+          <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
             <span>Real-money trading</span>
             <Pill status="rejected">Off (locked)</Pill>
           </div>
@@ -649,7 +649,7 @@ function Settings() {
       <Card title="Exchange connections">
         <p className="text-sm text-slate-400">
           The bot uses public market data only and needs no API keys. Read-only portfolio connections are managed on the{' '}
-          <Link to="/connections" className="text-mint-400 underline">Connections</Link> page and are never used for orders.
+          <Link to="/connections" className="text-up underline">Connections</Link> page and are never used for orders.
         </p>
       </Card>
       <Card title="Research configuration">
@@ -700,7 +700,7 @@ function MeasuredCosts() {
                   <td className="font-display text-slate-400">{m.venue}</td>
                   <td>{m.halfSpreadBpsP75.toFixed(2)}</td>
                   <td>{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
-                  <td className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-mint-400' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
+                  <td className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-up' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
                 </tr>
               );
             })}
