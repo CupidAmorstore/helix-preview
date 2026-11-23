@@ -30,7 +30,7 @@ export default [
     }
   },
   {
-    ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**']
+    ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**', 'docs/qa/**']
   }
 ];
 
