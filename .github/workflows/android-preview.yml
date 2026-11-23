@@ -38,6 +38,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      # the web inspection page (screenshots) is for the public site only
+      - run: rm -rf dist/inspect
       - run: npx cap sync android
       - name: Build debug APK
         working-directory: android

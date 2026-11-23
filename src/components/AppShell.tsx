@@ -11,7 +11,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col gap-6 border-r border-white/10 px-6 py-8">
         <div className="flex items-center gap-3">
-          <img src="/assets/helix_logo.png" alt="" className="h-8 w-8" />
+          <img src={`${import.meta.env.BASE_URL}assets/helix_logo.png`} alt="" className="h-8 w-8" />
           <div className="text-lg font-semibold tracking-wide">HELIX</div>
         </div>
         <nav className="flex flex-col gap-1 text-sm" aria-label="Main">

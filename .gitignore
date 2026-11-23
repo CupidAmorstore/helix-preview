@@ -24,3 +24,4 @@ deploy-*.zip
 # OS
 .DS_Store
 Thumbs.db
+dist-pages

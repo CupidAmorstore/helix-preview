@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HELIX app inspection</title>
+<meta name="description" content="Complete, text-first inspection of the HELIX crypto app: every screen with screenshots, features, data sources, rules, tests and known limitations.">
+<style>
+  :root { --bg:#0A0E15; --card:#121923; --line:#253142; --fg:#E7ECF3; --muted:#9AA6B9; --accent:#4CC9E8; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:24px max(16px, env(safe-area-inset-left)); }
+  main { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 30px; line-height:1.2; margin: 0 0 8px; }
+  h2 { font-size: 22px; margin: 40px 0 8px; border-top:1px solid var(--line); padding-top:20px; }
+  h3 { font-size: 18px; margin: 0 0 6px; }
+  a { color: var(--accent); }
+  p, li { color: var(--fg); }
+  .muted { color: var(--muted); }
+  .screen { display:grid; grid-template-columns: 220px minmax(0,1fr); gap:20px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
+  .screen img { width:220px; height:auto; border-radius:10px; border:1px solid var(--line); }
+  table { border-collapse: collapse; width:100%; font-size:14px; }
+  th, td { text-align:left; border-bottom:1px solid var(--line); padding:6px 8px; vertical-align:top; }
+  th { color: var(--muted); font-weight:600; }
+  .tbl { overflow-x:auto; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
+  @media (max-width: 640px) { .screen { grid-template-columns: 1fr; } .screen img { width: 100%; max-width: 320px; } }
+</style>
+</head>
+<body>
+<main>
+
+<h1>HELIX — app inspection</h1>
+<p class="muted">Version: Android preview build #7 / web build from branch <code>ccr-8d17e0b5-yaqvtm</code> (code at commit <code>f46e701</code>), 23 November 2026. Screenshots are real captures of this build on a Pixel 7–sized screen.</p>
+
+<p><b>What HELIX is:</b> a mobile-first crypto app with five areas — Home, Markets, Bot, Wallet, More. Users can follow live markets, practise trading with a <b>paper account</b> (simulated money at live prices with modelled fees), use a <b>self-custody testnet wallet</b>, and see what the <b>Trading Bot</b> research engine found. <b>Real-money trading is disabled</b>; the code contains no exchange order functions.</p>
+
+<p><b>Links:</b> <a href="../">Open the live app</a> (needs JavaScript; data is stored only in your own browser) ·
+<a href="https://github.com/CupidAmorstore/helix-preview/tree/ccr-8d17e0b5-yaqvtm">Source code</a> ·
+<a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/docs/APP_QA_REPORT.md">QA report</a> ·
+<a href="https://github.com/CupidAmorstore/helix-preview/releases/tag/android-preview">Android APK (debug)</a></p>
+
+<h2>Navigation</h2>
+<div class="tbl"><table>
+<tr><th>Bottom tab</th><th>Route</th><th>Contains</th></tr>
+<tr><td>Home</td><td><code>/</code></td><td>Paper account, positions, movers, watchlist, bot summary, recent activity, watched addresses</td></tr>
+<tr><td>Markets</td><td><code>/markets</code>, <code>/markets/:symbol</code></td><td>Search and lists; coin pages with chart, stats and paper buy/sell</td></tr>
+<tr><td>Bot</td><td><code>/bot</code>, <code>/bot/research</code></td><td>Overview, Strategies, Activity; advanced Research Lab</td></tr>
+<tr><td>Wallet</td><td><code>/wallet</code></td><td>Self-custody guide, create/import, accounts, receive, history, checked sends</td></tr>
+<tr><td>More</td><td><code>/more</code></td><td>Holdings (watched addresses), Price alerts, Connections &amp; vault, Help &amp; legal</td></tr>
+</table></div>
+
+<h2>Screens</h2>
+
+<section class="screen"><img src="img/01-home-start.jpg" alt="Home before a paper account exists" loading="lazy"><div>
+<h3>Home — first visit</h3>
+<p>Explains paper trading and asks for a starting balance: $20, $50, $100, $250, $500 or $1,000 of simulated money. One button opens the account. Below: watchlist with live prices, bot summary.</p>
+<p class="muted">Source: <a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/src/pages/HomePage.tsx">HomePage.tsx</a></p>
+</div></section>
+
+<section class="screen"><img src="img/02-home-account.jpg" alt="Home with a paper account and one position" loading="lazy"><div>
+<h3>Home — with a paper account</h3>
+<ul>
+<li>Account value and profit/loss since start (sign and arrow, not colour alone)</li>
+<li>Value chart with 1D / 1W / 1M / All (valued about hourly; minimum 2% vertical range so tiny fee moves don't look like crashes)</li>
+<li>Cash available, invested, realized P&amp;L, fees paid</li>
+<li>Paper positions with value and P&amp;L; top and weakest mover (24h); watchlist with live price, 24h change and 24h sparkline</li>
+<li>Trading Bot status, recent paper orders (including refused ones), and watched addresses (only shown if the user tracks some)</li>
+</ul>
+<p class="muted">In this capture: $1,000 account after a $100 paper buy of BTC. Small loss = 0.60% fee + spread.</p>
+</div></section>
+
+<section class="screen"><img src="img/03-markets.jpg" alt="Markets list" loading="lazy"><div>
+<h3>Markets</h3>
+<ul>
+<li>Search across Coinbase's ~400 USD markets plus CoinGecko's top 100</li>
+<li>Lists: All, Watchlist, Gainers, Losers; sort by market cap, volume or 24h change</li>
+<li>Each row: logo, name, market cap, price, 24h change; "not on Coinbase" marked</li>
+<li>Footer states the source and age of the list; on rate limits a saved copy is shown with its age</li>
+</ul>
+<p class="muted">Data: CoinGecko (list), Coinbase Exchange WebSocket (live prices for main coins). Not yet available: network filters, DEX pools, new-listing feed.</p>
+</div></section>
+
+<section class="screen"><img src="img/04-asset-btc.jpg" alt="Bitcoin asset page" loading="lazy"><div>
+<h3>Coin page (e.g. Bitcoin)</h3>
+<ul>
+<li>Live price with 24h change in $ and %, feed status (Live / Reconnecting / Delayed)</li>
+<li>Chart with 1m, 5m, 15m, 1h, 4h, 1d, 1w (4h and 1w built from complete Coinbase candles)</li>
+<li>Paper buy / Paper sell; watch ☆; "Set a price alert" (pre-selects the coin)</li>
+<li>Your holdings: paper position (value, cost, unrealized P&amp;L) kept separate from watched read-only addresses</li>
+<li>Market stats: 24h high/low/volume (Coinbase), market cap and rank (CoinGecko), market type, data ages</li>
+</ul>
+<p class="muted">Source: <a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/src/pages/AssetPage.tsx">AssetPage.tsx</a></p>
+</div></section>
+
+<section class="screen"><img src="img/05-paper-ticket.jpg" alt="Paper buy ticket" loading="lazy"><div>
+<h3>Paper order ticket</h3>
+<p>Bottom sheet labelled <b>PAPER ORDER — no real order is sent</b>. Buy in dollars or sell in coins, quick amounts, and a preview before confirming: live price, coins received, 0.60% fee, ≈0.05% spread + slippage.</p>
+<p><b>Rules enforced</b> (<a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/src/paper/engine.ts">engine.ts</a>, 10 unit tests): $1 minimum; one coin at most 50% of the account; not more than available cash; prices older than 60 s refused; duplicate submits ignored (one ticket id per opening); pause switch blocks orders; every order, filled or refused, is logged with a reason.</p>
+</div></section>
+
+<section class="screen"><img src="img/06-paper-filled.jpg" alt="Paper buy filled" loading="lazy"><div>
+<h3>Paper fill confirmation</h3>
+<p>Shows amount, fill price, fee and cash spent (or received and realized P&amp;L for sells). Verified end to end: $100 buy → cash $900.00, fee $0.60; selling all at an almost unchanged price realized −$1.23 (two fees + spread).</p>
+</div></section>
+
+<section class="screen"><img src="img/07-bot-overview.jpg" alt="Bot overview" loading="lazy"><div>
+<h3>Bot — Overview</h3>
+<ul>
+<li>Status: <b>Stopped · no approved strategy</b>. The research engine tested 154 strategy variants on 10 coins; none passed every test, so it holds cash and trades nothing.</li>
+<li>Last research run, data age, where it runs (a computer, not the phone), data sources, mode (paper only; real money locked)</li>
+<li>Bot capital and P&amp;L: all zero, explained as "has not traded", not "broke even"</li>
+<li>Why it isn't trading: plain-language reasons with counts (e.g. too few test trades to trust, lost money after fees)</li>
+<li>Protections: position size, daily/weekly loss stops, drawdown kill switch, no leverage; working pause switch for the paper account</li>
+<li>Market mood from the last run; link to the Research Lab</li>
+</ul>
+</div></section>
+
+<section class="screen"><img src="img/08-bot-strategies.jpg" alt="Bot strategies" loading="lazy"><div>
+<h3>Bot — Strategies</h3>
+<p>Seven strategies in plain language: trend following, momentum with trend filter, momentum, breakout, calm-before-the-move breakout, buy the dip (Bollinger), oversold bounce (RSI). Each shows objective, style, risk class, number of tests and, when opened, results across all 10 coins on daily data — training, validation and the final unseen test, with trade counts — plus costs assumed and why it was rejected.</p>
+<p class="muted">Example: "Buy the dip" made +6.8% in validation but lost 38.2% on the unseen test (49 trades). All 7 are rejected; none is promoted automatically.</p>
+</div></section>
+
+<section class="screen"><img src="img/09-bot-activity.jpg" alt="Bot activity" loading="lazy"><div>
+<h3>Bot — Activity</h3>
+<p>Bot trades (none), research runs (hourly and daily data, tested and passed counts), risk-control interventions (none) and 14 tracking accounts that follow rejected strategies forward to check the decisions.</p>
+</div></section>
+
+<section class="screen"><img src="img/10-research-lab.jpg" alt="Research Lab" loading="lazy"><div>
+<h3>Research Lab (advanced)</h3>
+<p>The full research record: every candidate with train/validation/test metrics, datasets with quality scores, run assumptions, cross-exchange price check, risk tables and account-size feasibility ($20–$1,000). Source: <a href="https://github.com/CupidAmorstore/helix-preview/tree/ccr-8d17e0b5-yaqvtm/src/bot">src/bot</a> (walk-forward validation, cost stress, Bonferroni-adjusted bootstrap) and <a href="https://github.com/CupidAmorstore/helix-preview/tree/ccr-8d17e0b5-yaqvtm/research">research/</a> (stored datasets and run records).</p>
+</div></section>
+
+<section class="screen"><img src="img/11-wallet-start.jpg" alt="Wallet before a wallet exists" loading="lazy"><div>
+<h3>Wallet — first visit</h3>
+<p>Testnet by default (mainnet behind an explicit consent step). A 7-step guide explains what a wallet is, self-custody, testnet vs mainnet, creation, recovery and backup, network fees and sending. Create a 12/24-word wallet (with word verification) or import one; keys are encrypted with the vault password (Argon2id + AES-GCM) and stay on the device.</p>
+</div></section>
+
+<section class="screen"><img src="img/12-wallet-accounts.jpg" alt="Wallet accounts" loading="lazy"><div>
+<h3>Wallet — accounts and sending</h3>
+<ul>
+<li>Bitcoin, Ethereum and Solana accounts with the network named (e.g. "Ethereum Sepolia (test)"), live balances from public blockchain data, Receive, Copy and History</li>
+<li>Sending is checked before anything is signed (<a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/src/services/walletSafety.ts">walletSafety.ts</a>, 6 tests): address valid for the chain <i>and</i> network (a mainnet address is refused on testnet and vice versa); the RPC server's chain is verified (Ethereum chain id, Solana genesis hash); a review step shows amount, network and recipient before "Confirm send"</li>
+</ul>
+<p class="muted">This capture uses the public BIP-39 test phrase ("abandon … about"); never use it for real funds.</p>
+</div></section>
+
+<section class="screen"><img src="img/13-wallet-receive.jpg" alt="Receive sheet" loading="lazy"><div>
+<h3>Wallet — Receive</h3>
+<p>Full address, a warning to send only coins from the named network, Copy address, and a block-explorer link. History lists recent transactions (Bitcoin via Blockstream, Solana via RPC; Ethereum via an explorer link).</p>
+</div></section>
+
+<section class="screen"><img src="img/14-more.jpg" alt="More menu" loading="lazy"><div>
+<h3>More</h3>
+<p>Holdings (watched public addresses, read-only, with cost basis — P&amp;L only once a cost basis is entered), Price alerts, Connections &amp; vault (vault password, watched addresses, optional API keys for Etherscan/RPC), Help &amp; legal.</p>
+</div></section>
+
+<section class="screen"><img src="img/15-alerts.jpg" alt="Price alerts" loading="lazy"><div>
+<h3>Price alerts</h3>
+<p>Create above/below alerts on the main coins. <b>Limitation:</b> alerts trigger only while the app is open; background phone notifications are not implemented yet.</p>
+</div></section>
+
+<h2>Design system</h2>
+<p>Dark ink surfaces (#0A0E15 / #121923 / #19222F), one accent (Helix Cyan #4CC9E8), semantic up #35C48F / down #F26E6E / paper #E9A33C. Instrument Sans for text; IBM Plex Mono with tabular figures for every number. Every change shows a sign and ▲/▼. Shared components in <a href="https://github.com/CupidAmorstore/helix-preview/blob/ccr-8d17e0b5-yaqvtm/src/components/ui.tsx">ui.tsx</a>.</p>
+
+<h2>Testing evidence</h2>
+<ul>
+<li>84 automated tests (Vitest): paper engine, wallet derivation vectors (BIP84, Ethereum), wallet send checks, market data, feed reconnect, research engine (look-ahead, false-positive control, walk-forward), formatting</li>
+<li>Typecheck and lint clean; CI runs typecheck, lint, tests and build on every push</li>
+<li>Automated accessibility scan (axe-core, WCAG 2.2 AA rules): 0 violations on 15 routes; no horizontal overflow at 412 px</li>
+<li>End-to-end browser runs of every flow listed above</li>
+</ul>
+
+<h2>Known limitations</h2>
+<ul>
+<li>Not yet tested on a physical Android device (back gesture, TalkBack, performance)</li>
+<li>Price alerts don't notify in the background</li>
+<li>Older secondary pages (Connections, Alerts, Holdings) still use the previous layout</li>
+<li>Some controls are 36–43 px tall: above WCAG's 24 px minimum, below Android's 48 dp guidance</li>
+<li>No network filters, DEX liquidity pools or new-listing feed yet</li>
+<li>The bot's research data is a bundled snapshot; it does not run on the phone</li>
+<li>Debug-signed APK; legal pages contain placeholder text; not for public release</li>
+</ul>
+
+</main>
+</body>
+</html>

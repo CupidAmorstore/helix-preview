@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      # owner-requested public preview of the current app (paper trading only)
+      - ccr-8d17e0b5-yaqvtm
   workflow_dispatch:
 
 permissions:
@@ -22,13 +24,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm test
       - run: npm run build
         env:
-          VITE_BASE: /
+          # project site lives at https://cupidamorstore.github.io/helix-preview/
+          VITE_BASE: /helix-preview/
+      # single-page app: unknown paths (e.g. /markets/BTC) are served the app shell
+      - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
