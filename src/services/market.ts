@@ -64,9 +64,10 @@ export async function fetchCandles(product: string, timeframe: string): Promise<
 
 export type FeedStatus = 'connecting' | 'live' | 'reconnecting' | 'offline';
 
-/** Delay before reconnect attempt n (0-based): 1 s, 2 s, 4 s … capped at 30 s. */
+/** Delay before reconnect attempt n (0-based): 1 s, 2 s, 4 s, then every 5 s. Android WebView does not
+ * reliably fire online/offline events, so the retry timer is what brings prices back after a dropout. */
 export function reconnectDelay(attempt: number): number {
-  return Math.min(30_000, 1000 * 2 ** attempt);
+  return Math.min(5_000, 1000 * 2 ** attempt);
 }
 
 /**
@@ -128,9 +129,13 @@ export function connectTicker(
     if (ws && ws.readyState === 1) return;
     open();
   };
+  const onVisible = () => {
+    if (document.visibilityState === 'visible' && (!ws || ws.readyState > 1)) goOnline();
+  };
   if (typeof window !== 'undefined') {
     window.addEventListener('offline', goOffline);
     window.addEventListener('online', goOnline);
+    document.addEventListener('visibilitychange', onVisible);
   }
 
   open();
@@ -140,6 +145,7 @@ export function connectTicker(
       if (typeof window !== 'undefined') {
         window.removeEventListener('offline', goOffline);
         window.removeEventListener('online', goOnline);
+        document.removeEventListener('visibilitychange', onVisible);
       }
       if (timer) clearTimeout(timer);
       ws?.close();

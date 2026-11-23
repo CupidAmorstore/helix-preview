@@ -259,7 +259,7 @@ export default function HomePage() {
             })}
           </ul>
         )}
-        <Note>{feed.status === 'live' ? 'Live Coinbase prices · 24h change' : feed.status === 'offline' ? 'No connection · showing the last prices received' : feed.status === 'stale' ? 'Prices delayed' : 'Connecting to live prices…'}</Note>
+        <Note>{feed.status === 'live' ? 'Live Coinbase prices · 24h change' : feed.status === 'offline' ? 'No connection · showing the last prices received' : feed.status === 'stale' ? 'Prices delayed' : feed.status === 'reconnecting' ? 'Connection lost · retrying, showing the last prices received' : 'Connecting to live prices…'}</Note>
       </Panel>
 
       {/* 3. Bot: honest one-glance status */}

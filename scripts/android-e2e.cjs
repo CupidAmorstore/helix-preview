@@ -103,7 +103,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   await tab('Home').click(); await sleep(1500);
   await sh('svc wifi disable; svc data disable'); await sleep(8000);
   const off = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
-  check('offline state is shown', /No connection|delayed|Connecting/i.test(off), (off.match(/(No connection[^.]*|Prices delayed|Connecting[^.]*)/) || [''])[0]);
+  check('offline state is shown', /No connection|Connection lost|delayed/i.test(off), (off.match(/(No connection[^.]*|Prices delayed|Connecting[^.]*)/) || [''])[0]);
   await device.screenshot({ path: `${OUT}/${String(++n).padStart(2, '0')}-offline.png` });
   // a screen never opened before must still open offline in the APK (its code ships inside the app)
   await tab('Bot').click(); await sleep(1500);
