@@ -53,12 +53,19 @@ export type Registry = Record<string, { runId: string; status: string; reasons: 
 export const registryKey = (family: string, datasetId: string, symbol: string, intervalMs: number) =>
   `${family}|${symbol}|${intervalMs}|${datasetId}`;
 
-/** How many earlier tests already looked at this exact dataset's holdout (registry entries on the same content hash). */
-export const priorHoldoutLooks = (registry: Registry, datasetId: string) =>
-  Object.keys(registry).filter((k) => k.endsWith(`|${datasetId}`)).length;
+/**
+ * How many earlier tests already looked at this market's recent history on this timeframe. Keyed by
+ * market + interval, NOT dataset hash: a refreshed dataset (one new bar) has a new hash but a holdout that
+ * overlaps almost entirely with the one already inspected, so it is not fresh evidence.
+ */
+export const priorHoldoutLooks = (registry: Registry, symbol: string, intervalMs: number) =>
+  Object.keys(registry).filter((k) => {
+    const [, sym, iv] = k.split('|');
+    return sym === symbol && Number(iv) === intervalMs;
+  }).length;
 
 export const REUSED_HOLDOUT_REASON = (n: number) =>
-  `holdout already inspected by ${n} earlier test(s) on this exact dataset: not fresh evidence, needs forward paper results before qualifying`;
+  `recent history already inspected by ${n} earlier test(s) on this market/timeframe: not fresh evidence, needs forward paper results before qualifying`;
 
 /** A candidate whose test window was already inspected can never qualify from that window alone. */
 export function guardReusedHoldout<T extends { status: string; rejectionReasons: string[] }>(rep: T, looks: number): T {
@@ -133,7 +140,7 @@ export function runResearchCycle(args: {
         res.skipped.push({ family: f, reason: `contiguous history ${contiguous.length} < ${minBars} bars` });
         continue;
       }
-      const rep = guardReusedHoldout(evaluateFamily(contiguous, f, cost, bonferroniN), priorHoldoutLooks(args.registry, d.id));
+      const rep = guardReusedHoldout(evaluateFamily(contiguous, f, cost, bonferroniN), priorHoldoutLooks(args.registry, d.market.symbol, d.intervalMs));
       res.candidates.push(rep);
       registry[registryKey(f, d.id, d.market.symbol, d.intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
     }
@@ -142,14 +149,14 @@ export function runResearchCycle(args: {
 
   const series = eligible.map((p) => ({ symbol: p.d.market.symbol, candles: p.contiguous }));
   const pooled: PooledReport[] = pooledTodo.map((f) => {
-    const rep = guardReusedHoldout(evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, pooledId));
+    const rep = guardReusedHoldout(evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'POOLED', intervalMs));
     registry[registryKey(f, pooledId, 'POOLED', intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
     return rep;
   });
 
   let crossSectional: XsReport | undefined;
   if (xsTodo) {
-    crossSectional = guardReusedHoldout(evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, pooledId));
+    crossSectional = guardReusedHoldout(evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'XS', intervalMs) + priorHoldoutLooks(args.registry, 'POOLED', intervalMs));
     registry[xsKey] = { runId, status: crossSectional.status, reasons: crossSectional.rejectionReasons };
   }
   const all = [...markets.flatMap((m) => m.candidates), ...pooled, ...(crossSectional ? [crossSectional] : [])];
@@ -166,7 +173,7 @@ export function runResearchCycle(args: {
       'Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.',
       'Historical candles are indicative; executable depth was not verified.',
       'Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).',
-      'A holdout already inspected by earlier tests on the identical dataset is not fresh evidence: such candidates cannot qualify without forward paper results.',
+      'Recent history already inspected by earlier tests on the same market/timeframe (even with refreshed data) is not fresh evidence: such candidates cannot qualify without forward paper results.',
       'Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).',
       'Research capital normalised to $1,000; account-size feasibility evaluated separately.'
     ],

@@ -9,11 +9,14 @@ import { randomWalk } from './helpers';
 describe('reused holdout (data snooping across runs)', () => {
   it('a qualified candidate on an already-inspected dataset is downgraded, never qualified', () => {
     const reg: Registry = { 'sma_cross|BTC-USD|86400000|abc': { runId: 'r1', status: 'rejected', reasons: [] } };
-    expect(priorHoldoutLooks(reg, 'abc')).toBe(1);
-    expect(priorHoldoutLooks(reg, 'other')).toBe(0);
-    const rep = guardReusedHoldout({ status: 'qualified_paper_strategy', rejectionReasons: [] as string[] }, priorHoldoutLooks(reg, 'abc'));
+    expect(priorHoldoutLooks(reg, 'BTC-USD', 86_400_000)).toBe(1);
+    // REGRESSION (self-audit): a refreshed dataset (new hash, one more bar) is still the same inspected history
+    expect(priorHoldoutLooks({ ...reg, 'regime_switch|BTC-USD|86400000|def': { runId: 'r2', status: 'rejected', reasons: [] } }, 'BTC-USD', 86_400_000)).toBe(2);
+    expect(priorHoldoutLooks(reg, 'BTC-USD', 3_600_000)).toBe(0);
+    expect(priorHoldoutLooks(reg, 'ETH-USD', 86_400_000)).toBe(0);
+    const rep = guardReusedHoldout({ status: 'qualified_paper_strategy', rejectionReasons: [] as string[] }, priorHoldoutLooks(reg, 'BTC-USD', 86_400_000));
     expect(rep.status).toBe('backtested_candidate');
-    expect(rep.rejectionReasons[0]).toMatch(/holdout already inspected/);
+    expect(rep.rejectionReasons[0]).toMatch(/already inspected/);
     expect(guardReusedHoldout({ status: 'qualified_paper_strategy', rejectionReasons: [] as string[] }, 0).status).toBe('qualified_paper_strategy');
     expect(guardReusedHoldout({ status: 'rejected', rejectionReasons: ['x'] }, 3).status).toBe('rejected');
   });
