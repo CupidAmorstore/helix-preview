@@ -1,17 +1,19 @@
 {
- "generatedAt": "2026-11-22T20:22:14.468Z",
- "codeVersion": "5a7a5ab1f594cbad09d5227f0f1bfa91cff0a2e6+dirty",
+ "generatedAt": "2026-11-23T11:07:19.870Z",
+ "codeVersion": "dca30a7b5c19f6c59a920189fec49757b889046e+dirty",
  "mode": "paper",
  "runs": [
   {
-   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "runId": "run-2026-11-23T11-07-19-870Z-1h",
    "totals": {
     "markets": 10,
-    "marketsEvaluated": 0,
-    "configsTried": 23,
-    "oosCandidates": 7,
+    "marketsEvaluated": 10,
+    "configsTried": 0,
+    "oosCandidates": 77,
+    "bonferroniN": 154,
     "qualified": 0,
-    "rejected": 7
+    "rejected": 77,
+    "newThisRun": 0
    },
    "gates": "gates-v1",
    "assumptions": [
@@ -19,7 +21,7 @@
     "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
-    "Bonferroni alpha uses the number of OOS candidates in this run; earlier runs are not pooled.",
+    "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -30,13 +32,15 @@
      "intervalMs": 3600000,
      "datasetId": "122df580-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -53,32 +57,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -472,13 +456,15 @@
      "intervalMs": 3600000,
      "datasetId": "fd8dc91a-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -495,32 +481,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -913,13 +879,15 @@
      "intervalMs": 3600000,
      "datasetId": "23beae22-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -936,32 +904,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -1352,13 +1300,15 @@
      "intervalMs": 3600000,
      "datasetId": "adc513e5-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -1375,32 +1325,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -1793,13 +1723,15 @@
      "intervalMs": 3600000,
      "datasetId": "75bc1955-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -1816,32 +1748,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -2234,13 +2146,15 @@
      "intervalMs": 3600000,
      "datasetId": "5b1824c9-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -2257,32 +2171,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -2674,13 +2568,15 @@
      "intervalMs": 3600000,
      "datasetId": "e82ce137-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -2697,32 +2593,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -3112,13 +2988,15 @@
      "intervalMs": 3600000,
      "datasetId": "3e2e8e14-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -3135,32 +3013,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -3549,13 +3407,15 @@
      "intervalMs": 3600000,
      "datasetId": "4ccc4734-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -3572,32 +3432,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -3990,13 +3830,15 @@
      "intervalMs": 3600000,
      "datasetId": "0e22e769-8754",
      "quality": {
-      "score": 100,
+      "score": 50,
       "bars": 8754,
       "gaps": 1,
       "missingBars": 5,
-      "stale": false,
+      "stale": true,
       "longestContiguous": 4765,
-      "reasons": []
+      "reasons": [
+       "stale: last completed bar too old"
+      ]
      },
      "regime": {
       "trend": "range",
@@ -4013,32 +3855,12 @@
      },
      "skipped": [
       {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "vol_filtered_trend",
+       "reason": "data stale"
       },
       {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1h"
+       "family": "regime_switch",
+       "reason": "data stale"
       }
      ],
      "candidates": [
@@ -5091,14 +4913,16 @@
    ]
   },
   {
-   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
    "totals": {
     "markets": 10,
-    "marketsEvaluated": 0,
-    "configsTried": 23,
-    "oosCandidates": 7,
+    "marketsEvaluated": 10,
+    "configsTried": 53,
+    "oosCandidates": 100,
+    "bonferroniN": 177,
     "qualified": 0,
-    "rejected": 7
+    "rejected": 100,
+    "newThisRun": 23
    },
    "gates": "gates-v1",
    "assumptions": [
@@ -5106,7 +4930,7 @@
     "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
-    "Bonferroni alpha uses the number of OOS candidates in this run; earlier runs are not pooled.",
+    "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -5138,37 +4962,169 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "test trades 11 < 15",
+        "test net return <= 0 after costs",
+        "test profit factor <= 1",
+        "test max drawdown 25.2% > 25%",
+        "fails 2x cost stress",
+        "fails +1 bar execution delay stress",
+        "parameter neighbours unstable on validation",
+        "out-of-sample trades 26 < 30",
+        "bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)"
+       ],
+       "periods": {
+        "train": [
+         1627862400000,
+         1711497600000
+        ],
+        "validation": [
+         1711584000000,
+         1753315200000
+        ],
+        "test": [
+         1753401600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 23,
+        "grossReturn": 0.5443591477264345,
+        "netReturn": 0.1452292349462938,
+        "totalCostUsd": 283.6857453904523,
+        "maxDrawdown": 0.4604995238635619,
+        "profitFactor": 1.1673704358292587,
+        "winRate": 0.34782608695652173,
+        "exposure": 0.30959752321981426,
+        "buyHoldReturn": 0.7736063136293385,
+        "meanTradeNet": 0.01371080939552751,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 15,
+        "grossReturn": 0.2612742060066944,
+        "netReturn": 0.03781727983252492,
+        "totalCostUsd": 176.16607344983606,
+        "maxDrawdown": 0.22782080013517964,
+        "profitFactor": 1.0834744447405362,
+        "winRate": 0.26666666666666666,
+        "exposure": 0.44421487603305787,
+        "buyHoldReturn": 0.6722467054927617,
+        "meanTradeNet": 0.007255079250142378,
+        "rejectedOrders": 0
+       },
+       "test": {
+        "trades": 11,
+        "grossReturn": -0.10038312364017288,
+        "netReturn": -0.2202549823509461,
+        "totalCostUsd": 125.61445293747408,
+        "maxDrawdown": 0.25165411219060235,
+        "profitFactor": 0.33429972579758954,
+        "winRate": 0.2727272727272727,
+        "exposure": 0.2824742268041237,
+        "buyHoldReturn": -0.48920913275640476,
+        "meanTradeNet": -0.02132964017923186,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": -0.32416236195339054,
+        "delayedTestNet": -0.2528755864844373,
+        "neighbourPassShare": 0
+       },
+       "ci": {
+        "lo": -0.04836064635188594,
+        "hi": 0.07395803357534539,
+        "mean": -0.0048384558930544145,
+        "alpha": 0.0002824858757062147,
+        "n": 26
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "test trades 14 < 15",
+        "test net return <= 0 after costs",
+        "test profit factor <= 1",
+        "test max drawdown 34.0% > 25%",
+        "fails 2x cost stress",
+        "fails +1 bar execution delay stress",
+        "out-of-sample trades 29 < 30",
+        "bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)"
+       ],
+       "periods": {
+        "train": [
+         1610582400000,
+         1702857600000
+        ],
+        "validation": [
+         1702944000000,
+         1748995200000
+        ],
+        "test": [
+         1749081600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 26,
+        "grossReturn": 0.5973178806946515,
+        "netReturn": 0.13919416288264008,
+        "totalCostUsd": 407.7369526671423,
+        "maxDrawdown": 0.7626278888983559,
+        "profitFactor": 1.0735658378631765,
+        "winRate": 0.5,
+        "exposure": 0.5556594948550047,
+        "buyHoldReturn": 0.09009220158701026,
+        "meanTradeNet": 0.01943195312003929,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 15,
+        "grossReturn": 0.9902628473135835,
+        "netReturn": 0.6376527518868127,
+        "totalCostUsd": 255.41444583771977,
+        "maxDrawdown": 0.27705629202430676,
+        "profitFactor": 2.041970628765421,
+        "winRate": 0.4666666666666667,
+        "exposure": 0.5955056179775281,
+        "buyHoldReturn": 1.4784184627818622,
+        "meanTradeNet": 0.04242254907809354,
+        "rejectedOrders": 0
+       },
+       "test": {
+        "trades": 14,
+        "grossReturn": 0.06905267636110746,
+        "netReturn": -0.10883854026653184,
+        "totalCostUsd": 164.25940998198507,
+        "maxDrawdown": 0.34029792799764896,
+        "profitFactor": 0.7220505476384829,
+        "winRate": 0.5,
+        "exposure": 0.45794392523364486,
+        "buyHoldReturn": -0.4084288501942499,
+        "meanTradeNet": -0.005798584690575822,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": -0.25713994277439545,
+        "delayedTestNet": -0.2953198754313544,
+        "neighbourPassShare": 1
+       },
+       "ci": {
+        "lo": -0.04151885736136557,
+        "hi": 0.12581819541677355,
+        "mean": 0.019143381051839367,
+        "alpha": 0.0002824858757062147,
+        "n": 29
+       }
+      },
       {
        "key": "sma_cross(fast=10,slow=100)",
        "family": "sma_cross",
@@ -5573,37 +5529,115 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 9 < 15"
+       ],
+       "periods": {
+        "train": [
+         1627862400000,
+         1711497600000
+        ],
+        "validation": [
+         1711584000000,
+         1753315200000
+        ],
+        "test": [
+         1753401600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 30,
+        "grossReturn": 0.7938679100093398,
+        "netReturn": 0.2145439293435163,
+        "totalCostUsd": 377.5975141133873,
+        "maxDrawdown": 0.61452102714797,
+        "profitFactor": 1.1852739089015423,
+        "winRate": 0.4,
+        "exposure": 0.34262125902992774,
+        "buyHoldReturn": 0.3417940892290232,
+        "meanTradeNet": 0.013242992119970027,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 9,
+        "grossReturn": 0.24503784854357824,
+        "netReturn": 0.10756540995372488,
+        "totalCostUsd": 99.32522745613755,
+        "maxDrawdown": 0.24920254130182787,
+        "profitFactor": 1.280795318293098,
+        "winRate": 0.2222222222222222,
+        "exposure": 0.18801652892561985,
+        "buyHoldReturn": 0.04141978602117313,
+        "meanTradeNet": 0.023540679223326033,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 14 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1610582400000,
+         1702857600000
+        ],
+        "validation": [
+         1702944000000,
+         1748995200000
+        ],
+        "test": [
+         1749081600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 29,
+        "grossReturn": 2.395645442580098,
+        "netReturn": 1.3291154237268876,
+        "totalCostUsd": 729.5971658790921,
+        "maxDrawdown": 0.5023243559088738,
+        "profitFactor": 1.7755213900062992,
+        "winRate": 0.6551724137931034,
+        "exposure": 0.5565949485500468,
+        "buyHoldReturn": 0.8018955267517787,
+        "meanTradeNet": 0.035127395879483186,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 14,
+        "grossReturn": 0.07615162858003854,
+        "netReturn": -0.10292085934968997,
+        "totalCostUsd": 165.81974175110975,
+        "maxDrawdown": 0.5633145701934359,
+        "profitFactor": 0.8785621548904097,
+        "winRate": 0.42857142857142855,
+        "exposure": 0.5411985018726592,
+        "buyHoldReturn": 0.19832175155125453,
+        "meanTradeNet": 0.0057222984713622095,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "sma_cross(fast=10,slow=200)",
        "family": "sma_cross",
@@ -6013,37 +6047,115 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1645574400000,
+         1720310400000
+        ],
+        "validation": [
+         1720396800000,
+         1757721600000
+        ],
+        "test": [
+         1757808000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 32,
+        "grossReturn": -0.5554930548575197,
+        "netReturn": -0.7067692561859864,
+        "totalCostUsd": 188.61788755137007,
+        "maxDrawdown": 0.7675847293534276,
+        "profitFactor": 0.3855111841659576,
+        "winRate": 0.21875,
+        "exposure": 0.20785219399538107,
+        "buyHoldReturn": 0.5549385633270323,
+        "meanTradeNet": -0.02866320957122605,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 18,
+        "grossReturn": -0.04431002601912759,
+        "netReturn": -0.24370593919166006,
+        "totalCostUsd": 181.63905942767917,
+        "maxDrawdown": 0.4606684828257764,
+        "profitFactor": 0.7061064839703428,
+        "winRate": 0.4444444444444444,
+        "exposure": 0.3533487297921478,
+        "buyHoldReturn": 0.7349932031194104,
+        "meanTradeNet": -0.007413010249512125,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1628294400000,
+         1711670400000
+        ],
+        "validation": [
+         1711756800000,
+         1753401600000
+        ],
+        "test": [
+         1753488000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 18,
+        "grossReturn": 16.966892212459758,
+        "netReturn": 13.218265589693088,
+        "totalCostUsd": 751.655637303751,
+        "maxDrawdown": 0.8207368578947797,
+        "profitFactor": 3.7525402222722013,
+        "winRate": 0.5,
+        "exposure": 0.5838509316770186,
+        "buyHoldReturn": 3.862587306407532,
+        "meanTradeNet": 0.3885092599063806,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 16,
+        "grossReturn": -0.2624186366350989,
+        "netReturn": -0.40093298144148504,
+        "totalCostUsd": 128.20808653559283,
+        "maxDrawdown": 0.654613844810184,
+        "profitFactor": 0.5335943837706069,
+        "winRate": 0.5625,
+        "exposure": 0.5714285714285714,
+        "buyHoldReturn": -0.03835066405847831,
+        "meanTradeNet": -0.018788098525320707,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "sma_cross(fast=10,slow=200)",
        "family": "sma_cross",
@@ -6452,37 +6564,115 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 9 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1710892800000,
+         1752969600000
+        ],
+        "validation": [
+         1753056000000,
+         1774051200000
+        ],
+        "test": [
+         1774137600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 13,
+        "grossReturn": 0.7212209180405724,
+        "netReturn": 0.4535829302392207,
+        "totalCostUsd": 169.97379407850565,
+        "maxDrawdown": 0.19604528551527212,
+        "profitFactor": 2.4726231469536533,
+        "winRate": 0.23076923076923078,
+        "exposure": 0.1557377049180328,
+        "buyHoldReturn": 4.657334643091028,
+        "meanTradeNet": 0.03868506025854011,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 9,
+        "grossReturn": -0.16671115590479468,
+        "netReturn": -0.2587198041410642,
+        "totalCostUsd": 97.87155850141812,
+        "maxDrawdown": 0.2579077805446611,
+        "profitFactor": 0.38993918658679083,
+        "winRate": 0.2222222222222222,
+        "exposure": 0.12295081967213115,
+        "buyHoldReturn": -0.6033171885559812,
+        "meanTradeNet": -0.02945305541104008,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 11 < 15"
+       ],
+       "periods": {
+        "train": [
+         1693612800000,
+         1744329600000
+        ],
+        "validation": [
+         1744416000000,
+         1769731200000
+        ],
+        "test": [
+         1769817600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 20,
+        "grossReturn": 4.430676206050523,
+        "netReturn": 3.187316167688161,
+        "totalCostUsd": 375.7339621945391,
+        "maxDrawdown": 0.4330575524447418,
+        "profitFactor": 4.723358542372544,
+        "winRate": 0.65,
+        "exposure": 0.5238095238095238,
+        "buyHoldReturn": 3.051713770294648,
+        "meanTradeNet": 0.14424405520891947,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 11,
+        "grossReturn": 0.5048907991967093,
+        "netReturn": 0.30436759649025213,
+        "totalCostUsd": 163.05288542091364,
+        "maxDrawdown": 0.22048928802680107,
+        "profitFactor": 1.7437550664686166,
+        "winRate": 0.7272727272727273,
+        "exposure": 0.4557823129251701,
+        "buyHoldReturn": -0.1976383422088447,
+        "meanTradeNet": 0.02866250026470184,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "sma_cross(fast=50,slow=200)",
        "family": "sma_cross",
@@ -6889,37 +7079,116 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 12 < 15"
+       ],
+       "periods": {
+        "train": [
+         1644364800000,
+         1719705600000
+        ],
+        "validation": [
+         1719792000000,
+         1757376000000
+        ],
+        "test": [
+         1757462400000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 26,
+        "grossReturn": 0.9070494020820725,
+        "netReturn": 0.36009217290921214,
+        "totalCostUsd": 417.666110435924,
+        "maxDrawdown": 0.358182448217939,
+        "profitFactor": 1.289840280109402,
+        "winRate": 0.34615384615384615,
+        "exposure": 0.16838487972508592,
+        "buyHoldReturn": -0.2209404388714734,
+        "meanTradeNet": 0.019560094842599775,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 12,
+        "grossReturn": 0.9112794173158538,
+        "netReturn": 0.6352090782021802,
+        "totalCostUsd": 209.75148440853707,
+        "maxDrawdown": 0.3159634035598112,
+        "profitFactor": 1.9138638732482869,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.20871559633027523,
+        "buyHoldReturn": 0.949517867271696,
+        "meanTradeNet": 0.059063419796836734,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 13 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1627084800000,
+         1711065600000
+        ],
+        "validation": [
+         1711152000000,
+         1753056000000
+        ],
+        "test": [
+         1753142400000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 29,
+        "grossReturn": -0.14979200541746518,
+        "netReturn": -0.41683176673078737,
+        "totalCostUsd": 176.94730076793752,
+        "maxDrawdown": 0.8104696695013267,
+        "profitFactor": 0.5375865622133205,
+        "winRate": 0.3793103448275862,
+        "exposure": 0.4830421377183967,
+        "buyHoldReturn": -0.223947234906139,
+        "meanTradeNet": -0.006538009591892424,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 13,
+        "grossReturn": -0.02022989145273979,
+        "netReturn": -0.1725773894473689,
+        "totalCostUsd": 110.97290410134389,
+        "maxDrawdown": 0.6328076355423334,
+        "profitFactor": 0.8132905186881183,
+        "winRate": 0.3076923076923077,
+        "exposure": 0.4773662551440329,
+        "buyHoldReturn": 0.6775588362468341,
+        "meanTradeNet": 0.028780476364236675,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "sma_cross(fast=50,slow=200)",
        "family": "sma_cross",
@@ -7326,37 +7595,116 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 13 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1637712000000,
+         1716422400000
+        ],
+        "validation": [
+         1716508800000,
+         1755820800000
+        ],
+        "test": [
+         1755907200000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 20,
+        "grossReturn": 0.18714570924290497,
+        "netReturn": -0.08465277009590211,
+        "totalCostUsd": 199.59618669364352,
+        "maxDrawdown": 0.5520219820311651,
+        "profitFactor": 0.8907206794556576,
+        "winRate": 0.25,
+        "exposure": 0.17543859649122806,
+        "buyHoldReturn": -0.7205282112845137,
+        "meanTradeNet": 0.0032761445531746592,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 13,
+        "grossReturn": -0.11983533388334977,
+        "netReturn": -0.2566948721937923,
+        "totalCostUsd": 128.91752428556958,
+        "maxDrawdown": 0.39707666450575096,
+        "profitFactor": 0.430380019557799,
+        "winRate": 0.15384615384615385,
+        "exposure": 0.21710526315789475,
+        "buyHoldReturn": 1.0236956521739127,
+        "meanTradeNet": -0.01923117821984979,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs"
+       ],
+       "periods": {
+        "train": [
+         1620432000000,
+         1707782400000
+        ],
+        "validation": [
+         1707868800000,
+         1751500800000
+        ],
+        "test": [
+         1751587200000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 20,
+        "grossReturn": 0.07759790722935134,
+        "netReturn": -0.16911946726245108,
+        "totalCostUsd": 197.55560848204072,
+        "maxDrawdown": 0.7081459127985038,
+        "profitFactor": 0.8716013157716395,
+        "winRate": 0.4,
+        "exposure": 0.41304347826086957,
+        "buyHoldReturn": -0.6644923076923077,
+        "meanTradeNet": 0.014706263689652489,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 16,
+        "grossReturn": 1.569226611562656,
+        "netReturn": 1.0867378199041937,
+        "totalCostUsd": 286.45359903305246,
+        "maxDrawdown": 0.43168709951433926,
+        "profitFactor": 2.2925455058181115,
+        "winRate": 0.5,
+        "exposure": 0.4723320158102767,
+        "buyHoldReturn": 0.03791551246537406,
+        "meanTradeNet": 0.07061166031096634,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "sma_cross(fast=10,slow=100)",
        "family": "sma_cross",
@@ -7763,37 +8111,117 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1654646400000,
+         1724889600000
+        ],
+        "validation": [
+         1724976000000,
+         1760054400000
+        ],
+        "test": [
+         1760140800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 24,
+        "grossReturn": -0.14560985093284617,
+        "netReturn": -0.37460494104419806,
+        "totalCostUsd": 239.39860625253266,
+        "maxDrawdown": 0.5267109558967668,
+        "profitFactor": 0.48778942581460005,
+        "winRate": 0.20833333333333334,
+        "exposure": 0.14864864864864866,
+        "buyHoldReturn": -0.06533278889342575,
+        "meanTradeNet": -0.016842982445634657,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 16,
+        "grossReturn": -0.23160366037236402,
+        "netReturn": -0.375904914202298,
+        "totalCostUsd": 183.49753513088854,
+        "maxDrawdown": 0.48235301127644686,
+        "profitFactor": 0.5180183149855186,
+        "winRate": 0.375,
+        "exposure": 0.3488943488943489,
+        "buyHoldReturn": -0.10905968226706741,
+        "meanTradeNet": -0.022878687055802795,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 14 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1637366400000,
+         1716249600000
+        ],
+        "validation": [
+         1716336000000,
+         1755734400000
+        ],
+        "test": [
+         1755820800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 21,
+        "grossReturn": -0.39983860747932687,
+        "netReturn": -0.5432232489794873,
+        "totalCostUsd": 103.84216394275413,
+        "maxDrawdown": 0.8240999081722516,
+        "profitFactor": 0.5220878051623113,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.45295404814004375,
+        "buyHoldReturn": -0.6730937078473379,
+        "meanTradeNet": 0.021278362102052795,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 14,
+        "grossReturn": -0.44466949394810906,
+        "netReturn": -0.5370769323619715,
+        "totalCostUsd": 107.05893588984554,
+        "maxDrawdown": 0.6090603046917983,
+        "profitFactor": 0.3298545677611355,
+        "winRate": 0.2857142857142857,
+        "exposure": 0.5098468271334792,
+        "buyHoldReturn": -0.4303227420565424,
+        "meanTradeNet": -0.044073229692342966,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "sma_cross(fast=10,slow=100)",
        "family": "sma_cross",
@@ -8202,37 +8630,117 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 12 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1627862400000,
+         1711497600000
+        ],
+        "validation": [
+         1711584000000,
+         1753315200000
+        ],
+        "test": [
+         1753401600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 34,
+        "grossReturn": -0.5004800523485924,
+        "netReturn": -0.6789357343727191,
+        "totalCostUsd": 221.1482519891603,
+        "maxDrawdown": 0.8210213918986582,
+        "profitFactor": 0.21700108726385867,
+        "winRate": 0.17647058823529413,
+        "exposure": 0.27347781217750256,
+        "buyHoldReturn": -0.17885006647039237,
+        "meanTradeNet": -0.02993462997870397,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 12,
+        "grossReturn": -0.24889224115679065,
+        "netReturn": -0.3573842658268228,
+        "totalCostUsd": 116.66366398133027,
+        "maxDrawdown": 0.48505586879320745,
+        "profitFactor": 0.25883999282498504,
+        "winRate": 0.08333333333333333,
+        "exposure": 0.1384297520661157,
+        "buyHoldReturn": -0.06403426303144255,
+        "meanTradeNet": -0.0326468803956782,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1610582400000,
+         1702857600000
+        ],
+        "validation": [
+         1702944000000,
+         1748995200000
+        ],
+        "test": [
+         1749081600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 23,
+        "grossReturn": -0.192781310430027,
+        "netReturn": -0.40140190599348413,
+        "totalCostUsd": 249.8126371180541,
+        "maxDrawdown": 0.8670214577487577,
+        "profitFactor": 0.7864596460489857,
+        "winRate": 0.43478260869565216,
+        "exposure": 0.4452759588400374,
+        "buyHoldReturn": -0.18380360096792914,
+        "meanTradeNet": 0.0015114395490759885,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 17,
+        "grossReturn": 0.13809031264997662,
+        "netReturn": -0.08757685258925174,
+        "totalCostUsd": 220.29457554031035,
+        "maxDrawdown": 0.4275132619846165,
+        "profitFactor": 0.9219509323155521,
+        "winRate": 0.47058823529411764,
+        "exposure": 0.449438202247191,
+        "buyHoldReturn": -0.018019296254256467,
+        "meanTradeNet": 0.003721141147562821,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "sma_cross(fast=20,slow=100)",
        "family": "sma_cross",
@@ -8642,37 +9150,116 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1627862400000,
+         1711497600000
+        ],
+        "validation": [
+         1711584000000,
+         1753315200000
+        ],
+        "test": [
+         1753401600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 35,
+        "grossReturn": -0.03336244623758777,
+        "netReturn": -0.3867226982150479,
+        "totalCostUsd": 448.9709307443943,
+        "maxDrawdown": 0.6966868073393959,
+        "profitFactor": 0.7806154008883176,
+        "winRate": 0.22857142857142856,
+        "exposure": 0.3508771929824561,
+        "buyHoldReturn": -0.33842671194114327,
+        "meanTradeNet": -0.006086661009030643,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 18,
+        "grossReturn": -0.2041837981455018,
+        "netReturn": -0.3702235208657172,
+        "totalCostUsd": 167.98405725616692,
+        "maxDrawdown": 0.4848926476009216,
+        "profitFactor": 0.2817622221135325,
+        "winRate": 0.1111111111111111,
+        "exposure": 0.18801652892561985,
+        "buyHoldReturn": 0.19256505576208172,
+        "meanTradeNet": -0.023410307827693346,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1610582400000,
+         1702857600000
+        ],
+        "validation": [
+         1702944000000,
+         1748995200000
+        ],
+        "test": [
+         1749081600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 28,
+        "grossReturn": -0.4110209426989052,
+        "netReturn": -0.5907257373283493,
+        "totalCostUsd": 218.0683784802975,
+        "maxDrawdown": 0.6870470909085923,
+        "profitFactor": 0.5071777292197696,
+        "winRate": 0.5357142857142857,
+        "exposure": 0.4546304957904584,
+        "buyHoldReturn": -0.5349783436146476,
+        "meanTradeNet": -0.023389553680097534,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 18,
+        "grossReturn": -0.3007811085037939,
+        "netReturn": -0.44666669187621333,
+        "totalCostUsd": 210.97793406030598,
+        "maxDrawdown": 0.605975170029693,
+        "profitFactor": 0.5207441980027854,
+        "winRate": 0.3888888888888889,
+        "exposure": 0.45318352059925093,
+        "buyHoldReturn": 0.24512022630834518,
+        "meanTradeNet": -0.027237227457864856,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "sma_cross(fast=20,slow=200)",
        "family": "sma_cross",
@@ -9082,37 +9669,118 @@
       "slippage": 3,
       "minOrderUsd": 1
      },
-     "skipped": [
-      {
-       "family": "sma_cross",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "donchian_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "ts_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "trend_filtered_momentum",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "bollinger_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "rsi_reversion",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      },
-      {
-       "family": "vol_compression_breakout",
-       "reason": "already evaluated on identical dataset (no new evidence); evidence from run-2026-11-22T20-00-26-711Z-1d"
-      }
-     ],
+     "skipped": [],
      "candidates": [
+      {
+       "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+       "family": "vol_filtered_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 12 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1645488000000,
+         1720310400000
+        ],
+        "validation": [
+         1720396800000,
+         1757721600000
+        ],
+        "test": [
+         1757808000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 19,
+        "grossReturn": -0.02603643055079219,
+        "netReturn": -0.2392000684638056,
+        "totalCostUsd": 207.88572903516604,
+        "maxDrawdown": 0.40779476394304826,
+        "profitFactor": 0.6963716221088497,
+        "winRate": 0.2631578947368421,
+        "exposure": 0.1695501730103806,
+        "buyHoldReturn": -0.6445514750150512,
+        "meanTradeNet": -0.008788186726888858,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 12,
+        "grossReturn": -0.14593944308072127,
+        "netReturn": -0.2693022467797441,
+        "totalCostUsd": 126.30577355124365,
+        "maxDrawdown": 0.34220313957189175,
+        "profitFactor": 0.4572665825250148,
+        "winRate": 0.25,
+        "exposure": 0.16859122401847576,
+        "buyHoldReturn": -0.2432659932659933,
+        "meanTradeNet": -0.022658715224181336,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+       "family": "regime_switch",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 12 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1628208000000,
+         1711670400000
+        ],
+        "validation": [
+         1711756800000,
+         1753401600000
+        ],
+        "test": [
+         1753488000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 22,
+        "grossReturn": 0.25222634013185874,
+        "netReturn": -0.05925295323094526,
+        "totalCostUsd": 214.00194485739286,
+        "maxDrawdown": 0.75195814089887,
+        "profitFactor": 0.9432740104861723,
+        "winRate": 0.45454545454545453,
+        "exposure": 0.5201654601861427,
+        "buyHoldReturn": -0.5299471520845567,
+        "meanTradeNet": 0.011876965403855905,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 12,
+        "grossReturn": -0.3939847826778651,
+        "netReturn": -0.48151925044769195,
+        "totalCostUsd": 110.60430338825859,
+        "maxDrawdown": 0.5818434133723579,
+        "profitFactor": 0.3198740916635678,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.40372670807453415,
+        "buyHoldReturn": -0.5667655786350148,
+        "meanTradeNet": -0.04589091925544456,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "sma_cross(fast=20,slow=200)",
        "family": "sma_cross",
@@ -9495,6 +10163,132 @@
     }
    ],
    "pooled": [
+    {
+     "key": "POOLED:vol_filtered_trend(lookback=250,trend=50,vol=20)",
+     "family": "vol_filtered_trend",
+     "status": "rejected",
+     "rejectionReasons": [
+      "pooled validation net return <= 0 after costs"
+     ],
+     "markets": [
+      "BTC-USD",
+      "ETH-USD",
+      "SOL-USD",
+      "XRP-USD",
+      "DOGE-USD",
+      "ADA-USD",
+      "AVAX-USD",
+      "LINK-USD",
+      "LTC-USD",
+      "DOT-USD"
+     ],
+     "cutoffs": {
+      "trainStart": 1710892800000,
+      "trainEnd": 1753056000000,
+      "valEnd": 1774137600000,
+      "testEnd": 1795305600000
+     },
+     "train": {
+      "trades": 138,
+      "netReturn": 0.007159786085720491,
+      "grossReturn": 0.19180574804004516,
+      "buyHoldReturn": 0.5878677016948475,
+      "maxDrawdownBound": 0.5298672172165244,
+      "profitFactor": 1.0148565353675931,
+      "winRate": 0.21739130434782608,
+      "totalCostUsd": 147.5385497265644
+     },
+     "validation": {
+      "trades": 71,
+      "netReturn": -0.32110585506645073,
+      "grossReturn": -0.2574622218592027,
+      "buyHoldReturn": -0.5774472834240469,
+      "maxDrawdownBound": 0.611050454747271,
+      "profitFactor": 0.2014586148173903,
+      "winRate": 0.16901408450704225,
+      "totalCostUsd": 77.05260581885355,
+      "perMarketNet": {
+       "BTC-USD": -0.09630876073435102,
+       "ETH-USD": -0.09832635935227085,
+       "SOL-USD": -0.3535790964501253,
+       "XRP-USD": -0.258719804141064,
+       "DOGE-USD": -0.611050454747271,
+       "ADA-USD": -0.27550719015380365,
+       "AVAX-USD": -0.3918441048897138,
+       "LINK-USD": -0.26650568437035804,
+       "LTC-USD": -0.3455173784945186,
+       "DOT-USD": -0.5136997173310313
+      }
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "POOLED:regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+     "family": "regime_switch",
+     "status": "rejected",
+     "rejectionReasons": [
+      "pooled validation net return <= 0 after costs"
+     ],
+     "markets": [
+      "BTC-USD",
+      "ETH-USD",
+      "SOL-USD",
+      "XRP-USD",
+      "DOGE-USD",
+      "ADA-USD",
+      "AVAX-USD",
+      "LINK-USD",
+      "LTC-USD",
+      "DOT-USD"
+     ],
+     "cutoffs": {
+      "trainStart": 1693612800000,
+      "trainEnd": 1744416000000,
+      "valEnd": 1769817600000,
+      "testEnd": 1795305600000
+     },
+     "train": {
+      "trades": 155,
+      "netReturn": 1.3964080958304435,
+      "grossReturn": 1.9320061032176346,
+      "buyHoldReturn": 1.5472756683444187,
+      "maxDrawdownBound": 0.7471653965112462,
+      "profitFactor": 1.9088422962740104,
+      "winRate": 0.4774193548387097,
+      "totalCostUsd": 362.7557114701208
+     },
+     "validation": {
+      "trades": 85,
+      "netReturn": -0.10064430960984402,
+      "grossReturn": 0.002740571333038847,
+      "buyHoldReturn": -0.18686602239907485,
+      "maxDrawdownBound": 0.6546855558963743,
+      "profitFactor": 0.7964255681687951,
+      "winRate": 0.43529411764705883,
+      "totalCostUsd": 109.2579335703875,
+      "perMarketNet": {
+       "BTC-USD": -0.1558094661251771,
+       "ETH-USD": 0.6923648437915231,
+       "SOL-USD": -0.2827567075123527,
+       "XRP-USD": 0.09437679844593116,
+       "DOGE-USD": -0.5305432821052823,
+       "ADA-USD": 0.010452111939536213,
+       "AVAX-USD": -0.5286244050311082,
+       "LINK-USD": -0.11933352478459325,
+       "LTC-USD": 0.16089227789264537,
+       "DOT-USD": -0.34746174260956253
+      }
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
     {
      "key": "POOLED:sma_cross(fast=10,slow=100)",
      "family": "sma_cross",
@@ -10009,6 +10803,47 @@
       "delayedTestNet": null,
       "neighbourPassShare": 0
      }
+    },
+    {
+     "key": "POOLED:XS_MOMENTUM(lookback=14,topK=2,rebalance=7)",
+     "family": "xs_momentum",
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation net return <= 0 after costs"
+     ],
+     "cutoffs": {
+      "trainStart": 1691712000000,
+      "trainEnd": 1743465600000,
+      "valEnd": 1769299200000,
+      "testEnd": 1795305600000
+     },
+     "train": {
+      "trades": 68,
+      "grossReturn": 6.451846793666748,
+      "netReturn": 3.8129232611940838,
+      "totalCostUsd": 0,
+      "maxDrawdown": 0.583826267110111,
+      "profitFactor": null,
+      "winRate": null,
+      "buyHoldReturn": 1.1736438050876628,
+      "periods": 80
+     },
+     "validation": {
+      "trades": 40,
+      "grossReturn": -0.42543729781141637,
+      "netReturn": -0.5574767747049811,
+      "totalCostUsd": 0,
+      "maxDrawdown": 0.5888976521267697,
+      "profitFactor": null,
+      "winRate": null,
+      "buyHoldReturn": -0.1527334148695661,
+      "periods": 38
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
     }
    ],
    "feasibility": [
@@ -10231,260 +11066,7 @@
    ]
   }
  ],
- "watchbot": [
-  {
-   "base": "BTC",
-   "buyVenue": "kraken",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.013187554121851797,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8468124458781482,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950557
-  },
-  {
-   "base": "BTC",
-   "buyVenue": "gemini",
-   "sellVenue": "kraken",
-   "grossEdgePct": -0.013367572384404003,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.873367572384404,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950557
-  },
-  {
-   "base": "BTC",
-   "buyVenue": "coinbase",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.01700565318152325,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0429943468184768,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950557
-  },
-  {
-   "base": "BTC",
-   "buyVenue": "coinbase",
-   "sellVenue": "kraken",
-   "grossEdgePct": 0.003652331732850733,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0563476682671493,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950527
-  },
-  {
-   "base": "BTC",
-   "buyVenue": "kraken",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.0038339756344263343,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0638339756344264,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950527
-  },
-  {
-   "base": "BTC",
-   "buyVenue": "gemini",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.01703580609186961,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0770358060918697,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950557
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "kraken",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.011109746756243766,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8488902532437562,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950698
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "gemini",
-   "sellVenue": "kraken",
-   "grossEdgePct": -0.012277757964462843,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8722777579644628,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950698
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "coinbase",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.01403377461757227,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0459662253824278,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950698
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "coinbase",
-   "sellVenue": "kraken",
-   "grossEdgePct": 0.0023389624362657457,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0576610375637343,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950672
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "kraken",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.014618087837170446,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0746180878371705,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950672
-  },
-  {
-   "base": "ETH",
-   "buyVenue": "gemini",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.026309481352426722,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0863094813524268,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950698
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "kraken",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.00143041052782511,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.8585695894721749,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950799
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "gemini",
-   "sellVenue": "kraken",
-   "grossEdgePct": -0.06862240521529062,
-   "roundTripCostPct": 0.86,
-   "netEdgePct": -0.9286224052152906,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950799
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "coinbase",
-   "sellVenue": "gemini",
-   "grossEdgePct": 0.00143041052782511,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.058569589472175,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950799
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "coinbase",
-   "sellVenue": "kraken",
-   "grossEdgePct": -0.014304105278206691,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0743041052782067,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950769
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "kraken",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.014304105278206691,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.0743041052782067,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950769
-  },
-  {
-   "base": "SOL",
-   "buyVenue": "gemini",
-   "sellVenue": "coinbase",
-   "grossEdgePct": -0.06862240521529062,
-   "roundTripCostPct": 1.06,
-   "netEdgePct": -1.1286224052152907,
-   "status": "rejected",
-   "reasons": [
-    "edge does not cover taker fees + slippage on both venues",
-    "unmodelled: transfer delay, withdrawal fee, inventory, depth"
-   ],
-   "observedAt": 1795378950799
-  }
- ],
+ "watchbot": [],
  "paper": [
   {
    "id": "BTC-USD|86400000|sma_cross(fast=10,slow=100)",
@@ -10751,6 +11333,86 @@
    "label": "ETH-USD 1d vol_compression_breakout(lookback=120,n=20,pct=0.1)",
    "kind": "diagnostic",
    "createdAt": 1795377626711,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "BTC-USD|86400000|vol_filtered_trend(lookback=250,trend=100,vol=20)",
+   "label": "BTC-USD 1d vol_filtered_trend(lookback=250,trend=100,vol=20)",
+   "kind": "diagnostic",
+   "createdAt": 1795432039870,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "BTC-USD|86400000|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "label": "BTC-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "kind": "diagnostic",
+   "createdAt": 1795432039870,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "ETH-USD|86400000|vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "label": "ETH-USD 1d vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "kind": "diagnostic",
+   "createdAt": 1795432039870,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "ETH-USD|86400000|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "label": "ETH-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "kind": "diagnostic",
+   "createdAt": 1795432039870,
    "lastProcessedT": null,
    "initialCash": 1000,
    "equity": 1000,

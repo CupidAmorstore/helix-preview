@@ -36,7 +36,9 @@ export type StrategyFamily =
   | 'trend_filtered_momentum'
   | 'bollinger_reversion'
   | 'rsi_reversion'
-  | 'vol_compression_breakout';
+  | 'vol_compression_breakout'
+  | 'vol_filtered_trend'
+  | 'regime_switch';
 
 export type StrategySpec = {
   family: StrategyFamily;

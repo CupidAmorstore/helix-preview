@@ -1235,5 +1235,200 @@
    "validation trades 14 < 15",
    "pooled validation net return <= 0 after costs"
   ]
+ },
+ "vol_filtered_trend|BTC-USD|86400000|596997c7-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "test trades 11 < 15",
+   "test net return <= 0 after costs",
+   "test profit factor <= 1",
+   "test max drawdown 25.2% > 25%",
+   "fails 2x cost stress",
+   "fails +1 bar execution delay stress",
+   "parameter neighbours unstable on validation",
+   "out-of-sample trades 26 < 30",
+   "bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)"
+  ]
+ },
+ "regime_switch|BTC-USD|86400000|596997c7-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "test trades 14 < 15",
+   "test net return <= 0 after costs",
+   "test profit factor <= 1",
+   "test max drawdown 34.0% > 25%",
+   "fails 2x cost stress",
+   "fails +1 bar execution delay stress",
+   "out-of-sample trades 29 < 30",
+   "bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)"
+  ]
+ },
+ "vol_filtered_trend|ETH-USD|86400000|d42a807a-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 9 < 15"
+  ]
+ },
+ "regime_switch|ETH-USD|86400000|d42a807a-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 14 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|SOL-USD|86400000|9ba1194d-1984": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|SOL-USD|86400000|9ba1194d-1984": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|XRP-USD|86400000|0f197877-1285": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 9 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|XRP-USD|86400000|0f197877-1285": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 11 < 15"
+  ]
+ },
+ "vol_filtered_trend|DOGE-USD|86400000|0118ae7c-1998": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 12 < 15"
+  ]
+ },
+ "regime_switch|DOGE-USD|86400000|0118ae7c-1998": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 13 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|ADA-USD|86400000|da286594-2075": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 13 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|ADA-USD|86400000|da286594-2075": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs"
+  ]
+ },
+ "vol_filtered_trend|AVAX-USD|86400000|6fae5cd5-1879": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|AVAX-USD|86400000|6fae5cd5-1879": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 14 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|LINK-USD|86400000|dd2f0bba-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 12 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|LINK-USD|86400000|dd2f0bba-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|LTC-USD|86400000|975956d0-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|LTC-USD|86400000|975956d0-2189": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|DOT-USD|86400000|81a55b83-1985": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 12 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|DOT-USD|86400000|81a55b83-1985": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 12 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "vol_filtered_trend|POOLED|86400000|b9460027": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "pooled validation net return <= 0 after costs"
+  ]
+ },
+ "regime_switch|POOLED|86400000|b9460027": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "pooled validation net return <= 0 after costs"
+  ]
+ },
+ "xs_momentum|XS|86400000|b9460027": {
+  "runId": "run-2026-11-23T11-07-19-870Z",
+  "status": "rejected",
+  "reasons": [
+   "validation net return <= 0 after costs"
+  ]
  }
 }

@@ -67,7 +67,10 @@ export const STRATEGIES: StrategyInfo[] = [
   { family: 'donchian_breakout', name: 'Breakout', objective: 'Buy when price breaks above its recent range; exit when it breaks below.', risk: 'Medium-high', style: 'Trend' },
   { family: 'vol_compression_breakout', name: 'Calm-before-the-move breakout', objective: 'Buy a breakout that follows an unusually quiet period.', risk: 'Medium-high', style: 'Volatility' },
   { family: 'bollinger_reversion', name: 'Buy the dip (Bollinger bands)', objective: 'Buy after an unusually sharp drop and sell when price returns to average.', risk: 'High', style: 'Mean reversion' },
-  { family: 'rsi_reversion', name: 'Oversold bounce (RSI)', objective: 'Buy when the RSI says a coin is oversold; sell when it recovers.', risk: 'High', style: 'Mean reversion' }
+  { family: 'rsi_reversion', name: 'Oversold bounce (RSI)', objective: 'Buy when the RSI says a coin is oversold; sell when it recovers.', risk: 'High', style: 'Mean reversion' },
+  { family: 'vol_filtered_trend', name: 'Calm-market trend', objective: 'Follow the trend only while volatility is below its usual level; stay in cash in turbulent markets.', risk: 'Medium', style: 'Risk-managed trend' },
+  { family: 'xs_momentum', name: 'Strongest coins rotation', objective: 'Each week hold the 1–3 coins that rose most over recent weeks; hold cash if none rose.', risk: 'Medium-high', style: 'Cross-sectional momentum' },
+  { family: 'regime_switch', name: 'Regime switcher', objective: 'Use trend following when the market trends and dip-buying when it moves sideways.', risk: 'Medium-high', style: 'Hybrid' }
 ];
 
 export type StrategyEvidence = {

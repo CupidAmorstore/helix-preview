@@ -57,6 +57,42 @@ const builders: Record<StrategyFamily, (c: Candle[], p: Record<string, number>) 
       return r[i] > p.hi || held >= p.maxHold ? 0 : 1;
     };
   },
+  // Hypothesis: trends are more reliable in calm regimes; stand aside when realized volatility is
+  // above its own trailing median (risk-managed trend following).
+  vol_filtered_trend(c, p) {
+    const close = c.map((x) => x.c);
+    const trend = sma(close, p.trend);
+    const r = close.map((x, i) => (i ? Math.log(x / close[i - 1]) : 0));
+    const vol = rollingStd(r, p.vol);
+    return (i) => {
+      if (!(close[i] > trend[i]) || !Number.isFinite(vol[i]) || i < p.lookback) return 0;
+      const hist = vol.slice(i - p.lookback, i).filter(Number.isFinite).sort((a, b) => a - b);
+      const median = hist[Math.floor(hist.length / 2)];
+      return vol[i] <= median ? 1 : 0;
+    };
+  },
+  // Hypothesis: use trend rules when the market trends and dip-buying when it ranges, chosen by
+  // the efficiency ratio measured on data up to the decision bar only.
+  regime_switch(c, p) {
+    const close = c.map((x) => x.c);
+    const er = efficiencyRatio(close, p.er);
+    const trend = sma(close, p.trend);
+    const m = sma(close, p.n);
+    const sd = rollingStd(close, p.n);
+    let mode: 'trend' | 'revert' | null = null;
+    let held = 0;
+    return (i, pos) => {
+      if (pos === 0) {
+        held = 0;
+        if (er[i] >= p.erTrend && close[i] > trend[i]) { mode = 'trend'; return 1; }
+        if (er[i] < p.erTrend && close[i] < m[i] - p.k * sd[i]) { mode = 'revert'; return 1; }
+        return 0;
+      }
+      held++;
+      if (mode === 'trend') return close[i] < trend[i] ? 0 : 1;
+      return close[i] >= m[i] || held >= p.maxHold ? 0 : 1;
+    };
+  },
   vol_compression_breakout(c, p) {
     const close = c.map((x) => x.c);
     const m = sma(close, p.n);
@@ -88,7 +124,7 @@ export function buildSignal(spec: StrategySpec, candles: Candle[]): SignalFn {
 /** Warm-up bars needed before a strategy's signal is defined. */
 export function warmup(spec: StrategySpec): number {
   const p = spec.params;
-  return Math.max(p.slow ?? 0, p.entry ?? 0, p.exit ?? 0, p.lookback ?? 0, p.filter ?? 0, p.n ?? 0) + 1;
+  return Math.max(p.slow ?? 0, p.entry ?? 0, p.exit ?? 0, p.lookback ?? 0, p.filter ?? 0, p.n ?? 0, p.trend ?? 0, p.er ?? 0, p.vol ?? 0) + 1;
 }
 
 /** Small, pre-declared parameter grids. Kept deliberately coarse to limit data snooping. */
@@ -99,7 +135,9 @@ export const PARAM_GRID: Record<StrategyFamily, Record<string, number>[]> = {
   trend_filtered_momentum: cartesian({ lookback: [24, 72], filter: [200] }),
   bollinger_reversion: cartesian({ n: [20, 50], k: [2, 2.5], maxHold: [24] }),
   rsi_reversion: cartesian({ n: [14], lo: [25, 30], hi: [55], maxHold: [24] }),
-  vol_compression_breakout: cartesian({ n: [20], lookback: [120], pct: [0.1, 0.2] })
+  vol_compression_breakout: cartesian({ n: [20], lookback: [120], pct: [0.1, 0.2] }),
+  vol_filtered_trend: cartesian({ trend: [50, 100], vol: [20], lookback: [250] }),
+  regime_switch: cartesian({ er: [20], erTrend: [0.3, 0.4], trend: [50], n: [20], k: [2], maxHold: [20] })
 };
 
 function cartesian(grid: Record<string, number[]>): Record<string, number>[] {

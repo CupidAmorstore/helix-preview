@@ -16,6 +16,7 @@
  *   src/bot/data/latest.json          compact summary rendered by the app
  */
 import { execSync } from 'node:child_process';
+import type { XsReport, XsWindow } from '../src/bot/crossSectional';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { join } from 'node:path';
@@ -242,24 +243,25 @@ async function main() {
       if (last) records.push(last);
     }
   }
+  // Evidence is the union over runs on IDENTICAL datasets (newest wins per candidate key), so a run that
+  // only tests new families still shows the earlier families' results.
   for (const rec of records) {
     for (const m of rec.markets) {
-      if (m.candidates.length) continue;
+      const have = new Set(m.candidates.map((c) => c.key));
       for (const old of [...history].reverse()) {
+        if (old.runId === rec.runId) continue;
         const om = old.markets.find((x) => x.market.symbol === m.market.symbol && x.intervalMs === m.intervalMs && x.datasetId === m.datasetId);
-        if (om && om.candidates.length) {
-          m.candidates = om.candidates;
-          m.skipped = m.skipped.map((x) => ({ ...x, reason: `${x.reason}; evidence from ${old.runId}` }));
-          break;
-        }
+        for (const c of om?.candidates ?? []) if (!have.has(c.key)) { have.add(c.key); m.candidates.push(c); }
       }
+      m.skipped = m.skipped.filter((x) => !m.candidates.some((c) => c.spec.family === x.family));
     }
-    if (!rec.pooled.length)
-      for (const old of [...history].reverse())
-        if (old.pooled?.length && old.markets[0]?.intervalMs === rec.markets[0]?.intervalMs) {
-          rec.pooled = old.pooled;
-          break;
-        }
+    const iv = rec.markets[0]?.intervalMs;
+    const havePooled = new Set(rec.pooled.map((c) => c.spec.family));
+    for (const old of [...history].reverse()) {
+      if (old.runId === rec.runId || old.markets[0]?.intervalMs !== iv) continue;
+      for (const c of old.pooled ?? []) if (!havePooled.has(c.spec.family)) { havePooled.add(c.spec.family); rec.pooled.push(c); }
+      if (!rec.crossSectional && old.crossSectional) rec.crossSectional = old.crossSectional;
+    }
   }
   const summary = {
     generatedAt: new Date(now).toISOString(),
@@ -267,7 +269,17 @@ async function main() {
     mode: 'paper',
     runs: records.map((r) => ({
       runId: r.runId,
-      totals: r.totals,
+      totals: (() => {
+        const all = [...r.markets.flatMap((m) => m.candidates), ...r.pooled, ...(r.crossSectional ? [r.crossSectional] : [])];
+        return {
+          ...r.totals,
+          newThisRun: r.totals.oosCandidates,
+          oosCandidates: all.length,
+          marketsEvaluated: r.markets.filter((m) => m.candidates.length).length,
+          qualified: all.filter((c) => c.status === 'qualified_paper_strategy').length,
+          rejected: all.filter((c) => c.status === 'rejected').length
+        };
+      })(),
       gates: r.gates.version,
       assumptions: r.assumptions,
       markets: r.markets.map((m) => ({
@@ -305,7 +317,7 @@ async function main() {
         test: c.test && { ...c.test, perMarketNet: c.test.perMarketNet },
         stress: c.stress,
         ci: c.ci
-      })),
+      })).concat(r.crossSectional ? [xsRow(r.crossSectional)] : []),
       feasibility: r.feasibility
     })),
     watchbot: watch,
@@ -333,6 +345,23 @@ async function main() {
   writeFileSync(join(ROOT, 'src/bot/data/latest.json'), JSON.stringify(summary, null, 1));
   console.log(`  paper accounts: ${accounts.length} (${accounts.filter((a) => a.kind === 'qualified').length} qualified)`);
   console.log('done.');
+}
+
+function xsRow(x: XsReport) {
+  const w = (v?: XsWindow) => v && { trades: v.trades, grossReturn: v.grossReturn, netReturn: v.netReturn, totalCostUsd: 0, maxDrawdown: v.maxDrawdown, profitFactor: null, winRate: null, buyHoldReturn: v.buyHoldReturn, periods: v.periods };
+  return {
+    key: `POOLED:${x.key}`,
+    family: 'xs_momentum',
+    status: x.status,
+    rejectionReasons: x.rejectionReasons,
+    markets: undefined as string[] | undefined,
+    cutoffs: x.cutoffs,
+    train: w(x.train)!,
+    validation: w(x.validation),
+    test: w(x.test),
+    stress: x.stress && { ...x.stress, doubleCostTestNet: Number.isFinite(x.stress.doubleCostTestNet) ? x.stress.doubleCostTestNet : null, delayedTestNet: Number.isFinite(x.stress.delayedTestNet) ? x.stress.delayedTestNet : null },
+    ci: x.ci
+  };
 }
 
 main().catch((e) => {
