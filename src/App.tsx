@@ -1,25 +1,44 @@
-﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Suspense, lazy, useEffect } from 'react';
+﻿import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Suspense, useEffect, type ReactNode } from 'react';
 import AppShell from './components/AppShell';
 import HomePage from './pages/HomePage';
 import { VaultProvider } from './services/vault';
 import { PaperProvider } from './paper/PaperProvider';
+import { lazyScreen, prefetchScreens, ScreenBoundary } from './components/ScreenGuard';
 
 // Home loads eagerly; every other page is code-split so the wallet/crypto
 // libraries only download when the Wallet page is opened.
-const MarketsPage = lazy(() => import('./pages/MarketsPage'));
-const AssetPage = lazy(() => import('./pages/AssetPage'));
-const BotPage = lazy(() => import('./pages/BotPage'));
-const ResearchLabPage = lazy(() => import('./pages/ResearchLabPage'));
-const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
-const ConnectionsPage = lazy(() => import('./pages/ConnectionsPage'));
-const AlertsPage = lazy(() => import('./pages/AlertsPage'));
-const WalletPage = lazy(() => import('./pages/WalletPage'));
-const AccessPage = lazy(() => import('./pages/AccessPage'));
-const LegalPage = lazy(() => import('./pages/LegalPage'));
-const MorePage = lazy(() => import('./pages/MorePage'));
+const loadMarketsPage = () => import('./pages/MarketsPage');
+const MarketsPage = lazyScreen(loadMarketsPage);
+const loadAssetPage = () => import('./pages/AssetPage');
+const AssetPage = lazyScreen(loadAssetPage);
+const loadBotPage = () => import('./pages/BotPage');
+const BotPage = lazyScreen(loadBotPage);
+const loadResearchLabPage = () => import('./pages/ResearchLabPage');
+const ResearchLabPage = lazyScreen(loadResearchLabPage);
+const loadPortfolioPage = () => import('./pages/PortfolioPage');
+const PortfolioPage = lazyScreen(loadPortfolioPage);
+const loadConnectionsPage = () => import('./pages/ConnectionsPage');
+const ConnectionsPage = lazyScreen(loadConnectionsPage);
+const loadAlertsPage = () => import('./pages/AlertsPage');
+const AlertsPage = lazyScreen(loadAlertsPage);
+const loadWalletPage = () => import('./pages/WalletPage');
+const WalletPage = lazyScreen(loadWalletPage);
+const loadAccessPage = () => import('./pages/AccessPage');
+const AccessPage = lazyScreen(loadAccessPage);
+const loadLegalPage = () => import('./pages/LegalPage');
+const LegalPage = lazyScreen(loadLegalPage);
+const loadMorePage = () => import('./pages/MorePage');
+const MorePage = lazyScreen(loadMorePage);
+
+function Guarded({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  return <ScreenBoundary key={pathname}>{children}</ScreenBoundary>;
+}
 
 export default function App() {
+  // most-used screens are fetched in the background so they open offline later (wallet libraries are large: on demand)
+  useEffect(() => prefetchScreens([loadMarketsPage, loadAssetPage, loadBotPage, loadMorePage, loadAlertsPage, loadPortfolioPage, loadLegalPage]), []);
   const base = import.meta.env.BASE_URL;
   // Dark theme only until a complete, contrast-checked light token set exists: the old light mode left
   // dark cards with dark text in the Trading Bot (including the paper-mode warning).
@@ -38,7 +57,8 @@ export default function App() {
       <VaultProvider>
       <PaperProvider>
         <AppShell>
-          <Suspense fallback={<div className="text-sm text-slate-500">Loading…</div>}>
+          <Guarded>
+          <Suspense fallback={<div className="mx-auto max-w-xl animate-pulse space-y-3 pt-2" aria-label="Loading"><div className="h-7 w-40 bg-ink-800" /><div className="h-24 bg-ink-800" /><div className="h-24 bg-ink-800" /></div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/markets" element={<MarketsPage />} />
@@ -57,6 +77,7 @@ export default function App() {
             <Route path="*" element={<LegalPage kind="notfound" />} />
           </Routes>
           </Suspense>
+          </Guarded>
         </AppShell>
       </PaperProvider>
       </VaultProvider>

@@ -62,7 +62,7 @@ export async function fetchCandles(product: string, timeframe: string): Promise<
   return derived ? resample(candles, gran * 1000, derived.targetSec * 1000) : candles;
 }
 
-export type FeedStatus = 'connecting' | 'live' | 'reconnecting';
+export type FeedStatus = 'connecting' | 'live' | 'reconnecting' | 'offline';
 
 /** Delay before reconnect attempt n (0-based): 1 s, 2 s, 4 s … capped at 30 s. */
 export function reconnectDelay(attempt: number): number {
@@ -106,6 +106,10 @@ export function connectTicker(
     };
     ws.onclose = () => {
       if (closed) return;
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        onStatus('offline'); // wait for the 'online' event instead of retrying into a dead network
+        return;
+      }
       onStatus('reconnecting');
       timer = setTimeout(open, reconnectDelay(attempt));
       attempt += 1;
@@ -113,10 +117,30 @@ export function connectTicker(
     ws.onerror = () => ws?.close();
   };
 
+  const goOffline = () => {
+    onStatus('offline');
+    ws?.close();
+  };
+  const goOnline = () => {
+    if (closed) return;
+    if (timer) clearTimeout(timer);
+    attempt = 0;
+    if (ws && ws.readyState === 1) return;
+    open();
+  };
+  if (typeof window !== 'undefined') {
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+  }
+
   open();
   return {
     close: () => {
       closed = true;
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('offline', goOffline);
+        window.removeEventListener('online', goOnline);
+      }
       if (timer) clearTimeout(timer);
       ws?.close();
     }

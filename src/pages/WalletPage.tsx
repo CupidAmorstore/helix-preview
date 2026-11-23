@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from 'react';
+import VaultGate from '../components/VaultGate';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
 import { buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
@@ -89,6 +90,13 @@ export default function WalletPage() {
       vault.decrypt(val).then(setSolRpc).catch(() => undefined);
     });
   }, [vault]);
+
+  // the decrypted phrase never outlives the vault: auto-lock (5 min idle) or manual lock clears it
+  useEffect(() => {
+    if (vault.locked) setMnemonic(null);
+  }, [vault.locked]);
+
+  const [confirmDelete, setConfirmDelete] = useState('');
 
   const unlockWallet = async () => {
     if (!keystore) return;
@@ -307,27 +315,42 @@ export default function WalletPage() {
       <section className="border-t border-ink-600 pt-5 space-y-4">
         <h2 className="text-sm font-semibold text-slate-200">Wallet Access</h2>
         {!keystore && <p className="text-sm text-slate-400">New to self-custody? Read the guide below first.</p>}
+        {(!mnemonic || !keystore) && <VaultGate purpose={keystore ? 'open your wallet' : 'create or import a wallet'} />}
         {keystore ? (
           <div className="space-y-3">
             <div className="text-xs text-slate-500">Encrypted keystore detected.</div>
             <button
               type="button"
               onClick={unlockWallet}
+              disabled={vault.locked || !!mnemonic}
               className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
             >
-              Unlock wallet
+              {mnemonic ? 'Wallet open' : 'Open wallet'}
             </button>
-            <button
-              type="button"
-              onClick={async () => {
-                await deleteKeystore();
-                setKeystore(null);
-                setMnemonic(null);
-              }}
-              className="text-xs text-rose-400"
-            >
-              Delete keystore (local)
-            </button>
+            <details className="pt-2">
+              <summary className="min-h-[44px] cursor-pointer py-3 text-sm text-down">Delete wallet from this phone…</summary>
+              <div className="space-y-2 border-l-2 border-down pl-3">
+                <p className="text-sm text-slate-300">This erases the encrypted wallet from this device. Coins stay on the blockchain, but without your written recovery phrase they are lost forever.</p>
+                <label className="block space-y-1 text-xs text-slate-400">
+                  Type DELETE to confirm
+                  <input value={confirmDelete} onChange={(e) => setConfirmDelete(e.target.value)} autoCapitalize="characters" className="min-h-[44px] w-full rounded-lg border border-ink-500 bg-ink-800 px-3 text-base text-white" />
+                </label>
+                <button
+                  type="button"
+                  disabled={confirmDelete !== 'DELETE'}
+                  onClick={async () => {
+                    await deleteKeystore();
+                    setKeystore(null);
+                    setMnemonic(null);
+                    setConfirmDelete('');
+                    setStatus('Wallet deleted from this phone.');
+                  }}
+                  className="min-h-[44px] rounded-full border border-down px-5 text-sm text-down disabled:opacity-40"
+                >
+                  Delete wallet
+                </button>
+              </div>
+            </details>
           </div>
         ) : (
           <div className="space-y-4">

@@ -54,7 +54,7 @@ export default function AssetPage() {
   const position = account?.positions[sym];
   const posValue = position && price ? position.qty * price : null;
   const posPnl = position && posValue !== null ? posValue - position.costUsd : null;
-  const feedLabel = useMemo(() => (feed.status === 'live' ? 'Live' : feed.status === 'stale' ? 'Delayed' : feed.status === 'reconnecting' ? 'Reconnecting…' : 'Connecting…'), [feed.status]);
+  const feedLabel = useMemo(() => (feed.status === 'live' ? 'Live' : feed.status === 'stale' ? 'Delayed' : feed.status === 'offline' ? 'Offline' : feed.status === 'reconnecting' ? 'Reconnecting…' : 'Connecting…'), [feed.status]);
 
   // unknown symbol: no Coinbase market and not in the ranked list → say so instead of an empty page
   if (product === null && cgDone && !coin) {
