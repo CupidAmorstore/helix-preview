@@ -4,7 +4,7 @@ import MarketChart from '../components/MarketChart';
 import TradeSheet from '../components/TradeSheet';
 import { Button, Change, CoinBadge, Money, Note, PageHeader, Panel } from '../components/ui';
 import { fetchCoinbaseProducts, fetchCoinbaseStats, fetchTopCoins, fmtAge, fmtUsd, type CoinGeckoCoin, type CoinStats } from '../services/marketData';
-import { TIMEFRAMES } from '../services/market';
+import { MARKET_COINS, TIMEFRAMES } from '../services/market';
 import { useLiveFeed } from '../hooks/useLivePrices';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { usePaper } from '../paper/PaperProvider';
@@ -16,6 +16,8 @@ export default function AssetPage() {
   const [coin, setCoin] = useState<CoinGeckoCoin | null>(null);
   const [cgAt, setCgAt] = useState<number | null>(null);
   const [product, setProduct] = useState<string | null | undefined>(undefined);
+  const [cgDone, setCgDone] = useState(false);
+  const [loadErr, setLoadErr] = useState(false);
   const [stats, setStats] = useState<CoinStats | null>(null);
   const [statsAt, setStatsAt] = useState<number | null>(null);
   const [tf, setTf] = useState('1d');
@@ -25,8 +27,10 @@ export default function AssetPage() {
   const { account } = usePaper();
 
   useEffect(() => {
-    fetchTopCoins().then((r) => { setCoin(r.data.find((c) => c.symbol === sym) ?? null); setCgAt(r.fetchedAt); }).catch(() => undefined);
-    fetchCoinbaseProducts().then((r) => setProduct(r.data.find((p) => p.base === sym)?.id ?? null)).catch(() => setProduct(null));
+    setCgDone(false);
+    setLoadErr(false);
+    fetchTopCoins().then((r) => { setCoin(r.data.find((c) => c.symbol === sym) ?? null); setCgAt(r.fetchedAt); }).catch(() => undefined).finally(() => setCgDone(true));
+    fetchCoinbaseProducts().then((r) => setProduct(r.data.find((p) => p.base === sym)?.id ?? null)).catch(() => { setLoadErr(true); setProduct(null); });
     listSnapshots().then((s) => {
       const latest = [...s].sort((a, b) => a.date.localeCompare(b.date)).pop();
       setWatchedQty(latest?.assets?.[sym] ?? null);
@@ -51,6 +55,21 @@ export default function AssetPage() {
   const posValue = position && price ? position.qty * price : null;
   const posPnl = position && posValue !== null ? posValue - position.costUsd : null;
   const feedLabel = useMemo(() => (feed.status === 'live' ? 'Live' : feed.status === 'stale' ? 'Delayed' : feed.status === 'reconnecting' ? 'Reconnecting…' : 'Connecting…'), [feed.status]);
+
+  // unknown symbol: no Coinbase market and not in the ranked list → say so instead of an empty page
+  if (product === null && cgDone && !coin) {
+    return (
+      <div className="mx-auto max-w-xl space-y-5">
+        <PageHeader title={sym} back />
+        <section className="space-y-3 border-t border-ink-600 pt-5">
+          <p className="text-[15px] text-slate-200">
+            {loadErr ? 'Market data could not be loaded. Check your connection and try again.' : `We couldn't find a coin called ${sym} on Coinbase or in the top 100 by market cap.`}
+          </p>
+          <Link to="/markets" className="inline-flex min-h-[48px] items-center rounded-full bg-white px-5 text-sm font-semibold text-ink-900">Search markets</Link>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-xl space-y-4 fade-in">
@@ -91,7 +110,7 @@ export default function AssetPage() {
           </div>
         </Panel>
       ) : product === null ? (
-        <Panel><p className="text-sm text-slate-300">{sym} has no Coinbase USD market, so live charts and paper trading are not available. Prices shown come from CoinGecko.</p></Panel>
+        <Panel><p className="text-sm text-slate-300">{sym} has no Coinbase USD market, so live charts and paper trading are not available.{coin ? ' Prices shown come from CoinGecko.' : ''}</p></Panel>
       ) : null}
 
       {product && (
@@ -134,9 +153,13 @@ export default function AssetPage() {
         </Note>
       </Panel>
 
-      <Link to={`/alerts?symbol=${sym}`} className="flex min-h-[48px] items-center justify-center rounded-xl bg-ink-700 text-sm font-semibold text-white">
-        Set a price alert for {sym}
-      </Link>
+      {MARKET_COINS.some((c) => c.symbol === sym) ? (
+        <Link to={`/alerts?symbol=${sym}`} className="flex min-h-[48px] items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">
+          Set a price alert for {sym}
+        </Link>
+      ) : (
+        <Note>Price alerts are available for {MARKET_COINS.map((c) => c.symbol).join(', ')}.</Note>
+      )}
 
       {product && (
         <TradeSheet open={sheet !== null} onClose={() => setSheet(null)} initialSide={sheet ?? 'buy'} symbol={sym} product={product} name={name} price={price} priceTs={live ? liveTs : null} />

@@ -2,9 +2,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import TopBar from './TopBar';
 import NavIcon from './NavIcon';
 import { isActive, legalItems, primaryNav, secondaryNav } from './navigation';
+import { useNativeShell } from '../hooks/useNativeShell';
+import AlertWatcher from '../alerts/AlertWatcher';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  useNativeShell();
 
   return (
     <div className="app-shell bg-ink-900 text-slate-100">
@@ -34,6 +37,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-h-screen min-w-0 flex-col">
         <TopBar />
+        <AlertWatcher />
         <main className="min-w-0 flex-1 px-4 pb-28 pt-5 sm:px-6 sm:pt-8 lg:px-10 lg:pb-8">{children}</main>
         <footer className="section-divider hidden px-6 py-6 text-xs text-slate-400 lg:block lg:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3">

@@ -1,10 +1,7 @@
-﻿const BTC_API = {
-  mainnet: 'https://blockstream.info/api',
-  testnet: 'https://blockstream.info/testnet/api'
-};
+﻿import { btcFetch } from './btcApi';
 
 export async function fetchBtcBalance(address: string, network: 'mainnet' | 'testnet') {
-  const res = await fetch(`${BTC_API[network]}/address/${address}`);
+  const res = await btcFetch(network, `/address/${address}`);
   if (!res.ok) throw new Error('BTC address lookup failed');
   const data = await res.json();
   const funded = data.chain_stats?.funded_txo_sum ?? 0;

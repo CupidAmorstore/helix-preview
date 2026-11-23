@@ -4,6 +4,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { isAddress } from 'ethers';
 import { PublicKey } from '@solana/web3.js';
 import type { WalletNetwork } from '../types';
+import { btcFetch } from './btcApi';
 
 export type Chain = 'btc' | 'eth' | 'sol';
 
@@ -80,8 +81,7 @@ export async function checkRpcNetwork(chain: 'eth' | 'sol', url: string, network
 
 export async function fetchBalance(chain: Chain, address: string, network: WalletNetwork, rpcUrl?: string): Promise<number> {
   if (chain === 'btc') {
-    const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-    const res = await fetch(`${base}/address/${address}`);
+    const res = await btcFetch(network, `/address/${address}`);
     if (!res.ok) throw new Error('Balance unavailable');
     const j = await res.json();
     const sats = j.chain_stats.funded_txo_sum - j.chain_stats.spent_txo_sum + j.mempool_stats.funded_txo_sum - j.mempool_stats.spent_txo_sum;
@@ -96,8 +96,7 @@ export type TxSummary = { id: string; when: number | null; amount: number | null
 
 export async function fetchHistory(chain: Chain, address: string, network: WalletNetwork, rpcUrl?: string): Promise<TxSummary[] | 'unsupported'> {
   if (chain === 'btc') {
-    const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-    const res = await fetch(`${base}/address/${address}/txs`);
+    const res = await btcFetch(network, `/address/${address}/txs`);
     if (!res.ok) throw new Error('History unavailable');
     const txs = (await res.json()) as { txid: string; status: { confirmed: boolean; block_time?: number }; vin: { prevout?: { scriptpubkey_address?: string; value: number } }[]; vout: { scriptpubkey_address?: string; value: number }[] }[];
     return txs.slice(0, 10).map((t) => {

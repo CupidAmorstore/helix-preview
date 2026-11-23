@@ -12,6 +12,10 @@ describe('product integrity (regressions)', () => {
   it('no contact address on a domain the project does not control', () => {
     for (const [f, s] of src) expect(/@helix\.app\b/.test(s), f).toBe(false);
   });
+  it('no static HTML page shadows an app route (e.g. /privacy served from privacy.html)', () => {
+    const pub = readdirSync(join(__dirname, '../../public')).filter((f) => f.endsWith('.html'));
+    expect(pub).toEqual([]);
+  });
   it('no leftover "Apex App" branding', () => {
     for (const [f, s] of src) expect(s.includes('Apex App'), f).toBe(false);
   });

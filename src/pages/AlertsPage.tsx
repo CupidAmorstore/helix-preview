@@ -1,8 +1,11 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { listAlerts, saveAlert, deleteAlert } from '../services/storage';
-import { useLivePrices } from '../hooks/useLivePrices';
 import { MARKET_COINS } from '../services/market';
+import { usePaper } from '../paper/PaperProvider';
+import { fmtAge, fmtUsd } from '../services/marketData';
+import { Button, Note, PageHeader, Segmented } from '../components/ui';
+import { ALERTS_CHANGED, isMet, parseThreshold, validateThreshold } from '../alerts/logic';
 import type { AlertRecord } from '../types';
 
 export default function AlertsPage() {
@@ -12,135 +15,98 @@ export default function AlertsPage() {
   const [symbol, setSymbol] = useState(MARKET_COINS.some((c) => c.symbol === preset) ? preset : 'BTC');
   const [direction, setDirection] = useState<'above' | 'below'>('above');
   const [threshold, setThreshold] = useState('');
-  const [notifications, setNotifications] = useState<string[]>([]);
-  const triggered = useRef<Record<string, boolean>>({});
-
-  const livePrices = useLivePrices(MARKET_COINS.map((coin) => coin.product));
+  const [error, setError] = useState<string | null>(null);
+  const [saved, setSaved] = useState<string | null>(null);
+  const { feed } = usePaper();
+  const price = feed.prices[symbol];
 
   useEffect(() => {
-    listAlerts().then(setAlerts);
+    const load = () => listAlerts().then((a) => setAlerts([...a].sort((x, y) => y.createdAt.localeCompare(x.createdAt)))).catch(() => undefined);
+    load();
+    window.addEventListener(ALERTS_CHANGED + ':fired', load);
+    return () => window.removeEventListener(ALERTS_CHANGED + ':fired', load);
   }, []);
 
-  useEffect(() => {
-    alerts.forEach((alert) => {
-      if (!alert.enabled) return;
-      const price = livePrices[alert.symbol];
-      if (!price) return;
-      const condition = alert.direction === 'above' ? price >= alert.threshold : price <= alert.threshold;
-      if (condition && !triggered.current[alert.id]) {
-        triggered.current[alert.id] = true;
-        setNotifications((prev) => [
-          `Alert: ${alert.symbol} ${alert.direction} ${alert.threshold} (price: ${price.toFixed(2)})`,
-          ...prev
-        ]);
-      }
-      if (!condition) {
-        triggered.current[alert.id] = false;
-      }
-    });
-  }, [alerts, livePrices]);
-
   const addAlert = async () => {
-    const value = parseFloat(threshold);
-    if (!value) return;
-    const record: AlertRecord = {
-      id: crypto.randomUUID(),
-      symbol,
-      direction,
-      threshold: value,
-      enabled: true,
-      createdAt: new Date().toISOString()
-    };
+    setSaved(null);
+    const err = validateThreshold(threshold);
+    if (err) return setError(err);
+    const value = parseThreshold(threshold);
+    const record: AlertRecord = { id: crypto.randomUUID(), symbol, direction, threshold: value, enabled: true, createdAt: new Date().toISOString() };
     await saveAlert(record);
-    setAlerts((prev) => [...prev, record]);
+    setAlerts((prev) => [record, ...prev]);
     setThreshold('');
+    setError(null);
+    setSaved(price && isMet(record, price) ? `Saved. ${symbol} is already ${direction} ${fmtUsd(value)}, so it fires right away.` : `Saved. You'll see it when ${symbol} goes ${direction} ${fmtUsd(value)}.`);
+    window.dispatchEvent(new Event(ALERTS_CHANGED));
+  };
+
+  const remove = async (id: string) => {
+    await deleteAlert(id);
+    setAlerts((prev) => prev.filter((a) => a.id !== id));
+    window.dispatchEvent(new Event(ALERTS_CHANGED));
   };
 
   return (
-    <div className="space-y-8 slide-up">
-      <header className="space-y-2">
-        <p className="text-xs eyebrow text-slate-500">Alerts</p>
-        <h1 className="text-3xl font-semibold text-white">Price Alert Center</h1>
-        <p className="text-sm text-slate-400">
-          Create read-only alerts on live prices. Notifications stay local to your browser.
-        </p>
-      </header>
+    <div className="mx-auto max-w-xl space-y-6">
+      <PageHeader title="Price alerts" back subtitle="Checked against live Coinbase prices while HELIX is open" />
 
-      <section className="border-t border-ink-600 pt-5 space-y-4">
-        <h2 className="text-sm font-semibold text-slate-200">Create alert</h2>
-        <div className="grid gap-3 md:grid-cols-4">
-          <select
-            aria-label="Coin"
-            value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
-            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
-          >
-            {MARKET_COINS.map((coin) => (
-              <option key={coin.symbol} value={coin.symbol} className="text-black">
-                {coin.symbol}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Alert when price goes"
-            value={direction}
-            onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
-            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
-          >
-            <option value="above" className="text-black">Above</option>
-            <option value="below" className="text-black">Below</option>
-          </select>
-          <input
-            value={threshold}
-            onChange={(e) => setThreshold(e.target.value)}
-            placeholder="Price threshold"
-            className="min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
-          />
-          <button
-            type="button"
-            onClick={addAlert}
-            className="min-h-[44px] rounded-full bg-white px-5 text-sm font-semibold text-ink-900 disabled:opacity-40"
-          >
-            Save alert
-          </button>
+      <section className="space-y-4 border-t border-ink-600 pt-5" aria-labelledby="new-alert">
+        <h2 id="new-alert" className="eyebrow text-slate-400">New alert</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <label className="space-y-1 text-xs text-slate-400">
+            Coin
+            <select value={symbol} onChange={(e) => setSymbol(e.target.value)} className="min-h-[48px] w-full rounded-lg border border-ink-500 bg-ink-800 px-3 text-sm text-white">
+              {MARKET_COINS.map((c) => <option key={c.symbol} value={c.symbol}>{c.symbol} · {c.name}</option>)}
+            </select>
+          </label>
+          <div className="space-y-1 text-xs text-slate-400">
+            Now
+            <div className="flex min-h-[48px] items-center font-mono text-base text-white">{price ? fmtUsd(price) : '…'}</div>
+          </div>
         </div>
+        <Segmented label="Alert when the price goes" value={direction} onChange={setDirection} options={[{ value: 'above', label: 'Goes above' }, { value: 'below', label: 'Goes below' }]} />
+        <label className="block space-y-1 text-xs text-slate-400">
+          Price in USD
+          <input
+            inputMode="decimal"
+            value={threshold}
+            onChange={(e) => { setThreshold(e.target.value); setError(null); }}
+            placeholder={price ? fmtUsd(price * (direction === 'above' ? 1.05 : 0.95)).replace('$', '') : '0.00'}
+            aria-invalid={!!error}
+            className="min-h-[48px] w-full rounded-lg border border-ink-500 bg-ink-800 px-3 font-mono text-base text-white"
+          />
+        </label>
+        {error && <p role="alert" className="text-sm text-down">{error}</p>}
+        {saved && <p role="status" className="text-sm text-up">{saved}</p>}
+        <Button kind="primary" className="w-full" onClick={addAlert}>Save alert</Button>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-        <div className="border-t border-ink-600">
-          <div className="border-b border-ink-600 px-4 py-3 text-xs eyebrow text-slate-500">Active Alerts</div>
-          {alerts.length === 0 && <div className="px-4 py-6 text-sm text-slate-400">No alerts yet.</div>}
-          {alerts.map((alert) => (
-            <div key={alert.id} className="flex items-center justify-between border-b border-white/5 px-4 py-3 text-sm text-slate-200">
-              <div>
-                <div className="font-semibold text-white">{alert.symbol}</div>
-                <div className="text-xs text-slate-500">{alert.direction} {alert.threshold}</div>
-              </div>
-              <button
-                type="button"
-                onClick={async () => {
-                  await deleteAlert(alert.id);
-                  setAlerts((prev) => prev.filter((item) => item.id !== alert.id));
-                }}
-                className="text-rose-400 text-xs"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <div className="border-t border-ink-600">
-          <div className="border-b border-ink-600 px-4 py-3 text-xs eyebrow text-slate-500">Notifications</div>
-          {notifications.length === 0 && <div className="px-4 py-6 text-sm text-slate-400">No alerts triggered yet.</div>}
-          {notifications.map((note, idx) => (
-            <div key={`${note}-${idx}`} className="border-b border-white/5 px-4 py-3 text-xs text-slate-300">
-              {note}
-            </div>
-          ))}
-        </div>
+      <section className="space-y-2 border-t border-ink-600 pt-5">
+        <h2 className="eyebrow text-slate-400">Your alerts ({alerts.length})</h2>
+        {alerts.length === 0 ? (
+          <p className="text-sm text-slate-400">No alerts yet.</p>
+        ) : (
+          <ul className="divide-y divide-ink-600">
+            {alerts.map((a) => {
+              const p = feed.prices[a.symbol];
+              return (
+                <li key={a.id} className="flex min-h-[60px] items-center justify-between gap-3 py-2">
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold text-white">{a.symbol} {a.direction === 'above' ? '▲ above' : '▼ below'} {fmtUsd(a.threshold)}</span>
+                    <span className="block text-xs text-slate-500">
+                      {p ? `Now ${fmtUsd(p)}` : 'Waiting for price'}
+                      {a.lastTriggeredAt ? ` · last fired ${fmtAge(new Date(a.lastTriggeredAt).getTime())}` : ' · not fired yet'}
+                    </span>
+                  </span>
+                  <button type="button" onClick={() => remove(a.id)} className="min-h-[44px] shrink-0 px-2 text-sm text-down">Remove</button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        <Note>Alerts show inside the app on any screen. HELIX cannot notify you while the app is closed.</Note>
       </section>
     </div>
   );
 }
-

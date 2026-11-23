@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import { listAddresses, listExchanges, saveAddress, deleteAddress, deleteExchange, getSetting, setSetting } from '../services/storage';
-import { useVault } from '../services/vault';
+import { MIN_VAULT_PASSWORD, useVault } from '../services/vault';
+import { validateAddress, type Chain } from '../services/walletSafety';
 import type { AddressRecord, EncryptedPayload, ExchangeRecord } from '../types';
 
 export default function ConnectionsPage() {
@@ -14,6 +15,7 @@ export default function ConnectionsPage() {
   const [address, setAddress] = useState('');
   const [addressLabel, setAddressLabel] = useState('');
   const [tokenContracts, setTokenContracts] = useState('');
+  const [addressNote, setAddressNote] = useState('');
 
   const [etherscanKey, setEtherscanKey] = useState('');
   const [heliusKey, setHeliusKey] = useState('');
@@ -48,19 +50,23 @@ export default function ConnectionsPage() {
   const unlockVault = async () => {
     setVaultNote('');
     try {
+      const creating = !vault.hasVault;
       await vault.unlock(vaultPassword);
       setVaultPassword('');
-      setVaultNote('Vault unlocked for this session.');
-    } catch {
-      setVaultNote('Unable to unlock vault.');
+      setVaultNote(creating ? 'Vault created and unlocked. It locks itself after 5 minutes of inactivity.' : 'Vault unlocked. It locks itself after 5 minutes of inactivity.');
+    } catch (e) {
+      setVaultNote(e instanceof Error && e.message ? e.message : 'Unable to unlock vault.');
     }
   };
 
   const addAddress = async () => {
+    setAddressNote('');
+    const bad = address.trim() ? validateAddress(chain as Chain, address.trim(), 'mainnet') : 'Enter an address.';
+    if (bad) return setAddressNote(bad);
     const record: AddressRecord = {
       id: crypto.randomUUID(),
       chain,
-      address,
+      address: address.trim(),
       label: addressLabel || `${chain.toUpperCase()} address`,
       tokenContracts: tokenContracts
         ? tokenContracts.split(',').map((t) => t.trim()).filter(Boolean)
@@ -72,6 +78,7 @@ export default function ConnectionsPage() {
     setAddress('');
     setAddressLabel('');
     setTokenContracts('');
+    setAddressNote('Address saved. Open Portfolio and tap Refresh balances to value it.');
   };
 
   const saveSettings = async () => {
@@ -116,6 +123,7 @@ export default function ConnectionsPage() {
             value={vaultPassword}
             onChange={(e) => setVaultPassword(e.target.value)}
             placeholder={vault.hasVault ? 'Enter vault password' : 'Create a vault password'}
+            aria-describedby="vault-hint"
             className="flex-1 min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
           />
           <button
@@ -126,7 +134,8 @@ export default function ConnectionsPage() {
             {vault.hasVault ? 'Unlock' : 'Create vault'}
           </button>
         </div>
-        {vaultNote && <div className="text-xs text-amber-400">{vaultNote}</div>}
+        {!vault.hasVault && <p id="vault-hint" className="text-xs text-slate-500">At least {MIN_VAULT_PASSWORD} characters. There is no way to recover it if you forget it.</p>}
+        {vaultNote && <div role="status" className="text-sm text-amber-400">{vaultNote}</div>}
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
@@ -198,6 +207,7 @@ export default function ConnectionsPage() {
             >
               Save address
             </button>
+          {addressNote && <p role="status" className={`text-sm ${/saved/i.test(addressNote) ? 'text-up' : 'text-down'}`}>{addressNote}</p>}
           </div>
           <div className="space-y-2">
             {addresses.map((addr) => (

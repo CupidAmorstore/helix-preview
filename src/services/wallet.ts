@@ -7,6 +7,7 @@ import { derivePath } from 'ed25519-hd-key';
 import { Buffer } from 'buffer';
 import { Keypair, Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import { HDNodeWallet, Wallet, JsonRpcProvider, parseEther } from 'ethers';
+import { btcFetch } from './btcApi';
 
 const bip32 = BIP32Factory(ecc);
 const ECPair = ECPairFactory(ecc);
@@ -51,15 +52,13 @@ export async function deriveAddresses(mnemonic: string, network: WalletNetwork) 
 }
 
 export async function fetchBtcUtxos(address: string, network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/address/${address}/utxo`);
+  const res = await btcFetch(network, `/address/${address}/utxo`);
   if (!res.ok) throw new Error('Failed to fetch UTXOs');
   return res.json();
 }
 
 export async function fetchBtcFeeRate(network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/fee-estimates`);
+  const res = await btcFetch(network, `/fee-estimates`);
   if (!res.ok) throw new Error('Failed to fetch fee estimates');
   return res.json();
 }
@@ -107,8 +106,7 @@ export async function buildAndSignBtcTx(params: {
 }
 
 export async function broadcastBtcTx(rawTx: string, network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/tx`, { method: 'POST', body: rawTx });
+  const res = await btcFetch(network, `/tx`, { method: 'POST', body: rawTx });
   if (!res.ok) throw new Error('Broadcast failed');
   return res.text();
 }
