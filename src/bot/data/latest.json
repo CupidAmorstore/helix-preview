@@ -1,16 +1,16 @@
 {
- "generatedAt": "2026-11-23T11:07:19.870Z",
- "codeVersion": "dca30a7b5c19f6c59a920189fec49757b889046e+dirty",
+ "generatedAt": "2026-11-23T15:56:32.914Z",
+ "codeVersion": "9843b3139e91610bb18eaba4d776ba348e144a1a+dirty",
  "mode": "paper",
  "runs": [
   {
-   "runId": "run-2026-11-23T11-07-19-870Z-1h",
+   "runId": "run-2026-11-23T15-56-32-914Z-1h",
    "totals": {
     "markets": 10,
     "marketsEvaluated": 10,
     "configsTried": 0,
     "oosCandidates": 77,
-    "bonferroniN": 154,
+    "bonferroniN": 176,
     "qualified": 0,
     "rejected": 77,
     "newThisRun": 0
@@ -22,6 +22,8 @@
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
     "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
+    "A holdout already inspected by earlier tests on the identical dataset is not fresh evidence: such candidates cannot qualify without forward paper results.",
+    "Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -4913,16 +4915,16 @@
    ]
   },
   {
-   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "runId": "run-2026-11-23T15-56-32-914Z-1d",
    "totals": {
     "markets": 10,
     "marketsEvaluated": 10,
-    "configsTried": 53,
+    "configsTried": 9,
     "oosCandidates": 100,
     "bonferroniN": 177,
     "qualified": 0,
     "rejected": 100,
-    "newThisRun": 23
+    "newThisRun": 1
    },
    "gates": "gates-v1",
    "assumptions": [
@@ -4931,6 +4933,8 @@
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
     "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
+    "A holdout already inspected by earlier tests on the identical dataset is not fresh evidence: such candidates cannot qualify without forward paper results.",
+    "Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -10819,25 +10823,25 @@
      },
      "train": {
       "trades": 68,
-      "grossReturn": 6.451846793666748,
-      "netReturn": 3.8129232611940838,
+      "grossReturn": 6.451846793666755,
+      "netReturn": 3.7580508135018755,
       "totalCostUsd": 0,
-      "maxDrawdown": 0.583826267110111,
+      "maxDrawdown": 0.601164096195271,
       "profitFactor": null,
       "winRate": null,
-      "buyHoldReturn": 1.1736438050876628,
-      "periods": 80
+      "buyHoldReturn": 1.1780221602934737,
+      "periods": 86
      },
      "validation": {
       "trades": 40,
-      "grossReturn": -0.42543729781141637,
-      "netReturn": -0.5574767747049811,
+      "grossReturn": -0.4254372978114169,
+      "netReturn": -0.5576900918901502,
       "totalCostUsd": 0,
-      "maxDrawdown": 0.5888976521267697,
+      "maxDrawdown": 0.5992033237904035,
       "profitFactor": null,
       "winRate": null,
-      "buyHoldReturn": -0.1527334148695661,
-      "periods": 38
+      "buyHoldReturn": -0.12150345350273668,
+      "periods": 43
      },
      "stress": {
       "doubleCostTestNet": null,

@@ -1425,7 +1425,7 @@
   ]
  },
  "xs_momentum|XS|86400000|b9460027": {
-  "runId": "run-2026-11-23T11-07-19-870Z",
+  "runId": "run-2026-11-23T15-56-32-914Z",
   "status": "rejected",
   "reasons": [
    "validation net return <= 0 after costs"

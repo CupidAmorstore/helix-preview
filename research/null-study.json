@@ -1,0 +1,63 @@
+{
+ "generatedAt": "2026-11-23T15:56:13.063Z",
+ "seedsPerFamily": 60,
+ "costBpsPerSide": 0.5,
+ "alphaCorrection": "none (N=1)",
+ "results": {
+  "sma_cross": {
+   "tests": 60,
+   "reachedTest": 0,
+   "qualified": 0
+  },
+  "donchian_breakout": {
+   "tests": 60,
+   "reachedTest": 0,
+   "qualified": 0
+  },
+  "ts_momentum": {
+   "tests": 60,
+   "reachedTest": 13,
+   "qualified": 0
+  },
+  "trend_filtered_momentum": {
+   "tests": 60,
+   "reachedTest": 6,
+   "qualified": 0
+  },
+  "bollinger_reversion": {
+   "tests": 60,
+   "reachedTest": 0,
+   "qualified": 0
+  },
+  "rsi_reversion": {
+   "tests": 60,
+   "reachedTest": 0,
+   "qualified": 0
+  },
+  "vol_compression_breakout": {
+   "tests": 60,
+   "reachedTest": 0,
+   "qualified": 0
+  },
+  "vol_filtered_trend": {
+   "tests": 60,
+   "reachedTest": 2,
+   "qualified": 0
+  },
+  "regime_switch": {
+   "tests": 60,
+   "reachedTest": 1,
+   "qualified": 0
+  },
+  "xs_momentum": {
+   "tests": 20,
+   "reachedTest": 12,
+   "qualified": 0
+  }
+ },
+ "total": {
+  "tests": 560,
+  "q": 0,
+  "rt": 34
+ }
+}
