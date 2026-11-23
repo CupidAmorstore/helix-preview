@@ -1,5 +1,9 @@
 # HELIX — independent audit handoff (PR #3) — RE-AUDIT EDITION
 
+> **Latest (release-readiness cycle):** read `docs/FINAL_RELEASE_READINESS_AUDIT.md` first. Final code `c1b10c7`,
+> 171 unit tests, Android emulator 30/30, verdict CONDITIONAL GO — LIMITED INTERNAL TESTING. Note: this repository is
+> `helix-preview`, not HELIX OMEGA (see section A of that document).
+
 > **Re-audit (2026-11-23):** remediation is complete on the branch. Start with
 > `docs/AUDIT_REMEDIATION_REPORT.md` (every finding, root cause, file:line, tests, status), then
 > `SECURITY_VERIFICATION.md`, `PAPER_ACCOUNTING_VERIFICATION.md`, `RESEARCH_VALIDATION_REPORT.md`, `ANDROID_E2E_RESULTS.md`.
