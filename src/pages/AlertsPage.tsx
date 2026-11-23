@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { listAlerts, saveAlert, deleteAlert } from '../services/storage';
 import { useLivePrices } from '../hooks/useLivePrices';
 import { MARKET_COINS } from '../services/market';
@@ -6,13 +7,15 @@ import type { AlertRecord } from '../types';
 
 export default function AlertsPage() {
   const [alerts, setAlerts] = useState<AlertRecord[]>([]);
-  const [symbol, setSymbol] = useState('BTC');
+  const [params] = useSearchParams();
+  const preset = (params.get('symbol') || '').toUpperCase();
+  const [symbol, setSymbol] = useState(MARKET_COINS.some((c) => c.symbol === preset) ? preset : 'BTC');
   const [direction, setDirection] = useState<'above' | 'below'>('above');
   const [threshold, setThreshold] = useState('');
   const [notifications, setNotifications] = useState<string[]>([]);
   const triggered = useRef<Record<string, boolean>>({});
 
-  const livePrices = useLivePrices(MARKET_COINS.map((coin) => coin.binance));
+  const livePrices = useLivePrices(MARKET_COINS.map((coin) => coin.product));
 
   useEffect(() => {
     listAlerts().then(setAlerts);
@@ -67,6 +70,7 @@ export default function AlertsPage() {
         <h2 className="text-sm font-semibold text-slate-200">Create alert</h2>
         <div className="grid gap-3 md:grid-cols-4">
           <select
+            aria-label="Coin"
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
             className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"
@@ -78,6 +82,7 @@ export default function AlertsPage() {
             ))}
           </select>
           <select
+            aria-label="Alert when price goes"
             value={direction}
             onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
             className="rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200"

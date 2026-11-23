@@ -1,0 +1,1586 @@
+{
+ "runId": "run-2026-11-22T20-04-14-695Z-1d",
+ "startedAt": "2026-11-22T20:04:15.821Z",
+ "finishedAt": "2026-11-22T20:04:15.945Z",
+ "codeVersion": "07ed0a29a0654b6733b7949d6790d7cd4a1f263a+dirty",
+ "gates": {
+  "version": "gates-v1",
+  "split": {
+   "train": 0.5,
+   "validation": 0.25,
+   "test": 0.25
+  },
+  "minTradesValidation": 15,
+  "minTradesTest": 15,
+  "minTradesOos": 30,
+  "familyAlpha": 0.05,
+  "maxTestDrawdown": 0.25,
+  "costStressFactor": 2,
+  "delayStressBars": 1,
+  "minNeighbourPassShare": 0.5
+ },
+ "riskPolicy": {
+  "maxPositionFraction": 0.25,
+  "maxOpenPositions": 3,
+  "maxCorrelatedPositionsPerBase": 1,
+  "maxDailyLossFraction": 0.03,
+  "maxWeeklyLossFraction": 0.06,
+  "maxDrawdownKill": 0.15,
+  "maxStaleBars": 2,
+  "leverage": 1,
+  "allowAveragingDown": false,
+  "allowMartingale": false
+ },
+ "assumptions": [
+  "Long-only spot, no leverage, no shorting.",
+  "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
+  "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
+  "Historical candles are indicative; executable depth was not verified.",
+  "Bonferroni alpha uses the number of OOS candidates in this run; earlier runs are not pooled.",
+  "Research capital normalised to $1,000; account-size feasibility evaluated separately."
+ ],
+ "markets": [
+  {
+   "datasetId": "596997c7-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "base": "BTC",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.451442187840927,
+    "realizedVolAnnPct": 40.80232681047994,
+    "volPercentile": 0.32
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "d42a807a-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "base": "ETH",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4683774789885816,
+    "realizedVolAnnPct": 56.859365058149095,
+    "volPercentile": 0.30857142857142855
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "9ba1194d-1984",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "base": "SOL",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1984,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1984,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "low",
+    "efficiency": 0.532911786047476,
+    "realizedVolAnnPct": 56.41294031930919,
+    "volPercentile": 0.08860759493670886
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "0f197877-1285",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "base": "XRP",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 70,
+    "bars": 1285,
+    "gaps": 1,
+    "missingBars": 904,
+    "stale": false,
+    "longestContiguous": 1228,
+    "reasons": [
+     "41.30% bars missing (gaps not filled)"
+    ]
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4526348086216154,
+    "realizedVolAnnPct": 57.88443046214715,
+    "volPercentile": 0.42105263157894735
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "0118ae7c-1998",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "base": "DOGE",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1998,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1998,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "low",
+    "efficiency": 0.4901109503135554,
+    "realizedVolAnnPct": 59.748928675644784,
+    "volPercentile": 0.16981132075471697
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "da286594-2075",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "base": "ADA",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2075,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2075,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.43015636634400567,
+    "realizedVolAnnPct": 72.15739833839963,
+    "volPercentile": 0.3696969696969697
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "6fae5cd5-1879",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "base": "AVAX",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1879,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1879,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.36081652180846857,
+    "realizedVolAnnPct": 78.70916275744955,
+    "volPercentile": 0.37583892617449666
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "dd2f0bba-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "base": "LINK",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.38461538461538486,
+    "realizedVolAnnPct": 67.09142604162703,
+    "volPercentile": 0.22285714285714286
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "975956d0-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "base": "LTC",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4818997837619201,
+    "realizedVolAnnPct": 59.202978285702876,
+    "volPercentile": 0.30857142857142855
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "81a55b83-1985",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "base": "DOT",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1985,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1985,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.40125346159451963,
+    "realizedVolAnnPct": 80.21981351803743,
+    "volPercentile": 0.5189873417721519
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  }
+ ],
+ "pooled": [
+  {
+   "key": "POOLED:sma_cross(fast=10,slow=100)",
+   "spec": {
+    "family": "sma_cross",
+    "params": {
+     "fast": 10,
+     "slow": 100
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled test net return <= 0 after costs",
+    "test profit factor <= 1",
+    "test drawdown bound 31.4% > 25%",
+    "fails 2x cost stress",
+    "fails +1 bar execution delay stress",
+    "parameter neighbours unstable on validation",
+    "month-block bootstrap lower bound of mean OOS trade <= 0 (multiple-testing adjusted)"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1706572800000,
+    "trainEnd": 1750896000000,
+    "valEnd": 1773014400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 49,
+    "netReturn": 0.36039830235528786,
+    "grossReturn": 0.4488182579593581,
+    "buyHoldReturn": 0.5495838051889036,
+    "maxDrawdownBound": 0.6474192874992842,
+    "profitFactor": 1.622575795038299,
+    "winRate": 0.3673469387755102,
+    "totalCostUsd": 82.48871555549036,
+    "perMarketNet": {
+     "BTC-USD": 0.8246455872594418,
+     "ETH-USD": -0.029795490400314595,
+     "SOL-USD": -0.3007055579265956,
+     "XRP-USD": 0.8393932071200068,
+     "DOGE-USD": 2.0507788286943844,
+     "ADA-USD": 0.3645779907502933,
+     "AVAX-USD": -0.11451496986126075,
+     "LINK-USD": 0.015159127916539283,
+     "LTC-USD": 0.16707751794803105,
+     "DOT-USD": -0.21263321794764722
+    }
+   },
+   "configsTriedOnTrain": 6,
+   "validation": {
+    "trades": 17,
+    "netReturn": 0.026293706158614635,
+    "grossReturn": 0.04684399821746842,
+    "buyHoldReturn": -0.41204009625223004,
+    "maxDrawdownBound": 0.5268087197969513,
+    "profitFactor": 1.2150380121115592,
+    "winRate": 0.4117647058823529,
+    "totalCostUsd": 21.760359160905892,
+    "perMarketNet": {
+     "BTC-USD": -0.17974896456475475,
+     "ETH-USD": 0.5651741491500801,
+     "SOL-USD": 0.17894317554701455,
+     "XRP-USD": 0.19075742941026297,
+     "DOGE-USD": 0.02172110961267326,
+     "ADA-USD": -0.18390391855475696,
+     "AVAX-USD": -0.09541365993586592,
+     "LINK-USD": 0.2972580890788319,
+     "LTC-USD": -0.05248409437338841,
+     "DOT-USD": -0.4793662537839505
+    }
+   },
+   "test": {
+    "trades": 19,
+    "netReturn": -0.10152960941376675,
+    "grossReturn": -0.07911639286489928,
+    "buyHoldReturn": -0.2741399476983898,
+    "maxDrawdownBound": 0.3139896373056994,
+    "profitFactor": 0.3114809297300701,
+    "winRate": 0.21052631578947367,
+    "totalCostUsd": 22.756412381959933,
+    "perMarketNet": {
+     "BTC-USD": -0.2150093973436532,
+     "ETH-USD": 0.09189297707604926,
+     "SOL-USD": -0.041076834918932215,
+     "XRP-USD": -0.26286612160394374,
+     "DOGE-USD": -0.22684480257844575,
+     "ADA-USD": -0.28251680337197826,
+     "AVAX-USD": 0.014247095141684651,
+     "LINK-USD": 0.04189020598751392,
+     "LTC-USD": -0.08074091809405137,
+     "DOT-USD": -0.05427149443191093
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": -0.12338518542488149,
+    "delayedTestNet": -0.12135427017595021,
+    "neighbourPassShare": 0.3333333333333333
+   },
+   "ci": {
+    "lo": -0.11611549532032173,
+    "hi": 0.0663251027515697,
+    "mean": -0.02359480450458312,
+    "blocks": 9,
+    "alpha": 0.0071428571428571435,
+    "n": 36
+   }
+  },
+  {
+   "key": "POOLED:donchian_breakout(entry=55,exit=10)",
+   "spec": {
+    "family": "donchian_breakout",
+    "params": {
+     "entry": 55,
+     "exit": 10
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1694044800000,
+    "trainEnd": 1744675200000,
+    "valEnd": 1769990400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 43,
+    "netReturn": 1.380570975341118,
+    "grossReturn": 1.514546749329293,
+    "buyHoldReturn": 1.5909179802641062,
+    "maxDrawdownBound": 0.5536860029864107,
+    "profitFactor": 3.9314480740826214,
+    "winRate": 0.5813953488372093,
+    "totalCostUsd": 96.54109941933658,
+    "perMarketNet": {
+     "BTC-USD": 1.1674200081543975,
+     "ETH-USD": 0.6143568313187169,
+     "SOL-USD": 2.588752348707938,
+     "XRP-USD": 2.156477638956647,
+     "DOGE-USD": 2.1777706701733086,
+     "ADA-USD": 2.150736403193538,
+     "AVAX-USD": 2.2112234677846523,
+     "LINK-USD": 0.41628379395908954,
+     "LTC-USD": -0.2877661869986733,
+     "DOT-USD": 0.6104547781615652
+    }
+   },
+   "configsTriedOnTrain": 4,
+   "validation": {
+    "trades": 25,
+    "netReturn": -0.188454657526042,
+    "grossReturn": -0.16204330103514913,
+    "buyHoldReturn": -0.24541341755457408,
+    "maxDrawdownBound": 0.47238160090207815,
+    "profitFactor": 0.20949780663498588,
+    "winRate": 0.28,
+    "totalCostUsd": 28.986994932593802,
+    "perMarketNet": {
+     "BTC-USD": -0.15421903476051468,
+     "ETH-USD": 0.0988097805727528,
+     "SOL-USD": -0.219122547697425,
+     "XRP-USD": 0.14672852883204324,
+     "DOGE-USD": -0.47238160090207815,
+     "ADA-USD": -0.12418686592738493,
+     "AVAX-USD": -0.4536991501789982,
+     "LINK-USD": -0.23606776061046342,
+     "LTC-USD": -0.36201408968512105,
+     "DOT-USD": -0.10839383490323096
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 0
+   }
+  },
+  {
+   "key": "POOLED:ts_momentum(lookback=24,threshold=0)",
+   "spec": {
+    "family": "ts_momentum",
+    "params": {
+     "lookback": 24,
+     "threshold": 0
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1703808000000,
+    "trainEnd": 1749513600000,
+    "valEnd": 1772323200000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 257,
+    "netReturn": 0.2063286549531915,
+    "grossReturn": 0.6205717189630926,
+    "buyHoldReturn": 0.5546493320855483,
+    "maxDrawdownBound": 0.751105707882725,
+    "profitFactor": 1.1971338998943837,
+    "winRate": 0.20233463035019456,
+    "totalCostUsd": 304.9127058207514,
+    "perMarketNet": {
+     "BTC-USD": -0.0076062814755285535,
+     "ETH-USD": -0.040563348052299,
+     "SOL-USD": 0.32422480125230657,
+     "XRP-USD": 0.7455184090710285,
+     "DOGE-USD": 3.1427296505710665,
+     "ADA-USD": -0.43759921771575994,
+     "AVAX-USD": -0.7214202054830949,
+     "LINK-USD": -0.4439571803843283,
+     "LTC-USD": -0.27708921370816253,
+     "DOT-USD": -0.22095086454331314
+    }
+   },
+   "configsTriedOnTrain": 3,
+   "validation": {
+    "trades": 107,
+    "netReturn": -0.24281030678814014,
+    "grossReturn": -0.1286074832860223,
+    "buyHoldReturn": -0.47725372182951986,
+    "maxDrawdownBound": 0.5937991941858275,
+    "profitFactor": 0.5395335572908836,
+    "winRate": 0.19626168224299065,
+    "totalCostUsd": 136.89133107072263,
+    "perMarketNet": {
+     "BTC-USD": -0.29707378834412834,
+     "ETH-USD": 0.008876338104987003,
+     "SOL-USD": -0.272512758293632,
+     "XRP-USD": -0.14173350305244425,
+     "DOGE-USD": -0.17566420506884972,
+     "ADA-USD": -0.37891511747740825,
+     "AVAX-USD": -0.13617295408145835,
+     "LINK-USD": -0.11945421133034073,
+     "LTC-USD": -0.40343711438801777,
+     "DOT-USD": -0.5120157539501091
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 0
+   }
+  },
+  {
+   "key": "POOLED:trend_filtered_momentum(filter=200,lookback=24)",
+   "spec": {
+    "family": "trend_filtered_momentum",
+    "params": {
+     "lookback": 24,
+     "filter": 200
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1706572800000,
+    "trainEnd": 1750896000000,
+    "valEnd": 1773014400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 134,
+    "netReturn": 0.5223756971360725,
+    "grossReturn": 0.8109233684149484,
+    "buyHoldReturn": 0.5495838051889036,
+    "maxDrawdownBound": 0.6100375539605829,
+    "profitFactor": 1.6565737170177788,
+    "winRate": 0.2537313432835821,
+    "totalCostUsd": 224.58578040488297,
+    "perMarketNet": {
+     "BTC-USD": 0.27034190960136173,
+     "ETH-USD": 0.02435731457886825,
+     "SOL-USD": 0.4776169451487957,
+     "XRP-USD": 1.1398495818255951,
+     "DOGE-USD": 2.7534745693946263,
+     "ADA-USD": 0.1997388641192419,
+     "AVAX-USD": -0.042789522552594494,
+     "LINK-USD": 0.12023499257948944,
+     "LTC-USD": -0.22029394152651138,
+     "DOT-USD": 0.5012262581918514
+    }
+   },
+   "configsTriedOnTrain": 2,
+   "validation": {
+    "trades": 69,
+    "netReturn": -0.07541492528393678,
+    "grossReturn": 0.009470326713857837,
+    "buyHoldReturn": -0.41204009625223004,
+    "maxDrawdownBound": 0.46521958686544906,
+    "profitFactor": 0.7128201805822895,
+    "winRate": 0.2608695652173913,
+    "totalCostUsd": 88.24442405331322,
+    "perMarketNet": {
+     "BTC-USD": -0.11899006587884065,
+     "ETH-USD": 0.6328416656331521,
+     "SOL-USD": -0.10869987887198729,
+     "XRP-USD": 0.0047534810773293135,
+     "DOGE-USD": -0.273286243020862,
+     "ADA-USD": -0.31919028116076076,
+     "AVAX-USD": -0.24817942033397433,
+     "LINK-USD": 0.1548334529518398,
+     "LTC-USD": -0.3157083726522357,
+     "DOT-USD": -0.16252359058302845
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 0
+   }
+  },
+  {
+   "key": "POOLED:bollinger_reversion(k=2,maxHold=24,n=20)",
+   "spec": {
+    "family": "bollinger_reversion",
+    "params": {
+     "n": 20,
+     "k": 2,
+     "maxHold": 24
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled test net return <= 0 after costs",
+    "test profit factor <= 1",
+    "test drawdown bound 63.4% > 25%",
+    "fails 2x cost stress",
+    "fails +1 bar execution delay stress",
+    "parameter neighbours unstable on validation",
+    "month-block bootstrap lower bound of mean OOS trade <= 0 (multiple-testing adjusted)"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1693612800000,
+    "trainEnd": 1744416000000,
+    "valEnd": 1769817600000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 112,
+    "netReturn": 0.15638442884368364,
+    "grossReturn": 0.34210329168448006,
+    "buyHoldReturn": 1.5472756683444187,
+    "maxDrawdownBound": 0.5504653503942513,
+    "profitFactor": 1.3560534265689697,
+    "winRate": 0.5803571428571429,
+    "totalCostUsd": 157.62764269865204,
+    "perMarketNet": {
+     "BTC-USD": 0.2828566215059185,
+     "ETH-USD": -0.20261772264265276,
+     "SOL-USD": 0.10550707996673392,
+     "XRP-USD": 0.9534243382095196,
+     "DOGE-USD": -0.11776305523102726,
+     "ADA-USD": 0.43338156345506795,
+     "AVAX-USD": -0.25053688220049475,
+     "LINK-USD": 0.1703479691640184,
+     "LTC-USD": 0.34939704133640137,
+     "DOT-USD": -0.1601526651266486
+    }
+   },
+   "configsTriedOnTrain": 4,
+   "validation": {
+    "trades": 64,
+    "netReturn": 0.06757401846850318,
+    "grossReturn": 0.1629857536977916,
+    "buyHoldReturn": -0.18686602239907485,
+    "maxDrawdownBound": 0.45922039050947244,
+    "profitFactor": 1.2336151244436353,
+    "winRate": 0.6875,
+    "totalCostUsd": 92.94277890485769,
+    "perMarketNet": {
+     "BTC-USD": -0.0025720539908191675,
+     "ETH-USD": -0.021046163230379555,
+     "SOL-USD": 0.12980257973078424,
+     "XRP-USD": 0.664431230219303,
+     "DOGE-USD": -0.22376078624130935,
+     "ADA-USD": -0.22245135960320228,
+     "AVAX-USD": -0.2814700791786118,
+     "LINK-USD": 0.12360258265486035,
+     "LTC-USD": 0.4431503950801565,
+     "DOT-USD": 0.06605383924424979
+    }
+   },
+   "test": {
+    "trades": 49,
+    "netReturn": -0.3824828377261992,
+    "grossReturn": -0.3420482108297729,
+    "buyHoldReturn": -0.36963749113124494,
+    "maxDrawdownBound": 0.6336560697719906,
+    "profitFactor": 0.18918323011217075,
+    "winRate": 0.30612244897959184,
+    "totalCostUsd": 52.08486368553257,
+    "perMarketNet": {
+     "BTC-USD": -0.38870749237336366,
+     "ETH-USD": -0.6218747467947474,
+     "SOL-USD": -0.4632221803587828,
+     "XRP-USD": -0.3772954392772754,
+     "DOGE-USD": -0.4254654059821401,
+     "ADA-USD": -0.2901828876070247,
+     "AVAX-USD": -0.25863618201883254,
+     "LINK-USD": -0.26802928321118014,
+     "LTC-USD": -0.3466126338627311,
+     "DOT-USD": -0.384802125775914
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": -0.4202675885765384,
+    "delayedTestNet": -0.3851692375772084,
+    "neighbourPassShare": 0
+   },
+   "ci": {
+    "lo": -0.08938638214326723,
+    "hi": 0.028276624006544633,
+    "mean": -0.03187365459360456,
+    "blocks": 18,
+    "alpha": 0.0071428571428571435,
+    "n": 113
+   }
+  },
+  {
+   "key": "POOLED:rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+   "spec": {
+    "family": "rsi_reversion",
+    "params": {
+     "n": 14,
+     "lo": 30,
+     "hi": 55,
+     "maxHold": 24
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "best pooled training config is not profitable after costs",
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1690502400000,
+    "trainEnd": 1742860800000,
+    "valEnd": 1769040000000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 43,
+    "netReturn": -0.03392244212502013,
+    "grossReturn": 0.02192081160580468,
+    "buyHoldReturn": 1.3437458898226096,
+    "maxDrawdownBound": 0.35689223057644104,
+    "profitFactor": 0.8461873188157586,
+    "winRate": 0.46511627906976744,
+    "totalCostUsd": 54.264286797672455,
+    "perMarketNet": {
+     "BTC-USD": 0.11388182612151199,
+     "ETH-USD": -0.04254283919470081,
+     "SOL-USD": -0.1123275617997086,
+     "XRP-USD": 0.052620902241554246,
+     "DOGE-USD": -0.19043653859436194,
+     "ADA-USD": 0.0931336291757261,
+     "AVAX-USD": -0.15883344797848697,
+     "LINK-USD": -0.05102670598943204,
+     "LTC-USD": 0.07038031751265628,
+     "DOT-USD": -0.1140740027449596
+    }
+   },
+   "configsTriedOnTrain": 2,
+   "validation": {
+    "trades": 21,
+    "netReturn": -0.02114099557017076,
+    "grossReturn": 0.005275252701678126,
+    "buyHoldReturn": -0.21966821287159138,
+    "maxDrawdownBound": 0.47295674408246,
+    "profitFactor": 0.8607434495096256,
+    "winRate": 0.47619047619047616,
+    "totalCostUsd": 28.011162530322053,
+    "perMarketNet": {
+     "BTC-USD": -0.008210761823617907,
+     "ETH-USD": 0.021771677915420007,
+     "SOL-USD": -0.1253871898598844,
+     "XRP-USD": -0.040306181114180384,
+     "DOGE-USD": 0.1529707589586764,
+     "ADA-USD": -0.38194270255590357,
+     "AVAX-USD": -0.154124891694829,
+     "LINK-USD": 0.04797682025296246,
+     "LTC-USD": 0.17613172455085158,
+     "DOT-USD": 0.0997107896687972
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 1
+   }
+  },
+  {
+   "key": "POOLED:vol_compression_breakout(lookback=120,n=20,pct=0.2)",
+   "spec": {
+    "family": "vol_compression_breakout",
+    "params": {
+     "n": 20,
+     "lookback": 120,
+     "pct": 0.2
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "validation trades 14 < 15",
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1699660800000,
+    "trainEnd": 1747440000000,
+    "valEnd": 1771286400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 31,
+    "netReturn": 0.11578024472405055,
+    "grossReturn": 0.1646562864674508,
+    "buyHoldReturn": 0.9885243965442706,
+    "maxDrawdownBound": 0.3373940859265005,
+    "profitFactor": 1.8197004894740838,
+    "winRate": 0.3870967741935484,
+    "totalCostUsd": 45.97423231696834,
+    "perMarketNet": {
+     "BTC-USD": 0.08441609573363928,
+     "ETH-USD": 0,
+     "SOL-USD": 0.5247456276623286,
+     "XRP-USD": -0.11837027192976224,
+     "DOGE-USD": 0.6214827621778329,
+     "ADA-USD": -0.11925888172259436,
+     "AVAX-USD": -0.09664599642570959,
+     "LINK-USD": -0.1545901650667808,
+     "LTC-USD": 0.214201027570059,
+     "DOT-USD": 0.20182224924149272
+    }
+   },
+   "configsTriedOnTrain": 2,
+   "validation": {
+    "trades": 14,
+    "netReturn": -0.05015989012001751,
+    "grossReturn": -0.03325219276815995,
+    "buyHoldReturn": -0.4647485031198091,
+    "maxDrawdownBound": 0.23752205183496766,
+    "profitFactor": 0.30787241442285734,
+    "winRate": 0.2857142857142857,
+    "totalCostUsd": 17.6241177384252,
+    "perMarketNet": {
+     "BTC-USD": -0.0889074294332769,
+     "ETH-USD": -0.21717899143468022,
+     "SOL-USD": 0.1096164918522009,
+     "XRP-USD": 0,
+     "DOGE-USD": -0.15208698441925705,
+     "ADA-USD": 0,
+     "AVAX-USD": 0.012865437265853874,
+     "LINK-USD": 0,
+     "LTC-USD": -0.048556570688965794,
+     "DOT-USD": -0.11735085434204995
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 0
+   }
+  }
+ ],
+ "totals": {
+  "markets": 10,
+  "marketsEvaluated": 0,
+  "configsTried": 23,
+  "oosCandidates": 7,
+  "qualified": 0,
+  "rejected": 7
+ },
+ "feasibility": [
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.5,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": false,
+   "roundTripCostPct": 121.09999999999998,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: position below venue minimum or fixed costs"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.26,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 49.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.18,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 25.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1320000000000001,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 10.7,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1159999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 5.8999999999999995,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1079999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 3.5000000000000004,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_ethereum_l1: policy sizing fits venue minimum"
+  }
+ ]
+}

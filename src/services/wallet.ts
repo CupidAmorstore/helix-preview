@@ -6,7 +6,7 @@ import * as ecc from '@bitcoinerlab/secp256k1';
 import { derivePath } from 'ed25519-hd-key';
 import { Buffer } from 'buffer';
 import { Keypair, Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
-import { Wallet, JsonRpcProvider, parseEther } from 'ethers';
+import { HDNodeWallet, Wallet, JsonRpcProvider, parseEther } from 'ethers';
 
 const bip32 = BIP32Factory(ecc);
 const ECPair = ECPairFactory(ecc);
@@ -31,11 +31,13 @@ export async function deriveAddresses(mnemonic: string, network: WalletNetwork) 
   const root = bip32.fromSeed(seed, btcNetwork(network));
   const path = network === 'mainnet' ? "m/84'/0'/0'/0/0" : "m/84'/1'/0'/0/0";
   const child = root.derivePath(path);
-  const btcPayment = bitcoin.payments.p2wpkh({ pubkey: child.publicKey, network: btcNetwork(network) });
+  // bip32 v5 returns Uint8Array; bitcoinjs-lib 6 expects Buffer, and Uint8Array#toString ignores 'hex'
+  const btcPayment = bitcoin.payments.p2wpkh({ pubkey: Buffer.from(child.publicKey), network: btcNetwork(network) });
   const btcAddress = btcPayment.address ?? '';
-  const btcPrivateKey = child.privateKey?.toString('hex') ?? '';
+  const btcPrivateKey = child.privateKey ? Buffer.from(child.privateKey).toString('hex') : '';
 
-  const ethWallet = Wallet.fromPhrase(mnemonic, "m/44'/60'/0'/0/0");
+  // ethers v6: second argument of Wallet.fromPhrase is a provider, not a path — use HDNodeWallet explicitly
+  const ethWallet = HDNodeWallet.fromPhrase(mnemonic, undefined, "m/44'/60'/0'/0/0");
 
   const solSeed = await bip39.mnemonicToSeed(mnemonic);
   const derived = derivePath("m/44'/501'/0'/0'", solSeed.toString('hex'));
@@ -74,7 +76,8 @@ export async function buildAndSignBtcTx(params: {
   const utxos = await fetchBtcUtxos(btc.address, network);
   if (!utxos.length) throw new Error('No UTXOs found');
 
-  const utxo = utxos.sort((a: any, b: any) => b.value - a.value)[0];
+  type Utxo = { txid: string; vout: number; value: number };
+  const utxo = (utxos as Utxo[]).sort((a, b) => b.value - a.value)[0];
   const keyPair = ECPair.fromPrivateKey(Buffer.from(btc.privateKey, 'hex'));
   const payment = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network: btcNetwork(network) });
   if (!payment.output) throw new Error('Failed to build payment script');

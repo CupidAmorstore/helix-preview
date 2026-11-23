@@ -1,38 +1,52 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import AppShell from './components/AppShell';
-import DashboardPage from './pages/DashboardPage';
-import PortfolioPage from './pages/PortfolioPage';
-import ConnectionsPage from './pages/ConnectionsPage';
-import AlertsPage from './pages/AlertsPage';
-import WalletPage from './pages/WalletPage';
-import AccessPage from './pages/AccessPage';
-import LegalPage from './pages/LegalPage';
+import HomePage from './pages/HomePage';
 import { VaultProvider } from './services/vault';
+import { PaperProvider } from './paper/PaperProvider';
+
+// Home loads eagerly; every other page is code-split so the wallet/crypto
+// libraries only download when the Wallet page is opened.
+const MarketsPage = lazy(() => import('./pages/MarketsPage'));
+const AssetPage = lazy(() => import('./pages/AssetPage'));
+const BotPage = lazy(() => import('./pages/BotPage'));
+const ResearchLabPage = lazy(() => import('./pages/ResearchLabPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const ConnectionsPage = lazy(() => import('./pages/ConnectionsPage'));
+const AlertsPage = lazy(() => import('./pages/AlertsPage'));
+const WalletPage = lazy(() => import('./pages/WalletPage'));
+const AccessPage = lazy(() => import('./pages/AccessPage'));
+const LegalPage = lazy(() => import('./pages/LegalPage'));
+const MorePage = lazy(() => import('./pages/MorePage'));
 
 export default function App() {
   const base = import.meta.env.BASE_URL;
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const stored = localStorage.getItem('helix_theme');
-    return stored === 'light' ? 'light' : 'dark';
-  });
-
+  // Dark theme only until a complete, contrast-checked light token set exists: the old light mode left
+  // dark cards with dark text in the Trading Bot (including the paper-mode warning).
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.classList.toggle('light', theme === 'light');
-    localStorage.setItem('helix_theme', theme);
-  }, [theme]);
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    try {
+      localStorage.removeItem('helix_theme');
+    } catch {
+      // storage unavailable: nothing to clean up
+    }
+  }, []);
 
   return (
     <BrowserRouter basename={base}>
       <VaultProvider>
-        <AppShell
-          theme={theme}
-          onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
-        >
+      <PaperProvider>
+        <AppShell>
+          <Suspense fallback={<div className="text-sm text-slate-500">Loading…</div>}>
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/markets" element={<MarketsPage />} />
+            <Route path="/markets/:symbol" element={<AssetPage />} />
+            <Route path="/bot" element={<BotPage />} />
+            <Route path="/bot/research" element={<ResearchLabPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/more" element={<MorePage />} />
             <Route path="/connections" element={<ConnectionsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/wallet" element={<WalletPage />} />
@@ -42,7 +56,9 @@ export default function App() {
             <Route path="/terms" element={<LegalPage kind="terms" />} />
             <Route path="*" element={<LegalPage kind="notfound" />} />
           </Routes>
+          </Suspense>
         </AppShell>
+      </PaperProvider>
       </VaultProvider>
     </BrowserRouter>
   );

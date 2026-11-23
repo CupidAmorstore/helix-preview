@@ -1,0 +1,254 @@
+[
+ {
+  "base": "BTC",
+  "buyVenue": "kraken",
+  "sellVenue": "gemini",
+  "grossEdgePct": 0.008389884008619397,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.8516101159913806,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759158
+ },
+ {
+  "base": "BTC",
+  "buyVenue": "gemini",
+  "sellVenue": "kraken",
+  "grossEdgePct": -0.008570477342628724,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.8685704773426287,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759158
+ },
+ {
+  "base": "BTC",
+  "buyVenue": "coinbase",
+  "sellVenue": "gemini",
+  "grossEdgePct": 0.023887673531830522,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0361123264681695,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759158
+ },
+ {
+  "base": "BTC",
+  "buyVenue": "coinbase",
+  "sellVenue": "kraken",
+  "grossEdgePct": 0.01533163311566721,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0446683668843328,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377758901
+ },
+ {
+  "base": "BTC",
+  "buyVenue": "kraken",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.015510571418686503,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0755105714186866,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377758901
+ },
+ {
+  "base": "BTC",
+  "buyVenue": "gemini",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.023914928123369705,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0839149281233698,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759158
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "kraken",
+  "sellVenue": "gemini",
+  "grossEdgePct": 0.019846018246649777,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.8401539817533502,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759679
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "gemini",
+  "sellVenue": "kraken",
+  "grossEdgePct": -0.026843444364044178,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.8868434443640442,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759679
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "coinbase",
+  "sellVenue": "gemini",
+  "grossEdgePct": 0.012256904722995898,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0477430952770042,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759679
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "kraken",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.0023348256760757913,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0623348256760758,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759651
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "coinbase",
+  "sellVenue": "kraken",
+  "grossEdgePct": -0.008171269815326898,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.068171269815327,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759651
+ },
+ {
+  "base": "ETH",
+  "buyVenue": "gemini",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.02859410377908933,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0885941037790894,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759679
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "kraken",
+  "sellVenue": "gemini",
+  "grossEdgePct": -0.0028494087476738095,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.8628494087476738,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759871
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "gemini",
+  "sellVenue": "kraken",
+  "grossEdgePct": -0.07689678742310857,
+  "roundTripCostPct": 0.86,
+  "netEdgePct": -0.9368967874231086,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759871
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "coinbase",
+  "sellVenue": "gemini",
+  "grossEdgePct": 0.011399259048161525,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.0486007409518385,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759871
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "coinbase",
+  "sellVenue": "kraken",
+  "grossEdgePct": -0.014249073810213009,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.074249073810213,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759750
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "kraken",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.028494087476838015,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.088494087476838,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759750
+ },
+ {
+  "base": "SOL",
+  "buyVenue": "gemini",
+  "sellVenue": "coinbase",
+  "grossEdgePct": -0.07689678742310857,
+  "roundTripCostPct": 1.06,
+  "netEdgePct": -1.1368967874231086,
+  "status": "rejected",
+  "reasons": [
+   "edge does not cover taker fees + slippage on both venues",
+   "unmodelled: transfer delay, withdrawal fee, inventory, depth"
+  ],
+  "observedAt": 1795377759871
+ }
+]

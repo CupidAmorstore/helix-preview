@@ -1,0 +1,4969 @@
+{
+ "runId": "run-2026-11-22T20-00-26-711Z-1h",
+ "startedAt": "2026-11-22T20:02:11.020Z",
+ "finishedAt": "2026-11-22T20:02:11.316Z",
+ "codeVersion": "07ed0a29a0654b6733b7949d6790d7cd4a1f263a+dirty",
+ "gates": {
+  "version": "gates-v1",
+  "split": {
+   "train": 0.5,
+   "validation": 0.25,
+   "test": 0.25
+  },
+  "minTradesValidation": 15,
+  "minTradesTest": 15,
+  "minTradesOos": 30,
+  "familyAlpha": 0.05,
+  "maxTestDrawdown": 0.25,
+  "costStressFactor": 2,
+  "delayStressBars": 1,
+  "minNeighbourPassShare": 0.5
+ },
+ "riskPolicy": {
+  "maxPositionFraction": 0.25,
+  "maxOpenPositions": 3,
+  "maxCorrelatedPositionsPerBase": 1,
+  "maxDailyLossFraction": 0.03,
+  "maxWeeklyLossFraction": 0.06,
+  "maxDrawdownKill": 0.15,
+  "maxStaleBars": 2,
+  "leverage": 1,
+  "allowAveragingDown": false,
+  "allowMartingale": false
+ },
+ "assumptions": [
+  "Long-only spot, no leverage, no shorting.",
+  "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
+  "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
+  "Historical candles are indicative; executable depth was not verified.",
+  "Bonferroni alpha uses the number of OOS candidates in this run; earlier runs are not pooled.",
+  "Research capital normalised to $1,000; account-size feasibility evaluated separately."
+ ],
+ "markets": [
+  {
+   "datasetId": "122df580-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "base": "BTC",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.12951750259169115,
+    "realizedVolAnnPct": 95.49441165424476,
+    "volPercentile": 0.982051282051282
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 4 < 15"
+     ],
+     "train": {
+      "trades": 7,
+      "grossReturn": 0.007605052636219689,
+      "netReturn": -0.08003992038769348,
+      "totalCostUsd": 84.69681623485849,
+      "maxDrawdown": 0.14117639441766353,
+      "profitFactor": 0.35487325204586356,
+      "winRate": 0.2857142857142857,
+      "exposure": 0.3803680981595092,
+      "buyHoldReturn": -0.128035387009925,
+      "meanTradeNet": -0.011498330703753692,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 4,
+      "grossReturn": 0.1341404601381586,
+      "netReturn": 0.07667148936093393,
+      "totalCostUsd": 56.4275274818317,
+      "maxDrawdown": 0.09182039636946061,
+      "profitFactor": 2.219827059338063,
+      "winRate": 0.5,
+      "exposure": 0.6091148115687993,
+      "buyHoldReturn": 0.24717092880927605,
+      "meanTradeNet": 0.020599351026324292,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 9 < 15"
+     ],
+     "train": {
+      "trades": 19,
+      "grossReturn": -0.07200816926248643,
+      "netReturn": -0.27511033940364804,
+      "totalCostUsd": 209.11434074723547,
+      "maxDrawdown": 0.2774272288881001,
+      "profitFactor": 0.051444981472312766,
+      "winRate": 0.05263157894736842,
+      "exposure": 0.23194562446898895,
+      "buyHoldReturn": -0.22382524296412243,
+      "meanTradeNet": -0.016734276082455268,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 9,
+      "grossReturn": 0.22068446884178305,
+      "netReturn": 0.08590103966592189,
+      "totalCostUsd": 126.13222870506058,
+      "maxDrawdown": 0.12679369338935562,
+      "profitFactor": 1.762254558762939,
+      "winRate": 0.4444444444444444,
+      "exposure": 0.29226847918436705,
+      "buyHoldReturn": 0.3521380890418546,
+      "meanTradeNet": 0.010469192537182655,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 41,
+      "grossReturn": -0.07157761954990838,
+      "netReturn": -0.45516702817424237,
+      "totalCostUsd": 389.2233310529232,
+      "maxDrawdown": 0.45160244406063643,
+      "profitFactor": 0.034914488528415576,
+      "winRate": 0.024390243902439025,
+      "exposure": 0.4007832898172324,
+      "buyHoldReturn": -0.2019125292066578,
+      "meanTradeNet": -0.014670675448648028,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 18,
+      "grossReturn": 0.2203903876673423,
+      "netReturn": -0.034232829485693284,
+      "totalCostUsd": 246.67054127646327,
+      "maxDrawdown": 0.23584337656261406,
+      "profitFactor": 0.8608059792985326,
+      "winRate": 0.16666666666666666,
+      "exposure": 0.6988685813751088,
+      "buyHoldReturn": 0.33646904683102363,
+      "meanTradeNet": -0.0009237770296406502,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 39,
+      "grossReturn": -0.013810203728437553,
+      "netReturn": -0.4060223533244449,
+      "totalCostUsd": 381.2897657611586,
+      "maxDrawdown": 0.4383133746590555,
+      "profitFactor": 0.092433202804518,
+      "winRate": 0.05128205128205128,
+      "exposure": 0.33917616126205086,
+      "buyHoldReturn": -0.128035387009925,
+      "meanTradeNet": -0.013183330516180956,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 23,
+      "grossReturn": 0.20399490218764127,
+      "netReturn": -0.10717001110687474,
+      "totalCostUsd": 300.2681095248844,
+      "maxDrawdown": 0.21946421455712434,
+      "profitFactor": 0.6288484016176432,
+      "winRate": 0.13043478260869565,
+      "exposure": 0.5030674846625767,
+      "buyHoldReturn": 0.24717092880927605,
+      "meanTradeNet": -0.004483330877544455,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 11 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 36,
+      "grossReturn": 0.13934544107754077,
+      "netReturn": -0.2864856057701046,
+      "totalCostUsd": 392.1830207493912,
+      "maxDrawdown": 0.2829289100065349,
+      "profitFactor": 0.1080601487708505,
+      "winRate": 0.1388888888888889,
+      "exposure": 0.2083156554942724,
+      "buyHoldReturn": -0.2202935976447672,
+      "meanTradeNet": -0.009256411239586097,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 11,
+      "grossReturn": 0.050518738605666025,
+      "netReturn": -0.08946044266170505,
+      "totalCostUsd": 136.65032214226142,
+      "maxDrawdown": 0.09736623884750766,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.11035653650254669,
+      "buyHoldReturn": 0.353336613157337,
+      "meanTradeNet": -0.008468407200351994,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 30,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 6 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 31,
+      "grossReturn": 0.10711654783100677,
+      "netReturn": -0.2601048151783575,
+      "totalCostUsd": 332.82131245120206,
+      "maxDrawdown": 0.26659828428228194,
+      "profitFactor": 0.16691422550022572,
+      "winRate": 0.3225806451612903,
+      "exposure": 0.248,
+      "buyHoldReturn": -0.2146953312141554,
+      "meanTradeNet": -0.009530555132183146,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 6,
+      "grossReturn": 0.0309311854780685,
+      "netReturn": -0.046426374746184274,
+      "totalCostUsd": 76.17660339464135,
+      "maxDrawdown": 0.05596638016223221,
+      "profitFactor": 0.03581473604324273,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.09519797809604044,
+      "buyHoldReturn": 0.348931584099907,
+      "meanTradeNet": -0.00785067307297573,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 9 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 14,
+      "grossReturn": -0.023489102153187447,
+      "netReturn": -0.18598129314550538,
+      "totalCostUsd": 163.18453556147995,
+      "maxDrawdown": 0.18598129314550532,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.06244616709732989,
+      "buyHoldReturn": -0.2096157161023835,
+      "meanTradeNet": -0.014579097201263071,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 9,
+      "grossReturn": 0.036263021477747515,
+      "netReturn": -0.0781572788767192,
+      "totalCostUsd": 112.13708723437401,
+      "maxDrawdown": 0.07815727887671915,
+      "profitFactor": 0.3489619205072881,
+      "winRate": 0.1111111111111111,
+      "exposure": 0.10766580534022395,
+      "buyHoldReturn": 0.34444173794645505,
+      "meanTradeNet": -0.008817367800979994,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "fd8dc91a-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "base": "ETH",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.24406694978765947,
+    "realizedVolAnnPct": 95.76715949620205,
+    "volPercentile": 0.9435897435897436
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 7 < 15"
+     ],
+     "train": {
+      "trades": 7,
+      "grossReturn": 0.1769166396883759,
+      "netReturn": 0.0745443591336028,
+      "totalCostUsd": 95.44038064347478,
+      "maxDrawdown": 0.17316681741036014,
+      "profitFactor": 1.5837228828181993,
+      "winRate": 0.5714285714285714,
+      "exposure": 0.4342681858019281,
+      "buyHoldReturn": -0.038096289752650225,
+      "meanTradeNet": 0.011619457427725062,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 7,
+      "grossReturn": 0.11046708496145508,
+      "netReturn": 0.013874816541649349,
+      "totalCostUsd": 98.39626834976013,
+      "maxDrawdown": 0.15266572224165792,
+      "profitFactor": 1.093957422160534,
+      "winRate": 0.2857142857142857,
+      "exposure": 0.7116564417177914,
+      "buyHoldReturn": 0.2891371587285654,
+      "meanTradeNet": 0.003964871198885841,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.3333333333333333
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 9 < 15"
+     ],
+     "train": {
+      "trades": 15,
+      "grossReturn": -0.013923837020855756,
+      "netReturn": -0.1886245859171427,
+      "totalCostUsd": 174.00205910906413,
+      "maxDrawdown": 0.19223452452373563,
+      "profitFactor": 0.2367197415008726,
+      "winRate": 0.26666666666666666,
+      "exposure": 0.17332200509770604,
+      "buyHoldReturn": -0.1958899032542526,
+      "meanTradeNet": -0.0135711065666627,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 9,
+      "grossReturn": 0.13720599066107808,
+      "netReturn": 0.011639943895475735,
+      "totalCostUsd": 123.80160650053779,
+      "maxDrawdown": 0.2254203242696375,
+      "profitFactor": 1.0487674865164966,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.23704333050127444,
+      "buyHoldReturn": 0.43469879773992104,
+      "meanTradeNet": 0.004099109529847612,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=72,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 72,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 66,
+      "grossReturn": -0.14986658727774216,
+      "netReturn": -0.6395399221619387,
+      "totalCostUsd": 504.0801785454459,
+      "maxDrawdown": 0.6411317769948773,
+      "profitFactor": 0.06561747103860399,
+      "winRate": 0.07575757575757576,
+      "exposure": 0.4660574412532637,
+      "buyHoldReturn": -0.1526804822608302,
+      "meanTradeNet": -0.015231971443860143,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 46,
+      "grossReturn": 0.20076429666579299,
+      "netReturn": -0.33969283724245125,
+      "totalCostUsd": 552.2112871862663,
+      "maxDrawdown": 0.49632933058110723,
+      "profitFactor": 0.5008903583814658,
+      "winRate": 0.06521739130434782,
+      "exposure": 0.6248912097476066,
+      "buyHoldReturn": 0.42454413832175764,
+      "meanTradeNet": -0.008077541036262889,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 38,
+      "grossReturn": 0.049870479200164075,
+      "netReturn": -0.35939366579137755,
+      "totalCostUsd": 381.77639267468544,
+      "maxDrawdown": 0.4166307152281438,
+      "profitFactor": 0.24805282411908988,
+      "winRate": 0.13157894736842105,
+      "exposure": 0.3496932515337423,
+      "buyHoldReturn": -0.038096289752650225,
+      "meanTradeNet": -0.01137080573302963,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 48,
+      "grossReturn": 0.05014235802829736,
+      "netReturn": -0.437341864237483,
+      "totalCostUsd": 509.42877355069265,
+      "maxDrawdown": 0.5273017428860629,
+      "profitFactor": 0.3319869521743022,
+      "winRate": 0.0625,
+      "exposure": 0.5617879053461875,
+      "buyHoldReturn": 0.2891371587285654,
+      "meanTradeNet": -0.01149877524489245,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 14 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 31,
+      "grossReturn": 0.009083909568576187,
+      "netReturn": -0.3256208416056008,
+      "totalCostUsd": 330.0753961418785,
+      "maxDrawdown": 0.32562084160560073,
+      "profitFactor": 0.14820536275936905,
+      "winRate": 0.3548387096774194,
+      "exposure": 0.19770895205770048,
+      "buyHoldReturn": -0.19081126183860775,
+      "meanTradeNet": -0.012363354602455846,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 14,
+      "grossReturn": 0.10216016201252498,
+      "netReturn": -0.08124016659083133,
+      "totalCostUsd": 173.20221957650915,
+      "maxDrawdown": 0.08914255508287888,
+      "profitFactor": 0.14981532407999598,
+      "winRate": 0.2857142857142857,
+      "exposure": 0.1400679117147708,
+      "buyHoldReturn": 0.43621978629231517,
+      "meanTradeNet": -0.005996555415495763,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 2 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 15,
+      "grossReturn": 0.043029143871962106,
+      "netReturn": -0.14176182805921744,
+      "totalCostUsd": 178.06734256916843,
+      "maxDrawdown": 0.19875172357216167,
+      "profitFactor": 0.25735371608183616,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.13010526315789472,
+      "buyHoldReturn": -0.1858745229048926,
+      "meanTradeNet": -0.009847730770748919,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": -0.014449444713762083,
+      "netReturn": -0.03974386302399724,
+      "totalCostUsd": 25.47818359570988,
+      "maxDrawdown": 0.046643123153597914,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.040438079191238416,
+      "buyHoldReturn": 0.4364435806343694,
+      "meanTradeNet": -0.020073391068971436,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 7 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 15,
+      "grossReturn": 0.05476063797704267,
+      "netReturn": -0.13210877462918402,
+      "totalCostUsd": 179.88072864035462,
+      "maxDrawdown": 0.141140521164873,
+      "profitFactor": 0.13260789031173023,
+      "winRate": 0.2,
+      "exposure": 0.11283376399655469,
+      "buyHoldReturn": -0.17976945991451887,
+      "meanTradeNet": -0.009346193337077927,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 7,
+      "grossReturn": -0.0055910826005418635,
+      "netReturn": -0.09208821013298996,
+      "totalCostUsd": 86.45847091132794,
+      "maxDrawdown": 0.10120324092671806,
+      "profitFactor": 0.018565897330729827,
+      "winRate": 0.14285714285714285,
+      "exposure": 0.09646856158484066,
+      "buyHoldReturn": 0.436406604387064,
+      "meanTradeNet": -0.01363237681222976,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "23beae22-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "base": "SOL",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.10212136161815544,
+    "realizedVolAnnPct": 98.6331202384248,
+    "volPercentile": 0.9384615384615385
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": 0.04659598252315411,
+      "netReturn": -0.06896524487576139,
+      "totalCostUsd": 110.9179423599328,
+      "maxDrawdown": 0.19892394007887249,
+      "profitFactor": 0.6621565316096811,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.3843120070113935,
+      "buyHoldReturn": -0.057621247113163965,
+      "meanTradeNet": -0.006819463434842497,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 5,
+      "grossReturn": 0.32077784611068294,
+      "netReturn": 0.23765681293909435,
+      "totalCostUsd": 78.06733245039993,
+      "maxDrawdown": 0.12348585325001421,
+      "profitFactor": 4.001535983735921,
+      "winRate": 0.4,
+      "exposure": 0.6993865030674846,
+      "buyHoldReturn": 0.4561147580841234,
+      "meanTradeNet": 0.04729144919469268,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=20,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 20,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 27,
+      "grossReturn": 0.11329737214348579,
+      "netReturn": -0.21626061112835337,
+      "totalCostUsd": 312.1413442095667,
+      "maxDrawdown": 0.24191155137568107,
+      "profitFactor": 0.4202657079762473,
+      "winRate": 0.2222222222222222,
+      "exposure": 0.326677994902294,
+      "buyHoldReturn": -0.20135435403660984,
+      "meanTradeNet": -0.008673802558191555,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 17,
+      "grossReturn": 0.43732858961139165,
+      "netReturn": 0.15232671873204828,
+      "totalCostUsd": 261.6283181565325,
+      "maxDrawdown": 0.15744638985287734,
+      "profitFactor": 1.4735229772610001,
+      "winRate": 0.29411764705882354,
+      "exposure": 0.4715378079864061,
+      "buyHoldReturn": 0.6154255319148936,
+      "meanTradeNet": 0.01018768449880079,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 47,
+      "grossReturn": -0.04179268371966838,
+      "netReturn": -0.47988208019302636,
+      "totalCostUsd": 459.4367036726378,
+      "maxDrawdown": 0.49199738407290433,
+      "profitFactor": 0.19680068294896233,
+      "winRate": 0.0851063829787234,
+      "exposure": 0.3990426457789382,
+      "buyHoldReturn": -0.1589041095890411,
+      "meanTradeNet": -0.013643321801833768,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 18,
+      "grossReturn": 0.4327608182557616,
+      "netReturn": 0.13382846624633338,
+      "totalCostUsd": 279.5500024571842,
+      "maxDrawdown": 0.23094323244949932,
+      "profitFactor": 1.4128930919885292,
+      "winRate": 0.2222222222222222,
+      "exposure": 0.7267188859878155,
+      "buyHoldReturn": 0.5770684039087948,
+      "meanTradeNet": 0.009632376300223178,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=24)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 24,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 66,
+      "grossReturn": 0.04783151835147348,
+      "netReturn": -0.5557151089301523,
+      "totalCostUsd": 579.8616319752956,
+      "maxDrawdown": 0.5848093332508338,
+      "profitFactor": 0.1895120163638857,
+      "winRate": 0.10606060606060606,
+      "exposure": 0.2883435582822086,
+      "buyHoldReturn": -0.057621247113163965,
+      "meanTradeNet": -0.012072544744474582,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 37,
+      "grossReturn": 0.3044679037575464,
+      "netReturn": -0.19362916820779608,
+      "totalCostUsd": 490.93315593385285,
+      "maxDrawdown": 0.3542608348460904,
+      "profitFactor": 0.6578645991128865,
+      "winRate": 0.1891891891891892,
+      "exposure": 0.4750219106047327,
+      "buyHoldReturn": 0.4561147580841234,
+      "meanTradeNet": -0.005260957942185603,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 50,
+       "k": 2,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 10 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 33,
+      "grossReturn": 0.013732627763372252,
+      "netReturn": -0.3399019221578109,
+      "totalCostUsd": 334.5937342211438,
+      "maxDrawdown": 0.3487548530665157,
+      "profitFactor": 0.253594478952388,
+      "winRate": 0.36363636363636365,
+      "exposure": 0.2613491726771319,
+      "buyHoldReturn": -0.19752823353931392,
+      "meanTradeNet": -0.012195192371209224,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 10,
+      "grossReturn": 0.03679635505749257,
+      "netReturn": -0.08959552467156329,
+      "totalCostUsd": 125.76952495463547,
+      "maxDrawdown": 0.11289469414159875,
+      "profitFactor": 0.21429488519613696,
+      "winRate": 0.4,
+      "exposure": 0.15874363327674024,
+      "buyHoldReturn": 0.6123989932441385,
+      "meanTradeNet": -0.009215756538833563,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 2 < 15"
+     ],
+     "train": {
+      "trades": 12,
+      "grossReturn": 0.05738346771674663,
+      "netReturn": -0.09534784402191421,
+      "totalCostUsd": 146.81195253676538,
+      "maxDrawdown": 0.14814432882329628,
+      "profitFactor": 0.39490590982220625,
+      "winRate": 0.5,
+      "exposure": 0.096,
+      "buyHoldReturn": -0.18255687973997825,
+      "meanTradeNet": -0.008046692082496568,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": 0.026778622645075467,
+      "netReturn": 0.0004260749712030609,
+      "totalCostUsd": 25.824371217606085,
+      "maxDrawdown": 0.025935162094763087,
+      "profitFactor": 1.030856533690621,
+      "winRate": 0.5,
+      "exposure": 0.040438079191238416,
+      "buyHoldReturn": 0.6030443414956983,
+      "meanTradeNet": 0.00031268916963134163,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 7 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 15,
+      "grossReturn": -0.025803956921266913,
+      "netReturn": -0.19839993346679596,
+      "totalCostUsd": 173.75645386047313,
+      "maxDrawdown": 0.1983999334667959,
+      "profitFactor": 0.1601532944226408,
+      "winRate": 0.13333333333333333,
+      "exposure": 0.08613264427217916,
+      "buyHoldReturn": -0.20933640360058614,
+      "meanTradeNet": -0.014506408777251142,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 7,
+      "grossReturn": 0.009826850007593979,
+      "netReturn": -0.07801138263740737,
+      "totalCostUsd": 87.19734959024402,
+      "maxDrawdown": 0.07801138263740734,
+      "profitFactor": 0.1902268042899581,
+      "winRate": 0.14285714285714285,
+      "exposure": 0.08871662360034453,
+      "buyHoldReturn": 0.6041749767318179,
+      "meanTradeNet": -0.011436711015024399,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "adc513e5-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "base": "XRP",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.12477396021699806,
+    "realizedVolAnnPct": 89.23916481623722,
+    "volPercentile": 0.9076923076923077
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=20,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 20,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15"
+     ],
+     "train": {
+      "trades": 8,
+      "grossReturn": -0.014949990852608508,
+      "netReturn": -0.1122493128241363,
+      "totalCostUsd": 98.9203522951102,
+      "maxDrawdown": 0.1837832711438638,
+      "profitFactor": 0.08112373255923763,
+      "winRate": 0.25,
+      "exposure": 0.24057843996494302,
+      "buyHoldReturn": -0.25058250370684176,
+      "meanTradeNet": -0.014694417895348769,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 5,
+      "grossReturn": 0.10689376290915265,
+      "netReturn": 0.037233181112502844,
+      "totalCostUsd": 73.06700955800977,
+      "maxDrawdown": 0.3528868362372987,
+      "profitFactor": 1.1260855662943037,
+      "winRate": 0.4,
+      "exposure": 0.574934268185802,
+      "buyHoldReturn": 0.400598746374778,
+      "meanTradeNet": 0.017747858417711336,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 7 < 15"
+     ],
+     "train": {
+      "trades": 11,
+      "grossReturn": 0.02520603153174683,
+      "netReturn": -0.11140029032659471,
+      "totalCostUsd": 134.81543683727614,
+      "maxDrawdown": 0.14123770000232244,
+      "profitFactor": 0.4280744324951193,
+      "winRate": 0.2727272727272727,
+      "exposure": 0.1261682242990654,
+      "buyHoldReturn": -0.3063767915253063,
+      "meanTradeNet": -0.01028897022651687,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 7,
+      "grossReturn": 0.5213489441316117,
+      "netReturn": 0.3890167502630748,
+      "totalCostUsd": 123.69958310392542,
+      "maxDrawdown": 0.19801274286234613,
+      "profitFactor": 3.1137676396352627,
+      "winRate": 0.5714285714285714,
+      "exposure": 0.23704333050127444,
+      "buyHoldReturn": 0.5014002800560113,
+      "meanTradeNet": 0.05814045458790058,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 39,
+      "grossReturn": -0.0863507104272101,
+      "netReturn": -0.44971317188745175,
+      "totalCostUsd": 374.45740928417206,
+      "maxDrawdown": 0.44971317188745175,
+      "profitFactor": 0.009205969219984633,
+      "winRate": 0.05128205128205128,
+      "exposure": 0.2989556135770235,
+      "buyHoldReturn": -0.3214358555986131,
+      "meanTradeNet": -0.015163008132127623,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 23,
+      "grossReturn": 0.218394294248472,
+      "netReturn": -0.09649205139925376,
+      "totalCostUsd": 326.16007530898366,
+      "maxDrawdown": 0.44267380886475377,
+      "profitFactor": 0.8134416926836721,
+      "winRate": 0.08695652173913043,
+      "exposure": 0.5831157528285466,
+      "buyHoldReturn": 0.5138304269392664,
+      "meanTradeNet": -0.001691176329021503,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 33,
+      "grossReturn": -0.014633334593118663,
+      "netReturn": -0.3583725885987007,
+      "totalCostUsd": 338.28808213249306,
+      "maxDrawdown": 0.3898634906672792,
+      "profitFactor": 0.20303982266207338,
+      "winRate": 0.09090909090909091,
+      "exposure": 0.2007011393514461,
+      "buyHoldReturn": -0.25058250370684176,
+      "meanTradeNet": -0.013201150483974619,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 33,
+      "grossReturn": 0.27285521179881234,
+      "netReturn": -0.1711726981367998,
+      "totalCostUsd": 466.223902893085,
+      "maxDrawdown": 0.46029705973323,
+      "profitFactor": 0.7254494058621366,
+      "winRate": 0.12121212121212122,
+      "exposure": 0.4215600350569676,
+      "buyHoldReturn": 0.400598746374778,
+      "meanTradeNet": -0.0034768852415869174,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 11 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 38,
+      "grossReturn": 0.10870439576506485,
+      "netReturn": -0.32349459027256666,
+      "totalCostUsd": 416.8736807564891,
+      "maxDrawdown": 0.3261652194654973,
+      "profitFactor": 0.16305006747607106,
+      "winRate": 0.21052631578947367,
+      "exposure": 0.21977089520577003,
+      "buyHoldReturn": -0.2992363203250894,
+      "meanTradeNet": -0.010108618580656805,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 11,
+      "grossReturn": 0.03158775176526696,
+      "netReturn": -0.10586891948765254,
+      "totalCostUsd": 137.40754927889225,
+      "maxDrawdown": 0.14795755626103022,
+      "profitFactor": 0.22933151433624852,
+      "winRate": 0.36363636363636365,
+      "exposure": 0.1366723259762309,
+      "buyHoldReturn": 0.5022981614708235,
+      "meanTradeNet": -0.009923839490620217,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 2 < 15"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": 0.05741487725854899,
+      "netReturn": -0.1070058470392139,
+      "totalCostUsd": 162.84616591230088,
+      "maxDrawdown": 0.120494660441974,
+      "profitFactor": 0.32990879264903766,
+      "winRate": 0.38461538461538464,
+      "exposure": 0.11536842105263158,
+      "buyHoldReturn": -0.2931058790356691,
+      "meanTradeNet": -0.008521881153573944,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": 0.02840265474046122,
+      "netReturn": 0.0020084258489694307,
+      "totalCostUsd": 26.158023560404672,
+      "maxDrawdown": 0.039746435812009526,
+      "profitFactor": 1.2218892517482995,
+      "winRate": 0.5,
+      "exposure": 0.031171019376579612,
+      "buyHoldReturn": 0.4940695704176219,
+      "meanTradeNet": 0.0010537196308490482,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 9 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": -0.04329869754213567,
+      "netReturn": -0.19205915521089334,
+      "totalCostUsd": 151.3911007121627,
+      "maxDrawdown": 0.1920591552108933,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.04263565891472868,
+      "buyHoldReturn": -0.3193846153846154,
+      "meanTradeNet": -0.016263219672014332,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 9,
+      "grossReturn": -0.02182879244177982,
+      "netReturn": -0.12983481122965235,
+      "totalCostUsd": 107.7080366792909,
+      "maxDrawdown": 0.13095797682359342,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.0921619293712317,
+      "buyHoldReturn": 0.5350575873913923,
+      "meanTradeNet": -0.015295334978674056,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "75bc1955-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "base": "DOGE",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.11254396248534573,
+    "realizedVolAnnPct": 103.20295180555283,
+    "volPercentile": 0.9282051282051282
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=20,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 20,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15"
+     ],
+     "train": {
+      "trades": 11,
+      "grossReturn": -0.11335146389421547,
+      "netReturn": -0.23149532139525608,
+      "totalCostUsd": 124.54004524490585,
+      "maxDrawdown": 0.25837871729717504,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.22962313759859773,
+      "buyHoldReturn": -0.3410810318111386,
+      "meanTradeNet": -0.023569593999492645,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 5,
+      "grossReturn": 0.16862580394271243,
+      "netReturn": 0.0950802152574246,
+      "totalCostUsd": 73.7119296390548,
+      "maxDrawdown": 0.18495625593639253,
+      "profitFactor": 1.5507579496043127,
+      "winRate": 0.4,
+      "exposure": 0.5600350569675723,
+      "buyHoldReturn": 0.2977582175766744,
+      "meanTradeNet": 0.022441338900227304,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=20)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 20
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 8 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 14,
+      "grossReturn": -0.202306575212021,
+      "netReturn": -0.33504339629591506,
+      "totalCostUsd": 149.38083240289882,
+      "maxDrawdown": 0.33504339629591506,
+      "profitFactor": 0.027225202628334284,
+      "winRate": 0.07142857142857142,
+      "exposure": 0.19583687340696687,
+      "buyHoldReturn": -0.358570119156737,
+      "meanTradeNet": -0.028611648857938137,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 8,
+      "grossReturn": 0.09345212297506089,
+      "netReturn": -0.014554728642439563,
+      "totalCostUsd": 113.19076757756488,
+      "maxDrawdown": 0.2721051000414581,
+      "profitFactor": 0.9504520962707192,
+      "winRate": 0.375,
+      "exposure": 0.3653355989804588,
+      "buyHoldReturn": 0.3649363649363646,
+      "meanTradeNet": 0.0024332271871531086,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 57,
+      "grossReturn": -0.23845862125862172,
+      "netReturn": -0.6370249593685746,
+      "totalCostUsd": 444.2175911881587,
+      "maxDrawdown": 0.6370249593685746,
+      "profitFactor": 0.0031365619295865,
+      "winRate": 0.017543859649122806,
+      "exposure": 0.2950391644908616,
+      "buyHoldReturn": -0.39314533622559655,
+      "meanTradeNet": -0.01756778904632696,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 15,
+      "grossReturn": 0.14717147355305982,
+      "netReturn": -0.05607014516398756,
+      "totalCostUsd": 204.4044283288698,
+      "maxDrawdown": 0.30853610086782934,
+      "profitFactor": 0.8104455216057052,
+      "winRate": 0.2,
+      "exposure": 0.577893820713664,
+      "buyHoldReturn": 0.3686695278969958,
+      "meanTradeNet": -0.002623955910835633,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=24)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 24,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 51,
+      "grossReturn": -0.08347640667495637,
+      "netReturn": -0.5277169574320422,
+      "totalCostUsd": 456.3090046392801,
+      "maxDrawdown": 0.5364636819278924,
+      "profitFactor": 0.06396041878282581,
+      "winRate": 0.0784313725490196,
+      "exposure": 0.16432953549517967,
+      "buyHoldReturn": -0.3410810318111386,
+      "meanTradeNet": -0.014541853705098386,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 39,
+      "grossReturn": 0.14823034215105624,
+      "netReturn": -0.30842606661431526,
+      "totalCostUsd": 476.973673271523,
+      "maxDrawdown": 0.4862329823266652,
+      "profitFactor": 0.5483392390005185,
+      "winRate": 0.15384615384615385,
+      "exposure": 0.3637160385626643,
+      "buyHoldReturn": 0.2977582175766744,
+      "meanTradeNet": -0.008358070591153304,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 37,
+      "grossReturn": 0.11404976292997304,
+      "netReturn": -0.31133818516801237,
+      "totalCostUsd": 382.0198667339432,
+      "maxDrawdown": 0.3218821187497884,
+      "profitFactor": 0.22831267178773476,
+      "winRate": 0.2972972972972973,
+      "exposure": 0.2117098005939754,
+      "buyHoldReturn": -0.3561177552897885,
+      "meanTradeNet": -0.00983392145348545,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 15,
+      "grossReturn": 0.06166665173077135,
+      "netReturn": -0.1264262827695647,
+      "totalCostUsd": 182.46897581597455,
+      "maxDrawdown": 0.15155827933004726,
+      "profitFactor": 0.20144213813023693,
+      "winRate": 0.26666666666666666,
+      "exposure": 0.17487266553480477,
+      "buyHoldReturn": 0.35037851735466363,
+      "meanTradeNet": -0.00883942295487732,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 3 < 15"
+     ],
+     "train": {
+      "trades": 11,
+      "grossReturn": 0.09018766175301884,
+      "netReturn": -0.05507731136162075,
+      "totalCostUsd": 139.46282138357196,
+      "maxDrawdown": 0.10818344299862294,
+      "profitFactor": 0.6071268448562803,
+      "winRate": 0.5454545454545454,
+      "exposure": 0.09010526315789473,
+      "buyHoldReturn": -0.3629230909588541,
+      "meanTradeNet": -0.004872029927658269,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": 0.0650968215317409,
+      "netReturn": 0.0243570607751602,
+      "totalCostUsd": 39.25809620260554,
+      "maxDrawdown": 0.026543993231810576,
+      "profitFactor": 18.6011696223467,
+      "winRate": 0.6666666666666666,
+      "exposure": 0.05981465880370682,
+      "buyHoldReturn": 0.3376734869079985,
+      "meanTradeNet": 0.008099503638239858,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 6 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": 0.021920020917909122,
+      "netReturn": -0.13698149789685177,
+      "totalCostUsd": 151.4722483520676,
+      "maxDrawdown": 0.17146241180793378,
+      "profitFactor": 0.20807223313170092,
+      "winRate": 0.15384615384615385,
+      "exposure": 0.06761412575366063,
+      "buyHoldReturn": -0.37717033211646334,
+      "meanTradeNet": -0.011143183380337015,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 6,
+      "grossReturn": 0.029306497218190453,
+      "netReturn": -0.04792915193995051,
+      "totalCostUsd": 74.97597929217898,
+      "maxDrawdown": 0.07227576318619765,
+      "profitFactor": 0.23725030437254335,
+      "winRate": 0.16666666666666666,
+      "exposure": 0.07407407407407407,
+      "buyHoldReturn": 0.38128050531151314,
+      "meanTradeNet": -0.0080756237722307,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "5b1824c9-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "base": "ADA",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.11021324354657668,
+    "realizedVolAnnPct": 104.678358288107,
+    "volPercentile": 0.8923076923076924
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=100)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 100
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 8 < 15"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": 0.2958460470973807,
+      "netReturn": 0.15276355660129926,
+      "totalCostUsd": 110.90773722083406,
+      "maxDrawdown": 0.16123880204829874,
+      "profitFactor": 1.8718050194937499,
+      "winRate": 0.2222222222222222,
+      "exposure": 0.37116564417177916,
+      "buyHoldReturn": -0.2968701095461659,
+      "meanTradeNet": 0.01944010564846013,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 8,
+      "grossReturn": 0.23830210562267995,
+      "netReturn": 0.1159875488447073,
+      "totalCostUsd": 121.71531871106288,
+      "maxDrawdown": 0.19157442204875835,
+      "profitFactor": 1.4513853976867732,
+      "winRate": 0.375,
+      "exposure": 0.5144609991235758,
+      "buyHoldReturn": 0.4986671109630123,
+      "meanTradeNet": 0.017510279883553526,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=20,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 20,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 31,
+      "grossReturn": -0.09117311534670058,
+      "netReturn": -0.3926234441090912,
+      "totalCostUsd": 299.1734356080515,
+      "maxDrawdown": 0.4005996247424864,
+      "profitFactor": 0.3316484734123345,
+      "winRate": 0.1935483870967742,
+      "exposure": 0.2905692438402719,
+      "buyHoldReturn": -0.3740227434257285,
+      "meanTradeNet": -0.015049649152843412,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 18,
+      "grossReturn": 0.17032341062662204,
+      "netReturn": -0.07385379277863058,
+      "totalCostUsd": 232.87376155737002,
+      "maxDrawdown": 0.34575559713764337,
+      "profitFactor": 0.8530688971842101,
+      "winRate": 0.2777777777777778,
+      "exposure": 0.4282073067119796,
+      "buyHoldReturn": 0.4067892824704813,
+      "meanTradeNet": -0.0018975616672017982,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=72,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 72,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 59,
+      "grossReturn": -0.07146496151394288,
+      "netReturn": -0.568789092678532,
+      "totalCostUsd": 473.4742969105522,
+      "maxDrawdown": 0.6073349107097336,
+      "profitFactor": 0.19493907011610764,
+      "winRate": 0.06779661016949153,
+      "exposure": 0.3825065274151436,
+      "buyHoldReturn": -0.3515128875607022,
+      "meanTradeNet": -0.01362357118401542,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 28,
+      "grossReturn": 0.4301342857028405,
+      "netReturn": -0.006217372168369706,
+      "totalCostUsd": 396.58049379423505,
+      "maxDrawdown": 0.35338981368076755,
+      "profitFactor": 0.9880893127468161,
+      "winRate": 0.17857142857142858,
+      "exposure": 0.5143603133159269,
+      "buyHoldReturn": 0.5628594432942258,
+      "meanTradeNet": 0.0011841992918948108,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=24)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 24,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 38,
+      "grossReturn": 0.19343275055135867,
+      "netReturn": -0.27179533608977724,
+      "totalCostUsd": 455.2641068579692,
+      "maxDrawdown": 0.3960601526525323,
+      "profitFactor": 0.5300005581884228,
+      "winRate": 0.13157894736842105,
+      "exposure": 0.18755477651183172,
+      "buyHoldReturn": -0.2968701095461659,
+      "meanTradeNet": -0.007406803181445984,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 47,
+      "grossReturn": 0.10289365819974194,
+      "netReturn": -0.40134588254037906,
+      "totalCostUsd": 504.0875803708177,
+      "maxDrawdown": 0.5873072602344164,
+      "profitFactor": 0.4886343040633198,
+      "winRate": 0.1276595744680851,
+      "exposure": 0.3978965819456617,
+      "buyHoldReturn": 0.4986671109630123,
+      "meanTradeNet": -0.010046469872474505,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 34,
+      "grossReturn": 0.11312434000937532,
+      "netReturn": -0.2845441899622314,
+      "totalCostUsd": 376.41316863688473,
+      "maxDrawdown": 0.2921753671924475,
+      "profitFactor": 0.3296779521019339,
+      "winRate": 0.35294117647058826,
+      "exposure": 0.1900721255833687,
+      "buyHoldReturn": -0.35408874220755415,
+      "meanTradeNet": -0.009440676122664644,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 15,
+      "grossReturn": 0.18459645750688347,
+      "netReturn": -0.025275655861216606,
+      "totalCostUsd": 190.2857929610734,
+      "maxDrawdown": 0.1054711224597121,
+      "profitFactor": 0.8013988066212453,
+      "winRate": 0.5333333333333333,
+      "exposure": 0.16213921901528014,
+      "buyHoldReturn": 0.40141482739105827,
+      "meanTradeNet": -0.001502792532645647,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": -0.058866267569985364,
+      "netReturn": -0.20520607541190183,
+      "totalCostUsd": 156.50857932166014,
+      "maxDrawdown": 0.262480630339806,
+      "profitFactor": 0.33511835913659704,
+      "winRate": 0.46153846153846156,
+      "exposure": 0.11452631578947368,
+      "buyHoldReturn": -0.3533648599490723,
+      "meanTradeNet": -0.01650756235302575,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": 0.0033489618218351946,
+      "netReturn": -0.00961033922504373,
+      "totalCostUsd": 12.937673374904762,
+      "maxDrawdown": 0.02390438247011953,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.020219039595619208,
+      "buyHoldReturn": 0.38574647887323943,
+      "meanTradeNet": -0.00961033922504373,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 7,
+      "grossReturn": -0.04835181388472598,
+      "netReturn": -0.13112946509053225,
+      "totalCostUsd": 85.43829015144831,
+      "maxDrawdown": 0.14721225869170662,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.021963824289405683,
+      "buyHoldReturn": -0.3677254472435195,
+      "meanTradeNet": -0.019841469803881778,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 5,
+      "grossReturn": -0.03386623723786697,
+      "netReturn": -0.09466831442232426,
+      "totalCostUsd": 60.82683493585637,
+      "maxDrawdown": 0.10302727857407763,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.050818260120585705,
+      "buyHoldReturn": 0.5995111731843576,
+      "meanTradeNet": -0.019617880402503916,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "e82ce137-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "base": "AVAX",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.09980430528375732,
+    "realizedVolAnnPct": 102.34290174645186,
+    "volPercentile": 0.8692307692307693
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=10,slow=100)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 10,
+       "slow": 100
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 12 < 15"
+     ],
+     "train": {
+      "trades": 32,
+      "grossReturn": -0.38329894355382876,
+      "netReturn": -0.5931768637841315,
+      "totalCostUsd": 275.0129893801904,
+      "maxDrawdown": 0.5990508524576057,
+      "profitFactor": 0.04488058046808278,
+      "winRate": 0.03125,
+      "exposure": 0.4189307624890447,
+      "buyHoldReturn": -0.2997858672376873,
+      "meanTradeNet": -0.027572712374373882,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 12,
+      "grossReturn": 0.3348007325321509,
+      "netReturn": 0.14199852499473087,
+      "totalCostUsd": 183.18185828939704,
+      "maxDrawdown": 0.2772990827215915,
+      "profitFactor": 1.3496903971244902,
+      "winRate": 0.25,
+      "exposure": 0.5942156003505696,
+      "buyHoldReturn": 0.7311761999693298,
+      "meanTradeNet": 0.01668464678570643,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=20,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 20,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 34,
+      "grossReturn": -0.34585726586891763,
+      "netReturn": -0.5795526133907625,
+      "totalCostUsd": 294.42202755339923,
+      "maxDrawdown": 0.5869825366607564,
+      "profitFactor": 0.037277336335352865,
+      "winRate": 0.11764705882352941,
+      "exposure": 0.29566694987255737,
+      "buyHoldReturn": -0.3732019704433498,
+      "meanTradeNet": -0.024921151265154456,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 17,
+      "grossReturn": 0.41894302074802203,
+      "netReturn": 0.1375867473758272,
+      "totalCostUsd": 229.94700759911393,
+      "maxDrawdown": 0.30768073042535016,
+      "profitFactor": 1.3363745616079838,
+      "winRate": 0.29411764705882354,
+      "exposure": 0.47068819031435855,
+      "buyHoldReturn": 0.7389798488664985,
+      "meanTradeNet": 0.01334502429829247,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 49,
+      "grossReturn": -0.2651533705645276,
+      "netReturn": -0.6113602435064305,
+      "totalCostUsd": 407.86677476034686,
+      "maxDrawdown": 0.6110373823355219,
+      "profitFactor": 0.01681937292765263,
+      "winRate": 0.02040816326530612,
+      "exposure": 0.3433420365535248,
+      "buyHoldReturn": -0.3519918283963227,
+      "meanTradeNet": -0.018999760454664342,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 17,
+      "grossReturn": 0.6213291878952127,
+      "netReturn": 0.29984260841629595,
+      "totalCostUsd": 251.73442092184973,
+      "maxDrawdown": 0.25010420230902614,
+      "profitFactor": 2.1610626571306413,
+      "winRate": 0.11764705882352941,
+      "exposure": 0.6910356832027851,
+      "buyHoldReturn": 0.7418388266834883,
+      "meanTradeNet": 0.020367884670381517,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 57,
+      "grossReturn": -0.2813959724313799,
+      "netReturn": -0.6574902777630867,
+      "totalCostUsd": 450.2910866973495,
+      "maxDrawdown": 0.6552493988556484,
+      "profitFactor": 0.04123404400451257,
+      "winRate": 0.05263157894736842,
+      "exposure": 0.28439964943032425,
+      "buyHoldReturn": -0.2997858672376873,
+      "meanTradeNet": -0.0185574167493167,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 26,
+      "grossReturn": 0.5795882305030615,
+      "netReturn": 0.12654952010218978,
+      "totalCostUsd": 389.04217730713754,
+      "maxDrawdown": 0.2748556719506775,
+      "profitFactor": 1.3026932832954663,
+      "winRate": 0.19230769230769232,
+      "exposure": 0.49517966695880805,
+      "buyHoldReturn": 0.7311761999693298,
+      "meanTradeNet": 0.007027272508721922,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 50,
+       "k": 2,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 12 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 31,
+      "grossReturn": 0.015200433089768373,
+      "netReturn": -0.321533118131461,
+      "totalCostUsd": 330.9143026112531,
+      "maxDrawdown": 0.36702898512837995,
+      "profitFactor": 0.373968433085049,
+      "winRate": 0.45161290322580644,
+      "exposure": 0.2384386932541366,
+      "buyHoldReturn": -0.35919999999999996,
+      "meanTradeNet": -0.011787897931413886,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 12,
+      "grossReturn": 0.15708982755755097,
+      "netReturn": -0.010043338940628699,
+      "totalCostUsd": 152.18039414222687,
+      "maxDrawdown": 0.10201679870062955,
+      "profitFactor": 0.9086261803056689,
+      "winRate": 0.75,
+      "exposure": 0.1833616298811545,
+      "buyHoldReturn": 0.7249805447470818,
+      "meanTradeNet": -0.0005698870666246599,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 1 < 15"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": 0.17996673062712087,
+      "netReturn": -0.0035099620783635155,
+      "totalCostUsd": 169.86551396830794,
+      "maxDrawdown": 0.11577558667982497,
+      "profitFactor": 0.9751695302680717,
+      "winRate": 0.46153846153846156,
+      "exposure": 0.10484210526315789,
+      "buyHoldReturn": -0.34773869346733666,
+      "meanTradeNet": 0.00006115387699767716,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": 0.04689394960247939,
+      "netReturn": 0.033372219503291944,
+      "totalCostUsd": 13.218887901059134,
+      "maxDrawdown": 0.022201542143047093,
+      "profitFactor": null,
+      "winRate": 1,
+      "exposure": 0.011794439764111205,
+      "buyHoldReturn": 0.7028817999691788,
+      "meanTradeNet": 0.033372219503291944,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 12,
+      "grossReturn": -0.022232802357284198,
+      "netReturn": -0.16346412593138326,
+      "totalCostUsd": 137.42481607409889,
+      "maxDrawdown": 0.2130406860205603,
+      "profitFactor": 0.21856561340115915,
+      "winRate": 0.08333333333333333,
+      "exposure": 0.053402239448751075,
+      "buyHoldReturn": -0.36859421734795605,
+      "meanTradeNet": -0.014508144071856133,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 5,
+      "grossReturn": -0.05206869560357208,
+      "netReturn": -0.11172523029572023,
+      "totalCostUsd": 61.39219823720225,
+      "maxDrawdown": 0.11172523029572028,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.03617571059431524,
+      "buyHoldReturn": 0.7645739910313902,
+      "meanTradeNet": -0.02338881712648715,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "3e2e8e14-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "base": "LINK",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.17370517928286816,
+    "realizedVolAnnPct": 97.26914110958461,
+    "volPercentile": 0.8897435897435897
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=20,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 20,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15"
+     ],
+     "train": {
+      "trades": 6,
+      "grossReturn": 0.20445170369489607,
+      "netReturn": 0.11407375556582178,
+      "totalCostUsd": 74.74310533782682,
+      "maxDrawdown": 0.10302249452941005,
+      "profitFactor": 1.9798962517196734,
+      "winRate": 0.5,
+      "exposure": 0.4303242769500438,
+      "buyHoldReturn": 0.02349199835863769,
+      "meanTradeNet": 0.021610343733708865,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 3,
+      "grossReturn": 0.30600217280291075,
+      "netReturn": 0.25604782593794884,
+      "totalCostUsd": 43.39580183336136,
+      "maxDrawdown": 0.13441432720232338,
+      "profitFactor": 9.057099647307453,
+      "winRate": 0.6666666666666666,
+      "exposure": 0.6362839614373357,
+      "buyHoldReturn": 0.38490037048162606,
+      "meanTradeNet": 0.08194371167068197,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=20,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 20,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 14 < 15"
+     ],
+     "train": {
+      "trades": 35,
+      "grossReturn": -0.06987598323054334,
+      "netReturn": -0.4098884891141349,
+      "totalCostUsd": 325.6316666272413,
+      "maxDrawdown": 0.44222628528384206,
+      "profitFactor": 0.20349461918809847,
+      "winRate": 0.2,
+      "exposure": 0.381053525913339,
+      "buyHoldReturn": -0.11650028253908462,
+      "meanTradeNet": -0.014692421683297938,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 14,
+      "grossReturn": 0.47214985638680007,
+      "netReturn": 0.22718294801867245,
+      "totalCostUsd": 203.0870125302447,
+      "maxDrawdown": 0.19068730591649716,
+      "profitFactor": 1.8668886330169696,
+      "winRate": 0.5,
+      "exposure": 0.44010195412064573,
+      "buyHoldReturn": 0.5020689655172412,
+      "meanTradeNet": 0.016646522960852228,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 41,
+      "grossReturn": 0.1002379422581372,
+      "netReturn": -0.354339231347105,
+      "totalCostUsd": 387.17191108222596,
+      "maxDrawdown": 0.43449609363647357,
+      "profitFactor": 0.24907625733486538,
+      "winRate": 0.0975609756097561,
+      "exposure": 0.46344647519582244,
+      "buyHoldReturn": -0.07969400600367971,
+      "meanTradeNet": -0.010281509954522462,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 18,
+      "grossReturn": 0.3122927128806474,
+      "netReturn": 0.038494921799359316,
+      "totalCostUsd": 255.992857631314,
+      "maxDrawdown": 0.23324601776195367,
+      "profitFactor": 1.1245539976694245,
+      "winRate": 0.16666666666666666,
+      "exposure": 0.6823324630113142,
+      "buyHoldReturn": 0.459819555182543,
+      "meanTradeNet": 0.0036544403869615116,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 41,
+      "grossReturn": 0.08285429403978584,
+      "netReturn": -0.3645406061948181,
+      "totalCostUsd": 400.7698844868112,
+      "maxDrawdown": 0.4446193775223162,
+      "profitFactor": 0.26014456177739276,
+      "winRate": 0.12195121951219512,
+      "exposure": 0.35100788781770376,
+      "buyHoldReturn": 0.02349199835863769,
+      "meanTradeNet": -0.01070119295871319,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 19,
+      "grossReturn": 0.2949589228535885,
+      "netReturn": 0.011541592265451817,
+      "totalCostUsd": 258.9204852774228,
+      "maxDrawdown": 0.23418241740664206,
+      "profitFactor": 1.0440151158696855,
+      "winRate": 0.3157894736842105,
+      "exposure": 0.5188431200701139,
+      "buyHoldReturn": 0.38490037048162606,
+      "meanTradeNet": 0.0013635345329302024,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 48,
+      "grossReturn": 0.2674875299101205,
+      "netReturn": -0.32089000578886373,
+      "totalCostUsd": 500.24462490836504,
+      "maxDrawdown": 0.32597977272190803,
+      "profitFactor": 0.29701501877512804,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.24480271531607975,
+      "buyHoldReturn": -0.11035993144163025,
+      "meanTradeNet": -0.007836018905435583,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 23,
+      "grossReturn": 0.16509179347830782,
+      "netReturn": -0.13601885594313656,
+      "totalCostUsd": 284.20480579446473,
+      "maxDrawdown": 0.2047439403059934,
+      "profitFactor": 0.38299644770700114,
+      "winRate": 0.43478260869565216,
+      "exposure": 0.25806451612903225,
+      "buyHoldReturn": 0.5090056485132688,
+      "meanTradeNet": -0.006140239682063969,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": 0.19285215692557145,
+      "netReturn": 0.06114186789174769,
+      "totalCostUsd": 120.58714346750719,
+      "maxDrawdown": 0.05327930972910895,
+      "profitFactor": 2.267484613425346,
+      "winRate": 0.4444444444444444,
+      "exposure": 0.07494736842105264,
+      "buyHoldReturn": -0.08012326656394464,
+      "meanTradeNet": 0.006847626628732716,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": 0.014233001834559555,
+      "netReturn": -0.02456122701943908,
+      "totalCostUsd": 38.11295151652416,
+      "maxDrawdown": 0.04961189464918511,
+      "profitFactor": 0.14459534978876307,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.060657118786857624,
+      "buyHoldReturn": 0.4736016727652903,
+      "meanTradeNet": -0.008159516916339168,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 11 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 17,
+      "grossReturn": -0.06522426805185866,
+      "netReturn": -0.25057703594598213,
+      "totalCostUsd": 191.02118547175007,
+      "maxDrawdown": 0.25777895379621846,
+      "profitFactor": 0.04047930348693021,
+      "winRate": 0.058823529411764705,
+      "exposure": 0.0615848406546081,
+      "buyHoldReturn": -0.1145217309678026,
+      "meanTradeNet": -0.01677719340342035,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 11,
+      "grossReturn": 0.12562193942596855,
+      "netReturn": -0.024364568864753466,
+      "totalCostUsd": 148.4867052950159,
+      "maxDrawdown": 0.13267814337889175,
+      "profitFactor": 0.8655836459818288,
+      "winRate": 0.2727272727272727,
+      "exposure": 0.13178294573643412,
+      "buyHoldReturn": 0.5149054386152367,
+      "meanTradeNet": -0.0016026511786067358,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "4ccc4734-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "base": "LTC",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.004658126767593137,
+    "realizedVolAnnPct": 87.2676315019423,
+    "volPercentile": 0.8871794871794871
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 4 < 15"
+     ],
+     "train": {
+      "trades": 8,
+      "grossReturn": -0.0698798666008219,
+      "netReturn": -0.16175343392370212,
+      "totalCostUsd": 95.06507404959063,
+      "maxDrawdown": 0.206988221813102,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.3773006134969325,
+      "buyHoldReturn": -0.1856812110418522,
+      "meanTradeNet": -0.021566640111297372,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 4,
+      "grossReturn": 0.36017568167963665,
+      "netReturn": 0.2912530929441848,
+      "totalCostUsd": 60.6624374396805,
+      "maxDrawdown": 0.12308160882586844,
+      "profitFactor": 8.426807075242568,
+      "winRate": 0.75,
+      "exposure": 0.6248904469763366,
+      "buyHoldReturn": 0.5152155905305837,
+      "meanTradeNet": 0.06895770067881385,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=20)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 20
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 10 < 15"
+     ],
+     "train": {
+      "trades": 13,
+      "grossReturn": -0.09155363851136278,
+      "netReturn": -0.23281078549692258,
+      "totalCostUsd": 143.16742106427205,
+      "maxDrawdown": 0.2512534758844334,
+      "profitFactor": 0.13389301823505576,
+      "winRate": 0.15384615384615385,
+      "exposure": 0.31053525913339,
+      "buyHoldReturn": -0.24606265876375943,
+      "meanTradeNet": -0.019875500299688226,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 10,
+      "grossReturn": 0.2498093617061934,
+      "netReturn": 0.09744988073535454,
+      "totalCostUsd": 139.125609041158,
+      "maxDrawdown": 0.16950188388848664,
+      "profitFactor": 1.5141069698049592,
+      "winRate": 0.5,
+      "exposure": 0.453695836873407,
+      "buyHoldReturn": 0.5984255510571301,
+      "meanTradeNet": 0.010744982208879695,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=72,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 72,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs"
+     ],
+     "train": {
+      "trades": 62,
+      "grossReturn": -0.15018788905515124,
+      "netReturn": -0.6204433247249792,
+      "totalCostUsd": 498.86316254187057,
+      "maxDrawdown": 0.6191386166250183,
+      "profitFactor": 0.08124279681712078,
+      "winRate": 0.06451612903225806,
+      "exposure": 0.4186248912097476,
+      "buyHoldReturn": -0.24020530367835768,
+      "meanTradeNet": -0.015409201639369598,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 29,
+      "grossReturn": 0.5202635214554205,
+      "netReturn": 0.042767649281054254,
+      "totalCostUsd": 396.99827929647006,
+      "maxDrawdown": 0.26220110213096565,
+      "profitFactor": 1.0942264098859908,
+      "winRate": 0.10344827586206896,
+      "exposure": 0.6048738033072236,
+      "buyHoldReturn": 0.581389057956313,
+      "meanTradeNet": 0.003288095929888205,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0.5
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 45,
+      "grossReturn": -0.09095340614224412,
+      "netReturn": -0.493568986382926,
+      "totalCostUsd": 417.7702530748755,
+      "maxDrawdown": 0.5007461877496038,
+      "profitFactor": 0.12232149817645321,
+      "winRate": 0.08888888888888889,
+      "exposure": 0.3124452234881683,
+      "buyHoldReturn": -0.1856812110418522,
+      "meanTradeNet": -0.014895927553105186,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 36,
+      "grossReturn": 0.33549063709950633,
+      "netReturn": -0.1636497952468663,
+      "totalCostUsd": 453.99207636067354,
+      "maxDrawdown": 0.2977929856773416,
+      "profitFactor": 0.7268129646070062,
+      "winRate": 0.08333333333333333,
+      "exposure": 0.5328659070990359,
+      "buyHoldReturn": 0.5152155905305837,
+      "meanTradeNet": -0.0035412072114975692,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 20,
+       "k": 2.5,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 8 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 33,
+      "grossReturn": 0.21430918656352782,
+      "netReturn": -0.20929529344911257,
+      "totalCostUsd": 387.392168409237,
+      "maxDrawdown": 0.21460757099409203,
+      "profitFactor": 0.3344298641651859,
+      "winRate": 0.2727272727272727,
+      "exposure": 0.1841323716588884,
+      "buyHoldReturn": -0.2412258174970039,
+      "meanTradeNet": -0.0069387677367635965,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 8,
+      "grossReturn": 0.017560026198454315,
+      "netReturn": -0.08295050595222819,
+      "totalCostUsd": 100.28778843633347,
+      "maxDrawdown": 0.12474326207698645,
+      "profitFactor": 0.15324018172407722,
+      "winRate": 0.25,
+      "exposure": 0.11205432937181664,
+      "buyHoldReturn": 0.5924574753804834,
+      "meanTradeNet": -0.010591584955255973,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 8,
+      "grossReturn": 0.06332720897253696,
+      "netReturn": -0.04170402345844826,
+      "totalCostUsd": 101.86616114378262,
+      "maxDrawdown": 0.0985421272296227,
+      "profitFactor": 0.5999383847640357,
+      "winRate": 0.5,
+      "exposure": 0.06442105263157895,
+      "buyHoldReturn": -0.24348869088416725,
+      "meanTradeNet": -0.005030768091664528,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": -0.024851588872075392,
+      "netReturn": -0.037446650317344066,
+      "totalCostUsd": 12.755553574099736,
+      "maxDrawdown": 0.03890920900692834,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.020219039595619208,
+      "buyHoldReturn": 0.601634135270086,
+      "meanTradeNet": -0.037446650317344066,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 20,
+      "grossReturn": -0.046810490702228424,
+      "netReturn": -0.26504440852016964,
+      "totalCostUsd": 226.00463002228855,
+      "maxDrawdown": 0.2650444085201697,
+      "profitFactor": 0.05528736334490994,
+      "winRate": 0.1,
+      "exposure": 0.09345391903531439,
+      "buyHoldReturn": -0.24284253578732107,
+      "meanTradeNet": -0.015229695837117724,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": 0.01037653692305418,
+      "netReturn": -0.002673532605012796,
+      "totalCostUsd": 12.983057615498865,
+      "maxDrawdown": 0.04394497631197893,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.02153316106804479,
+      "buyHoldReturn": 0.601042374801722,
+      "meanTradeNet": -0.002673532605012796,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  },
+  {
+   "datasetId": "0e22e769-8754",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "base": "DOT",
+    "quote": "USD"
+   },
+   "intervalMs": 3600000,
+   "quality": {
+    "score": 100,
+    "bars": 8754,
+    "gaps": 1,
+    "missingBars": 5,
+    "stale": false,
+    "longestContiguous": 4765,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "range",
+    "volatility": "high",
+    "efficiency": 0.0065934065934063636,
+    "realizedVolAnnPct": 103.55981424944187,
+    "volPercentile": 0.8358974358974359
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder; min order from Coinbase /products"
+   },
+   "candidates": [
+    {
+     "key": "sma_cross(fast=50,slow=200)",
+     "spec": {
+      "family": "sma_cross",
+      "params": {
+       "fast": 50,
+       "slow": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 6 < 15"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": -0.16515990187777374,
+      "netReturn": -0.25733983380169656,
+      "totalCostUsd": 98.45477177699286,
+      "maxDrawdown": 0.275349304825657,
+      "profitFactor": 0.014243180834939811,
+      "winRate": 0.2222222222222222,
+      "exposure": 0.2751971954425942,
+      "buyHoldReturn": -0.39184313725490194,
+      "meanTradeNet": -0.03225145444563677,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 6,
+     "validation": {
+      "trades": 6,
+      "grossReturn": 0.24749831158650815,
+      "netReturn": 0.15389029280933286,
+      "totalCostUsd": 92.8424814479365,
+      "maxDrawdown": 0.2689725511099436,
+      "profitFactor": 2.1699195267295117,
+      "winRate": 0.6666666666666666,
+      "exposure": 0.6722173531989483,
+      "buyHoldReturn": 0.5915912031047865,
+      "meanTradeNet": 0.027434169930960723,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "donchian_breakout(entry=55,exit=10)",
+     "spec": {
+      "family": "donchian_breakout",
+      "params": {
+       "entry": 55,
+       "exit": 10
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 8 < 15"
+     ],
+     "train": {
+      "trades": 15,
+      "grossReturn": -0.14657059191139166,
+      "netReturn": -0.2977706333693937,
+      "totalCostUsd": 158.12148015146545,
+      "maxDrawdown": 0.29820822215730475,
+      "profitFactor": 0.10939621656596005,
+      "winRate": 0.13333333333333333,
+      "exposure": 0.13211554800339848,
+      "buyHoldReturn": -0.4431900946831756,
+      "meanTradeNet": -0.022887713819916566,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778425200000,
+       1786896000000
+      ],
+      "validation": [
+       1786899600000,
+       1791133200000
+      ],
+      "test": [
+       1791136800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 8,
+      "grossReturn": 0.4015319778761852,
+      "netReturn": 0.26309422354653567,
+      "totalCostUsd": 122.8999012232448,
+      "maxDrawdown": 0.17894948807319036,
+      "profitFactor": 3.796098239637473,
+      "winRate": 0.5,
+      "exposure": 0.29566694987255737,
+      "buyHoldReturn": 0.5635743340768928,
+      "meanTradeNet": 0.03148939357451916,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "ts_momentum(lookback=168,threshold=0)",
+     "spec": {
+      "family": "ts_momentum",
+      "params": {
+       "lookback": 168,
+       "threshold": 0
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 48,
+      "grossReturn": -0.2787181194774061,
+      "netReturn": -0.6135427590825832,
+      "totalCostUsd": 387.18962736139264,
+      "maxDrawdown": 0.6176781629252548,
+      "profitFactor": 0.0007599896102657303,
+      "winRate": 0.020833333333333332,
+      "exposure": 0.2854656222802437,
+      "buyHoldReturn": -0.43448275862068975,
+      "meanTradeNet": -0.019567439946292994,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778832000000,
+       1787101200000
+      ],
+      "validation": [
+       1787104800000,
+       1791237600000
+      ],
+      "test": [
+       1791241200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 3,
+     "validation": {
+      "trades": 23,
+      "grossReturn": 0.10117637018279191,
+      "netReturn": -0.1834157399061399,
+      "totalCostUsd": 285.8629577346545,
+      "maxDrawdown": 0.3779467907194623,
+      "profitFactor": 0.5901732638528722,
+      "winRate": 0.17391304347826086,
+      "exposure": 0.7258485639686684,
+      "buyHoldReturn": 0.6256131512660745,
+      "meanTradeNet": -0.00782774264792894,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "trend_filtered_momentum(filter=200,lookback=72)",
+     "spec": {
+      "family": "trend_filtered_momentum",
+      "params": {
+       "lookback": 72,
+       "filter": 200
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 35,
+      "grossReturn": -0.22585181891913675,
+      "netReturn": -0.5088464069835921,
+      "totalCostUsd": 311.60409258199786,
+      "maxDrawdown": 0.522806087476738,
+      "profitFactor": 0.030712787472263907,
+      "winRate": 0.05714285714285714,
+      "exposure": 0.2252410166520596,
+      "buyHoldReturn": -0.39184313725490194,
+      "meanTradeNet": -0.020037045360947033,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778947200000,
+       1787158800000
+      ],
+      "validation": [
+       1787162400000,
+       1791266400000
+      ],
+      "test": [
+       1791270000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 31,
+      "grossReturn": 0.10406653378817055,
+      "netReturn": -0.2621431648971424,
+      "totalCostUsd": 408.10528784486723,
+      "maxDrawdown": 0.490027022863687,
+      "profitFactor": 0.5915911059724145,
+      "winRate": 0.12903225806451613,
+      "exposure": 0.5319894829097284,
+      "buyHoldReturn": 0.5915912031047865,
+      "meanTradeNet": -0.008607779370355593,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+     "spec": {
+      "family": "bollinger_reversion",
+      "params": {
+       "n": 50,
+       "k": 2,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 12 < 15"
+     ],
+     "train": {
+      "trades": 33,
+      "grossReturn": 0.12288971505026902,
+      "netReturn": -0.26882363037992063,
+      "totalCostUsd": 387.60509920175457,
+      "maxDrawdown": 0.3345997641645837,
+      "profitFactor": 0.4823368442253307,
+      "winRate": 0.3939393939393939,
+      "exposure": 0.26983453542638947,
+      "buyHoldReturn": -0.43707533234859675,
+      "meanTradeNet": -0.008942146996635994,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778407200000,
+       1786888800000
+      ],
+      "validation": [
+       1786892400000,
+       1791129600000
+      ],
+      "test": [
+       1791133200000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 4,
+     "validation": {
+      "trades": 12,
+      "grossReturn": 0.1703525181185246,
+      "netReturn": 0.0013036529278576126,
+      "totalCostUsd": 145.1382759027157,
+      "maxDrawdown": 0.16686260132817268,
+      "profitFactor": 1.007004993756248,
+      "winRate": 0.5,
+      "exposure": 0.20628183361629882,
+      "buyHoldReturn": 0.5569752281616687,
+      "meanTradeNet": 0.0009014515718690034,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+     "spec": {
+      "family": "rsi_reversion",
+      "params": {
+       "n": 14,
+       "lo": 25,
+       "hi": 55,
+       "maxHold": 24
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 2 < 15"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": 0.07672142137279381,
+      "netReturn": -0.04216614469694535,
+      "totalCostUsd": 119.28788543026394,
+      "maxDrawdown": 0.11509264241914867,
+      "profitFactor": 0.5969687430447038,
+      "winRate": 0.4444444444444444,
+      "exposure": 0.07705263157894737,
+      "buyHoldReturn": -0.44480755265068994,
+      "meanTradeNet": -0.004461283402184645,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778277600000,
+       1786824000000
+      ],
+      "validation": [
+       1786827600000,
+       1791097200000
+      ],
+      "test": [
+       1791100800000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": 0.07234707847773003,
+      "netReturn": 0.04482500421042235,
+      "totalCostUsd": 26.551093221404585,
+      "maxDrawdown": 0.01672610599380382,
+      "profitFactor": null,
+      "winRate": 1,
+      "exposure": 0.02527379949452401,
+      "buyHoldReturn": 0.5496541824350776,
+      "meanTradeNet": 0.022169688515159547,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+     "spec": {
+      "family": "vol_compression_breakout",
+      "params": {
+       "n": 20,
+       "lookback": 120,
+       "pct": 0.1
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 5 < 15"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": -0.038469362153243813,
+      "netReturn": -0.1446379912581952,
+      "totalCostUsd": 108.76058533116088,
+      "maxDrawdown": 0.14463799125819526,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.03617571059431524,
+      "buyHoldReturn": -0.4639942734430923,
+      "meanTradeNet": -0.01717484117522077,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1778659200000,
+       1787014800000
+      ],
+      "validation": [
+       1787018400000,
+       1791194400000
+      ],
+      "test": [
+       1791198000000,
+       1795374000000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 5,
+      "grossReturn": 0.0742304963806979,
+      "netReturn": 0.006625524820545792,
+      "totalCostUsd": 66.45776770036093,
+      "maxDrawdown": 0.09834484299135454,
+      "profitFactor": 1.1311359372200331,
+      "winRate": 0.4,
+      "exposure": 0.06546080964685616,
+      "buyHoldReturn": 0.6727547377094205,
+      "meanTradeNet": 0.0016220445732261445,
+      "rejectedOrders": 0
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": []
+  }
+ ],
+ "totals": {
+  "markets": 10,
+  "marketsEvaluated": 10,
+  "configsTried": 230,
+  "oosCandidates": 70,
+  "qualified": 0,
+  "rejected": 70
+ },
+ "feasibility": [
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.5,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": false,
+   "roundTripCostPct": 121.09999999999998,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: position below venue minimum or fixed costs"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.26,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 49.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.18,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 25.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1320000000000001,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 10.7,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1159999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 5.8999999999999995,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1079999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 3.5000000000000004,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_ethereum_l1: policy sizing fits venue minimum"
+  }
+ ]
+}

@@ -1,8 +1,11 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
 import { buildAndSignBtcTx, broadcastBtcTx, deriveAddresses, generateMnemonic, sendEthTransaction, sendSolTransaction, validateMnemonic } from '../services/wallet';
-import type { KeystoreRecord, WalletNetwork } from '../types';
+import type { EncryptedPayload, KeystoreRecord, WalletNetwork } from '../types';
+import { PageHeader } from '../components/ui';
+import { WalletAccounts, WalletGuide } from '../components/WalletParts';
+import { DEFAULT_RPC, NETWORK_LABEL, checkRpcNetwork, validateAddress, validateAmount, type Chain } from '../services/walletSafety';
 
 export default function WalletPage() {
   const vault = useVault();
@@ -23,15 +26,42 @@ export default function WalletPage() {
 
   const [ethTo, setEthTo] = useState('');
   const [ethAmount, setEthAmount] = useState('');
-  const [ethRpc, setEthRpc] = useState('https://ethereum-sepolia.publicnode.com');
+  const [ethRpc, setEthRpc] = useState(DEFAULT_RPC.eth.testnet);
   const [ethTxid, setEthTxid] = useState('');
 
   const [solTo, setSolTo] = useState('');
   const [solAmount, setSolAmount] = useState('');
-  const [solRpc, setSolRpc] = useState('https://api.devnet.solana.com');
+  const [solRpc, setSolRpc] = useState(DEFAULT_RPC.sol.testnet);
   const [solTxid, setSolTxid] = useState('');
 
   const [addresses, setAddresses] = useState<{ btc?: string; eth?: string; sol?: string }>({});
+  // Two-step send: first tap validates and shows a review, second tap signs.
+  const [review, setReview] = useState<Chain | null>(null);
+
+  // Keep the RPC endpoints on the selected network (they used to stay on Sepolia/devnet after
+  // switching to mainnet). Custom endpoints entered by the user are kept but still checked before signing.
+  useEffect(() => {
+    const other: WalletNetwork = network === 'mainnet' ? 'testnet' : 'mainnet';
+    setEthRpc((cur) => (cur === DEFAULT_RPC.eth[other] ? DEFAULT_RPC.eth[network] : cur));
+    setSolRpc((cur) => (cur === DEFAULT_RPC.sol[other] ? DEFAULT_RPC.sol[network] : cur));
+    setReview(null);
+  }, [network]);
+
+  const preflight = async (chain: Chain, to: string, amount: string): Promise<boolean> => {
+    const err = validateAddress(chain, to, network) ?? validateAmount(amount) ??
+      (chain === 'eth' ? await checkRpcNetwork('eth', ethRpc, network) : chain === 'sol' ? await checkRpcNetwork('sol', solRpc, network) : null);
+    if (err) {
+      setStatus(err);
+      setReview(null);
+      return false;
+    }
+    return true;
+  };
+
+  const startReview = async (chain: Chain, to: string, amount: string) => {
+    setStatus('');
+    if (await preflight(chain, to, amount)) setReview(chain);
+  };
 
   useEffect(() => {
     getKeystore().then(setKeystore);
@@ -50,11 +80,11 @@ export default function WalletPage() {
 
   useEffect(() => {
     if (vault.locked) return;
-    getSetting<any>('eth_rpc').then((val) => {
+    getSetting<EncryptedPayload>('eth_rpc').then((val) => {
       if (!val) return;
       vault.decrypt(val).then(setEthRpc).catch(() => undefined);
     });
-    getSetting<any>('sol_rpc').then((val) => {
+    getSetting<EncryptedPayload>('sol_rpc').then((val) => {
       if (!val) return;
       vault.decrypt(val).then(setSolRpc).catch(() => undefined);
     });
@@ -138,6 +168,8 @@ export default function WalletPage() {
 
   const sendBtc = async () => {
     if (!mnemonic) return;
+    setReview(null);
+    if (!(await preflight('btc', btcTo, btcAmount))) return;
     try {
       const amountSats = Math.round(parseFloat(btcAmount) * 1e8);
       const raw = await buildAndSignBtcTx({
@@ -150,13 +182,15 @@ export default function WalletPage() {
       const txid = await broadcastBtcTx(raw, network);
       setBtcTxid(txid);
       setStatus('BTC transaction broadcasted.');
-    } catch (err: any) {
-      setStatus(err.message || 'BTC transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'BTC transaction failed.');
     }
   };
 
   const sendEth = async () => {
     if (!mnemonic) return;
+    setReview(null);
+    if (!(await preflight('eth', ethTo, ethAmount))) return;
     try {
       const txid = await sendEthTransaction({
         mnemonic,
@@ -166,13 +200,15 @@ export default function WalletPage() {
       });
       setEthTxid(txid);
       setStatus('ETH transaction submitted.');
-    } catch (err: any) {
-      setStatus(err.message || 'ETH transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'ETH transaction failed.');
     }
   };
 
   const sendSol = async () => {
     if (!mnemonic) return;
+    setReview(null);
+    if (!(await preflight('sol', solTo, solAmount))) return;
     try {
       const txid = await sendSolTransaction({
         mnemonic,
@@ -182,8 +218,8 @@ export default function WalletPage() {
       });
       setSolTxid(txid);
       setStatus('SOL transaction submitted.');
-    } catch (err: any) {
-      setStatus(err.message || 'SOL transaction failed.');
+    } catch (err) {
+      setStatus((err instanceof Error && err.message) || 'SOL transaction failed.');
     }
   };
 
@@ -193,13 +229,7 @@ export default function WalletPage() {
 
   return (
     <div className="space-y-8 slide-up">
-      <header className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Wallet</p>
-        <h1 className="text-3xl font-semibold text-white">Self-Custody Wallet (Testnet First)</h1>
-        <p className="text-sm text-slate-400">
-          All keys are generated locally and stored encrypted in IndexedDB. You control your keys.
-        </p>
-      </header>
+      <PageHeader title="Wallet" subtitle="Self-custody · keys stay on this phone, encrypted" />
 
       <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -231,7 +261,7 @@ export default function WalletPage() {
         {status && <div className="text-xs text-amber-400">{status}</div>}
         {network === 'testnet' && (
           <div className="text-xs text-slate-400">
-            Faucets: BTC testnet <a className="text-mint-300" href="https://bitcoinfaucet.uo1.net/">uo1</a>, ETH Sepolia <a className="text-mint-300" href="https://sepoliafaucet.com/">sepoliafaucet</a>, SOL devnet <a className="text-mint-300" href="https://solfaucet.com/">solfaucet</a>.
+            Faucets: BTC testnet <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://bitcoinfaucet.uo1.net/">uo1</a>, ETH Sepolia <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://sepoliafaucet.com/">sepoliafaucet</a>, SOL devnet <a className="text-mint-300 underline" target="_blank" rel="noreferrer" href="https://solfaucet.com/">solfaucet</a>.
           </div>
         )}
       </section>
@@ -276,6 +306,7 @@ export default function WalletPage() {
 
       <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
         <h2 className="text-sm font-semibold text-slate-200">Wallet Access</h2>
+        {!keystore && <p className="text-sm text-slate-400">New to self-custody? Read the guide below first.</p>}
         {keystore ? (
           <div className="space-y-3">
             <div className="text-xs text-slate-500">Encrypted keystore detected.</div>
@@ -385,50 +416,39 @@ export default function WalletPage() {
         )}
       </section>
 
-      {mnemonic && (
-        <section className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-slate-200">Derived Addresses</h2>
-          <div className="grid gap-3 md:grid-cols-3 text-xs text-slate-300">
-            <div className="rounded-lg border border-white/10 px-3 py-2">
-              <div className="text-slate-500">BTC</div>
-              <div className="break-all">{addresses.btc}</div>
-            </div>
-            <div className="rounded-lg border border-white/10 px-3 py-2">
-              <div className="text-slate-500">ETH</div>
-              <div className="break-all">{addresses.eth}</div>
-            </div>
-            <div className="rounded-lg border border-white/10 px-3 py-2">
-              <div className="text-slate-500">SOL</div>
-              <div className="break-all">{addresses.sol}</div>
-            </div>
-          </div>
-        </section>
-      )}
+      {mnemonic && <WalletAccounts addresses={addresses} network={network} rpc={{ eth: ethRpc, sol: solRpc }} />}
+      {!keystore && <WalletGuide />}
 
       {mnemonic && (
-        <section className="grid gap-6 lg:grid-cols-3">
+        <section className="grid gap-4 lg:grid-cols-3" aria-label="Send">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
-            <h3 className="text-sm font-semibold text-slate-200">BTC Send</h3>
+            <h3 className="text-sm font-semibold text-slate-200">Send BTC</h3>
+            <p className="text-xs text-slate-400">{NETWORK_LABEL.btc[network]}</p>
             <input value={btcTo} onChange={(e) => setBtcTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={btcAmount} onChange={(e) => setBtcAmount(e.target.value)} placeholder="Amount (BTC)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={btcFeeRate} onChange={(e) => setBtcFeeRate(e.target.value)} placeholder="Fee rate (sats/vbyte)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
-            <button type="button" onClick={sendBtc} className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300">Send BTC</button>
+            {review === 'btc' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {btcAmount} BTC on {NETWORK_LABEL.btc[network]} to {btcTo}? This cannot be undone.</div>}
+            <button type="button" onClick={() => (review === 'btc' ? sendBtc() : startReview('btc', btcTo, btcAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'btc' ? 'Confirm send' : 'Review send'}</button>
             {btcTxid && <div className="text-xs text-slate-400 break-all">TXID: {btcTxid}</div>}
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
-            <h3 className="text-sm font-semibold text-slate-200">ETH Send</h3>
+            <h3 className="text-sm font-semibold text-slate-200">Send ETH</h3>
+            <p className="text-xs text-slate-400">{NETWORK_LABEL.eth[network]}</p>
             <input value={ethTo} onChange={(e) => setEthTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={ethAmount} onChange={(e) => setEthAmount(e.target.value)} placeholder="Amount (ETH)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={ethRpc} onChange={(e) => setEthRpc(e.target.value)} placeholder="RPC URL" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-xs text-slate-400" />
-            <button type="button" onClick={sendEth} className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300">Send ETH</button>
+            {review === 'eth' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {ethAmount} ETH on {NETWORK_LABEL.eth[network]} to {ethTo}? This cannot be undone.</div>}
+            <button type="button" onClick={() => (review === 'eth' ? sendEth() : startReview('eth', ethTo, ethAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'eth' ? 'Confirm send' : 'Review send'}</button>
             {ethTxid && <div className="text-xs text-slate-400 break-all">TXID: {ethTxid}</div>}
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-3">
-            <h3 className="text-sm font-semibold text-slate-200">SOL Send</h3>
+            <h3 className="text-sm font-semibold text-slate-200">Send SOL</h3>
+            <p className="text-xs text-slate-400">{NETWORK_LABEL.sol[network]}</p>
             <input value={solTo} onChange={(e) => setSolTo(e.target.value)} placeholder="Recipient address" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={solAmount} onChange={(e) => setSolAmount(e.target.value)} placeholder="Amount (SOL)" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm text-slate-200" />
             <input value={solRpc} onChange={(e) => setSolRpc(e.target.value)} placeholder="RPC URL" className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2 text-xs text-slate-400" />
-            <button type="button" onClick={sendSol} className="rounded-lg border border-mint-500/50 px-4 py-2 text-sm text-mint-300">Send SOL</button>
+            {review === 'sol' && <div role="status" className="rounded-lg bg-amber-500/10 p-3 text-xs text-amber-200">Send {solAmount} SOL on {NETWORK_LABEL.sol[network]} to {solTo}? This cannot be undone.</div>}
+            <button type="button" onClick={() => (review === 'sol' ? sendSol() : startReview('sol', solTo, solAmount))} className="min-h-[48px] w-full rounded-xl bg-helix-400 px-4 text-sm font-semibold text-ink-900">{review === 'sol' ? 'Confirm send' : 'Review send'}</button>
             {solTxid && <div className="text-xs text-slate-400 break-all">TXID: {solTxid}</div>}
           </div>
         </section>

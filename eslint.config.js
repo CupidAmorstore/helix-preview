@@ -24,11 +24,13 @@ export default [
     rules: {
       ...tsPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      // TypeScript already checks undefined identifiers; core no-undef misfires on TS globals/types
+      'no-undef': 'off'
     }
   },
   {
-    ignores: ['dist', 'legacy', 'netlify/functions/**']
+    ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**']
   }
 ];
 

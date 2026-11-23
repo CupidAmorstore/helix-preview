@@ -1,0 +1,66 @@
+name: Android preview APK
+
+# Builds a DEBUG APK of the app (Capacitor) and publishes it as the "android-preview" pre-release,
+# so it can be downloaded and installed directly on a phone. Paper trading only; no store release.
+on:
+  push:
+    branches:
+      - ccr-8d17e0b5-yaqvtm
+      - main
+    # documentation-only commits don't replace the APK being tested
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write # needed to update the android-preview pre-release
+
+concurrency:
+  group: android-preview
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      # the web inspection page (screenshots) is for the public site only
+      - run: rm -rf dist/inspect
+      - run: npx cap sync android
+      - name: Build debug APK
+        working-directory: android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: helix-preview-apk
+          path: helix-preview.apk
+          retention-days: 14
+      - name: Publish android-preview pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete android-preview --yes --cleanup-tag || true
+          gh release create android-preview helix-preview.apk \
+            --prerelease \
+            --target "${GITHUB_SHA}" \
+            --title "HELIX Android preview (debug build #${{ github.run_number }})" \
+            --notes "Debug build of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Trading Bot is PAPER ONLY — no real-money orders. Install: open this page on your Android phone, tap helix-preview.apk, allow installing from your browser."

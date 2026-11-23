@@ -1,0 +1,242 @@
+// HELIX paper-trading engine. Simulated money only: nothing here talks to an exchange or a blockchain.
+// Pure functions (no I/O) so every rule is unit-tested; persistence lives in ./store.ts.
+import { COST_PRESETS, sideCostFrac } from '../bot/costs';
+import { assertPaperOnly } from '../bot/risk';
+
+export const STARTING_CAPITAL_OPTIONS = [20, 50, 100, 250, 500, 1000] as const;
+
+export type PaperLimits = {
+  /** max value of one coin position as a fraction of account equity */
+  maxPositionFraction: number;
+  /** venue minimum order (Coinbase min_market_funds is $1) */
+  minOrderUsd: number;
+  /** quotes older than this are refused (stale price) */
+  maxQuoteAgeMs: number;
+};
+
+export const DEFAULT_LIMITS: PaperLimits = { maxPositionFraction: 0.5, minOrderUsd: 1, maxQuoteAgeMs: 60_000 };
+
+/** Fee model: Coinbase lowest-tier taker fee + half spread + slippage (same assumptions as the bot). */
+export const PAPER_COST = COST_PRESETS.coinbase_taker;
+
+export type PaperPosition = { symbol: string; product: string; qty: number; costUsd: number };
+
+export type PaperOrder = {
+  id: string;
+  clientId: string;
+  ts: number;
+  symbol: string;
+  product: string;
+  side: 'buy' | 'sell';
+  status: 'filled' | 'rejected';
+  reason?: string;
+  /** market price used (last live trade) */
+  quotePx: number;
+  /** price after half-spread + slippage */
+  fillPx: number;
+  qty: number;
+  /** cash spent (buy) or received (sell), after fees */
+  cashUsd: number;
+  feeUsd: number;
+  /** spread + slippage cost versus the quote */
+  slippageUsd: number;
+  realizedPnl?: number;
+};
+
+export type PaperAccount = {
+  version: 1;
+  createdAt: number;
+  startingCash: number;
+  cash: number;
+  positions: Record<string, PaperPosition>;
+  orders: PaperOrder[];
+  /** [timestamp, equity] recorded after every fill and on valuation snapshots */
+  equity: [number, number][];
+  halted: boolean;
+  haltReason?: string;
+  limits: PaperLimits;
+};
+
+export type Quote = { symbol: string; product: string; price: number; ts: number };
+
+export type OrderRequest =
+  | { clientId: string; side: 'buy'; symbol: string; product: string; notionalUsd: number }
+  | { clientId: string; side: 'sell'; symbol: string; product: string; qty: number };
+
+const round = (x: number, d = 8) => Math.round(x * 10 ** d) / 10 ** d;
+
+export function createAccount(startingCash: number, now: number, limits: PaperLimits = DEFAULT_LIMITS): PaperAccount {
+  assertPaperOnly();
+  if (!(startingCash > 0)) throw new Error('Starting cash must be positive');
+  return { version: 1, createdAt: now, startingCash, cash: startingCash, positions: {}, orders: [], equity: [[now, startingCash]], halted: false, limits };
+}
+
+export function valueAccount(acc: PaperAccount, prices: Record<string, number>) {
+  let positionsValue = 0;
+  let unrealized = 0;
+  let missingPrice = false;
+  for (const p of Object.values(acc.positions)) {
+    const px = prices[p.symbol];
+    if (!px) {
+      missingPrice = true;
+      positionsValue += p.costUsd; // fall back to cost so equity is not overstated
+      continue;
+    }
+    positionsValue += p.qty * px;
+    unrealized += p.qty * px - p.costUsd;
+  }
+  const filled = acc.orders.filter((o) => o.status === 'filled');
+  const realized = filled.reduce((s, o) => s + (o.realizedPnl ?? 0), 0);
+  const fees = filled.reduce((s, o) => s + o.feeUsd, 0);
+  const slippage = filled.reduce((s, o) => s + o.slippageUsd, 0);
+  const equity = acc.cash + positionsValue;
+  return {
+    equity,
+    cash: acc.cash,
+    positionsValue,
+    unrealized,
+    realized,
+    fees,
+    slippage,
+    totalPnl: equity - acc.startingCash,
+    returnPct: ((equity - acc.startingCash) / acc.startingCash) * 100,
+    missingPrice
+  };
+}
+
+function reject(acc: PaperAccount, req: OrderRequest, quote: Quote, now: number, reason: string) {
+  const order: PaperOrder = {
+    id: `po_${now}_${req.clientId.slice(0, 8)}`,
+    clientId: req.clientId,
+    ts: now,
+    symbol: req.symbol,
+    product: req.product,
+    side: req.side,
+    status: 'rejected',
+    reason,
+    quotePx: quote.price,
+    fillPx: 0,
+    qty: 0,
+    cashUsd: 0,
+    feeUsd: 0,
+    slippageUsd: 0
+  };
+  return { account: { ...acc, orders: [...acc.orders, order] }, order };
+}
+
+/**
+ * Fill a market order at the live quote with the fee model. Every request produces an order record
+ * (filled or rejected with a reason) so the activity log is complete. Duplicate clientIds are ignored.
+ */
+export function placeOrder(acc: PaperAccount, req: OrderRequest, quote: Quote, now: number): { account: PaperAccount; order: PaperOrder; duplicate?: true } {
+  assertPaperOnly();
+  const dup = acc.orders.find((o) => o.clientId === req.clientId);
+  if (dup) return { account: acc, order: dup, duplicate: true };
+  if (acc.halted) return reject(acc, req, quote, now, `Trading paused: ${acc.haltReason ?? 'paused by you'}`);
+  if (quote.symbol !== req.symbol || !(quote.price > 0)) return reject(acc, req, quote, now, 'No valid live price for this coin');
+  if (now - quote.ts > acc.limits.maxQuoteAgeMs) return reject(acc, req, quote, now, 'Price is out of date. Wait for a live price and try again.');
+
+  const feeFrac = PAPER_COST.takerFeeBps / 10_000;
+  const impactFrac = sideCostFrac(PAPER_COST) - feeFrac; // half spread + slippage
+
+  if (req.side === 'buy') {
+    const n = req.notionalUsd;
+    if (!(n > 0)) return reject(acc, req, quote, now, 'Enter an amount');
+    if (n < acc.limits.minOrderUsd) return reject(acc, req, quote, now, `Minimum order is $${acc.limits.minOrderUsd}`);
+    if (n > acc.cash + 1e-9) return reject(acc, req, quote, now, 'Not enough paper cash');
+    const before = valueAccount(acc, { [req.symbol]: quote.price });
+    const held = acc.positions[req.symbol];
+    const after = (held ? held.qty * quote.price : 0) + n;
+    const cap = acc.limits.maxPositionFraction * before.equity;
+    if (after > cap + 1e-9)
+      return reject(acc, req, quote, now, `Position limit: one coin can be at most ${Math.round(acc.limits.maxPositionFraction * 100)}% of your account ($${cap.toFixed(2)})`);
+    const fillPx = quote.price * (1 + impactFrac);
+    const fee = n * feeFrac;
+    const qty = round((n - fee) / fillPx);
+    const slippage = qty * (fillPx - quote.price);
+    const pos: PaperPosition = held
+      ? { ...held, qty: round(held.qty + qty), costUsd: held.costUsd + n }
+      : { symbol: req.symbol, product: req.product, qty, costUsd: n };
+    const order: PaperOrder = {
+      id: `po_${now}_${req.clientId.slice(0, 8)}`,
+      clientId: req.clientId,
+      ts: now,
+      symbol: req.symbol,
+      product: req.product,
+      side: 'buy',
+      status: 'filled',
+      quotePx: quote.price,
+      fillPx,
+      qty,
+      cashUsd: n,
+      feeUsd: fee,
+      slippageUsd: slippage
+    };
+    const next: PaperAccount = { ...acc, cash: round(acc.cash - n, 10), positions: { ...acc.positions, [req.symbol]: pos }, orders: [...acc.orders, order] };
+    next.equity = [...acc.equity, [now, valueAccount(next, { [req.symbol]: quote.price }).equity]];
+    return { account: next, order };
+  }
+
+  const held = acc.positions[req.symbol];
+  if (!held || held.qty <= 0) return reject(acc, req, quote, now, `You don't hold any ${req.symbol}`);
+  const qty = Math.min(req.qty, held.qty);
+  if (!(qty > 0)) return reject(acc, req, quote, now, 'Enter an amount');
+  const fillPx = quote.price * (1 - impactFrac);
+  const gross = qty * fillPx;
+  if (gross < acc.limits.minOrderUsd) return reject(acc, req, quote, now, `Minimum order is $${acc.limits.minOrderUsd}`);
+  const fee = gross * feeFrac;
+  const net = gross - fee;
+  const avgCost = held.costUsd / held.qty;
+  const costSold = avgCost * qty;
+  const realized = net - costSold;
+  const remainingQty = round(held.qty - qty);
+  const positions = { ...acc.positions };
+  if (remainingQty <= 1e-10) delete positions[req.symbol];
+  else positions[req.symbol] = { ...held, qty: remainingQty, costUsd: held.costUsd - costSold };
+  const order: PaperOrder = {
+    id: `po_${now}_${req.clientId.slice(0, 8)}`,
+    clientId: req.clientId,
+    ts: now,
+    symbol: req.symbol,
+    product: req.product,
+    side: 'sell',
+    status: 'filled',
+    quotePx: quote.price,
+    fillPx,
+    qty,
+    cashUsd: net,
+    feeUsd: fee,
+    slippageUsd: qty * (quote.price - fillPx),
+    realizedPnl: realized
+  };
+  const next: PaperAccount = { ...acc, cash: round(acc.cash + net, 10), positions, orders: [...acc.orders, order] };
+  next.equity = [...acc.equity, [now, valueAccount(next, { [req.symbol]: quote.price }).equity]];
+  return { account: next, order };
+}
+
+/** Preview of what an order would cost, for the ticket (no state change). */
+export function previewBuy(notionalUsd: number, price: number) {
+  const feeFrac = PAPER_COST.takerFeeBps / 10_000;
+  const fillPx = price * (1 + sideCostFrac(PAPER_COST) - feeFrac);
+  const fee = notionalUsd * feeFrac;
+  const qty = notionalUsd > 0 && price > 0 ? (notionalUsd - fee) / fillPx : 0;
+  return { qty, fee, fillPx, costPct: sideCostFrac(PAPER_COST) * 100 };
+}
+
+export function previewSell(qty: number, price: number) {
+  const feeFrac = PAPER_COST.takerFeeBps / 10_000;
+  const fillPx = price * (1 - (sideCostFrac(PAPER_COST) - feeFrac));
+  const gross = qty * fillPx;
+  return { gross, fee: gross * feeFrac, net: gross * (1 - feeFrac), fillPx, costPct: sideCostFrac(PAPER_COST) * 100 };
+}
+
+export function setHalted(acc: PaperAccount, halted: boolean, reason?: string): PaperAccount {
+  return { ...acc, halted, haltReason: halted ? reason ?? 'paused by you' : undefined };
+}
+
+/** Record a valuation point at most once per hour (keeps the chart meaningful without bloating storage). */
+export function recordEquity(acc: PaperAccount, equity: number, now: number): PaperAccount {
+  const last = acc.equity[acc.equity.length - 1];
+  if (last && now - last[0] < 3_600_000) return acc;
+  return { ...acc, equity: [...acc.equity, [now, equity]].slice(-2000) as [number, number][] };
+}

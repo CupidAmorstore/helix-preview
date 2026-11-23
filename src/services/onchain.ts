@@ -13,13 +13,22 @@ export async function fetchBtcBalance(address: string, network: 'mainnet' | 'tes
   return { balanceSats, balanceBtc: balanceSats / 1e8 };
 }
 
+// Etherscan API V2 (V1 was retired: it now answers "You are using a deprecated V1 endpoint").
+// chainid=1 is Ethereum mainnet.
+const ETHERSCAN_V2 = 'https://api.etherscan.io/v2/api?chainid=1';
+
+function etherscanUrl(params: Record<string, string>, apiKey: string) {
+  const q = new URLSearchParams({ ...params, apikey: apiKey });
+  return `${ETHERSCAN_V2}&${q.toString()}`;
+}
+
 export async function fetchEthBalance(address: string, apiKey: string) {
   if (!apiKey) throw new Error('Missing Etherscan API key');
-  const url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${apiKey}`;
+  const url = etherscanUrl({ module: 'account', action: 'balance', address, tag: 'latest' }, apiKey);
   const res = await fetch(url);
   if (!res.ok) throw new Error('Etherscan balance failed');
   const data = await res.json();
-  if (data.status !== '1') throw new Error(data.message || 'Etherscan error');
+  if (data.status !== '1') throw new Error(data.result || data.message || 'Etherscan error');
   const wei = BigInt(data.result);
   return { wei, eth: Number(wei) / 1e18 };
 }
@@ -28,7 +37,7 @@ export async function fetchErc20Balances(address: string, contracts: string[], a
   if (!apiKey) throw new Error('Missing Etherscan API key');
   const results: { contract: string; balance: string }[] = [];
   for (const contract of contracts) {
-    const url = `https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${contract}&address=${address}&tag=latest&apikey=${apiKey}`;
+    const url = etherscanUrl({ module: 'account', action: 'tokenbalance', contractaddress: contract, address, tag: 'latest' }, apiKey);
     const res = await fetch(url);
     if (!res.ok) continue;
     const data = await res.json();
@@ -69,7 +78,8 @@ export async function fetchSolTokens(address: string, rpc: string) {
   if (!res.ok) throw new Error('Solana token RPC failed');
   const data = await res.json();
   const accounts = data.result?.value ?? [];
-  return accounts.map((acc: any) => ({
+  type TokenAccount = { account?: { data?: { parsed?: { info?: { mint?: string; tokenAmount?: { uiAmount?: number } } } } } };
+  return (accounts as TokenAccount[]).map((acc) => ({
     mint: acc.account?.data?.parsed?.info?.mint,
     amount: acc.account?.data?.parsed?.info?.tokenAmount?.uiAmount ?? 0
   }));

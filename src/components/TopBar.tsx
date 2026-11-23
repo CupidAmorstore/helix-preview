@@ -1,40 +1,15 @@
-﻿type TopBarProps = {
-  theme: 'dark' | 'light';
-  onToggleTheme: () => void;
-  mobileOpen: boolean;
-  onMobileToggle: () => void;
-};
+import { Link } from 'react-router-dom';
 
-export default function TopBar({ theme, onToggleTheme, mobileOpen, onMobileToggle }: TopBarProps) {
+export default function TopBar() {
   return (
-    <header className="app-topbar sticky top-0 z-20 flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-10">
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className="lg:hidden rounded-lg border border-white/10 px-3 py-2 text-xs text-slate-300"
-          onClick={onMobileToggle}
-        >
-          {mobileOpen ? 'Close' : 'Menu'}
-        </button>
-        <div>
-          <div className="text-sm uppercase tracking-[0.2em] text-slate-500">HELIX (Apex App)</div>
-          <div className="text-sm text-slate-200">Live market context + read-only tracking</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-3 text-xs text-slate-400">
-        <div className="hidden md:flex items-center gap-2 rounded-full border border-white/10 px-3 py-1">
-          <span className="h-2 w-2 rounded-full bg-mint-500"></span>
-          Data feeds: live
-        </div>
-        <button
-          type="button"
-          onClick={onToggleTheme}
-          className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300"
-        >
-          {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-        </button>
-      </div>
+    <header className="app-topbar sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-6 lg:px-10">
+      <Link to="/" className="flex min-h-[48px] items-center gap-2.5" aria-label="HELIX home">
+        <img src={`${import.meta.env.BASE_URL}assets/helix_logo.png`} alt="" className="h-8 w-8" />
+        <span className="text-base font-semibold tracking-wide text-white">HELIX</span>
+      </Link>
+      <span className="rounded-md border border-dashed border-amber-500/70 px-2 py-1 text-[11px] font-semibold tracking-wider text-amber-400">
+        PAPER TRADING ONLY
+      </span>
     </header>
   );
 }
-
