@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { evaluateFamily, chronologicalSplit, evaluatePooled } from '../../bot/validation';
 import { runResearchCycle, ALL_FAMILIES } from '../../bot/research';
+import { DAILY_ONLY } from '../../bot/strategies';
 import { COST_PRESETS } from '../../bot/costs';
 import { HOUR, datasetHash } from '../../bot/candles';
 import type { CostModel, Dataset } from '../../bot/types';
@@ -90,7 +91,8 @@ describe('November 21 regression cases', () => {
     const d = mkDataset(randomWalk(2000, 8));
     const args = { datasets: [d], costFor: () => COST_PRESETS.coinbase_taker, nowMs: d.candles[1999].t + HOUR, codeVersion: 't', minBars: 1500 };
     const first = runResearchCycle({ ...args, registry: {} });
-    expect(first.record.totals.oosCandidates).toBe(ALL_FAMILIES.length);
+    // hourly data: the daily-only multi-day families are not run at all
+    expect(first.record.totals.oosCandidates).toBe(ALL_FAMILIES.filter((f) => !DAILY_ONLY.has(f)).length);
     const second = runResearchCycle({ ...args, registry: first.registry });
     expect(second.record.totals.oosCandidates).toBe(0);
     expect(second.record.markets[0].skipped[0].reason).toMatch(/no new evidence/);

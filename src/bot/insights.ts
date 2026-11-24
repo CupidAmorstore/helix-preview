@@ -70,7 +70,9 @@ export const STRATEGIES: StrategyInfo[] = [
   { family: 'rsi_reversion', name: 'Oversold bounce (RSI)', objective: 'Buy when the RSI says a coin is oversold; sell when it recovers.', risk: 'High', style: 'Mean reversion' },
   { family: 'vol_filtered_trend', name: 'Calm-market trend', objective: 'Follow the trend only while volatility is below its usual level; stay in cash in turbulent markets.', risk: 'Medium', style: 'Risk-managed trend' },
   { family: 'xs_momentum', name: 'Strongest coins rotation', objective: 'Each week hold the 1–3 coins that rose most over recent weeks; hold cash if none rose.', risk: 'Medium-high', style: 'Cross-sectional momentum' },
-  { family: 'regime_switch', name: 'Regime switcher', objective: 'Use trend following when the market trends and dip-buying when it moves sideways.', risk: 'Medium-high', style: 'Hybrid' }
+  { family: 'regime_switch', name: 'Regime switcher', objective: 'Use trend following when the market trends and dip-buying when it moves sideways.', risk: 'Medium-high', style: 'Hybrid' },
+  { family: 'weekly_trend', name: 'Weekly trend check', objective: 'Once a week, hold a coin only if it is above its long-term average; otherwise cash. Few trades, so fees matter less.', risk: 'Medium', style: 'Multi-week trend' },
+  { family: 'monthly_momentum', name: 'Monthly momentum', objective: 'Every four weeks, hold a coin only if it rose over the past 3–6 months.', risk: 'Medium-high', style: 'Multi-month momentum' }
 ];
 
 export type StrategyEvidence = {

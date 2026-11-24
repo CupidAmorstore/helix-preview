@@ -6,6 +6,10 @@ import { efficiencyRatio, priorHigh, priorLow, rollingStd, rsi, sma } from './in
  * Each builder precomputes indicators over the full array; value at i only uses data <= i
  * (enforced by tests/bot/lookahead.test.ts which mutates future bars and checks signals are unchanged).
  */
+const DAY_MS = 86_400_000;
+/** true when bar i closes the last UTC day of a `period`-day calendar block (pure calendar, no future data) */
+const rebalanceDay = (c: Candle[], i: number, period: number) => (Math.floor(c[i].t / DAY_MS) + 1) % period === 0;
+
 const builders: Record<StrategyFamily, (c: Candle[], p: Record<string, number>) => SignalFn> = {
   sma_cross(c, p) {
     const close = c.map((x) => x.c);
@@ -93,6 +97,18 @@ const builders: Record<StrategyFamily, (c: Candle[], p: Record<string, number>) 
       return close[i] >= m[i] || held >= p.maxHold ? 0 : 1;
     };
   },
+  // Hypothesis (pre-registered 2026-11-24): a slow trend filter checked only once a week captures
+  // multi-week moves (median weekly move ≈ 5× round-trip cost) with few trades.
+  weekly_trend(c, p) {
+    const close = c.map((x) => x.c);
+    const m = sma(close, p.n);
+    return (i, pos) => (rebalanceDay(c, i, p.period) ? (close[i] > m[i] ? 1 : 0) : pos);
+  },
+  // Hypothesis (pre-registered 2026-11-24): time-series momentum over months, rebalanced every 4 weeks.
+  monthly_momentum(c, p) {
+    return (i, pos) =>
+      rebalanceDay(c, i, p.period) ? (i >= p.lookback && c[i].c / c[i - p.lookback].c - 1 > 0 ? 1 : 0) : pos;
+  },
   vol_compression_breakout(c, p) {
     const close = c.map((x) => x.c);
     const m = sma(close, p.n);
@@ -137,8 +153,14 @@ export const PARAM_GRID: Record<StrategyFamily, Record<string, number>[]> = {
   rsi_reversion: cartesian({ n: [14], lo: [25, 30], hi: [55], maxHold: [24] }),
   vol_compression_breakout: cartesian({ n: [20], lookback: [120], pct: [0.1, 0.2] }),
   vol_filtered_trend: cartesian({ trend: [50, 100], vol: [20], lookback: [250] }),
-  regime_switch: cartesian({ er: [20], erTrend: [0.3, 0.4], trend: [50], n: [20], k: [2], maxHold: [20] })
+  regime_switch: cartesian({ er: [20], erTrend: [0.3, 0.4], trend: [50], n: [20], k: [2], maxHold: [20] }),
+  weekly_trend: cartesian({ n: [100, 200], period: [7] }),
+  monthly_momentum: cartesian({ lookback: [90, 180], period: [28] })
 };
+
+/** Families defined only for daily bars (multi-day horizons); never run on intraday data. */
+export const DAILY_ONLY: ReadonlySet<StrategyFamily> = new Set<StrategyFamily>(['weekly_trend', 'monthly_momentum']);
+export const familyAllowed = (f: StrategyFamily, intervalMs: number) => !DAILY_ONLY.has(f) || intervalMs === DAY_MS;
 
 function cartesian(grid: Record<string, number[]>): Record<string, number>[] {
   let out: Record<string, number>[] = [{}];

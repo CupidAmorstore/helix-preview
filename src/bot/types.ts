@@ -38,7 +38,11 @@ export type StrategyFamily =
   | 'rsi_reversion'
   | 'vol_compression_breakout'
   | 'vol_filtered_trend'
-  | 'regime_switch';
+  | 'regime_switch'
+  // multi-day horizon (registered 2026-11-24 after research/cost-horizon-study.json): daily data only,
+  // decisions only on calendar rebalance days so turnover stays far below the 1.3% round-trip cost
+  | 'weekly_trend'
+  | 'monthly_momentum';
 
 export type StrategySpec = {
   family: StrategyFamily;

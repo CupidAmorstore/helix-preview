@@ -1,6 +1,6 @@
 import type { CostModel, Dataset, StrategyFamily } from './types';
 import { validateCandles } from './candles';
-import { PARAM_GRID } from './strategies';
+import { PARAM_GRID, familyAllowed } from './strategies';
 import { CandidateReport, GATES, PooledReport, evaluateFamily, evaluatePooled } from './validation';
 import { fnv1a } from './candles';
 import { classifyRegime, scoreDataQuality, DataQuality, Regime } from './watchbot';
@@ -107,7 +107,7 @@ export function runResearchCycle(args: {
 }): { record: RunRecord; registry: Registry } {
   const startedAt = new Date().toISOString();
   const runId = `run-${new Date(args.nowMs).toISOString().replace(/[:.]/g, '-')}`;
-  const families = args.families ?? ALL_FAMILIES;
+  const families = (args.families ?? ALL_FAMILIES).filter((f) => args.datasets.every((d) => familyAllowed(f, d.intervalMs)));
   const minBars = args.minBars ?? 1500;
   const registry = { ...args.registry };
 
