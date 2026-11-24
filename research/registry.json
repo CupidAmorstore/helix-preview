@@ -1430,5 +1430,193 @@
   "reasons": [
    "validation net return <= 0 after costs"
   ]
+ },
+ "weekly_trend|BTC-USD|86400000|596997c7-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 6 < 15"
+  ]
+ },
+ "monthly_momentum|BTC-USD|86400000|596997c7-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 4 < 15"
+  ]
+ },
+ "weekly_trend|ETH-USD|86400000|d42a807a-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 5 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|ETH-USD|86400000|d42a807a-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 4 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|SOL-USD|86400000|9ba1194d-1984": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 3 < 15"
+  ]
+ },
+ "monthly_momentum|SOL-USD|86400000|9ba1194d-1984": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 4 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "weekly_trend|XRP-USD|86400000|0f197877-1285": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 1 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "monthly_momentum|XRP-USD|86400000|0f197877-1285": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 1 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|DOGE-USD|86400000|0118ae7c-1998": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 4 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|DOGE-USD|86400000|0118ae7c-1998": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 2 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+  ]
+ },
+ "weekly_trend|ADA-USD|86400000|da286594-2075": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 5 < 15"
+  ]
+ },
+ "monthly_momentum|ADA-USD|86400000|da286594-2075": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 2 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|AVAX-USD|86400000|6fae5cd5-1879": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 3 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|AVAX-USD|86400000|6fae5cd5-1879": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 2 < 15",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|LINK-USD|86400000|dd2f0bba-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 3 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|LINK-USD|86400000|dd2f0bba-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 3 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "weekly_trend|LTC-USD|86400000|975956d0-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "best training config is not profitable after costs",
+   "validation trades 8 < 15",
+   "validation net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|LTC-USD|86400000|975956d0-2189": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 3 < 15",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|DOT-USD|86400000|81a55b83-1985": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 2 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "monthly_momentum|DOT-USD|86400000|81a55b83-1985": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 1 < 15",
+   "validation net return <= 0 after costs",
+   "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+   "walk-forward unstable: too few profitable folds"
+  ]
+ },
+ "weekly_trend|POOLED|86400000|b9460027": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "pooled validation net return <= 0 after costs"
+  ]
+ },
+ "monthly_momentum|POOLED|86400000|b9460027": {
+  "runId": "run-2026-11-24T19-36-41-194Z",
+  "status": "rejected",
+  "reasons": [
+   "validation trades 10 < 15"
+  ]
  }
 }

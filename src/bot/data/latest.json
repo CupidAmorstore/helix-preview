@@ -1,29 +1,29 @@
 {
- "generatedAt": "2026-11-23T15:56:32.914Z",
- "codeVersion": "9843b3139e91610bb18eaba4d776ba348e144a1a+dirty",
+ "generatedAt": "2026-11-24T19:36:41.194Z",
+ "codeVersion": "0b6b578c58de4bdf74db5a4679b84aee6cb381cb",
  "mode": "paper",
  "runs": [
   {
-   "runId": "run-2026-11-23T15-56-32-914Z-1h",
+   "runId": "run-2026-11-24T19-36-41-194Z-1h",
    "totals": {
     "markets": 10,
     "marketsEvaluated": 10,
     "configsTried": 0,
     "oosCandidates": 77,
-    "bonferroniN": 176,
+    "bonferroniN": 177,
     "qualified": 0,
     "rejected": 77,
     "newThisRun": 0
    },
-   "gates": "gates-v1",
+   "gates": "gates-v2",
    "assumptions": [
     "Long-only spot, no leverage, no shorting.",
     "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
     "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
-    "A holdout already inspected by earlier tests on the identical dataset is not fresh evidence: such candidates cannot qualify without forward paper results.",
-    "Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).",
+    "Recent history already inspected by earlier tests on the same market/timeframe (even with refreshed data) is not fresh evidence: such candidates cannot qualify without forward paper results.",
+    "Universe = coins that are large and listed today (survivorship bias). Measured in research/survivorship-study.json; qualification also requires a non-negative median on delisted markets.",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -4915,26 +4915,26 @@
    ]
   },
   {
-   "runId": "run-2026-11-23T15-56-32-914Z-1d",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
    "totals": {
     "markets": 10,
     "marketsEvaluated": 10,
-    "configsTried": 9,
-    "oosCandidates": 100,
-    "bonferroniN": 177,
+    "configsTried": 44,
+    "oosCandidates": 122,
+    "bonferroniN": 199,
     "qualified": 0,
-    "rejected": 100,
-    "newThisRun": 1
+    "rejected": 122,
+    "newThisRun": 22
    },
-   "gates": "gates-v1",
+   "gates": "gates-v2",
    "assumptions": [
     "Long-only spot, no leverage, no shorting.",
     "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
     "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
     "Historical candles are indicative; executable depth was not verified.",
     "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
-    "A holdout already inspected by earlier tests on the identical dataset is not fresh evidence: such candidates cannot qualify without forward paper results.",
-    "Universe = coins that are large and listed today (survivorship bias: delisted/failed coins are absent from the history).",
+    "Recent history already inspected by earlier tests on the same market/timeframe (even with refreshed data) is not fresh evidence: such candidates cannot qualify without forward paper results.",
+    "Universe = coins that are large and listed today (survivorship bias). Measured in research/survivorship-study.json; qualification also requires a non-negative median on delisted markets.",
     "Research capital normalised to $1,000; account-size feasibility evaluated separately."
    ],
    "markets": [
@@ -4968,6 +4968,112 @@
      },
      "skipped": [],
      "candidates": [
+      {
+       "key": "weekly_trend(n=100,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 6 < 15"
+       ],
+       "periods": {
+        "train": [
+         1623542400000,
+         1709337600000
+        ],
+        "validation": [
+         1709424000000,
+         1752278400000
+        ],
+        "test": [
+         1752364800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 7,
+        "grossReturn": 2.17085066262375,
+        "netReturn": 1.895039103261861,
+        "totalCostUsd": 130.0279350764947,
+        "maxDrawdown": 0.3561484242701781,
+        "profitFactor": 5.564736773414265,
+        "winRate": 0.42857142857142855,
+        "exposure": 0.4959758551307847,
+        "buyHoldReturn": 0.5902959971539328,
+        "meanTradeNet": 0.22481657353392429,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 6,
+        "grossReturn": 0.3879702776565004,
+        "netReturn": 0.28382172161733554,
+        "totalCostUsd": 70.94707024623756,
+        "maxDrawdown": 0.34523068987057043,
+        "profitFactor": 1.9271381940254657,
+        "winRate": 0.5,
+        "exposure": 0.6680080482897385,
+        "buyHoldReturn": 0.8600838990228565,
+        "meanTradeNet": 0.06124057180358857,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 4 < 15"
+       ],
+       "periods": {
+        "train": [
+         1621814400000,
+         1708473600000
+        ],
+        "validation": [
+         1708560000000,
+         1751846400000
+        ],
+        "test": [
+         1751932800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 3,
+        "grossReturn": 0.6348966905935078,
+        "netReturn": 0.5723621879172924,
+        "totalCostUsd": 41.47651112610879,
+        "maxDrawdown": 0.40417889305056187,
+        "profitFactor": 4.629811592333584,
+        "winRate": 0.6666666666666666,
+        "exposure": 0.5089641434262948,
+        "buyHoldReturn": 0.33368288331666607,
+        "meanTradeNet": 0.19470322918280583,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 4,
+        "grossReturn": 0.11103528627632886,
+        "netReturn": 0.05473709690417472,
+        "totalCostUsd": 45.885419439934026,
+        "maxDrawdown": 0.325557102285341,
+        "profitFactor": 1.2044729185533514,
+        "winRate": 0.5,
+        "exposure": 0.7350597609561753,
+        "buyHoldReturn": 1.1122236810531678,
+        "meanTradeNet": 0.030758579564043403,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
        "family": "vol_filtered_trend",
@@ -5536,6 +5642,116 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 5 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1623542400000,
+         1709337600000
+        ],
+        "validation": [
+         1709424000000,
+         1752278400000
+        ],
+        "test": [
+         1752364800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 4,
+        "grossReturn": 1.6281213906174083,
+        "netReturn": 1.4949496744985842,
+        "totalCostUsd": 66.3796134140041,
+        "maxDrawdown": 0.35982044514640776,
+        "profitFactor": 9.853740491643299,
+        "winRate": 0.75,
+        "exposure": 0.545271629778672,
+        "buyHoldReturn": 0.3640343713524259,
+        "meanTradeNet": 0.3165307312763094,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 5,
+        "grossReturn": -0.48857002522516135,
+        "netReturn": -0.5207560495617942,
+        "totalCostUsd": 38.75160131283633,
+        "maxDrawdown": 0.6111443212800192,
+        "profitFactor": 0.09595814396475888,
+        "winRate": 0.2,
+        "exposure": 0.49899396378269617,
+        "buyHoldReturn": -0.15622734293730112,
+        "meanTradeNet": -0.12490036921726247,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 4 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1621814400000,
+         1708473600000
+        ],
+        "validation": [
+         1708560000000,
+         1751846400000
+        ],
+        "test": [
+         1751932800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 5,
+        "grossReturn": 0.7237310271818787,
+        "netReturn": 0.615250782520602,
+        "totalCostUsd": 68.16584393058463,
+        "maxDrawdown": 0.39652916647245945,
+        "profitFactor": 3.9154079554505103,
+        "winRate": 0.8,
+        "exposure": 0.5089641434262948,
+        "buyHoldReturn": 0.11961572698058265,
+        "meanTradeNet": 0.12051346730759185,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 4,
+        "grossReturn": -0.34430869807752473,
+        "netReturn": -0.37753377521168563,
+        "totalCostUsd": 40.8859477572131,
+        "maxDrawdown": 0.4508230514400341,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.45617529880478086,
+        "buyHoldReturn": -0.1439135017189883,
+        "meanTradeNet": -0.10840811926993887,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -6054,6 +6270,113 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 3 < 15"
+       ],
+       "periods": {
+        "train": [
+         1641254400000,
+         1718150400000
+        ],
+        "validation": [
+         1718236800000,
+         1756598400000
+        ],
+        "test": [
+         1756684800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 5,
+        "grossReturn": 3.021907900568902,
+        "netReturn": 2.7687955842163094,
+        "totalCostUsd": 66.61682200588814,
+        "maxDrawdown": 0.4797997135257051,
+        "profitFactor": 7.429277554525425,
+        "winRate": 0.2,
+        "exposure": 0.40852974186307517,
+        "buyHoldReturn": -0.0747674695921774,
+        "meanTradeNet": 1.0199918941293367,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 3,
+        "grossReturn": 0.3506212355961653,
+        "netReturn": 0.2989602176505721,
+        "totalCostUsd": 43.47154433706032,
+        "maxDrawdown": 0.41940807576018074,
+        "profitFactor": null,
+        "winRate": 1,
+        "exposure": 0.4966292134831461,
+        "buyHoldReturn": 0.3626978197378252,
+        "meanTradeNet": 0.09168819118483085,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 4 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1639526400000,
+         1717286400000
+        ],
+        "validation": [
+         1717372800000,
+         1756166400000
+        ],
+        "test": [
+         1756252800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 3,
+        "grossReturn": 3.252530347974391,
+        "netReturn": 3.08987183141115,
+        "totalCostUsd": 50.59143200886922,
+        "maxDrawdown": 0.594089956903966,
+        "profitFactor": 8.497546163040292,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.5249722530521642,
+        "buyHoldReturn": -0.08708069664557305,
+        "meanTradeNet": 1.8302884029216868,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 4,
+        "grossReturn": -0.27445907031504535,
+        "netReturn": -0.31122355580096606,
+        "totalCostUsd": 37.08021680290278,
+        "maxDrawdown": 0.5336348629513253,
+        "profitFactor": 0.31423083974731886,
+        "winRate": 0.25,
+        "exposure": 0.4955555555555556,
+        "buyHoldReturn": 0.1879548762736536,
+        "meanTradeNet": -0.07159168690777012,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -6571,6 +6894,118 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 1 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1706572800000,
+         1750809600000
+        ],
+        "validation": [
+         1750896000000,
+         1772928000000
+        ],
+        "test": [
+         1773014400000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 6,
+        "grossReturn": 1.5248354736614704,
+        "netReturn": 1.3353804305302206,
+        "totalCostUsd": 68.32477874506833,
+        "maxDrawdown": 0.5477162927525318,
+        "profitFactor": 4.064625721390664,
+        "winRate": 0.16666666666666666,
+        "exposure": 0.6276803118908382,
+        "buyHoldReturn": 3.2806811509101577,
+        "meanTradeNet": 0.43529662975251737,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 1,
+        "grossReturn": 0.003077306940574731,
+        "netReturn": -0.009878485399442694,
+        "totalCostUsd": 12.935919021474206,
+        "maxDrawdown": 0.331409588694012,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.3828125,
+        "buyHoldReturn": -0.36378311651315154,
+        "meanTradeNet": -0.009878485399442694,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=180,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 1 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1704844800000,
+         1749945600000
+        ],
+        "validation": [
+         1750032000000,
+         1772496000000
+        ],
+        "test": [
+         1772582400000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 3,
+        "grossReturn": 0.7485359902646993,
+        "netReturn": 0.6816548049324489,
+        "totalCostUsd": 40.898994580888484,
+        "maxDrawdown": 0.4551332645255297,
+        "profitFactor": 5.7086731543929305,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.5889101338432122,
+        "buyHoldReturn": 2.606060606060606,
+        "meanTradeNet": 0.2721462916080912,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 1,
+        "grossReturn": -0.31941484208486726,
+        "netReturn": -0.32820531108923556,
+        "totalCostUsd": 10.85325735364961,
+        "maxDrawdown": 0.369488903276319,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.42911877394636017,
+        "buyHoldReturn": -0.39222867351496205,
+        "meanTradeNet": -0.32820531108923556,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -7085,6 +7520,116 @@
      },
      "skipped": [],
      "candidates": [
+      {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 4 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1640044800000,
+         1717545600000
+        ],
+        "validation": [
+         1717632000000,
+         1756339200000
+        ],
+        "test": [
+         1756425600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 6,
+        "grossReturn": -0.16560584882844331,
+        "netReturn": -0.22821594027706538,
+        "totalCostUsd": 39.41003594624067,
+        "maxDrawdown": 0.676866584312274,
+        "profitFactor": 0.6592700894553936,
+        "winRate": 0.16666666666666666,
+        "exposure": 0.3897550111358575,
+        "buyHoldReturn": -0.045263157894737005,
+        "meanTradeNet": 0.06658524033250017,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 4,
+        "grossReturn": -0.04916912613768576,
+        "netReturn": -0.09734946501512931,
+        "totalCostUsd": 51.51629536933126,
+        "maxDrawdown": 0.6907679935754236,
+        "profitFactor": 0.7869472702138632,
+        "winRate": 0.25,
+        "exposure": 0.36080178173719374,
+        "buyHoldReturn": 0.40193689472039984,
+        "meanTradeNet": 0.00183510643658924,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=180,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 2 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1638316800000,
+         1716681600000
+        ],
+        "validation": [
+         1716768000000,
+         1755907200000
+        ],
+        "test": [
+         1755993600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 2,
+        "grossReturn": 0.9592082904266652,
+        "netReturn": 0.9089246862126332,
+        "totalCostUsd": 30.4161735878522,
+        "maxDrawdown": 0.4088802035993456,
+        "profitFactor": 8.715204421681204,
+        "winRate": 0.5,
+        "exposure": 0.3898678414096916,
+        "buyHoldReturn": -0.2071599045346062,
+        "meanTradeNet": 0.5230184501812661,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 2,
+        "grossReturn": -0.7220975916202546,
+        "netReturn": -0.729230031178302,
+        "totalCostUsd": 16.06511322020839,
+        "maxDrawdown": 0.7749541198476758,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.5550660792951542,
+        "buyHoldReturn": 0.39853184939616404,
+        "meanTradeNet": -0.47401783052943364,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
       {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
@@ -7602,6 +8147,116 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=100,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 5 < 15"
+       ],
+       "periods": {
+        "train": [
+         1633392000000,
+         1714262400000
+        ],
+        "validation": [
+         1714348800000,
+         1754697600000
+        ],
+        "test": [
+         1754784000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 7,
+        "grossReturn": 0.21531999327578233,
+        "netReturn": 0.10960725617963951,
+        "totalCostUsd": 68.024182716866,
+        "maxDrawdown": 0.4584904874292468,
+        "profitFactor": 1.2417584648536792,
+        "winRate": 0.2857142857142857,
+        "exposure": 0.33617929562433296,
+        "buyHoldReturn": -0.7941874524204021,
+        "meanTradeNet": 0.06477960760603345,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 5,
+        "grossReturn": 0.19950214744297967,
+        "netReturn": 0.12401340565298113,
+        "totalCostUsd": 79.60683957654612,
+        "maxDrawdown": 0.6712204595493432,
+        "profitFactor": 1.1561600649463406,
+        "winRate": 0.4,
+        "exposure": 0.32051282051282054,
+        "buyHoldReturn": 0.7568927789934352,
+        "meanTradeNet": 0.09643721687328237,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 2 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1631664000000,
+         1713398400000
+        ],
+        "validation": [
+         1713484800000,
+         1754265600000
+        ],
+        "test": [
+         1754352000000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 3,
+        "grossReturn": -0.3437010623236296,
+        "netReturn": -0.36880437797082277,
+        "totalCostUsd": 27.84324757312629,
+        "maxDrawdown": 0.5518627286407232,
+        "profitFactor": 0.21333235866194222,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.3632523759239704,
+        "buyHoldReturn": -0.8170605141306083,
+        "meanTradeNet": -0.11612713656743119,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 2,
+        "grossReturn": -0.09127352912304842,
+        "netReturn": -0.11459623678188557,
+        "totalCostUsd": 24.04035186026249,
+        "maxDrawdown": 0.4854376830458836,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.24735729386892177,
+        "buyHoldReturn": 0.6122143924834509,
+        "meanTradeNet": -0.05839958779365079,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -8117,6 +8772,115 @@
      },
      "skipped": [],
      "candidates": [
+      {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 3 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1650326400000,
+         1722729600000
+        ],
+        "validation": [
+         1722816000000,
+         1758931200000
+        ],
+        "test": [
+         1759017600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 4,
+        "grossReturn": 0.8180945409187985,
+        "netReturn": 0.7259683663270149,
+        "totalCostUsd": 63.754749990827804,
+        "maxDrawdown": 0.5137865921530016,
+        "profitFactor": 2.6372510296567877,
+        "winRate": 0.25,
+        "exposure": 0.3253873659117998,
+        "buyHoldReturn": -0.7354260089686099,
+        "meanTradeNet": 0.2927848573826505,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 3,
+        "grossReturn": -0.18366446640886658,
+        "netReturn": -0.21488915290053234,
+        "totalCostUsd": 30.75989969257273,
+        "maxDrawdown": 0.620426230654959,
+        "profitFactor": 0.2722918787330423,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.3412887828162291,
+        "buyHoldReturn": 0.471611253196931,
+        "meanTradeNet": -0.06686744898976711,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 2 < 15",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1648598400000,
+         1721865600000
+        ],
+        "validation": [
+         1721952000000,
+         1758499200000
+        ],
+        "test": [
+         1758585600000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 3,
+        "grossReturn": 0.5800979121556478,
+        "netReturn": 0.5196594528420453,
+        "totalCostUsd": 41.28046731690483,
+        "maxDrawdown": 0.4612722478576138,
+        "profitFactor": 9.977592377620903,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.3627797408716137,
+        "buyHoldReturn": -0.714973317986816,
+        "meanTradeNet": 0.18476076214478773,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 2,
+        "grossReturn": 0.4429972191415674,
+        "netReturn": 0.4059623099877978,
+        "totalCostUsd": 25.778351106033597,
+        "maxDrawdown": 0.546498703223416,
+        "profitFactor": 2.8333313479692883,
+        "winRate": 0.5,
+        "exposure": 0.3915094339622642,
+        "buyHoldReturn": 0.17995127044900805,
+        "meanTradeNet": 0.29220102059349046,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
@@ -8636,6 +9400,114 @@
      },
      "skipped": [],
      "candidates": [
+      {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 3 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1623542400000,
+         1709337600000
+        ],
+        "validation": [
+         1709424000000,
+         1752278400000
+        ],
+        "test": [
+         1752364800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 9,
+        "grossReturn": 0.3147583357349395,
+        "netReturn": 0.1695876208195266,
+        "totalCostUsd": 72.7778847956456,
+        "maxDrawdown": 0.6850024448722052,
+        "profitFactor": 1.274478646442205,
+        "winRate": 0.1111111111111111,
+        "exposure": 0.34808853118712274,
+        "buyHoldReturn": -0.08216815060053784,
+        "meanTradeNet": 0.12951679796515148,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 3,
+        "grossReturn": -0.27805745736625664,
+        "netReturn": -0.30567162902869616,
+        "totalCostUsd": 27.488752558512033,
+        "maxDrawdown": 0.48246150164113777,
+        "profitFactor": 0.18862686330180078,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.3380281690140845,
+        "buyHoldReturn": -0.26351186705005114,
+        "meanTradeNet": -0.09155887145621959,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 3 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1621814400000,
+         1708473600000
+        ],
+        "validation": [
+         1708560000000,
+         1751846400000
+        ],
+        "test": [
+         1751932800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 5,
+        "grossReturn": 0.42340997687375936,
+        "netReturn": 0.33382995533349913,
+        "totalCostUsd": 52.78948273364301,
+        "maxDrawdown": 0.6555913765981369,
+        "profitFactor": 1.7501584646865247,
+        "winRate": 0.2,
+        "exposure": 0.3695219123505976,
+        "buyHoldReturn": -0.2967639494813553,
+        "meanTradeNet": 0.17202732807991888,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 3,
+        "grossReturn": -0.3730062097347524,
+        "netReturn": -0.3969886087945236,
+        "totalCostUsd": 27.00518518906904,
+        "maxDrawdown": 0.567594365426696,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.34462151394422313,
+        "buyHoldReturn": -0.25793979563656444,
+        "meanTradeNet": -0.14265800898043066,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
       {
        "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
        "family": "vol_filtered_trend",
@@ -9157,6 +10029,116 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=100,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "best training config is not profitable after costs",
+        "validation trades 8 < 15",
+        "validation net return <= 0 after costs"
+       ],
+       "periods": {
+        "train": [
+         1623542400000,
+         1709337600000
+        ],
+        "validation": [
+         1709424000000,
+         1752278400000
+        ],
+        "test": [
+         1752364800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 14,
+        "grossReturn": -0.44726113131457346,
+        "netReturn": -0.5392373192069486,
+        "totalCostUsd": 106.53486012053173,
+        "maxDrawdown": 0.7345879519285831,
+        "profitFactor": 0.35942333802327747,
+        "winRate": 0.21428571428571427,
+        "exposure": 0.41851106639839036,
+        "buyHoldReturn": -0.4464390129809379,
+        "meanTradeNet": -0.041565986040585985,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 8,
+        "grossReturn": -0.048473000909518116,
+        "netReturn": -0.14246105328184377,
+        "totalCostUsd": 97.92756061148191,
+        "maxDrawdown": 0.5098952178857702,
+        "profitFactor": 0.7481549925154388,
+        "winRate": 0.25,
+        "exposure": 0.4567404426559356,
+        "buyHoldReturn": 0.022476862053768087,
+        "meanTradeNet": -0.004900265265576603,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 1
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 3 < 15",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1621814400000,
+         1708473600000
+        ],
+        "validation": [
+         1708560000000,
+         1751846400000
+        ],
+        "test": [
+         1751932800000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 4,
+        "grossReturn": 0.10313526598369038,
+        "netReturn": 0.047237385084158534,
+        "totalCostUsd": 54.60744254508677,
+        "maxDrawdown": 0.5590604545815766,
+        "profitFactor": 2.557750822292104,
+        "winRate": 0.75,
+        "exposure": 0.3904382470119522,
+        "buyHoldReturn": -0.6283033114011434,
+        "meanTradeNet": 0.01209161063108316,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 3,
+        "grossReturn": 0.13111263394634287,
+        "netReturn": 0.08784778030660623,
+        "totalCostUsd": 39.39248607819684,
+        "maxDrawdown": 0.362290299051787,
+        "profitFactor": 1.5364468386489536,
+        "winRate": 0.3333333333333333,
+        "exposure": 0.45617529880478086,
+        "buyHoldReturn": 0.2515997673065735,
+        "meanTradeNet": 0.043226983534542206,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -9676,6 +10658,118 @@
      "skipped": [],
      "candidates": [
       {
+       "key": "weekly_trend(n=200,period=7)",
+       "family": "weekly_trend",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 2 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1641168000000,
+         1718150400000
+        ],
+        "validation": [
+         1718236800000,
+         1756684800000
+        ],
+        "test": [
+         1756771200000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 4,
+        "grossReturn": 0.058463252279466804,
+        "netReturn": 0.004828983992622771,
+        "totalCostUsd": 48.69620173867327,
+        "maxDrawdown": 0.4636572050451079,
+        "profitFactor": 1.0206760500243213,
+        "winRate": 0.25,
+        "exposure": 0.27466367713004486,
+        "buyHoldReturn": -0.7762047191758059,
+        "meanTradeNet": 0.013306860399418724,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 2,
+        "grossReturn": -0.25706722519529557,
+        "netReturn": -0.276134793349459,
+        "totalCostUsd": 21.692135569685092,
+        "maxDrawdown": 0.6236451118717774,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.18834080717488788,
+        "buyHoldReturn": -0.41865953429830083,
+        "meanTradeNet": -0.1480373589118057,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
+       "key": "monthly_momentum(lookback=90,period=28)",
+       "family": "monthly_momentum",
+       "status": "rejected",
+       "rejectionReasons": [
+        "validation trades 1 < 15",
+        "validation net return <= 0 after costs",
+        "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+        "walk-forward unstable: too few profitable folds"
+       ],
+       "periods": {
+        "train": [
+         1639440000000,
+         1717286400000
+        ],
+        "validation": [
+         1717372800000,
+         1756252800000
+        ],
+        "test": [
+         1756339200000,
+         1795219200000
+        ]
+       },
+       "train": {
+        "trades": 2,
+        "grossReturn": 0.11519747422516002,
+        "netReturn": 0.08657563310268568,
+        "totalCostUsd": 24.173576706130234,
+        "maxDrawdown": 0.4459634853335641,
+        "profitFactor": 1.4701572870428745,
+        "winRate": 0.5,
+        "exposure": 0.2793791574279379,
+        "buyHoldReturn": -0.7333206106870229,
+        "meanTradeNet": 0.0738387270790119,
+        "rejectedOrders": 0
+       },
+       "validation": {
+        "trades": 1,
+        "grossReturn": -0.3072625698324022,
+        "netReturn": -0.3162099981405777,
+        "totalCostUsd": 10.931737005553032,
+        "maxDrawdown": 0.6381665107577175,
+        "profitFactor": 0,
+        "winRate": 0,
+        "exposure": 0.24833702882483372,
+        "buyHoldReturn": -0.4527036667142246,
+        "meanTradeNet": -0.3162099981405777,
+        "rejectedOrders": 0
+       },
+       "stress": {
+        "doubleCostTestNet": null,
+        "delayedTestNet": null,
+        "neighbourPassShare": 0
+       }
+      },
+      {
        "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
        "family": "vol_filtered_trend",
        "status": "rejected",
@@ -10167,6 +11261,132 @@
     }
    ],
    "pooled": [
+    {
+     "key": "POOLED:weekly_trend(n=200,period=7)",
+     "family": "weekly_trend",
+     "status": "rejected",
+     "rejectionReasons": [
+      "pooled validation net return <= 0 after costs"
+     ],
+     "markets": [
+      "BTC-USD",
+      "ETH-USD",
+      "SOL-USD",
+      "XRP-USD",
+      "DOGE-USD",
+      "ADA-USD",
+      "AVAX-USD",
+      "LINK-USD",
+      "LTC-USD",
+      "DOT-USD"
+     ],
+     "cutoffs": {
+      "trainStart": 1706572800000,
+      "trainEnd": 1750896000000,
+      "valEnd": 1773014400000,
+      "testEnd": 1795305600000
+     },
+     "train": {
+      "trades": 35,
+      "netReturn": 0.24744669195432673,
+      "grossReturn": 0.30706554378950535,
+      "buyHoldReturn": 0.5495838051889036,
+      "maxDrawdownBound": 0.6872302618267782,
+      "profitFactor": 1.9495987117896854,
+      "winRate": 0.37142857142857144,
+      "totalCostUsd": 46.596600863570444
+     },
+     "validation": {
+      "trades": 16,
+      "netReturn": -0.12550490357819113,
+      "grossReturn": -0.10815753014612654,
+      "buyHoldReturn": -0.41204009625223004,
+      "maxDrawdownBound": 0.48645469955866716,
+      "profitFactor": 0.20758798244311388,
+      "winRate": 0.125,
+      "totalCostUsd": 19.30998343453139,
+      "perMarketNet": {
+       "BTC-USD": -0.09122885297349514,
+       "ETH-USD": 0.31069368138034714,
+       "SOL-USD": -0.07746773369334436,
+       "XRP-USD": -0.009878485399442472,
+       "DOGE-USD": -0.3343536891443266,
+       "ADA-USD": -0.1369306463147082,
+       "AVAX-USD": -0.22226860682469474,
+       "LINK-USD": -0.16395204584564516,
+       "LTC-USD": -0.15853117774068992,
+       "DOT-USD": -0.37113147922591205
+      }
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "POOLED:monthly_momentum(lookback=90,period=28)",
+     "family": "monthly_momentum",
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 10 < 15"
+     ],
+     "markets": [
+      "BTC-USD",
+      "ETH-USD",
+      "SOL-USD",
+      "XRP-USD",
+      "DOGE-USD",
+      "ADA-USD",
+      "AVAX-USD",
+      "LINK-USD",
+      "LTC-USD",
+      "DOT-USD"
+     ],
+     "cutoffs": {
+      "trainStart": 1704844800000,
+      "trainEnd": 1750032000000,
+      "valEnd": 1772582400000,
+      "testEnd": 1795305600000
+     },
+     "train": {
+      "trades": 29,
+      "netReturn": 0.16010302145809843,
+      "grossReturn": 0.20523300496649685,
+      "buyHoldReturn": 0.46733633585965145,
+      "maxDrawdownBound": 0.6381665107577176,
+      "profitFactor": 1.5909602458613292,
+      "winRate": 0.3103448275862069,
+      "totalCostUsd": 40.72440736249824
+     },
+     "validation": {
+      "trades": 10,
+      "netReturn": 0.029085758364093932,
+      "grossReturn": 0.04255139989276338,
+      "buyHoldReturn": -0.4298561767341436,
+      "maxDrawdownBound": 0.46317130681818186,
+      "profitFactor": 1.5857721880685494,
+      "winRate": 0.7,
+      "totalCostUsd": 13.190843615800162,
+      "perMarketNet": {
+       "BTC-USD": -0.02469184606658703,
+       "ETH-USD": 0.1606038485315846,
+       "SOL-USD": 0.16720166962006577,
+       "XRP-USD": 0.044874823650301376,
+       "DOGE-USD": 0.11084230277681062,
+       "ADA-USD": -0.19318527566364263,
+       "AVAX-USD": 0.01318601245171358,
+       "LINK-USD": 0.25241736236586076,
+       "LTC-USD": 0.03826859615794054,
+       "DOT-USD": -0.2786599101831083
+      }
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
     {
      "key": "POOLED:vol_filtered_trend(lookback=250,trend=50,vol=20)",
      "family": "vol_filtered_trend",
@@ -11417,6 +12637,86 @@
    "label": "ETH-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
    "kind": "diagnostic",
    "createdAt": 1795432039870,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "BTC-USD|86400000|weekly_trend(n=100,period=7)",
+   "label": "BTC-USD 1d weekly_trend(n=100,period=7)",
+   "kind": "diagnostic",
+   "createdAt": 1795549001194,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "BTC-USD|86400000|monthly_momentum(lookback=90,period=28)",
+   "label": "BTC-USD 1d monthly_momentum(lookback=90,period=28)",
+   "kind": "diagnostic",
+   "createdAt": 1795549001194,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "ETH-USD|86400000|weekly_trend(n=200,period=7)",
+   "label": "ETH-USD 1d weekly_trend(n=200,period=7)",
+   "kind": "diagnostic",
+   "createdAt": 1795549001194,
+   "lastProcessedT": null,
+   "initialCash": 1000,
+   "equity": 1000,
+   "realizedPnl": 0,
+   "unrealizedPnl": 0,
+   "netReturnPct": 0,
+   "trades": 0,
+   "entries": 0,
+   "openPosition": false,
+   "totalCostUsd": 0,
+   "barsProcessed": 0,
+   "killSwitch": false,
+   "recentDecisions": [],
+   "fills": []
+  },
+  {
+   "id": "ETH-USD|86400000|monthly_momentum(lookback=90,period=28)",
+   "label": "ETH-USD 1d monthly_momentum(lookback=90,period=28)",
+   "kind": "diagnostic",
+   "createdAt": 1795549001194,
    "lastProcessedT": null,
    "initialCash": 1000,
    "equity": 1000,
