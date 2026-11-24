@@ -9,7 +9,7 @@ import { bootstrapMeanCI, profitFactor, winRate } from './stats';
  * Changing them requires a documented decision in docs/trading-bot/RISK_POLICY.md — never to rescue a candidate.
  */
 export const GATES = {
-  version: 'gates-v1',
+  version: 'gates-v2', // v2 = v1 + walk-forward re-estimation with embargo (stricter, nothing relaxed)
   split: { train: 0.5, validation: 0.25, test: 0.25 },
   minTradesValidation: 15,
   minTradesTest: 15,
@@ -18,8 +18,53 @@ export const GATES = {
   maxTestDrawdown: 0.25,
   costStressFactor: 2,
   delayStressBars: 1,
-  minNeighbourPassShare: 0.5
+  minNeighbourPassShare: 0.5,
+  walkForwardFolds: 4,
+  /** at least this share of walk-forward folds must be profitable after costs */
+  minWalkForwardPositiveShare: 0.5
 } as const;
+
+export type WalkForward = {
+  folds: { from: number; to: number; params: Record<string, number>; netReturn: number; trades: number }[];
+  compoundedNet: number;
+  positiveFolds: number;
+  embargoBars: number;
+};
+
+/**
+ * Walk-forward re-estimation on the PRE-TEST region only (the final test stays untouched): the second half of
+ * [trainStart, valEnd) is cut into `folds` blocks; for each block the configuration is re-selected on all data
+ * before it, minus an embargo of `embargo` bars (indicator look-back), then traded on the block.
+ */
+export function walkForward(
+  candles: Candle[],
+  family: StrategyFamily,
+  cost: CostModel,
+  s: Split,
+  embargo: number,
+  select: (a: number, b: number) => StrategySpec,
+  folds = GATES.walkForwardFolds
+): WalkForward {
+  const first = s.trainStart + Math.floor((s.valEnd - s.trainStart) / 2);
+  const size = Math.floor((s.valEnd - first) / folds);
+  const out: WalkForward['folds'] = [];
+  for (let k = 0; k < folds && size > 0; k++) {
+    const a = first + k * size;
+    const b = k === folds - 1 ? s.valEnd : a + size;
+    const trainEnd = a - embargo;
+    if (trainEnd - s.trainStart < 2 * embargo) continue;
+    const spec = select(s.trainStart, trainEnd);
+    const r = backtest(candles, spec, { start: a, end: b, cost, capitalUsd: CAPITAL });
+    out.push({ from: candles[a].t, to: candles[b - 1].t, params: spec.params, netReturn: r.netReturn, trades: r.trades.length });
+  }
+  void family;
+  return {
+    folds: out,
+    compoundedNet: out.reduce((m, f) => m * (1 + f.netReturn), 1) - 1,
+    positiveFolds: out.filter((f) => f.netReturn > 0).length,
+    embargoBars: embargo
+  };
+}
 
 export type Split = { trainStart: number; trainEnd: number; valEnd: number; testEnd: number };
 
@@ -72,6 +117,7 @@ export type CandidateReport = {
   ci?: { lo: number; hi: number; mean: number; alpha: number; n: number };
   periods: { train: [number, number]; validation: [number, number]; test: [number, number] };
   configsTriedOnTrain: number;
+  walkForward?: WalkForward;
 };
 
 const CAPITAL = 1000; // research normalisation; account-size feasibility is evaluated separately
@@ -105,11 +151,16 @@ export function evaluateFamily(
     if (ta !== tb) return ta;
     return a.netReturn > b.netReturn;
   };
-  for (const params of grid) {
-    const spec = { family, params };
-    const r = run(spec, s.trainStart, s.trainEnd);
-    if (!best || better(r, best.r)) best = { spec, r };
-  }
+  const selectOn = (a: number, b: number) => {
+    let top: { spec: StrategySpec; r: BacktestResult } | null = null;
+    for (const params of grid) {
+      const sp = { family, params };
+      const r = run(sp, a, b);
+      if (!top || better(r, top.r)) top = { spec: sp, r };
+    }
+    return top!;
+  };
+  best = selectOn(s.trainStart, s.trainEnd);
   const spec = best!.spec;
   const tc = (i: number) => candles[Math.min(i, candles.length - 1)].t;
   const report: CandidateReport = {
@@ -137,6 +188,12 @@ export function evaluateFamily(
   if (v.trades.length < GATES.minTradesValidation)
     reject(`validation trades ${v.trades.length} < ${GATES.minTradesValidation}`);
   if (v.netReturn <= 0) reject('validation net return <= 0 after costs');
+
+  // walk-forward re-estimation (pre-test data only, embargoed by the longest indicator look-back)
+  const wf = walkForward(candles, family, cost, s, maxWarm, (a, b) => selectOn(a, b).spec);
+  report.walkForward = wf;
+  if (wf.folds.length && !(wf.compoundedNet > 0)) reject('walk-forward (re-estimated, embargoed) net return <= 0 after costs');
+  if (wf.folds.length && wf.positiveFolds / wf.folds.length < GATES.minWalkForwardPositiveShare) reject('walk-forward unstable: too few profitable folds');
 
   const nb = neighbours(family, spec.params);
   const nbPass = nb.filter((p) => run({ family, params: p }, s.trainEnd, s.valEnd).netReturn > 0).length;
