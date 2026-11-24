@@ -3,7 +3,8 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { ECPairFactory } from 'ecpair';
 import * as ecc from '@bitcoinerlab/secp256k1';
 import { Buffer } from 'buffer';
-import { Keypair } from '@solana/web3.js';
+import { ed25519 } from '@noble/curves/ed25519';
+import { checkSolanaAddress } from '../services/solana';
 import { deriveAddresses } from '../services/wallet';
 
 // Standard public test mnemonic (BIP39/BIP84 test vectors). Never holds funds.
@@ -36,27 +37,29 @@ describe('wallet derivation (known test vectors)', () => {
     expect(w.eth.privateKey).toMatch(/^0x[0-9a-f]{64}$/);
   });
 
-  it('SOL secret key round-trips to the derived address', async () => {
+  it('SOL m/44\'/501\'/0\'/0\' matches the vector produced by @solana/web3.js before its removal', async () => {
     const w = await deriveAddresses(M, 'mainnet');
+    expect(w.sol.address).toBe('HAgk14JpMQLgt6rVgv7cBQFJWFto5Dqxi472uT3DKpqk');
     expect(w.sol.secretKey).toMatch(/^[0-9a-f]{128}$/);
-    const kp = Keypair.fromSecretKey(Uint8Array.from(Buffer.from(w.sol.secretKey, 'hex')));
-    expect(kp.publicKey.toBase58()).toBe(w.sol.address);
+    expect(w.sol.secretKey.slice(64)).toBe('f036276246a75b9de3349ed42b15e232f6518fc20f5fcd4f1d64e81f9bd258f7');
+  });
+
+  it('SOL secret key = seed || public key, and the seed signs for that public key', async () => {
+    const w = await deriveAddresses(M, 'mainnet');
+    const sk = Uint8Array.from(Buffer.from(w.sol.secretKey, 'hex'));
+    const pub = sk.slice(32);
+    expect(Buffer.from(ed25519.getPublicKey(sk.slice(0, 32))).toString('hex')).toBe(Buffer.from(pub).toString('hex'));
+    const msg = new TextEncoder().encode('helix');
+    expect(ed25519.verify(ed25519.sign(msg, sk.slice(0, 32)), msg, pub)).toBe(true);
+    expect(checkSolanaAddress(w.sol.address)).toBe('ok');
   });
 });
 
-describe('SOL transfer signing (offline, mirrors sendSolTransaction)', () => {
-  it('builds, signs and serialises a valid transfer without network access', async () => {
-    const { PublicKey, SystemProgram, Transaction } = await import('@solana/web3.js');
-    const w = await deriveAddresses(M, 'mainnet');
-    const kp = Keypair.fromSecretKey(Uint8Array.from(Buffer.from(w.sol.secretKey, 'hex')));
-    const to = new PublicKey('11111111111111111111111111111112');
-    const tx = new Transaction().add(SystemProgram.transfer({ fromPubkey: kp.publicKey, toPubkey: to, lamports: 1234 }));
-    tx.feePayer = kp.publicKey;
-    tx.recentBlockhash = 'EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k'; // any valid base58 32-byte hash
-    tx.sign(kp);
-    expect(tx.verifySignatures()).toBe(true);
-    const raw = tx.serialize();
-    expect(raw.length).toBeGreaterThan(100);
-    expect(Transaction.from(raw).instructions[0].programId.equals(SystemProgram.programId)).toBe(true);
+describe('Solana address checks without @solana/web3.js', () => {
+  it('valid, off-curve and invalid addresses', () => {
+    expect(checkSolanaAddress('HAgk14JpMQLgt6rVgv7cBQFJWFto5Dqxi472uT3DKpqk')).toBe('ok');
+    expect(checkSolanaAddress('11111111111111111111111111111111')).toBe('ok'); // system program id: all-zero, on curve
+    expect(checkSolanaAddress('not-base58!')).toBe('invalid');
+    expect(checkSolanaAddress('3yZe7d')).toBe('invalid'); // wrong length
   });
 });

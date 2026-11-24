@@ -2,7 +2,7 @@
 // actually on that network. Nothing is signed until these pass.
 import * as bitcoin from 'bitcoinjs-lib';
 import { isAddress } from 'ethers';
-import { PublicKey } from '@solana/web3.js';
+import { checkSolanaAddress } from './solana';
 import type { WalletNetwork } from '../types';
 import { btcFetch } from './btcApi';
 
@@ -43,12 +43,9 @@ export function validateAddress(chain: Chain, address: string, network: WalletNe
     }
   }
   if (chain === 'eth') return isAddress(a) ? null : 'Not a valid Ethereum address';
-  try {
-    const pk = new PublicKey(a);
-    return PublicKey.isOnCurve(pk.toBytes()) ? null : 'This Solana address cannot receive transfers (not a wallet address)';
-  } catch {
-    return 'Not a valid Solana address';
-  }
+  const sol = checkSolanaAddress(a);
+  if (sol === 'invalid') return 'Not a valid Solana address';
+  return sol === 'off-curve' ? 'This Solana address cannot receive transfers (not a wallet address)' : null;
 }
 
 export function validateAmount(amount: string): string | null {

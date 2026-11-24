@@ -5,7 +5,7 @@ import { ECPairFactory } from 'ecpair';
 import * as ecc from '@bitcoinerlab/secp256k1';
 import { derivePath } from 'ed25519-hd-key';
 import { Buffer } from 'buffer';
-import { Keypair, Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { solKeypairFromSeed } from './solana';
 import { HDNodeWallet, Wallet, JsonRpcProvider, parseEther } from 'ethers';
 import { btcFetch } from './btcApi';
 import { ETH_CHAIN_ID, SOL_GENESIS } from './walletSafety';
@@ -59,12 +59,12 @@ export async function deriveAddresses(mnemonic: string, network: WalletNetwork) 
 
   const solSeed = await bip39.mnemonicToSeed(mnemonic);
   const derived = derivePath("m/44'/501'/0'/0'", solSeed.toString('hex'));
-  const solKeypair = Keypair.fromSeed(derived.key);
+  const solKeypair = solKeypairFromSeed(Uint8Array.from(derived.key));
 
   return {
     btc: { address: btcAddress, privateKey: btcPrivateKey },
     eth: { address: ethWallet.address, privateKey: ethWallet.privateKey },
-    sol: { address: solKeypair.publicKey.toBase58(), secretKey: Buffer.from(solKeypair.secretKey).toString('hex') }
+    sol: { address: solKeypair.address, secretKey: Buffer.from(solKeypair.secretKey).toString('hex') }
   };
 }
 
@@ -157,27 +157,12 @@ export async function sendSolTransaction(params: {
   amountSol: number;
   rpcUrl: string;
   network: WalletNetwork;
-}) {
+}): Promise<string> {
   assertSendAllowed(params.network);
-  const seed = await bip39.mnemonicToSeed(params.mnemonic);
-  const derived = derivePath("m/44'/501'/0'/0'", seed.toString('hex'));
-  const keypair = Keypair.fromSeed(derived.key);
-  const connection = new Connection(params.rpcUrl, 'confirmed');
-  const genesis = await connection.getGenesisHash();
-  if (genesis !== SOL_GENESIS[params.network]) throw new Error('RPC is not on the selected Solana network. Nothing was sent.');
-  assertSendAllowed(genesis === SOL_GENESIS.mainnet ? 'mainnet' : 'testnet');
-  const tx = new Transaction().add(
-    SystemProgram.transfer({
-      fromPubkey: keypair.publicKey,
-      toPubkey: new PublicKey(params.toAddress),
-      lamports: Math.round(params.amountSol * 1e9)
-    })
-  );
-  tx.feePayer = keypair.publicKey;
-  const { blockhash } = await connection.getLatestBlockhash('confirmed');
-  tx.recentBlockhash = blockhash;
-  tx.sign(keypair);
-  const signature = await connection.sendRawTransaction(tx.serialize());
-  return signature;
+  // Unreachable while sending is disabled. SOL transaction building was removed together with @solana/web3.js;
+  // it must be re-implemented and audited (with a genesis-hash check of the RPC) before sending is ever enabled.
+  void params;
+  void SOL_GENESIS;
+  throw new Error('SOL sending is not available in this build.');
 }
 
