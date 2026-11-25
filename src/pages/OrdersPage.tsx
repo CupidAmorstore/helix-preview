@@ -4,6 +4,7 @@ import { usePaper } from '../paper/PaperProvider';
 import { Money, Note, PageHeader, Segmented } from '../components/ui';
 import { fmtUsd } from '../services/marketData';
 import type { PaperOrder } from '../paper/engine';
+import { ordersCsv } from '../paper/exportCsv';
 
 type Filter = 'all' | 'filled' | 'refused';
 const when = (t: number) => new Date(t).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -56,6 +57,40 @@ function OrderRow({ o }: { o: PaperOrder }) {
 
 const stat = 'py-3 pl-3 first:pl-0 border-l border-ink-600 first:border-l-0';
 
+/** CSV export: download where the browser supports it, otherwise copy to the clipboard (Android WebView). */
+function ExportOrders() {
+  const { account } = usePaper();
+  const [msg, setMsg] = useState('');
+  if (!account || account.orders.length === 0) return null;
+  const csv = () => ordersCsv(account);
+  const download = () => {
+    const url = URL.createObjectURL(new Blob([csv()], { type: 'text/csv' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `helix-paper-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setMsg('CSV file saved (check your downloads).');
+  };
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(csv());
+      setMsg(`Copied ${account.orders.length} orders as CSV.`);
+    } catch {
+      setMsg('Copying is not allowed here. Use Download instead.');
+    }
+  };
+  return (
+    <div className="space-y-1">
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={download} className="min-h-[44px] rounded-full border border-ink-500 px-4 text-sm text-white">Download CSV</button>
+        <button type="button" onClick={() => void copy()} className="min-h-[44px] rounded-full border border-ink-500 px-4 text-sm text-white">Copy as CSV</button>
+      </div>
+      <p className="text-xs text-slate-400" aria-live="polite">{msg}</p>
+    </div>
+  );
+}
+
 export default function OrdersPage() {
   const { account } = usePaper();
   const [filter, setFilter] = useState<Filter>('all');
@@ -93,6 +128,7 @@ export default function OrdersPage() {
           ) : (
             <ul className="divide-y divide-ink-600">{orders.map((o) => <OrderRow key={o.id} o={o} />)}</ul>
           )}
+          <ExportOrders />
           <Note>Every order is kept, including refusals, so the history matches the account balance exactly.</Note>
         </>
       )}

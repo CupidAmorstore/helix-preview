@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { listAddresses, listExchanges, saveAddress, deleteAddress, deleteExchange, getSetting, setSetting } from '../services/storage';
 import { MIN_VAULT_PASSWORD, useVault } from '../services/vault';
 import { validateAddress, type Chain } from '../services/walletSafety';
@@ -109,13 +109,15 @@ export default function ConnectionsPage() {
             <h2 className="text-sm font-semibold text-slate-200">Vault</h2>
             <p className="text-xs text-slate-500">Unlock to access encrypted settings and keys.</p>
           </div>
-          <button
-            type="button"
-            className="rounded-full border border-ink-600 px-3 py-1 text-xs text-slate-300"
-            onClick={vault.lock}
-          >
-            Lock vault
-          </button>
+          {vault.hasVault && !vault.locked && (
+            <button
+              type="button"
+              className="min-h-[44px] rounded-full border border-ink-600 px-4 text-xs text-slate-300"
+              onClick={vault.lock}
+            >
+              Lock vault
+            </button>
+          )}
         </div>
         <div className="flex flex-wrap gap-3">
           <input

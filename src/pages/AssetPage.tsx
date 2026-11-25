@@ -23,19 +23,23 @@ export default function AssetPage() {
   const [tf, setTf] = useState('1d');
   const [watchedQty, setWatchedQty] = useState<number | null>(null);
   const [sheet, setSheet] = useState<null | 'buy' | 'sell'>(null);
+  const [cgErr, setCgErr] = useState(false);
+  const [retry, setRetry] = useState(0);
   const watch = useWatchlist();
   const { account } = usePaper();
 
   useEffect(() => {
     setCgDone(false);
     setLoadErr(false);
-    fetchTopCoins().then((r) => { setCoin(r.data.find((c) => c.symbol === sym) ?? null); setCgAt(r.fetchedAt); }).catch(() => undefined).finally(() => setCgDone(true));
+    setCgErr(false);
+    // a failed ranking request is NOT "coin not found" (audit MD-2)
+    fetchTopCoins().then((r) => { setCoin(r.data.find((c) => c.symbol === sym) ?? null); setCgAt(r.fetchedAt); }).catch(() => setCgErr(true)).finally(() => setCgDone(true));
     fetchCoinbaseProducts().then((r) => setProduct(r.data.find((p) => p.base === sym)?.id ?? null)).catch(() => { setLoadErr(true); setProduct(null); });
     listSnapshots().then((s) => {
       const latest = [...s].sort((a, b) => a.date.localeCompare(b.date)).pop();
       setWatchedQty(latest?.assets?.[sym] ?? null);
     }).catch(() => undefined);
-  }, [sym]);
+  }, [sym, retry]);
 
   useEffect(() => {
     if (!product) return;
@@ -63,8 +67,15 @@ export default function AssetPage() {
         <PageHeader title={sym} back />
         <section className="space-y-3 border-t border-ink-600 pt-5">
           <p className="text-[15px] text-slate-200">
-            {loadErr ? 'Market data could not be loaded. Check your connection and try again.' : `We couldn't find a coin called ${sym} on Coinbase or in the top 100 by market cap.`}
+            {loadErr
+              ? 'Market data could not be loaded. Check your connection and try again.'
+              : cgErr
+                ? `${sym} has no Coinbase market, and coin ranking data (CoinGecko) is temporarily unavailable, so HELIX cannot show it right now.`
+                : `We couldn't find a coin called ${sym} on Coinbase or in the top 100 by market cap.`}
           </p>
+          {(cgErr || loadErr) && (
+            <button type="button" onClick={() => setRetry((n) => n + 1)} className="inline-flex min-h-[48px] items-center rounded-full border border-ink-500 px-5 text-sm font-semibold text-white">Try again</button>
+          )}
           <Link to="/markets" className="inline-flex min-h-[48px] items-center rounded-full bg-white px-5 text-sm font-semibold text-ink-900">Search markets</Link>
         </section>
       </div>

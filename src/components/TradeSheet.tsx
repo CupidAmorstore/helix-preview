@@ -12,7 +12,7 @@ export default function TradeSheet({
 }: {
   open: boolean; onClose: () => void; symbol: string; product: string; name: string; price: number | null; priceTs: number | null; initialSide?: 'buy' | 'sell';
 }) {
-  const { account, value, place } = usePaper();
+  const { account, value, place, pause } = usePaper();
   const [side, setSide] = useState<'buy' | 'sell'>(initialSide);
   const [amount, setAmount] = useState('');
   const [busy, setBusy] = useState(false);
@@ -152,7 +152,12 @@ export default function TradeSheet({
             <p role="alert" className="border-l-2 border-down py-1 pl-3 text-sm text-slate-200">{result.reason}</p>
           )}
           {stale && <Note tone="warn">Waiting for a live price{priceTs ? ` (last ${fmtAge(priceTs)})` : ''}…</Note>}
-          {value && account.halted && <Note tone="warn">Paper trading is paused. Resume it in Bot → Risk.</Note>}
+          {value && account.halted && (
+            <div className="flex items-center justify-between gap-3">
+              <Note tone="warn">Paper trading is paused.</Note>
+              <button type="button" onClick={() => void pause(false)} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm font-medium text-white">Resume</button>
+            </div>
+          )}
 
           <Button kind="primary" className="w-full" onClick={submit} disabled={busy || !num || stale}>
             {busy ? 'Placing…' : `Place paper ${side}`}

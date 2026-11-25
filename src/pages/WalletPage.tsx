@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import VaultGate from '../components/VaultGate';
 import { getKeystore, saveKeystore, deleteKeystore, getSetting } from '../services/storage';
 import { useVault } from '../services/vault';
@@ -271,7 +271,7 @@ export default function WalletPage() {
         {status && <div className="text-xs text-amber-400">{status}</div>}
         {network === 'testnet' && (
           <div className="text-xs text-slate-400">
-            Faucets: BTC testnet <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://bitcoinfaucet.uo1.net/">uo1</a>, ETH Sepolia <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://sepoliafaucet.com/">sepoliafaucet</a>, SOL devnet <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://solfaucet.com/">solfaucet</a>.
+            Free test coins (no value): <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://bitcoinfaucet.uo1.net/">Bitcoin testnet faucet</a> · <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://sepoliafaucet.com/">Ethereum Sepolia faucet</a> · <a className="text-helix-400 underline" target="_blank" rel="noreferrer" href="https://solfaucet.com/">Solana devnet faucet</a>.
           </div>
         )}
       </section>

@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Note, PageHeader } from '../components/ui';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchPriceMap } from '../services/market';
@@ -46,6 +46,11 @@ export default function PortfolioPage() {
     setNotes([]);
     try {
       const [addresses, exchanges] = await Promise.all([listAddresses(), listExchanges()]);
+      if (addresses.length === 0 && exchanges.length === 0) {
+        setNotes(['Nothing to refresh yet: add a public address in Connections first.']);
+        setStatus('idle');
+        return;
+      }
       const assetTotals = new Map<string, number>();
       const localNotes: string[] = [];
       let etherscanKey: string | null = null;

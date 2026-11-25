@@ -12,9 +12,10 @@ export const primaryNav: { label: string; path: string; icon: NavIcon }[] = [
 // Secondary destinations: listed on the More page (and in the desktop sidebar).
 export const secondaryNav = [
   { label: 'Paper orders', path: '/orders', description: 'Every simulated order, fill price, fee and refusal' },
-  { label: 'Holdings', path: '/portfolio', description: 'Balances of your watched addresses and cost basis' },
+  { label: 'Watched addresses', path: '/portfolio', description: 'Read-only balances of public addresses you follow' },
   { label: 'Price alerts', path: '/alerts', description: 'In-app alert when a coin crosses a price (while HELIX is open)' },
-  { label: 'Connections & vault', path: '/connections', description: 'Vault password, watched addresses, API settings' }
+  { label: 'Connections & vault', path: '/connections', description: 'Vault password, watched addresses, API settings' },
+  { label: 'Price & access', path: '/access', description: 'HELIX is free: no account, no subscription, no payment' }
 ];
 
 export const legalItems = [

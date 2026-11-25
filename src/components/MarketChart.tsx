@@ -112,7 +112,8 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
 
   return (
     <div className="relative">
-      <div ref={containerRef} className="h-[280px] w-full" />
+      <div ref={containerRef} className="h-[280px] w-full" role="img" aria-label={`${symbol} price chart, ${timeframe} intervals`} />
+      <p className="mt-1 text-[11px] text-slate-500">Times in your time zone ({Intl.DateTimeFormat().resolvedOptions().timeZone}). The last point is the current, unfinished interval and moves with the live price.</p>
       {status === 'loading' && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
       )}

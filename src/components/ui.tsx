@@ -54,9 +54,9 @@ export function Money({ v, className = '' }: { v: number | null | undefined; cla
   return (
     <span className={`font-mono tabular-nums ${className}`}>
       {neg ? '−' : ''}$
-      {v !== 0 && Math.abs(v) < 0.01
-        ? Math.abs(v).toLocaleString(undefined, { maximumSignificantDigits: 4 })
-        : Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: Math.abs(v) < 1 && v !== 0 ? 4 : 2 })}
+      {v !== 0 && Math.abs(v) < 1
+        ? Math.abs(v).toLocaleString(undefined, { minimumSignificantDigits: 2, maximumSignificantDigits: 4 })
+        : Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
     </span>
   );
 }
