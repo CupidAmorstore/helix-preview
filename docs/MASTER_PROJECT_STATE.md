@@ -12,19 +12,21 @@ Last updated: 2026-11-24. No secrets in this file.
 ## Branches and SHAs (helix-preview)
 - `main` `dca30a7` (base) · `ccr-8d17e0b5-yaqvtm` (head: run `git log -1` — this file is committed in it) ·
   `claude/helix-mobile-takeover-vrkwgr` `45cc4cb` (handoff only).
-- App code last changed in `c1b10c7`. Tested artifact: version code 30 from `236cc84`, sha256 `5385a710…c94d`.
+- App code last changed in `2433734` (2026-11-25: Research Lab layout, walk-forward, Solana libs). Tested artifact: version code 30 from `236cc84`, sha256 `5385a710…c94d`.
 - Uncommitted work: none.
 
 ## Completed (Preview)
 Ledger design system; paper trading vs live order book with partial fills, serialized ledger, rollback, reconciliation,
 order history; vault hardening (verification, single-flight, throttle, wall-clock + native-lifecycle lock, backup
-exclusion); fail-closed signing/broadcast; research engine with 177 candidates / 0 qualified, holdout guard, cumulative
+exclusion); fail-closed signing/broadcast; research engine with 199 candidates / 0 qualified, walk-forward re-estimation with embargo (gates-v2), holdout guard, cumulative
 Bonferroni, survivorship gate, null and cost-horizon studies; feed validation; Android Back/safe areas/dark bars; QA signing
-support; exact-artifact emulator testing; opt-in public publishing.
+support; exact-artifact emulator testing; opt-in public publishing; `@solana/web3.js` removed (0 production advisories);
+multi-day families (weekly_trend, monthly_momentum) pre-registered and tested; Research Lab tables reflow on phones.
 
 ## Test results (latest)
-Unit/integration 171 passed / 0 failed / 0 skipped · browser functional 68/68 · deep 21/21 · wallet 10/10 · Android 15
-emulator 30/30 on the exact artifact · CI green.
+Unit/integration 180 passed / 0 failed / 0 skipped · typecheck clean · lint 0 errors (1 pre-existing warning) · browser
+functional 68/68 · deep 21/21 (axe) · wallet 10/10 · Research Lab 360/390 px viewport 24/24 (browser only) · Android 15
+emulator: see the `android-e2e` release for the latest pushed commit (previous: 30/30 on version code 30).
 
 ## Gates
 | Gate | Status |

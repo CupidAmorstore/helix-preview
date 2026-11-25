@@ -24,7 +24,12 @@ device transfer excluded. No authentication backend exists in Preview (OMEGA's, 
 the ciphertext offline; Argon2id cost is the real barrier). QA builds use a public debug key (see Android evidence).
 
 ## Dependency advisories
-`npm audit --omit=dev`: 4 moderate, all `uuid` (GHSA-w5hq-g745-h8pq) via `@solana/web3.js` → `jayson`, `rpc-websockets`.
+**Update 2026-11-25:** `@solana/web3.js` removed (`4e3bf37`); Solana keys and addresses now use `@noble/curves` (Ed25519) and
+`@scure/base` (base58), checked against the same address vector. `npm audit --omit=dev`: **0 vulnerabilities**. Full
+`npm audit`: 6 low (`elliptic`) in the dev-only `vite-plugin-node-polyfills` chain; the `crypto` polyfill is not included,
+and the built bundle contains no `elliptic` package → not shipped. History below.
+
+Previous: `npm audit --omit=dev`: 4 moderate, all `uuid` (GHSA-w5hq-g745-h8pq) via `@solana/web3.js` → `jayson`, `rpc-websockets`.
 The advisory needs `uuid.v3/v5/v6` with a caller buffer; both packages only call `uuid.v4()` → **not reachable**. The only
 upgrade is `@solana/web3.js` 3.x (breaking; it previously broke the wallet). Removal option: Preview uses web3.js only for
 `PublicKey` validation, `Keypair` derivation and the (disabled) SOL send; it could be replaced by `@noble/curves` + base58.
