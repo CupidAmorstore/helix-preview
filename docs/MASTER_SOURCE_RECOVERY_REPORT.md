@@ -69,3 +69,14 @@ skyfleet-2, skyfleet-2026-04-29_16-08-39, skyfleet, bonuscodewatch, Skyfleet-Cit
    authorized for reading.
 
 Then the three-way comparison and integration can proceed (`docs/UNIFIED_PLATFORM_INTEGRATION_MAP.md`).
+
+## Re-check 2026-11-25 (independent-audit cycle)
+- Computers shared with this session (Remote Control folders): **none** (`list_computer_folders` → empty).
+- Accessible GitHub repositories: same 15 as 2026-11-24 (helix-preview public; 14 private, unrelated names).
+  `Skylegend-builds/AetherForge` was pushed on 2026-11-25; code search for `helix omega`, `Trading_Lab`,
+  `watchbot`, `antigravity helix`, `a12fc5a7` across both accounts (excluding helix-preview): **0 results**.
+- No OMEGA or Trading Lab source, archive or commit reached this environment. Status: **SOURCE RECOVERY BLOCKED**.
+- Shortest secure path (unchanged; the 6-step PowerShell procedure above): on the Windows PC, back up
+  `C:\Users\Sam\.gemini\antigravity\scratch\helix` cold, commit any WIP to a snapshot branch, create a
+  **private** GitHub repository, push all branches and tags, add both Trading Lab zips, then open a new Claude Code
+  session with that private repository attached (or enable Remote Control on the PC so a session can read the folder).

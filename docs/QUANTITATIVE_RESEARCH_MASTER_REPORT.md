@@ -62,3 +62,36 @@ gas makes $20–$100 accounts uneconomic on Ethereum L1.
 ## Governance
 Hypothesis → data checks → train → validate → robustness → unseen test → forward paper → independent acceptance. No
 stage is skippable in code; nothing can enable real money; holding cash is the current, correct state.
+
+## 2026-11-25 — independent audit remediation and bottleneck analysis
+Gates are now **gates-v3** (`RESEARCH_INTEGRITY_V3.md`): mandatory fail-closed walk-forward for every evaluator,
+full dependency-horizon embargo, event-driven capital-aware cross-sectional simulation, drawdown including final
+liquidation, monthly portfolio-return inference with an explicit tail-resolution policy, cross-category
+provenance. Registry: **199 candidates, 0 qualified** (no new candidates evaluated this cycle; provenance holds 200
+evaluation records incl. one superseded XS run). No test window was opened in this cycle.
+
+### Why nothing qualifies — measured bottlenecks (`research/research-bottleneck-study.json`)
+1. **Costs vs horizon:** 1.30% round trip; hourly moves are 0.23× cost (`cost-horizon-study.json`).
+2. **Trade counts:** with 6 years of daily data, 10 of 11 families cannot produce 15 validation trades
+   (expected: weekly_trend 3.7, 28-day momentum 1.9, sma_cross 3.4; only ts_momentum ≈ 19). The trade minimum
+   was not lowered; low-frequency rules need a different evidence framework or much longer histories.
+3. **Statistical power:** at N = 199, a 2%/month edge at a quarter of market volatility needs ≈ 298 OOS months
+   for 80% power; ≈ 32 exist. A 5%/month edge needs 48.
+4. **Correlation:** mean pairwise daily correlation 0.70; first factor explains 73%; ≈ 1.8 effectively independent
+   assets — pooling 10 coins is not 10× the evidence.
+5. **Regimes:** every market fell in 2022, 2025 and 2026 YTD; most rose in 2021/2023/2024 — results are dominated
+   by a handful of market-wide regimes.
+6. **Capital tiers:** Coinbase/Kraken/Solana feasible from $20; Ethereum L1 gas makes small accounts infeasible
+   (`CAPITAL_TIER_FEASIBILITY.md`).
+7. **Universe/delisting:** delisted coins −69% vs survivors +49% buy-and-hold (`survivorship-study.json`).
+
+### Direction (no new hypotheses tested this cycle)
+More candidates on the same history cannot help: provenance blocks qualification on inspected periods, and N
+grows. The only route to fresh evidence is **forward paper trading**:
+- Protocol: pre-register a small set (≤ 3) of rules with fixed parameters and the gates-v3 thresholds before the
+  start date; run them on live public data in the paper ledger from that date only; evaluate monthly portfolio
+  returns once ≥ 12 forward months exist; any rule change restarts its clock; results append to provenance.
+- Any proposal for a low-frequency evidence framework (e.g. fewer trades but longer histories / more assets)
+  must be written prospectively, justified, independently accepted, and validated only on data observed after
+  acceptance — never on the windows that motivated it.
+Holding cash remains the correct outcome.

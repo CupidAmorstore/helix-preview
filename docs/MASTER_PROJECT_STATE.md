@@ -1,56 +1,59 @@
 # MASTER PROJECT STATE (single authoritative status — update on every cycle)
 
-Last updated: 2026-11-24. No secrets in this file.
+Last updated: 2026-11-25 (independent-audit remediation cycle). No secrets in this file.
 
 ## Source locations
-| Body | Location | Access from cloud | Canonical? |
+| Body | Location | Access from cloud | Status |
 |---|---|---|---|
-| HELIX OMEGA | owner's Windows PC `C:\Users\Sam\.gemini\antigravity\scratch\helix` (verified-beta `a12fc5a7…`, possible OMEGA 4.2 WIP) | **No** | intended primary platform; to move into a **private** repo |
-| Trading Lab / Pro Trading Bot | owner devices / ChatGPT / Termux; archives `Trading_Lab_v070_Multichain_Source_and_Evidence.zip`, `Trading_Lab_Paper_Strategy_Study_20261121.zip` | **No** | to be integrated as the Trading Bot section |
-| HELIX Preview | https://github.com/CupidAmorstore/helix-preview (public), branch `ccr-8d17e0b5-yaqvtm`, PR #3 (draft) | Yes | canonical only for Preview; not OMEGA |
+| HELIX OMEGA | owner's Windows PC `C:\Users\Sam\.gemini\antigravity\scratch\helix` (verified-beta `a12fc5a7…`, possible OMEGA 4.2 WIP) | **No** (no shared computer folders; 0 hits in 15 repos) | **inaccessible** |
+| Trading Lab / Pro Trading Bot | owner devices / ChatGPT / Termux; `Trading_Lab_v070_Multichain_Source_and_Evidence.zip`, `Trading_Lab_Paper_Strategy_Study_20261121.zip` | **No** | **inaccessible** |
+| HELIX Preview | github.com/CupidAmorstore/helix-preview (public), branch `ccr-8d17e0b5-yaqvtm`, draft PR #3 | Yes | canonical for Preview only — **not OMEGA** |
 
-## Branches and SHAs (helix-preview)
-- `main` `dca30a7` (base) · `ccr-8d17e0b5-yaqvtm` (head: run `git log -1` — this file is committed in it) ·
-  `claude/helix-mobile-takeover-vrkwgr` `45cc4cb` (handoff only).
-- App code last changed in `2433734` (2026-11-25: Research Lab layout, walk-forward, Solana libs). Tested artifact: version code 33 from `0e6c6e6`, sha256 `cc081b0d5268a6c3f7e391415843cb52503b4804b8307ee358d1083c667be142`.
-- Uncommitted work: none.
+## Branches and SHAs
+`main` `dca30a7` (untouched) · cycle baseline `886d4b2` · cycle head: `git log -1` on the branch (this file is in it).
+Uncommitted work: none.
 
-## Completed (Preview)
-Ledger design system; paper trading vs live order book with partial fills, serialized ledger, rollback, reconciliation,
-order history; vault hardening (verification, single-flight, throttle, wall-clock + native-lifecycle lock, backup
-exclusion); fail-closed signing/broadcast; research engine with 199 candidates / 0 qualified, walk-forward re-estimation with embargo (gates-v2), holdout guard, cumulative
-Bonferroni, survivorship gate, null and cost-horizon studies; feed validation; Android Back/safe areas/dark bars; QA signing
-support; exact-artifact emulator testing; opt-in public publishing; `@solana/web3.js` removed (0 production advisories);
-multi-day families (weekly_trend, monthly_momentum) pre-registered and tested; Research Lab tables reflow on phones.
+## Evidence classes (2026-11-25)
+| Class | Items |
+|---|---|
+| Verified source findings (reproduced by execution on `886d4b2`) | AUD-202, 203, 205, 207, 208, embargo horizon 4.1 (`research/audit/repro-886d4b2.json`); AUD-201, 204, 206 by source reading |
+| Fixed defects (with regression tests) | AUD-201…208; 4.1, 4.3, 4.4, 4.5, 4.6; Solana small-order guard; QA signing fail-closed; XS drift-trim accounting; workflow shell bug in the new signing check (caught by CI) |
+| Independently reproduced results | none — reproduction and fixes were by the same agent (self-verification of an external audit) |
+| Reported (not re-verified) results | OMEGA 22/22 tests at verified-beta; Trading Lab 88 candidates / 0 qualified |
+| Unresolved defects | public debug signing key in use (owner must add QA secrets); lot-size precision not modelled; indirect exposure disclosed but not blocking |
+| Inaccessible source | HELIX OMEGA, Trading Lab |
+| Blocked gates | 1 source recovery, 2 integration, 7 Android (physical device + private key), 8 private beta |
 
-## Test results (latest)
-Unit/integration 180 passed / 0 failed / 0 skipped · typecheck clean · lint 0 errors (1 pre-existing warning) · browser
-functional 68/68 · deep 21/21 (axe) · wallet 10/10 · Research Lab 360/390 px viewport 24/24 (browser only) · Android 15
-emulator 30/30 on the exact artifact: version code 33, commit `0e6c6e6`, run 45530332004, sha256
-`cc081b0d…e142` (public debug key) · CI green on `0e6c6e6`.
+## Test results (commands, SHA, environment in `INDEPENDENT_AUDIT_REMEDIATION_2026_11_25.md`)
+Unit/integration **271 passed / 0 failed / 0 skipped** (29 files; baseline 180) · typecheck clean · lint 0 errors
+(1 pre-existing warning) · browser functional 68/68 · deep (axe) 21/21 · wallet 10/10 · Research Lab 360/390 px
+24/24 (browser viewport only) · Android: see `ANDROID_RELEASE_EVIDENCE.md`.
+
+## Research
+Registry 199 candidates (provenance 200 evaluation records), **0 qualified**, gates-v3. No new candidates this
+cycle. Financial result after modelled costs: no strategy trades; paper capital stays in cash (0% return, by
+design). Bottlenecks measured: costs, trade counts, power, correlation (≈ 1.8 independent assets), regimes.
 
 ## Gates
 | Gate | Status |
 |---|---|
-| 1 Source recovery | **BLOCKED** (OMEGA, Trading Lab inaccessible) |
+| 1 Source recovery | **BLOCKED** |
 | 2 Integration | **NOT STARTED** (blocked by 1) |
-| 3 Security (Preview) | PASSED for owner-only QA; signing key High open |
-| 4 Financial correctness (Preview, paper) | PASSED |
-| 5 Research integrity (Preview) | PASSED (0 qualified, kept rejected) |
-| 6 Product quality (Preview) | PASSED with listed gaps |
-| 7 Android acceptance | **BLOCKED** (public debug key; no physical device) |
+| 3 Security (Preview) | PASSED for owner-only QA; High open: public debug signing key |
+| 4 Financial correctness (paper) | PASSED (re-verified after AUD-203/207/208 fixes) |
+| 5 Research integrity | PASSED after remediation (gates-v3; all confirmed findings fixed and tested) |
+| 6 Product quality | PASSED with gaps (no product/UI work this cycle — defects took priority) |
+| 7 Android acceptance | **BLOCKED** (no physical device; public key) |
 | 8 Private beta | NOT MET |
 | 9 Public production | NOT AUTHORIZED |
 | 10 Real money | NOT AUTHORIZED |
 
 ## Owner decisions required
-1. Move OMEGA (and Trading Lab archives) into a **private** repo (procedure: `MASTER_SOURCE_RECOVERY_REPORT.md`).
-2. Create the private QA signing key as CI secrets (`ANDROID_RELEASE_EVIDENCE.md`).
-3. Run the physical-device checklist (`PRODUCT_AND_MOBILE_ACCEPTANCE.md`).
-4. Optional: re-sign Gmail in claude.ai so archives sent by email can be searched; make helix-preview private if QA
-   builds must not be public.
+1. Move OMEGA + Trading Lab into a **private** repo (`MASTER_SOURCE_RECOVERY_REPORT.md`), or enable Remote Control
+   for the PC folder.
+2. Add the four `HELIX_QA_*` signing secrets; then run the workflow manually with `require_private_signing=true`.
+3. Physical-device checklist (`PRODUCT_AND_MOBILE_ACCEPTANCE.md`).
+4. Accept or amend the forward paper-trading protocol (`QUANTITATIVE_RESEARCH_MASTER_REPORT.md`).
 
 ## Rollback
-Every change is a separate commit on `ccr-8d17e0b5-yaqvtm`; `main` is untouched. Revert a commit with `git revert <sha>`;
-the pre-cycle head of each cycle is recorded in that cycle's report (`AUDIT_REMEDIATION_REPORT.md`,
-`FINAL_RELEASE_READINESS_AUDIT.md`, this file).
+Each change is a separate commit after `886d4b2`; `git revert <sha>` reverts one. `main` untouched.

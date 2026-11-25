@@ -43,3 +43,26 @@ upgrade is `@solana/web3.js` 3.x (breaking; it previously broke the wallet). Rem
 | Concurrent submissions, save failure rollback | VERIFIED (serialized store tests) |
 | Restart recovery, storage corruption | VERIFIED (reconciliation on load pauses a non-matching ledger) |
 | Limit/stop orders, cancellation, async exchange events, maker fees | **NOT IMPLEMENTED** (not claimed) |
+
+## 2026-11-25 — independent audit cycle
+**Solana (section 5):** `research/audit/solana-equivalence.json` — RFC 8032 vectors 3/3; 5,000 disposable random
+seeds: address, 32-byte public key and 64-byte secret key identical to `@solana/web3.js` 1.98.4 (installed only in
+an isolated scratch directory, absent from package.json and the lockfile); invalid seed lengths (0/31/33/64) refused
+by both; 10 address classes agree. Hardening beyond web3.js: small-order (8-torsion) keys such as
+`11111111111111111111111111111111` are flagged — nobody holds their private key; the send form warns. Existing wallets
+derive the same SOL address as before (published vector test unchanged). Signing/broadcast disabled on all networks.
+
+**Dependencies:** `npm audit --omit=dev` → 0. Full audit → 6 low, all GHSA-848j-6mx2-7j84 (`elliptic`) via
+vite-plugin-node-polyfills → node-stdlib-browser → crypto-browserify. Exposure examined, not assumed: the plugin is
+configured for buffer/process/stream/util/events only (no crypto); the production bundle (`dist/assets`, also the
+APK web layer) contains no elliptic, crypto-browserify, browserify-sign, createECDH or bn.js code (the only
+"elliptic" string is an @noble/curves error message). Build-time only; accepted. Removal path: replace the plugin
+with explicit buffer/process shims.
+
+**Secrets:** full-history scan (private keys, GitHub/AWS/Google/Slack tokens, xprv, keystore passwords): none.
+Key material in the tree: only the known public `android/app/debug.keystore`.
+
+**Financial:** drawdown now includes final liquidation; exits never produce negative proceeds; cross-sectional
+orders execute only at their scheduled open and respect venue minimums and fixed costs (`TEMPORAL_ACCOUNTING_VERIFICATION.md`).
+The research feed cannot enable trading, change risk limits, or show a qualification without current-gate
+walk-forward evidence.

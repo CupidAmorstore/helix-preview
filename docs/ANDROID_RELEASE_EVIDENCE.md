@@ -34,3 +34,23 @@ This is a QA identity only; it does not authorize production signing.
 ## Truly private distribution
 Not possible at $0 from a public repository. Options for the owner: make `helix-preview` private (artifacts and releases
 become private), or build QA APKs in the private OMEGA repository once it exists.
+
+## 2026-11-25 — current artifact (independent-audit cycle)
+| Field | Value |
+|---|---|
+| Application id / version | com.helix.app · 2.0.0-preview · **version code 41** |
+| Source commit | `a9ddc7f5200aafcd2b78cfd758b35597950dae11` |
+| Workflow run | 45572474498 (jobs `apk` → `device`) |
+| APK sha256 | `7a3bb0b384e01dd1d07e20e9b088a402481c1bf9c413aa939827831bb4e781d0` |
+| Signing certificate (read from the APK by apksigner) | `2c87443785d679b0b51b8115738083aa38ac766f4c1280e4e162484c9e1e1cdc` = **PUBLIC debug key** |
+| Emulator (Android 15, API 35), exact artifact | **30/30** (release `android-e2e`: results.json, apk-identity.txt) |
+| Physical device | **BLOCKED** — no device access; owner checklist in `PRODUCT_AND_MOBILE_ACCEPTANCE.md` |
+
+### Signing now fails closed (`.github/workflows/android-preview.yml`)
+- Partially configured `HELIX_QA_*` secrets (1–3 of 4) → build fails; never a silent fallback.
+- Manual run with `require_private_signing=true` and no secrets → build fails before producing an APK.
+- After the build, apksigner reads the certificate actually in the APK; claiming the private key while carrying the
+  public debug cert, a restricted build carrying the public cert, an unknown cert without the private key, or an
+  unreadable cert → failure. All six cases simulated with the exact step script; the first CI run of this check
+  caught a shell bug (`[ ] && {}` as final statement), fixed in `a9ddc7f`.
+- Public prerelease remains manual opt-in only and labelled PUBLIC.
