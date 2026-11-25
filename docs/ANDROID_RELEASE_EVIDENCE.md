@@ -54,3 +54,8 @@ become private), or build QA APKs in the private OMEGA repository once it exists
   unreadable cert → failure. All six cases simulated with the exact step script; the first CI run of this check
   caught a shell bug (`[ ] && {}` as final statement), fixed in `a9ddc7f`.
 - Public prerelease remains manual opt-in only and labelled PUBLIC.
+
+### Superseding artifact (2026-11-25, after the polyfill replacement and product fixes)
+version code **44** · commit `64f73b2c33c9002acad2598612c340ff544a85f7` · run 45644409511 · sha256
+`c59f599d4e7556010b9e9cd010bf1215aafe737306044ba72dd6c3cf26c0b825` · certificate `2c87…1cdc` (PUBLIC debug key) ·
+Android 15 emulator **30/30** on the exact artifact. Physical device: BLOCKED.
