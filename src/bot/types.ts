@@ -21,6 +21,8 @@ export type Dataset = {
   candles: Candle[];
   fetchedAt: number;
   source: string;
+  /** SHA-256 of the canonical candle serialisation (audit 4.4); `id` stays FNV-based for registry compatibility */
+  sha256?: string;
 };
 
 /**

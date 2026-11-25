@@ -7,6 +7,7 @@ import { classifyRegime, scoreDataQuality, DataQuality, Regime } from './watchbo
 import { COST_PRESETS } from './costs';
 import { accountFeasibility, DEFAULT_RISK, Feasibility } from './risk';
 import { evaluateCrossSectional, XsReport } from './crossSectional';
+import { canonicalAsset, exposureFor, guardExposure, type ObservationRecord, type Provenance } from './provenance';
 
 export const ALL_FAMILIES = Object.keys(PARAM_GRID) as StrategyFamily[];
 export const ACCOUNT_SIZES = [20, 50, 100, 250, 500, 1000];
@@ -49,7 +50,7 @@ export type RunRecord = {
 };
 
 /** registry entry key: strategy family × market × interval × dataset content hash */
-export type Registry = Record<string, { runId: string; status: string; reasons: string[] }>;
+export type Registry = Record<string, { runId: string; status: string; reasons: string[]; gates?: string }>;
 export const registryKey = (family: string, datasetId: string, symbol: string, intervalMs: number) =>
   `${family}|${symbol}|${intervalMs}|${datasetId}`;
 
@@ -104,12 +105,26 @@ export function runResearchCycle(args: {
   families?: StrategyFamily[];
   /** rows of research/survivorship-study.json; null/absent → no candidate can be promoted */
   survivorship?: SurvivorshipRow[] | null;
-}): { record: RunRecord; registry: Registry } {
+  /** unified observation provenance (AUD-204); records are appended, never removed */
+  provenance?: Provenance | null;
+}): { record: RunRecord; registry: Registry; provenance: Provenance } {
+  // audit 4.5: one research cycle = one timeframe, one dataset per market identity
+  const ivs = new Set(args.datasets.map((d) => d.intervalMs));
+  if (ivs.size > 1) throw new Error(`mixed timeframes in one research cycle (${[...ivs].join(', ')} ms): partition by interval`);
+  const ids = args.datasets.map((d) => `${d.market.venue}|${d.market.symbol}`.toUpperCase());
+  const dup = ids.find((x, i) => ids.indexOf(x) !== i);
+  if (dup) throw new Error(`duplicate market identity in one research cycle: ${dup}`);
+  const venues = new Set(args.datasets.map((d) => `${canonicalAsset(d.market.symbol)}|${d.intervalMs}`));
+  if (venues.size !== args.datasets.length) throw new Error('the same canonical asset appears twice in one research cycle (cross-venue duplicates must be evaluated separately)');
   const startedAt = new Date().toISOString();
   const runId = `run-${new Date(args.nowMs).toISOString().replace(/[:.]/g, '-')}`;
   const families = (args.families ?? ALL_FAMILIES).filter((f) => args.datasets.every((d) => familyAllowed(f, d.intervalMs)));
   const minBars = args.minBars ?? 1500;
   const registry = { ...args.registry };
+  const prov: Provenance = { version: 1, records: [...(args.provenance?.records ?? [])] };
+  const priorProv: Provenance | null = args.provenance ? { version: 1, records: [...args.provenance.records] } : null;
+  const addRecord = (r: Omit<ObservationRecord, 'id' | 'gateVersion' | 'source' | 'runId'>) =>
+    prov.records.push({ ...r, id: `${runId}|${r.category}|${r.key}|${r.markets.join(',')}`, runId, gateVersion: GATES.version, source: 'live' });
 
   // pre-pass: validate and count OOS candidates for the Bonferroni denominator (fixed before evaluating)
   const prepared = args.datasets.map((d) => {
@@ -157,24 +172,35 @@ export function runResearchCycle(args: {
         res.skipped.push({ family: f, reason: `contiguous history ${contiguous.length} < ${minBars} bars` });
         continue;
       }
-      const rep = survivorshipGate(guardReusedHoldout(evaluateFamily(contiguous, f, cost, bonferroniN), priorHoldoutLooks(args.registry, d.market.symbol, d.intervalMs)), f, args.survivorship ?? null);
+      const raw = evaluateFamily(contiguous, f, cost, bonferroniN);
+      const exp = exposureFor(priorProv, { assets: [d.market.symbol], oos: [raw.periods.validation[0], raw.periods.test[1]] });
+      const rep = survivorshipGate(guardExposure(guardReusedHoldout(raw, priorHoldoutLooks(args.registry, d.market.symbol, d.intervalMs)), exp), f, args.survivorship ?? null);
       res.candidates.push(rep);
-      registry[registryKey(f, d.id, d.market.symbol, d.intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
+      registry[registryKey(f, d.id, d.market.symbol, d.intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons, gates: GATES.version };
+      addRecord({ category: 'single', family: f, key: rep.key, venue: d.market.venue, markets: [d.market.symbol], assets: [canonicalAsset(d.market.symbol)], intervalMs: d.intervalMs, datasetIds: [d.id], datasetSha256: d.sha256 ? [d.sha256] : undefined, windows: { train: raw.periods.train, validation: raw.periods.validation, test: raw.periods.test }, testOpened: !!raw.test, status: rep.status });
     }
     return res;
   });
 
   const series = eligible.map((p) => ({ symbol: p.d.market.symbol, candles: p.contiguous }));
+  const universe = eligible.map((p) => p.d);
+  const multiRecord = (category: 'pooled' | 'xs', family: string, key: string, cut: { trainStart: number; trainEnd: number; valEnd: number; testEnd: number }, testOpened: boolean, status: string) =>
+    addRecord({ category, family, key, venue: universe[0]?.market.venue ?? '', markets: universe.map((d) => d.market.symbol), assets: universe.map((d) => canonicalAsset(d.market.symbol)), intervalMs, datasetIds: universe.map((d) => d.id), datasetSha256: universe.every((d) => d.sha256) ? universe.map((d) => d.sha256!) : undefined, windows: { train: [cut.trainStart, cut.trainEnd - 1], validation: [cut.trainEnd, cut.valEnd - 1], test: [cut.valEnd, cut.testEnd - 1] }, testOpened, status });
+  const multiExposure = (cut: { trainEnd: number; testEnd: number }) => exposureFor(priorProv, { assets: universe.map((d) => d.market.symbol), oos: [cut.trainEnd, cut.testEnd - 1] });
   const pooled: PooledReport[] = pooledTodo.map((f) => {
-    const rep = survivorshipGate(guardReusedHoldout(evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), f, args.survivorship ?? null);
-    registry[registryKey(f, pooledId, 'POOLED', intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons };
+    const raw = evaluatePooled(series, f, args.costFor(eligible[0].d), intervalMs, bonferroniN);
+    const rep = survivorshipGate(guardExposure(guardReusedHoldout(raw, priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), multiExposure(raw.cutoffs)), f, args.survivorship ?? null);
+    registry[registryKey(f, pooledId, 'POOLED', intervalMs)] = { runId, status: rep.status, reasons: rep.rejectionReasons, gates: GATES.version };
+    multiRecord('pooled', f, rep.key, raw.cutoffs, !!raw.test, rep.status);
     return rep;
   });
 
   let crossSectional: XsReport | undefined;
   if (xsTodo) {
-    crossSectional = survivorshipGate(guardReusedHoldout(evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN), priorHoldoutLooks(args.registry, 'XS', intervalMs) + priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), 'xs_momentum', args.survivorship ?? null);
-    registry[xsKey] = { runId, status: crossSectional.status, reasons: crossSectional.rejectionReasons };
+    const raw = evaluateCrossSectional(series, args.costFor(eligible[0].d), intervalMs, bonferroniN);
+    crossSectional = survivorshipGate(guardExposure(guardReusedHoldout(raw, priorHoldoutLooks(args.registry, 'XS', intervalMs) + priorHoldoutLooks(args.registry, 'POOLED', intervalMs)), multiExposure(raw.cutoffs)), 'xs_momentum', args.survivorship ?? null);
+    registry[xsKey] = { runId, status: crossSectional.status, reasons: crossSectional.rejectionReasons, gates: GATES.version };
+    multiRecord('xs', 'xs_momentum', crossSectional.key, raw.cutoffs, !!raw.test, crossSectional.status);
   }
   const all = [...markets.flatMap((m) => m.candidates), ...pooled, ...(crossSectional ? [crossSectional] : [])];
   const record: RunRecord = {
@@ -213,5 +239,5 @@ export function runResearchCycle(args: {
       }))
     )
   };
-  return { record, registry };
+  return { record, registry, provenance: prov };
 }

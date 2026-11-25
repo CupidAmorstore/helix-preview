@@ -20,7 +20,8 @@ import type { XsReport, XsWindow } from '../src/bot/crossSectional';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { join } from 'node:path';
-import { DAY, HOUR, datasetHash, validateCandles } from '../src/bot/candles';
+import { DAY, HOUR, datasetHash, datasetSha256, validateCandles } from '../src/bot/candles';
+import type { Provenance } from '../src/bot/provenance';
 import { COST_PRESETS } from '../src/bot/costs';
 import { runResearchCycle, Registry, RunRecord } from '../src/bot/research';
 import {
@@ -94,7 +95,7 @@ async function loadOrFetch(m: MarketRef, iv: (typeof INTERVALS)[number]): Promis
   candles = validateCandles(candles, iv.ms, now, Infinity).candles;
   if (!candles.length) return null;
   writeFileSync(f, gzipSync(toCsv(candles)));
-  return { id: datasetHash(candles), market: m, intervalMs: iv.ms, candles, fetchedAt: now, source: 'coinbase-exchange-public' };
+  return { id: datasetHash(candles), sha256: datasetSha256(candles), market: m, intervalMs: iv.ms, candles, fetchedAt: now, source: 'coinbase-exchange-public' };
 }
 
 async function main() {
@@ -106,6 +107,9 @@ async function main() {
   const records: RunRecord[] = [];
   const allDatasets: Dataset[] = [];
   let reg = registry;
+  // AUD-204: unified provenance (built once from run records by scripts/migrate-provenance.ts; append-only)
+  if (!watchOnly && !existsSync(R('provenance.json'))) throw new Error('research/provenance.json missing: run scripts/migrate-provenance.ts first');
+  let prov: Provenance | null = existsSync(R('provenance.json')) ? JSON.parse(readFileSync(R('provenance.json'), 'utf8')) : null;
   for (const iv of INTERVALS) {
     const datasets: Dataset[] = [];
     for (const m of RESEARCH_UNIVERSE) {
@@ -127,14 +131,17 @@ async function main() {
     allDatasets.push(...datasets);
     if (watchOnly) continue;
     const survivorship = existsSync(R('survivorship-study.json')) ? JSON.parse(readFileSync(R('survivorship-study.json'), 'utf8')).families : null;
-    const { record, registry: next } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars, survivorship });
+    const { record, registry: next, provenance: nextProv } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars, survivorship, provenance: prov });
     reg = next;
+    const baseId = record.runId;
     record.runId += `-${iv.label}`;
+    prov = { version: 1, records: nextProv.records.map((x) => (x.runId === baseId ? { ...x, runId: record.runId, id: x.id.replace(baseId, record.runId) } : x)) };
     records.push(record);
     writeFileSync(R('runs', `${record.runId}.json`), JSON.stringify(record, null, 1));
     console.log(`  run ${record.runId}: evaluated ${record.totals.oosCandidates} candidates, qualified ${record.totals.qualified}, rejected ${record.totals.rejected}`);
   }
   writeFileSync(R('registry.json'), JSON.stringify(reg, null, 1));
+  if (prov && !watchOnly) writeFileSync(R('provenance.json'), JSON.stringify(prov, null, 1));
 
   // ---- R2: measured execution costs from public order books (appended, never overwritten)
   if (!offline) {

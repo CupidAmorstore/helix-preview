@@ -7,7 +7,11 @@ import { efficiencyRatio, priorHigh, priorLow, rollingStd, rsi, sma } from './in
  * (enforced by tests/bot/lookahead.test.ts which mutates future bars and checks signals are unchanged).
  */
 const DAY_MS = 86_400_000;
-/** true when bar i closes the last UTC day of a `period`-day calendar block (pure calendar, no future data) */
+/**
+ * True when bar i closes the last UTC day of a `period`-day block counted from the Unix epoch (pure calendar,
+ * no future data). Anchor: period 7 → every Wednesday close (UTC); period 28 → a FIXED 28-day cycle (first
+ * 1970-01-28), not a calendar month. A missing candle on that day skips the decision (position held).
+ */
 const rebalanceDay = (c: Candle[], i: number, period: number) => (Math.floor(c[i].t / DAY_MS) + 1) % period === 0;
 
 const builders: Record<StrategyFamily, (c: Candle[], p: Record<string, number>) => SignalFn> = {

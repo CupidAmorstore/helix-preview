@@ -1,0 +1,7745 @@
+{
+ "version": 1,
+ "records": [
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=10,slow=100)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=20)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1611014400000,
+     1703030400000
+    ],
+    "validation": [
+     1703116800000,
+     1749081600000
+    ],
+    "test": [
+     1749168000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1620777600000,
+     1707955200000
+    ],
+    "validation": [
+     1708041600000,
+     1751587200000
+    ],
+    "test": [
+     1751673600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1607472000000,
+     1701302400000
+    ],
+    "validation": [
+     1701388800000,
+     1748217600000
+    ],
+    "test": [
+     1748304000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1616630400000,
+     1705881600000
+    ],
+    "validation": [
+     1705968000000,
+     1750550400000
+    ],
+    "test": [
+     1750636800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=10,slow=200)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=10)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1611014400000,
+     1703030400000
+    ],
+    "validation": [
+     1703116800000,
+     1749081600000
+    ],
+    "test": [
+     1749168000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1620777600000,
+     1707955200000
+    ],
+    "validation": [
+     1708041600000,
+     1751587200000
+    ],
+    "test": [
+     1751673600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2,maxHold=24,n=20)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1607472000000,
+     1701302400000
+    ],
+    "validation": [
+     1701388800000,
+     1748217600000
+    ],
+    "test": [
+     1748304000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1616630400000,
+     1705881600000
+    ],
+    "validation": [
+     1705968000000,
+     1750550400000
+    ],
+    "test": [
+     1750636800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=10,slow=200)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1641254400000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756598400000
+    ],
+    "test": [
+     1756684800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=55,exit=20)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1628726400000,
+     1711929600000
+    ],
+    "validation": [
+     1712016000000,
+     1753574400000
+    ],
+    "test": [
+     1753660800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1638489600000,
+     1716768000000
+    ],
+    "validation": [
+     1716854400000,
+     1755907200000
+    ],
+    "test": [
+     1755993600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1641254400000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756598400000
+    ],
+    "test": [
+     1756684800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=50)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1628294400000,
+     1711670400000
+    ],
+    "validation": [
+     1711756800000,
+     1753401600000
+    ],
+    "test": [
+     1753488000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1625184000000,
+     1710115200000
+    ],
+    "validation": [
+     1710201600000,
+     1752624000000
+    ],
+    "test": [
+     1752710400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1634342400000,
+     1714694400000
+    ],
+    "validation": [
+     1714780800000,
+     1754870400000
+    ],
+    "test": [
+     1754956800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=50,slow=200)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750809600000
+    ],
+    "validation": [
+     1750896000000,
+     1772928000000
+    ],
+    "test": [
+     1773014400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=55,exit=10)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1694044800000,
+     1744588800000
+    ],
+    "validation": [
+     1744675200000,
+     1769904000000
+    ],
+    "test": [
+     1769990400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=168,threshold=0)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1703808000000,
+     1749427200000
+    ],
+    "validation": [
+     1749513600000,
+     1772236800000
+    ],
+    "test": [
+     1772323200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750809600000
+    ],
+    "validation": [
+     1750896000000,
+     1772928000000
+    ],
+    "test": [
+     1773014400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2,maxHold=24,n=20)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1693612800000,
+     1744329600000
+    ],
+    "validation": [
+     1744416000000,
+     1769731200000
+    ],
+    "test": [
+     1769817600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=30,maxHold=24,n=14)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1690502400000,
+     1742774400000
+    ],
+    "validation": [
+     1742860800000,
+     1768953600000
+    ],
+    "test": [
+     1769040000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1699660800000,
+     1747353600000
+    ],
+    "validation": [
+     1747440000000,
+     1771200000000
+    ],
+    "test": [
+     1771286400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=50,slow=200)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1640044800000,
+     1717545600000
+    ],
+    "validation": [
+     1717632000000,
+     1756339200000
+    ],
+    "test": [
+     1756425600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=10)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1627516800000,
+     1711324800000
+    ],
+    "validation": [
+     1711411200000,
+     1753228800000
+    ],
+    "test": [
+     1753315200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1637280000000,
+     1716163200000
+    ],
+    "validation": [
+     1716249600000,
+     1755648000000
+    ],
+    "test": [
+     1755734400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1640044800000,
+     1717545600000
+    ],
+    "validation": [
+     1717632000000,
+     1756339200000
+    ],
+    "test": [
+     1756425600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=50)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1627084800000,
+     1711065600000
+    ],
+    "validation": [
+     1711152000000,
+     1753056000000
+    ],
+    "test": [
+     1753142400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=30,maxHold=24,n=14)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1623974400000,
+     1709510400000
+    ],
+    "validation": [
+     1709596800000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1633132800000,
+     1714089600000
+    ],
+    "validation": [
+     1714176000000,
+     1754611200000
+    ],
+    "test": [
+     1754697600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=10,slow=100)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1633392000000,
+     1714262400000
+    ],
+    "validation": [
+     1714348800000,
+     1754697600000
+    ],
+    "test": [
+     1754784000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=55,exit=10)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1620864000000,
+     1707955200000
+    ],
+    "validation": [
+     1708041600000,
+     1751500800000
+    ],
+    "test": [
+     1751587200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1630627200000,
+     1712880000000
+    ],
+    "validation": [
+     1712966400000,
+     1754006400000
+    ],
+    "test": [
+     1754092800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1633392000000,
+     1714262400000
+    ],
+    "validation": [
+     1714348800000,
+     1754697600000
+    ],
+    "test": [
+     1754784000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1620432000000,
+     1707782400000
+    ],
+    "validation": [
+     1707868800000,
+     1751500800000
+    ],
+    "test": [
+     1751587200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1617321600000,
+     1706227200000
+    ],
+    "validation": [
+     1706313600000,
+     1750723200000
+    ],
+    "test": [
+     1750809600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.2)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.2)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1626480000000,
+     1710806400000
+    ],
+    "validation": [
+     1710892800000,
+     1752969600000
+    ],
+    "test": [
+     1753056000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=10,slow=100)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1650326400000,
+     1722729600000
+    ],
+    "validation": [
+     1722816000000,
+     1758931200000
+    ],
+    "test": [
+     1759017600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=10)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1637798400000,
+     1716422400000
+    ],
+    "validation": [
+     1716508800000,
+     1755734400000
+    ],
+    "test": [
+     1755820800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1647561600000,
+     1721347200000
+    ],
+    "validation": [
+     1721433600000,
+     1758240000000
+    ],
+    "test": [
+     1758326400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1650326400000,
+     1722729600000
+    ],
+    "validation": [
+     1722816000000,
+     1758931200000
+    ],
+    "test": [
+     1759017600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=50)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1637366400000,
+     1716249600000
+    ],
+    "validation": [
+     1716336000000,
+     1755734400000
+    ],
+    "test": [
+     1755820800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1634256000000,
+     1714694400000
+    ],
+    "validation": [
+     1714780800000,
+     1754956800000
+    ],
+    "test": [
+     1755043200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.2)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.2)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1643414400000,
+     1719273600000
+    ],
+    "validation": [
+     1719360000000,
+     1757203200000
+    ],
+    "test": [
+     1757289600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=20,slow=100)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=10)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1611014400000,
+     1703030400000
+    ],
+    "validation": [
+     1703116800000,
+     1749081600000
+    ],
+    "test": [
+     1749168000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1620777600000,
+     1707955200000
+    ],
+    "validation": [
+     1708041600000,
+     1751587200000
+    ],
+    "test": [
+     1751673600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=72)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2.5,maxHold=24,n=50)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1607472000000,
+     1701302400000
+    ],
+    "validation": [
+     1701388800000,
+     1748217600000
+    ],
+    "test": [
+     1748304000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1616630400000,
+     1705881600000
+    ],
+    "validation": [
+     1705968000000,
+     1750550400000
+    ],
+    "test": [
+     1750636800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=20,slow=200)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=20,exit=20)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1611014400000,
+     1703030400000
+    ],
+    "validation": [
+     1703116800000,
+     1749081600000
+    ],
+    "test": [
+     1749168000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1620777600000,
+     1707955200000
+    ],
+    "validation": [
+     1708041600000,
+     1751587200000
+    ],
+    "test": [
+     1751673600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2,maxHold=24,n=50)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1607472000000,
+     1701302400000
+    ],
+    "validation": [
+     1701388800000,
+     1748217600000
+    ],
+    "test": [
+     1748304000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1616630400000,
+     1705881600000
+    ],
+    "validation": [
+     1705968000000,
+     1750550400000
+    ],
+    "test": [
+     1750636800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|sma_cross(fast=20,slow=200)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1641168000000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756684800000
+    ],
+    "test": [
+     1756771200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|donchian_breakout(entry=55,exit=20)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1628640000000,
+     1711843200000
+    ],
+    "validation": [
+     1711929600000,
+     1753488000000
+    ],
+    "test": [
+     1753574400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|ts_momentum(lookback=24,threshold=0)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1638403200000,
+     1716768000000
+    ],
+    "validation": [
+     1716854400000,
+     1755993600000
+    ],
+    "test": [
+     1756080000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|trend_filtered_momentum(filter=200,lookback=24)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1641168000000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756684800000
+    ],
+    "test": [
+     1756771200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|bollinger_reversion(k=2,maxHold=24,n=50)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1628208000000,
+     1711670400000
+    ],
+    "validation": [
+     1711756800000,
+     1753401600000
+    ],
+    "test": [
+     1753488000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1625097600000,
+     1710115200000
+    ],
+    "validation": [
+     1710201600000,
+     1752624000000
+    ],
+    "test": [
+     1752710400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1d|single|vol_compression_breakout(lookback=120,n=20,pct=0.2)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1d",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.2)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1634256000000,
+     1714694400000
+    ],
+    "validation": [
+     1714780800000,
+     1754956800000
+    ],
+    "test": [
+     1755043200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=200)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=10)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=30,maxHold=24,n=14)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|BTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=200)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=10)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=72,threshold=0)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=72,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|ETH-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "fd8dc91a-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=200)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=20,exit=10)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=24)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2,maxHold=24,n=50)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|SOL-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "23beae22-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=20,slow=200)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=10)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|XRP-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "adc513e5-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=20,slow=200)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=20)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=24)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|DOGE-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "75bc1955-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=100)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=20,exit=10)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=72,threshold=0)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=72,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=24)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|ADA-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "5b1824c9-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=10,slow=100)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=10,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=20,exit=10)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2,maxHold=24,n=50)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|AVAX-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "e82ce137-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=20,slow=200)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=20,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=20,exit=10)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=20,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2,maxHold=24,n=20)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|LINK-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "3e2e8e14-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=200)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=20)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=72,threshold=0)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=72,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2.5,maxHold=24,n=20)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2.5,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|LTC-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "4ccc4734-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|sma_cross(fast=50,slow=200)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "sma_cross",
+   "key": "sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|donchian_breakout(entry=55,exit=10)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "donchian_breakout",
+   "key": "donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786896000000
+    ],
+    "validation": [
+     1786899600000,
+     1791133200000
+    ],
+    "test": [
+     1791136800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|ts_momentum(lookback=168,threshold=0)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "ts_momentum",
+   "key": "ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787101200000
+    ],
+    "validation": [
+     1787104800000,
+     1791237600000
+    ],
+    "test": [
+     1791241200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|trend_filtered_momentum(filter=200,lookback=72)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "trend_filtered_momentum",
+   "key": "trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787158800000
+    ],
+    "validation": [
+     1787162400000,
+     1791266400000
+    ],
+    "test": [
+     1791270000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|bollinger_reversion(k=2,maxHold=24,n=50)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "bollinger_reversion",
+   "key": "bollinger_reversion(k=2,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786888800000
+    ],
+    "validation": [
+     1786892400000,
+     1791129600000
+    ],
+    "test": [
+     1791133200000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "rsi_reversion",
+   "key": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786824000000
+    ],
+    "validation": [
+     1786827600000,
+     1791097200000
+    ],
+    "test": [
+     1791100800000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-00-26-711Z-1h|single|vol_compression_breakout(lookback=120,n=20,pct=0.1)|DOT-USD",
+   "runId": "run-2026-11-22T20-00-26-711Z-1h",
+   "category": "single",
+   "family": "vol_compression_breakout",
+   "key": "vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787014800000
+    ],
+    "validation": [
+     1787018400000,
+     1791194400000
+    ],
+    "test": [
+     1791198000000,
+     1795374000000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:sma_cross(fast=10,slow=100)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "sma_cross",
+   "key": "POOLED:sma_cross(fast=10,slow=100)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750895999999
+    ],
+    "validation": [
+     1750896000000,
+     1773014399999
+    ],
+    "test": [
+     1773014400000,
+     1795305599999
+    ]
+   },
+   "testOpened": true,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:donchian_breakout(entry=55,exit=10)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "donchian_breakout",
+   "key": "POOLED:donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1694044800000,
+     1744675199999
+    ],
+    "validation": [
+     1744675200000,
+     1769990399999
+    ],
+    "test": [
+     1769990400000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:ts_momentum(lookback=24,threshold=0)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "ts_momentum",
+   "key": "POOLED:ts_momentum(lookback=24,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1703808000000,
+     1749513599999
+    ],
+    "validation": [
+     1749513600000,
+     1772323199999
+    ],
+    "test": [
+     1772323200000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:trend_filtered_momentum(filter=200,lookback=24)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "trend_filtered_momentum",
+   "key": "POOLED:trend_filtered_momentum(filter=200,lookback=24)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750895999999
+    ],
+    "validation": [
+     1750896000000,
+     1773014399999
+    ],
+    "test": [
+     1773014400000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:bollinger_reversion(k=2,maxHold=24,n=20)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "bollinger_reversion",
+   "key": "POOLED:bollinger_reversion(k=2,maxHold=24,n=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1693612800000,
+     1744415999999
+    ],
+    "validation": [
+     1744416000000,
+     1769817599999
+    ],
+    "test": [
+     1769817600000,
+     1795305599999
+    ]
+   },
+   "testOpened": true,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:rsi_reversion(hi=55,lo=30,maxHold=24,n=14)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "rsi_reversion",
+   "key": "POOLED:rsi_reversion(hi=55,lo=30,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1690502400000,
+     1742860799999
+    ],
+    "validation": [
+     1742860800000,
+     1769039999999
+    ],
+    "test": [
+     1769040000000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1d|pooled|POOLED:vol_compression_breakout(lookback=120,n=20,pct=0.2)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1d",
+   "category": "pooled",
+   "family": "vol_compression_breakout",
+   "key": "POOLED:vol_compression_breakout(lookback=120,n=20,pct=0.2)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1699660800000,
+     1747439999999
+    ],
+    "validation": [
+     1747440000000,
+     1771286399999
+    ],
+    "test": [
+     1771286400000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:sma_cross(fast=50,slow=200)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "sma_cross",
+   "key": "POOLED:sma_cross(fast=50,slow=200)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787162399999
+    ],
+    "validation": [
+     1787162400000,
+     1791269999999
+    ],
+    "test": [
+     1791270000000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:donchian_breakout(entry=55,exit=10)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "donchian_breakout",
+   "key": "POOLED:donchian_breakout(entry=55,exit=10)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778425200000,
+     1786899599999
+    ],
+    "validation": [
+     1786899600000,
+     1791136799999
+    ],
+    "test": [
+     1791136800000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:ts_momentum(lookback=168,threshold=0)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "ts_momentum",
+   "key": "POOLED:ts_momentum(lookback=168,threshold=0)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778832000000,
+     1787104799999
+    ],
+    "validation": [
+     1787104800000,
+     1791241199999
+    ],
+    "test": [
+     1791241200000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:trend_filtered_momentum(filter=200,lookback=72)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "trend_filtered_momentum",
+   "key": "POOLED:trend_filtered_momentum(filter=200,lookback=72)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778947200000,
+     1787162399999
+    ],
+    "validation": [
+     1787162400000,
+     1791269999999
+    ],
+    "test": [
+     1791270000000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:bollinger_reversion(k=2.5,maxHold=24,n=50)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "bollinger_reversion",
+   "key": "POOLED:bollinger_reversion(k=2.5,maxHold=24,n=50)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778407200000,
+     1786892399999
+    ],
+    "validation": [
+     1786892400000,
+     1791133199999
+    ],
+    "test": [
+     1791133200000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:rsi_reversion(hi=55,lo=25,maxHold=24,n=14)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "rsi_reversion",
+   "key": "POOLED:rsi_reversion(hi=55,lo=25,maxHold=24,n=14)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778277600000,
+     1786827599999
+    ],
+    "validation": [
+     1786827600000,
+     1791100799999
+    ],
+    "test": [
+     1791100800000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-22T20-04-14-695Z-1h|pooled|POOLED:vol_compression_breakout(lookback=120,n=20,pct=0.1)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-22T20-04-14-695Z-1h",
+   "category": "pooled",
+   "family": "vol_compression_breakout",
+   "key": "POOLED:vol_compression_breakout(lookback=120,n=20,pct=0.1)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 3600000,
+   "datasetIds": [
+    "122df580-8754",
+    "fd8dc91a-8754",
+    "23beae22-8754",
+    "adc513e5-8754",
+    "75bc1955-8754",
+    "5b1824c9-8754",
+    "e82ce137-8754",
+    "3e2e8e14-8754",
+    "4ccc4734-8754",
+    "0e22e769-8754"
+   ],
+   "windows": {
+    "train": [
+     1778659200000,
+     1787018399999
+    ],
+    "validation": [
+     1787018400000,
+     1791197999999
+    ],
+    "test": [
+     1791198000000,
+     1795377599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=100,vol=20)|BTC-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1627862400000,
+     1711497600000
+    ],
+    "validation": [
+     1711584000000,
+     1753315200000
+    ],
+    "test": [
+     1753401600000,
+     1795219200000
+    ]
+   },
+   "testOpened": true,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)|BTC-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": true,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|ETH-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1627862400000,
+     1711497600000
+    ],
+    "validation": [
+     1711584000000,
+     1753315200000
+    ],
+    "test": [
+     1753401600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)|ETH-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=100,vol=20)|SOL-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1645574400000,
+     1720310400000
+    ],
+    "validation": [
+     1720396800000,
+     1757721600000
+    ],
+    "test": [
+     1757808000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|SOL-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1628294400000,
+     1711670400000
+    ],
+    "validation": [
+     1711756800000,
+     1753401600000
+    ],
+    "test": [
+     1753488000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|XRP-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1710892800000,
+     1752969600000
+    ],
+    "validation": [
+     1753056000000,
+     1774051200000
+    ],
+    "test": [
+     1774137600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|XRP-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1693612800000,
+     1744329600000
+    ],
+    "validation": [
+     1744416000000,
+     1769731200000
+    ],
+    "test": [
+     1769817600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|DOGE-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1644364800000,
+     1719705600000
+    ],
+    "validation": [
+     1719792000000,
+     1757376000000
+    ],
+    "test": [
+     1757462400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)|DOGE-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1627084800000,
+     1711065600000
+    ],
+    "validation": [
+     1711152000000,
+     1753056000000
+    ],
+    "test": [
+     1753142400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|ADA-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1637712000000,
+     1716422400000
+    ],
+    "validation": [
+     1716508800000,
+     1755820800000
+    ],
+    "test": [
+     1755907200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|ADA-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1620432000000,
+     1707782400000
+    ],
+    "validation": [
+     1707868800000,
+     1751500800000
+    ],
+    "test": [
+     1751587200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|AVAX-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1654646400000,
+     1724889600000
+    ],
+    "validation": [
+     1724976000000,
+     1760054400000
+    ],
+    "test": [
+     1760140800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|AVAX-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1637366400000,
+     1716249600000
+    ],
+    "validation": [
+     1716336000000,
+     1755734400000
+    ],
+    "test": [
+     1755820800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=100,vol=20)|LINK-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=100,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1627862400000,
+     1711497600000
+    ],
+    "validation": [
+     1711584000000,
+     1753315200000
+    ],
+    "test": [
+     1753401600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|LINK-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|LTC-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1627862400000,
+     1711497600000
+    ],
+    "validation": [
+     1711584000000,
+     1753315200000
+    ],
+    "test": [
+     1753401600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|LTC-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1610582400000,
+     1702857600000
+    ],
+    "validation": [
+     1702944000000,
+     1748995200000
+    ],
+    "test": [
+     1749081600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|vol_filtered_trend(lookback=250,trend=50,vol=20)|DOT-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "vol_filtered_trend",
+   "key": "vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1645488000000,
+     1720310400000
+    ],
+    "validation": [
+     1720396800000,
+     1757721600000
+    ],
+    "test": [
+     1757808000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|single|regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)|DOT-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "single",
+   "family": "regime_switch",
+   "key": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1628208000000,
+     1711670400000
+    ],
+    "validation": [
+     1711756800000,
+     1753401600000
+    ],
+    "test": [
+     1753488000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|pooled|POOLED:vol_filtered_trend(lookback=250,trend=50,vol=20)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "pooled",
+   "family": "vol_filtered_trend",
+   "key": "POOLED:vol_filtered_trend(lookback=250,trend=50,vol=20)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1710892800000,
+     1753055999999
+    ],
+    "validation": [
+     1753056000000,
+     1774137599999
+    ],
+    "test": [
+     1774137600000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|pooled|POOLED:regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "pooled",
+   "family": "regime_switch",
+   "key": "POOLED:regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1693612800000,
+     1744415999999
+    ],
+    "validation": [
+     1744416000000,
+     1769817599999
+    ],
+    "test": [
+     1769817600000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T11-07-19-870Z-1d|xs|XS_MOMENTUM(lookback=14,topK=2,rebalance=7)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-23T11-07-19-870Z-1d",
+   "category": "xs",
+   "family": "xs_momentum",
+   "key": "XS_MOMENTUM(lookback=14,topK=2,rebalance=7)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1691712000000,
+     1743465599999
+    ],
+    "validation": [
+     1743465600000,
+     1769299199999
+    ],
+    "test": [
+     1769299200000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-23T15-56-32-914Z-1d|xs|XS_MOMENTUM(lookback=14,topK=2,rebalance=7)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-23T15-56-32-914Z-1d",
+   "category": "xs",
+   "family": "xs_momentum",
+   "key": "XS_MOMENTUM(lookback=14,topK=2,rebalance=7)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1691712000000,
+     1743465599999
+    ],
+    "validation": [
+     1743465600000,
+     1769299199999
+    ],
+    "test": [
+     1769299200000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v1",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=100,period=7)|BTC-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=100,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|BTC-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD"
+   ],
+   "assets": [
+    "BTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189"
+   ],
+   "windows": {
+    "train": [
+     1621814400000,
+     1708473600000
+    ],
+    "validation": [
+     1708560000000,
+     1751846400000
+    ],
+    "test": [
+     1751932800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|ETH-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|ETH-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "ETH-USD"
+   ],
+   "assets": [
+    "ETH"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "d42a807a-2189"
+   ],
+   "windows": {
+    "train": [
+     1621814400000,
+     1708473600000
+    ],
+    "validation": [
+     1708560000000,
+     1751846400000
+    ],
+    "test": [
+     1751932800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|SOL-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1641254400000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756598400000
+    ],
+    "test": [
+     1756684800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|SOL-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "SOL-USD"
+   ],
+   "assets": [
+    "SOL"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "9ba1194d-1984"
+   ],
+   "windows": {
+    "train": [
+     1639526400000,
+     1717286400000
+    ],
+    "validation": [
+     1717372800000,
+     1756166400000
+    ],
+    "test": [
+     1756252800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|XRP-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750809600000
+    ],
+    "validation": [
+     1750896000000,
+     1772928000000
+    ],
+    "test": [
+     1773014400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=180,period=28)|XRP-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=180,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "XRP-USD"
+   ],
+   "assets": [
+    "XRP"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0f197877-1285"
+   ],
+   "windows": {
+    "train": [
+     1704844800000,
+     1749945600000
+    ],
+    "validation": [
+     1750032000000,
+     1772496000000
+    ],
+    "test": [
+     1772582400000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|DOGE-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1640044800000,
+     1717545600000
+    ],
+    "validation": [
+     1717632000000,
+     1756339200000
+    ],
+    "test": [
+     1756425600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=180,period=28)|DOGE-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=180,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "DOGE-USD"
+   ],
+   "assets": [
+    "DOGE"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "0118ae7c-1998"
+   ],
+   "windows": {
+    "train": [
+     1638316800000,
+     1716681600000
+    ],
+    "validation": [
+     1716768000000,
+     1755907200000
+    ],
+    "test": [
+     1755993600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=100,period=7)|ADA-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=100,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1633392000000,
+     1714262400000
+    ],
+    "validation": [
+     1714348800000,
+     1754697600000
+    ],
+    "test": [
+     1754784000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|ADA-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "ADA-USD"
+   ],
+   "assets": [
+    "ADA"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "da286594-2075"
+   ],
+   "windows": {
+    "train": [
+     1631664000000,
+     1713398400000
+    ],
+    "validation": [
+     1713484800000,
+     1754265600000
+    ],
+    "test": [
+     1754352000000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|AVAX-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1650326400000,
+     1722729600000
+    ],
+    "validation": [
+     1722816000000,
+     1758931200000
+    ],
+    "test": [
+     1759017600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|AVAX-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "AVAX-USD"
+   ],
+   "assets": [
+    "AVAX"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "6fae5cd5-1879"
+   ],
+   "windows": {
+    "train": [
+     1648598400000,
+     1721865600000
+    ],
+    "validation": [
+     1721952000000,
+     1758499200000
+    ],
+    "test": [
+     1758585600000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|LINK-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|LINK-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "LINK-USD"
+   ],
+   "assets": [
+    "LINK"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "dd2f0bba-2189"
+   ],
+   "windows": {
+    "train": [
+     1621814400000,
+     1708473600000
+    ],
+    "validation": [
+     1708560000000,
+     1751846400000
+    ],
+    "test": [
+     1751932800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=100,period=7)|LTC-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=100,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1623542400000,
+     1709337600000
+    ],
+    "validation": [
+     1709424000000,
+     1752278400000
+    ],
+    "test": [
+     1752364800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|LTC-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "LTC-USD"
+   ],
+   "assets": [
+    "LTC"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "975956d0-2189"
+   ],
+   "windows": {
+    "train": [
+     1621814400000,
+     1708473600000
+    ],
+    "validation": [
+     1708560000000,
+     1751846400000
+    ],
+    "test": [
+     1751932800000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|weekly_trend(n=200,period=7)|DOT-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "weekly_trend",
+   "key": "weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1641168000000,
+     1718150400000
+    ],
+    "validation": [
+     1718236800000,
+     1756684800000
+    ],
+    "test": [
+     1756771200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|single|monthly_momentum(lookback=90,period=28)|DOT-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "single",
+   "family": "monthly_momentum",
+   "key": "monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "DOT-USD"
+   ],
+   "assets": [
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1639440000000,
+     1717286400000
+    ],
+    "validation": [
+     1717372800000,
+     1756252800000
+    ],
+    "test": [
+     1756339200000,
+     1795219200000
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|pooled|POOLED:weekly_trend(n=200,period=7)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "pooled",
+   "family": "weekly_trend",
+   "key": "POOLED:weekly_trend(n=200,period=7)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1706572800000,
+     1750895999999
+    ],
+    "validation": [
+     1750896000000,
+     1773014399999
+    ],
+    "test": [
+     1773014400000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  },
+  {
+   "id": "run-2026-11-24T19-36-41-194Z-1d|pooled|POOLED:monthly_momentum(lookback=90,period=28)|BTC-USD,ETH-USD,SOL-USD,XRP-USD,DOGE-USD,ADA-USD,AVAX-USD,LINK-USD,LTC-USD,DOT-USD",
+   "runId": "run-2026-11-24T19-36-41-194Z-1d",
+   "category": "pooled",
+   "family": "monthly_momentum",
+   "key": "POOLED:monthly_momentum(lookback=90,period=28)",
+   "venue": "coinbase",
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "XRP",
+    "DOGE",
+    "ADA",
+    "AVAX",
+    "LINK",
+    "LTC",
+    "DOT"
+   ],
+   "intervalMs": 86400000,
+   "datasetIds": [
+    "596997c7-2189",
+    "d42a807a-2189",
+    "9ba1194d-1984",
+    "0f197877-1285",
+    "0118ae7c-1998",
+    "da286594-2075",
+    "6fae5cd5-1879",
+    "dd2f0bba-2189",
+    "975956d0-2189",
+    "81a55b83-1985"
+   ],
+   "windows": {
+    "train": [
+     1704844800000,
+     1750031999999
+    ],
+    "validation": [
+     1750032000000,
+     1772582399999
+    ],
+    "test": [
+     1772582400000,
+     1795305599999
+    ]
+   },
+   "testOpened": false,
+   "gateVersion": "gates-v2",
+   "status": "rejected",
+   "source": "run-record"
+  }
+ ]
+}
