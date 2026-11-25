@@ -186,8 +186,19 @@ jobs:
         run: |
           mkdir -p e2e-out
           cd e2e-out && zip -qr ../android-e2e-evidence.zip . && cd ..
-          gh release delete android-e2e --yes --cleanup-tag || true
-          gh release create android-e2e android-e2e-evidence.zip e2e-out/results.json e2e-out/apk-identity.txt \
-            --prerelease --target "${TARGET_SHA}" \
-            --title "HELIX Android emulator test (run #${{ github.run_number }})" \
-            --notes "Exact APK artifact built by the apk job of this same run, installed on an Android 15 (API 35) emulator, ${TARGET_SHA::7}. APK identity in apk-identity.txt. Emulator, not a physical phone."
+          TITLE="HELIX Android emulator test (run #${{ github.run_number }}, ${TARGET_SHA::7})"
+          NOTES="Exact APK artifact built by the apk job of this same run, installed on an Android 15 (API 35) emulator, ${TARGET_SHA::7}. APK identity in apk-identity.txt. Emulator, not a physical phone."
+          FILES="android-e2e-evidence.zip e2e-out/results.json e2e-out/apk-identity.txt"
+          # Update in place (a delete + re-create is not atomic: an API error between the two left the tag behind).
+          # Retries absorb transient GitHub API errors. The tag is not moved (no force-push); the tested commit is in
+          # the title, notes and apk-identity.txt.
+          for attempt in 1 2 3 4; do
+            if gh release view android-e2e >/dev/null 2>&1; then
+              gh release edit android-e2e --prerelease --title "$TITLE" --notes "$NOTES" \
+                && gh release upload android-e2e $FILES --clobber && exit 0
+            else
+              gh release create android-e2e $FILES --prerelease --target "${TARGET_SHA}" --title "$TITLE" --notes "$NOTES" && exit 0
+            fi
+            echo "publish attempt $attempt failed; retrying"; sleep $((attempt * 15))
+          done
+          exit 1
