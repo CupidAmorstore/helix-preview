@@ -26,6 +26,10 @@ describe('walk-forward split (stage 3)', () => {
   });
 });
 
+// every family x several seeds, each with grid selection + 4 walk-forward re-selections: ~3 s locally,
+// slower on CI runners. Deterministic; a longer limit, not a skip.
+const HEAVY = 30_000;
+
 describe('false-positive control', () => {
   it('nothing qualifies on driftless random walks (5 seeds x all families, realistic costs)', () => {
     let qualified = 0;
@@ -37,7 +41,7 @@ describe('false-positive control', () => {
       }
     }
     expect(qualified).toBe(0);
-  });
+  }, HEAVY);
 
   it('nothing qualifies on random walks even with near-zero costs', () => {
     let qualified = 0;
@@ -46,7 +50,7 @@ describe('false-positive control', () => {
       for (const f of ALL_FAMILIES) if (evaluateFamily(c, f, LOW, 21).status === 'qualified_paper_strategy') qualified++;
     }
     expect(qualified).toBe(0);
-  });
+  }, HEAVY);
 });
 
 describe('power check (pipeline is not impossible)', () => {
