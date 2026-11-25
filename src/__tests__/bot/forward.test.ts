@@ -30,14 +30,17 @@ const reg = (o: Partial<ForwardRegistration> = {}): ForwardRegistration => {
 };
 
 describe('forward paper-trading protocol', () => {
-  it('the committed registration is a PROPOSAL with a valid hash and trades nothing', () => {
-    const r = proposed as unknown as ForwardRegistration;
-    expect(r.status).toBe('proposed');
-    expect(r.startAt).toBeNull();
+  it('the committed registration: activated by the owner, rules unchanged (hash), start after registration', () => {
+    const r = proposed as unknown as ForwardRegistration & { activation?: { by: string } };
+    expect(r.status).toBe('active');
+    expect(r.startAt).toBe(Date.UTC(2026, 10, 26));
+    expect(r.startAt!).toBeGreaterThan(Date.parse(r.registeredAt));
     expect(registrationHash(r)).toBe(r.rulesHash);
-    const rep = evaluateForward(r, {}, COST_PRESETS.coinbase_taker, Date.now());
-    expect(rep.results).toHaveLength(0);
-    expect(rep.problems[0]).toMatch(/owner activates/);
+    expect(r.activation?.by).toMatch(/owner/);
+    // before the first forward bar nothing is counted
+    const rep = evaluateForward(r, {}, COST_PRESETS.coinbase_taker, Date.UTC(2026, 10, 25, 23));
+    expect(rep.problems).toEqual([]);
+    expect(rep.results.every((x) => x.forwardMonths === 0 && x.status === 'collecting')).toBe(true);
   });
 
   it('a rule changed after registration is refused (clock must restart)', () => {

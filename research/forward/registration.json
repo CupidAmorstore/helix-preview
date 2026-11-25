@@ -1,8 +1,8 @@
 {
  "id": "forward-2026-11-25-a",
- "status": "proposed",
+ "status": "active",
  "registeredAt": "2026-11-25T09:00:00Z",
- "startAt": null,
+ "startAt": 1795651200000,
  "capitalUsd": 1000,
  "costPreset": "coinbase_taker",
  "rules": [
@@ -88,5 +88,11 @@
   "Chosen by an agent that has seen the historical results of all 199 candidates (all rejected). Historical data is NOT evidence for these rules; only forward months after startAt count.",
   "Power is low: ~12-24 forward months can only confirm very large edges (STATISTICAL_CONFIDENCE_VALIDATION.md). Holding cash remains the expected outcome.",
   "Paper only. Activation (status 'active' + startAt) is an owner decision. Any rule change = new registration, clock restarts."
- ]
+ ],
+ "activation": {
+  "activatedAt": "2026-11-25T15:49:20+00:00",
+  "by": "owner, in chat: \"Start now\"",
+  "startAtUtc": "2026-11-26T00:00:00Z",
+  "note": "first complete daily bar after activation; paper only"
+ }
 }

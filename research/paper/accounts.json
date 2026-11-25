@@ -43,12 +43,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -102,12 +120,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -161,12 +197,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -220,12 +274,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -280,12 +352,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -341,12 +431,36 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
-  "pendingOrder": null,
-  "posHistory": [],
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": "buy",
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
-  "decisions": [],
-  "equity": [],
+  "decisions": [
+   {
+    "t": 1795478400000,
+    "action": "enter",
+    "reason": "rsi_reversion entry signal; buy at next open"
+   }
+  ],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -401,12 +515,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -460,12 +592,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -519,12 +669,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -578,12 +746,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -637,12 +823,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -697,12 +901,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -758,12 +980,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -818,12 +1058,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -878,12 +1136,22 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -941,12 +1209,22 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -1001,12 +1279,22 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -1064,12 +1352,22 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
