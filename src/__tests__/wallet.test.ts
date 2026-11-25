@@ -58,8 +58,23 @@ describe('wallet derivation (known test vectors)', () => {
 describe('Solana address checks without @solana/web3.js', () => {
   it('valid, off-curve and invalid addresses', () => {
     expect(checkSolanaAddress('HAgk14JpMQLgt6rVgv7cBQFJWFto5Dqxi472uT3DKpqk')).toBe('ok');
-    expect(checkSolanaAddress('11111111111111111111111111111111')).toBe('ok'); // system program id: all-zero, on curve
+    // system program id (all-zero bytes) is an on-curve SMALL-ORDER point: nobody holds its key
+    expect(checkSolanaAddress('11111111111111111111111111111111')).toBe('small-order');
     expect(checkSolanaAddress('not-base58!')).toBe('invalid');
     expect(checkSolanaAddress('3yZe7d')).toBe('invalid'); // wrong length
+  });
+
+  it('every small-order (8-torsion) encoding is flagged; ordinary wallets are not', async () => {
+    const { base58 } = await import('@scure/base');
+    const { ed25519 } = await import('@noble/curves/ed25519');
+    const torsion = ['0100000000000000000000000000000000000000000000000000000000000000', 'ecffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7f', '0000000000000000000000000000000000000000000000000000000000000000', '0000000000000000000000000000000000000000000000000000000000000080', 'c7176a703d4dd84fba3c0b760d10670f2a2053fa2c39ccc64ec7fd7792ac037a', 'c7176a703d4dd84fba3c0b760d10670f2a2053fa2c39ccc64ec7fd7792ac03fa', '26e8958fc2b227b045c3f489f2ef98f0d5dfac05d3c63339b13802886d53fc05', '26e8958fc2b227b045c3f489f2ef98f0d5dfac05d3c63339b13802886d53fc85'];
+    for (const h of torsion) {
+      const b = Uint8Array.from(Buffer.from(h, 'hex'));
+      let valid = true;
+      try { ed25519.ExtendedPoint.fromHex(b); } catch { valid = false; }
+      if (valid) expect(checkSolanaAddress(base58.encode(b))).toBe('small-order');
+    }
+    for (let i = 1; i < 50; i++) expect(checkSolanaAddress(ed25519KeyAddress(i))).toBe('ok');
+    function ed25519KeyAddress(i: number) { return base58.encode(ed25519.getPublicKey(new Uint8Array(32).fill(i))); }
   });
 });

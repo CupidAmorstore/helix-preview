@@ -45,6 +45,7 @@ export function validateAddress(chain: Chain, address: string, network: WalletNe
   if (chain === 'eth') return isAddress(a) ? null : 'Not a valid Ethereum address';
   const sol = checkSolanaAddress(a);
   if (sol === 'invalid') return 'Not a valid Solana address';
+  if (sol === 'small-order') return 'This Solana address has no owner (special system key): funds sent there are lost';
   return sol === 'off-curve' ? 'This Solana address cannot receive transfers (not a wallet address)' : null;
 }
 

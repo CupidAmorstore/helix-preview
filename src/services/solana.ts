@@ -14,8 +14,12 @@ export function solKeypairFromSeed(seed: Uint8Array) {
   return { publicKey, secretKey, address: base58.encode(publicKey) };
 }
 
-/** 'ok' = valid on-curve wallet address; 'off-curve' = valid 32-byte key that is not a wallet (e.g. PDA); 'invalid'. */
-export function checkSolanaAddress(address: string): 'ok' | 'off-curve' | 'invalid' {
+/**
+ * 'ok' = valid on-curve wallet address; 'off-curve' = valid 32-byte key that is not a wallet (e.g. PDA);
+ * 'small-order' = on-curve but in the 8-torsion subgroup (e.g. 11111111111111111111111111111111): no one holds a
+ * private key for it, so funds sent there are unrecoverable (web3.js reports these as on-curve); 'invalid'.
+ */
+export function checkSolanaAddress(address: string): 'ok' | 'off-curve' | 'small-order' | 'invalid' {
   let bytes: Uint8Array;
   try {
     bytes = base58.decode(address.trim());
@@ -24,8 +28,8 @@ export function checkSolanaAddress(address: string): 'ok' | 'off-curve' | 'inval
   }
   if (bytes.length !== 32) return 'invalid';
   try {
-    ed25519.ExtendedPoint.fromHex(bytes);
-    return 'ok';
+    const p = ed25519.ExtendedPoint.fromHex(bytes);
+    return p.isSmallOrder() ? 'small-order' : 'ok';
   } catch {
     return 'off-curve';
   }
