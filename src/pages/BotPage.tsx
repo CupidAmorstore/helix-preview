@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { bot, useBotData } from '../bot/botData';
-import { botHeadline, dailyRegimes, plainReasons, snapshotAgeHours, strategyEvidence } from '../bot/insights';
+import { FEED_NOT_PUBLISHED, bot, useBotData } from '../bot/botData';
+import { STRATEGIES, botHeadline, dailyRegimes, plainAccountLabel, plainReasons, plural, researchAgeHours, researchRunAt, strategyEvidence } from '../bot/insights';
 import { DEFAULT_RISK, LIVE_TRADING_ENABLED } from '../bot/risk';
 import { usePaper } from '../paper/PaperProvider';
 import { Button, Note, Panel, Segmented } from '../components/ui';
@@ -24,7 +24,9 @@ function Overview() {
   const head = botHeadline(bot());
   const reasons = plainReasons(bot(), 3);
   const regimes = dailyRegimes(bot());
-  const ageH = snapshotAgeHours(bot());
+  const ageH = researchAgeHours(bot());
+  const utc = (ms: number) => `${new Date(ms).toISOString().slice(0, 16).replace('T', ' ')} UTC`;
+  const fwd = bot().forward;
   const diag = bot().paper;
   const forwardBars = diag.reduce((s, a) => s + a.barsProcessed, 0);
   const { account, pause } = usePaper();
@@ -35,18 +37,18 @@ function Overview() {
       <section className="space-y-4" aria-labelledby="bot-state">
         <div className="space-y-2">
           <p className="eyebrow flex items-center gap-2 text-paper"><span className="h-1.5 w-1.5 rounded-full bg-paper" aria-hidden="true" />Holding cash</p>
-          <h2 id="bot-state" className="text-[26px] font-semibold leading-tight tracking-tight text-white">
+          <h2 id="bot-state" className="text-[22px] font-semibold leading-tight tracking-tight text-white">
             {head.qualified === 0 ? 'No strategy has earned the right to trade yet.' : `${head.qualified} strategies approved for paper trading.`}
           </h2>
           <p className="text-[15px] leading-relaxed text-slate-400">
-            Every idea is tested on data it has never seen, with real fees. {head.qualified === 0 ? 'None passed every test, so the bot places no trades.' : ''}
+            Every idea is tested on data it has never seen, with realistic trading costs (0.60% fee plus spread). {head.qualified === 0 ? 'None passed every test, so the bot places no trades.' : ''}
           </p>
         </div>
         {/* research funnel: the one number set that explains the bot */}
-        <dl className="grid grid-cols-3 border-y border-ink-600">
+        <dl className="grid grid-cols-3 border-t border-ink-600">
           {[
-            ['Tested', head.tested, 'text-white'],
-            ['Reached unseen test', head.reachedTest, 'text-white'],
+            ['Strategy tests', head.tested, 'text-white'],
+            ['Reached final test', head.reachedTest, 'text-white'],
             ['Approved', head.qualified, head.qualified ? 'text-up' : 'text-paper']
           ].map(([k, v, c]) => (
             <div key={k as string} className="py-3 [&:not(:first-child)]:border-l [&:not(:first-child)]:border-ink-600 [&:not(:first-child)]:pl-3">
@@ -55,17 +57,19 @@ function Overview() {
             </div>
           ))}
         </dl>
+        <Note>
+          {plural(head.tested, 'test')} = {STRATEGIES.length} strategy types, each tried on up to 10 coins (daily and/or hourly data) and on all 10 together. {head.reachedTest} passed
+          the earlier checks and reached the final unseen data; {head.qualified} passed everything. What would change this: a strategy must pass every test and then make
+          money on new data for at least {fwd?.minMonths ?? 12} months of forward paper trading{fwd?.status === 'active' ? ` — ${plural(fwd.rules.length, 'rule')} are being tracked since ${new Date(fwd.startAt ?? 0).toISOString().slice(0, 10)} (see Activity)` : ''}.
+        </Note>
       </section>
 
       <Panel title="Research data">
         <dl className="divide-y divide-ink-600">
-          <Row k="Last successful research run" v={`${new Date(bot().generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC`} />
-          <Row k="Research data age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 ? 'text-amber-400' : 'text-white'} />
-          <Row
-            k="Where it runs"
-            v={data.source === 'bundled' ? 'GitHub Actions, scheduled daily · no published run received yet' : 'GitHub Actions, once a day (not this phone)'}
-            vClass="text-slate-200"
-          />
+          <Row k="Last research run (strategies tested)" v={utc(researchRunAt(bot()))} />
+          <Row k="Research age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 * 7 ? 'text-amber-400' : 'text-white'} />
+          <Row k="Prices & forward accounts refreshed" v={utc(new Date(bot().generatedAt).getTime())} vClass="text-slate-200" />
+          <Row k="How it updates" v="Run by the developer on a computer, not on this phone · no automatic schedule yet" vClass="text-slate-200" />
           <Row
             k="Data on this phone"
             v={data.source === 'published' ? 'Daily feed' : data.source === 'cached' ? 'Saved copy of daily feed' : 'Built into the app'}
@@ -78,8 +82,10 @@ function Overview() {
           <p className="text-xs text-slate-400" aria-live="polite">
             {data.loading
               ? 'Checking for new research…'
-              : data.error
-                ? 'No newer research online right now. Showing the latest copy on this phone.'
+              : data.error === FEED_NOT_PUBLISHED
+                ? 'No online research feed is published yet. Showing the copy built into this app.'
+                : data.error
+                ? 'Could not reach the research feed. Showing the latest copy on this phone.'
                 : data.checkedAt
                   ? `Up to date · checked ${fmtAge(data.checkedAt)}`
                   : 'Not checked yet'}
@@ -100,7 +106,7 @@ function Overview() {
         </dl>
         <Note>
           These are zero because the bot has not traded, not because it broke even. {diag.length} tracking accounts follow rejected strategies forward to check the
-          decisions; they have processed {forwardBars} closed {forwardBars === 1 ? 'bar' : 'bars'} so far. An equity curve will appear once there is forward data.
+          decisions; they have processed {plural(forwardBars, 'closed daily bar')} so far. An equity curve will appear once there is forward data.
         </Note>
       </Panel>
 
@@ -161,7 +167,7 @@ function Strategies() {
   const [open, setOpen] = useState<string | null>(null);
   return (
     <div className="space-y-4">
-      <Note>Each strategy was tested on 10 coins (daily and hourly data) with 0.60% fees plus spread, on data split into training, validation and a final unseen test. None qualified for paper trading.</Note>
+      <Note>Each strategy type was tested on up to 10 coins, on daily and/or hourly data (some types use daily data only), with a 0.60% fee plus spread, on data split into training, validation and a final unseen test. None qualified for paper trading.</Note>
       {ev.map((e) => {
         const p = e.pooledDaily;
         const isOpen = open === e.info.family;
@@ -171,7 +177,7 @@ function Strategies() {
               <span className="min-w-0 flex-1 space-y-1">
                 <span className="block text-sm font-semibold text-white">{e.info.name}</span>
                 <span className="block text-xs text-slate-400">{e.info.objective}</span>
-                <span className="block text-xs text-slate-500">{e.info.style} · risk {e.info.risk} · {e.tested} tests · {e.reachedTest} reached the final test</span>
+                <span className="block text-xs text-slate-500">{e.info.style} · {e.info.risk} risk · {plural(e.tested, 'test')} · {e.reachedTest} reached the final test</span>
               </span>
               <span className={`shrink-0 text-xs font-semibold ${e.qualified ? 'text-up' : e.tested ? 'text-down' : 'text-slate-400'}`}>
                 {e.qualified ? 'Approved' : e.tested ? 'Rejected' : 'Not tested'} <span aria-hidden="true" className="text-slate-500">{isOpen ? '−' : '+'}</span>
@@ -223,20 +229,43 @@ function Activity() {
             </li>
           ))}
         </ul>
-        <Note>Last run {fmtAge(new Date(bot().generatedAt).getTime())}.</Note>
+        <Note>Last research run {fmtAge(researchRunAt(bot()))}.</Note>
       </Panel>
       <Panel title="Risk-control interventions">
         <p className="text-sm text-slate-300">None. No limit was hit because no trades were placed.</p>
       </Panel>
-      <Panel title={`Forward experiments (${bot().paper.length})`}>
+      {bot().forward && (
+        <Panel title="Forward paper trading (pre-registered)">
+          <p className="text-sm text-slate-300">
+            {bot().forward!.status === 'active'
+              ? `Started ${new Date(bot().forward!.startAt ?? 0).toISOString().slice(0, 10)}. These rules were fixed before the start date and trade simulated money on new data only. A verdict needs at least ${bot().forward!.minMonths} months.`
+              : 'Proposed, not started.'}
+          </p>
+          <ul className="divide-y divide-ink-600">
+            {bot().forward!.rules.map((r) => (
+              <li key={r.id} className="flex min-h-[52px] items-center justify-between gap-3 py-2 text-sm">
+                <span className="min-w-0">
+                  <span className="block text-slate-200">{r.label}</span>
+                  <span className="block text-xs text-slate-500">{plural(r.forwardMonths, 'month')} of {bot().forward!.minMonths} · {r.status === 'forward_qualified' ? 'passed' : r.status === 'rejected' ? 'failed' : 'collecting evidence'}</span>
+                </span>
+                <span className={`shrink-0 font-mono ${r.netReturn > 0 ? 'text-up' : r.netReturn < 0 ? 'text-down' : 'text-slate-400'}`}>
+                  {r.netReturn === 0 ? '0.00%' : `${r.netReturn > 0 ? '+' : '−'}${Math.abs(r.netReturn * 100).toFixed(2)}%`}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <Note>Results after modelled fees. Not real trades and not a prediction.</Note>
+        </Panel>
+      )}
+      <Panel title={`Forward checks of rejected strategies (${bot().paper.length})`}>
         <p className="text-sm text-slate-300">Each follows one rejected strategy forward with $1,000 of simulated money, to check that rejecting it was right. They act once each daily bar closes.</p>
         <ul className="divide-y divide-ink-600">
           {bot().paper.map((a) => (
             <li key={a.id} className="flex min-h-[52px] items-center justify-between gap-3 py-2 text-sm">
               <span className="min-w-0">
-                <span className="block truncate text-slate-200">{a.label}</span>
+                <span className="block text-slate-200">{plainAccountLabel(a.id).title}</span>
                 <span className="block text-xs text-slate-500">
-                  {a.barsProcessed} bars · {a.trades} trades · {a.openPosition ? 'in a position' : 'in cash'}{a.killSwitch ? ' · stopped by kill switch' : ''}
+                  {plainAccountLabel(a.id).params} · {plural(a.barsProcessed, 'bar')} · {plural(a.trades, 'trade')} · {a.openPosition ? 'in a position' : 'in cash'}{a.killSwitch ? ' · stopped by kill switch' : ''}
                 </span>
               </span>
               <span className={`shrink-0 font-mono ${a.netReturnPct > 0 ? 'text-up' : a.netReturnPct < 0 ? 'text-down' : 'text-slate-400'}`}>

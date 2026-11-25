@@ -144,7 +144,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     await go('/bot');
     await p.getByRole('button', { name: 'Check now' }).click(); await wait(p, 1500);
     const t = await p.locator('main').innerText();
-    check('bot: Check now gives a readable result', /Up to date|No newer research|Checking/.test(t));
+    check('bot: Check now gives a readable result', /Up to date|No online research feed is published yet|Could not reach the research feed|Checking/.test(t));
     await p.getByRole('radio', { name: 'Strategies' }).click(); await wait(p, 400);
     await p.getByRole('button', { name: /Breakout/ }).first().click(); await wait(p, 300);
     check('bot: strategy row expands with evidence', /why it was rejected/i.test(await p.locator('main').innerText()));

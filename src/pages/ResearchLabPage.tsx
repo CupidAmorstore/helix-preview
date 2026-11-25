@@ -1,3 +1,4 @@
+import { researchRunAt, plainSpec, plainAccountLabel, plural } from '../bot/insights';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { bot, useBotData } from '../bot/botData';
@@ -34,8 +35,8 @@ export default function ResearchLabPage() {
       <header className="space-y-1">
         <PageHeader back title="Research Lab" subtitle="Advanced · every test, dataset and run behind the bot" />
         <p className={`text-sm ${isStale() ? 'text-amber-400' : 'text-slate-400'}`}>
-          Research data from {dateTime(bot().generatedAt)} · {ageLabel()}
-          {isStale() && ' · not refreshed since'}
+          Last research run {dateTime(researchRunAt(bot()))} · {ageLabel()} · prices refreshed {dateTime(bot().generatedAt)}
+          {isStale() && ' · no new research for over a week'}
         </p>
       </header>
       <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label="Trading bot sections">
@@ -63,8 +64,8 @@ export default function ResearchLabPage() {
   );
 }
 
-const ageMs = () => Date.now() - new Date(bot().generatedAt).getTime();
-const isStale = () => ageMs() > 24 * 3600_000;
+const ageMs = () => Date.now() - researchRunAt(bot());
+const isStale = () => ageMs() > 7 * 24 * 3600_000; // research runs are manual; older than a week is flagged
 /** Human age of the bundled research snapshot, e.g. "3 h old", "2 days old". */
 function ageLabel() {
   const h = Math.max(0, Math.floor(ageMs() / 3600_000));
@@ -245,7 +246,8 @@ function Strategies() {
             <div key={id} className="rounded-xl border border-ink-600 bg-ink-800/60">
               <button type="button" aria-expanded={open === id} onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm text-slate-100">{c.key.replace('POOLED:', '')}</div>
+                  <div className="text-sm text-slate-100">{plainSpec(c.key).name}</div>
+                  <div className="font-code text-[11px] text-slate-500">{c.key.replace('POOLED:', '')}</div>
                   <div className="text-xs text-slate-500">
                     {c.scope} · {ivLabel(c.intervalMs)} · validation {pct(c.validation?.netReturn)} net ({c.validation?.trades ?? 0} trades)
                     {c.test && ` · test ${pct(c.test.netReturn)}`}
@@ -369,7 +371,7 @@ function Lab() {
           ))}
         </div>
         <details className="mt-3 text-xs text-slate-400">
-          <summary className="cursor-pointer text-slate-300">Assumptions</summary>
+          <summary className="flex min-h-[44px] cursor-pointer items-center text-slate-300">Assumptions</summary>
           <ul className="mt-2 list-inside list-disc space-y-1">{bot().runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
         </details>
       </Card>
@@ -594,8 +596,8 @@ function Activity() {
         <div className="space-y-2">
           {bot().paper.map((a) => (
             <details key={a.id} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
-                <span className="min-w-0 truncate text-slate-200">{a.label}</span>
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-2">
+                <span className="min-w-0 text-slate-200">{plainAccountLabel(a.id).title}<span className="block font-code text-[11px] text-slate-500">{plainAccountLabel(a.id).params}</span></span>
                 <span className="flex shrink-0 items-center gap-2">
                   <span className="font-mono text-slate-400">{usd(a.equity)}</span>
                   <Pill status={a.kind} />
@@ -603,7 +605,7 @@ function Activity() {
               </summary>
               <div className="mt-2 grid grid-cols-2 gap-2 text-slate-400 sm:grid-cols-4">
                 <div>Started {dateTime(a.createdAt)}</div>
-                <div>Bars processed {a.barsProcessed}</div>
+                <div>{plural(a.barsProcessed, 'bar')} processed</div>
                 <div>Entries {a.entries} · exits {a.trades}</div>
                 <div>Costs {usd(a.totalCostUsd)}</div>
               </div>

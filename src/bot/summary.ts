@@ -79,8 +79,23 @@ export type PaperRow = {
   fills: PaperFill[];
 };
 
+export type ForwardRow = { id: string; label: string; status: string; forwardMonths: number; netReturn: number };
+export type ForwardSummary = {
+  id: string;
+  status: 'proposed' | 'active' | 'stopped';
+  startAt: number | null;
+  minMonths: number;
+  evaluatedAt: number | null;
+  rules: ForwardRow[];
+};
+
 export type BotSummary = {
+  /** when this summary file was written (also on data-only refreshes) */
   generatedAt: string;
+  /** when the last research run (new strategy tests) finished; absent in older bundles */
+  lastResearchRunAt?: string;
+  /** pre-registered forward paper-trading protocol (research/forward) */
+  forward?: ForwardSummary;
   codeVersion: string;
   mode: 'paper';
   runs: RunRow[];

@@ -9,6 +9,8 @@ import { MAX_FEED_BYTES, validateSummary } from './feedValidation';
 
 export const REMOTE_SUMMARY_URL = 'https://cupidamorstore.github.io/helix-preview/data/latest.json';
 const CACHE_KEY = 'bot.summary.v1';
+/** the online feed does not exist (yet): not the same as 'no newer research' */
+export const FEED_NOT_PUBLISHED = 'feed not published';
 const BUNDLED = raw as unknown as BotSummary;
 
 export type BotDataSource = 'bundled' | 'published' | 'cached';
@@ -45,6 +47,7 @@ export async function refreshBotData(fetchImpl: typeof fetch = fetch): Promise<v
   set({ loading: true, error: null });
   try {
     const res = await fetchImpl(`${REMOTE_SUMMARY_URL}?t=${Math.floor(Date.now() / 60_000)}`, { cache: 'no-store' });
+    if (res.status === 404) throw new Error(FEED_NOT_PUBLISHED);
     if (!res.ok) throw new Error(`feed HTTP ${res.status}`);
     const text = await res.text();
     if (text.length > MAX_FEED_BYTES) throw new Error('feed too large');
@@ -89,6 +92,9 @@ export function useBotData(): BotDataState & { refresh: () => Promise<void> } {
   }, []);
   return { ...s, refresh: () => refreshBotData() };
 }
+
+/** current state (tests and non-React callers) */
+export const botDataState = () => state;
 
 /** test hook */
 export function __resetBotData() {

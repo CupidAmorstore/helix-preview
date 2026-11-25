@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { bot, useBotData } from '../bot/botData';
-import { botHeadline, plainReasons, snapshotAgeHours } from '../bot/insights';
+import { botHeadline, plainReasons, researchAgeHours } from '../bot/insights';
 import { MARKET_COINS, fetchCandles } from '../services/market';
 import { listAddresses, listSnapshots } from '../services/storage';
 import type { SnapshotRecord } from '../types';
@@ -119,7 +119,7 @@ export default function HomePage() {
 
   const head = botHeadline(bot());
   const reason = plainReasons(bot(), 1)[0];
-  const age = snapshotAgeHours(bot());
+  const age = researchAgeHours(bot());
   const recent = account ? [...account.orders].reverse().slice(0, 4) : [];
   const positions = account ? Object.values(account.positions) : [];
   const showWatched = watched && (watched.addresses > 0 || (watched.snap && watched.snap.totalUsd > 0));
@@ -276,7 +276,7 @@ export default function HomePage() {
               {head.holdingCash ? 'No strategy approved · holding cash' : `${head.qualified} strategies approved for paper trading`}
             </p>
             <p className="text-xs text-slate-400">
-              {head.tested} strategies tested · research {age < 48 ? `${Math.floor(age)} h` : `${Math.floor(age / 24)} days`} old · no bot trades yet
+              {head.tested} strategy tests · last research run {age < 48 ? `${Math.floor(age)} h` : `${Math.floor(age / 24)} days`} ago · no bot trades yet
             </p>
             {head.holdingCash && reason && <p className="text-xs text-slate-300">Main reason: {reason.text.toLowerCase()} ({reason.count}×)</p>}
           </div>

@@ -63,6 +63,20 @@ export function validateSummary(x: unknown, now = Date.now(), bytes?: number): s
   const t = typeof x.generatedAt === 'string' ? Date.parse(x.generatedAt) : NaN;
   if (!Number.isFinite(t)) errs.push('generatedAt: invalid');
   else if (t < EARLIEST || t > now + 5 * 60_000) errs.push('generatedAt: outside plausible range (future or too old)');
+  if (x.lastResearchRunAt !== undefined) {
+    const r = typeof x.lastResearchRunAt === 'string' ? Date.parse(x.lastResearchRunAt) : NaN;
+    if (!Number.isFinite(r) || r > now + 5 * 60_000 || (Number.isFinite(t) && r > t + 60_000)) errs.push('lastResearchRunAt: invalid or later than the summary itself');
+  }
+  if (x.forward !== undefined) {
+    const f = x.forward;
+    if (!isObj(f) || !['proposed', 'active', 'stopped'].includes(f.status as string) || !Array.isArray(f.rules) || f.rules.length > 10)
+      errs.push('forward: invalid');
+    else (f.rules as unknown[]).forEach((r, i) => {
+      if (!isObj(r) || typeof r.label !== 'string' || !int0(r.forwardMonths) || !fin(r.netReturn) || (r.netReturn as number) < -1) errs.push(`forward.rules[${i}]: invalid`);
+      // a forward rule cannot be presented as qualified before the minimum number of forward months
+      if (isObj(r) && r.status === 'forward_qualified' && (r.forwardMonths as number) < ((f.minMonths as number) ?? 12)) errs.push(`forward.rules[${i}]: qualified before minimum months`);
+    });
+  }
   if (!Array.isArray(x.runs) || x.runs.length === 0 || x.runs.length > 20) errs.push('runs: must be 1–20 items');
   if (!Array.isArray(x.paper) || x.paper.length > 200) errs.push('paper: must be a list of ≤200');
   if (errs.length) return errs;

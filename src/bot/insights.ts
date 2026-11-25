@@ -59,6 +59,49 @@ export function snapshotAgeHours(s: BotSummary, now = Date.now()) {
   return Math.max(0, (now - new Date(s.generatedAt).getTime()) / 3_600_000);
 }
 
+/** Run ids look like run-2026-11-24T19-36-41-194Z-1d; returns the timestamp in ms (NaN if not parseable). */
+export function runIdTime(runId: string): number {
+  const m = runId.match(/run-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z/);
+  return m ? Date.parse(`${m[1]}T${m[2]}:${m[3]}:${m[4]}.${m[5]}Z`) : NaN;
+}
+
+/** When strategies were last tested (NOT when prices/paper accounts were last refreshed). */
+export function researchRunAt(s: BotSummary): number {
+  if (s.lastResearchRunAt && Number.isFinite(Date.parse(s.lastResearchRunAt))) return Date.parse(s.lastResearchRunAt);
+  const t = s.runs.map((r) => runIdTime(r.runId)).filter(Number.isFinite);
+  return t.length ? Math.max(...t) : new Date(s.generatedAt).getTime();
+}
+
+export function researchAgeHours(s: BotSummary, now = Date.now()) {
+  return Math.max(0, (now - researchRunAt(s)) / 3_600_000);
+}
+
+export const plural = (n: number, one: string, many = `${one}s`) => `${n.toLocaleString('en-US')} ${n === 1 ? one : many}`;
+
+const PARAM_WORDS: Record<string, string> = {
+  fast: 'fast', slow: 'slow', entry: 'entry', exit: 'exit', lookback: 'look-back', threshold: 'threshold', filter: 'trend filter',
+  n: 'window', k: 'band width', maxHold: 'max hold', lo: 'buy below', hi: 'sell above', pct: 'quietest', trend: 'trend', vol: 'volatility',
+  er: 'efficiency window', erTrend: 'trend threshold', period: 'every'
+};
+/** 'sma_cross(fast=10,slow=100)' → { name: 'Trend following (moving averages)', params: 'fast 10 · slow 100' } */
+export function plainSpec(key: string): { name: string; params: string } {
+  const m = key.replace(/^POOLED:/, '').match(/^(\w+)\((.*)\)$/);
+  if (!m) return { name: key, params: '' };
+  const info = STRATEGIES.find((x) => x.family === m[1]);
+  const params = m[2].split(',').filter(Boolean).map((kv) => {
+    const [k, v] = kv.split('=');
+    return k === 'period' ? `every ${v} days` : `${PARAM_WORDS[k] ?? k} ${v}`;
+  }).join(' · ');
+  return { name: info?.name ?? m[1].replace(/_/g, ' '), params };
+}
+
+/** 'BTC-USD|86400000|sma_cross(fast=10,slow=100)' → 'BTC daily · Trend following (moving averages)' */
+export function plainAccountLabel(id: string): { title: string; params: string } {
+  const [sym, iv, key] = id.split('|');
+  const ps = plainSpec(key ?? '');
+  return { title: `${(sym ?? '').replace('-USD', '')} ${Number(iv) === 86_400_000 ? 'daily' : 'hourly'} · ${ps.name}`, params: ps.params };
+}
+
 // ---------------------------------------------------------------- strategy catalogue (plain language)
 export type StrategyInfo = { family: string; name: string; objective: string; risk: 'Medium' | 'Medium-high' | 'High'; style: string };
 

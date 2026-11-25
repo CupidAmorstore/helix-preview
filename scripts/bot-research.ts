@@ -22,6 +22,7 @@ import { gunzipSync, gzipSync } from 'node:zlib';
 import { join } from 'node:path';
 import { DAY, HOUR, datasetHash, datasetSha256, validateCandles } from '../src/bot/candles';
 import type { Provenance } from '../src/bot/provenance';
+import { plainSpec } from '../src/bot/insights';
 import { COST_PRESETS } from '../src/bot/costs';
 import { runResearchCycle, Registry, RunRecord } from '../src/bot/research';
 import {
@@ -271,8 +272,39 @@ async function main() {
       if (!rec.crossSectional && old.crossSectional) rec.crossSectional = old.crossSectional;
     }
   }
+  // last time strategies were actually tested (a watch-only refresh does not count)
+  const researchRuns = history.filter((h) => (h.totals?.oosCandidates ?? 0) > 0);
+  const lastResearchRunAt = (researchRuns.length ? researchRuns : history).map((h) => h.finishedAt).sort().at(-1);
+  // forward paper-trading protocol (research/forward): registration + latest evaluation
+  const forward = (() => {
+    if (!existsSync(R('forward', 'registration.json'))) return undefined;
+    const reg = JSON.parse(readFileSync(R('forward', 'registration.json'), 'utf8'));
+    const rep = existsSync(R('forward', 'report.json')) ? JSON.parse(readFileSync(R('forward', 'report.json'), 'utf8')) : null;
+    const byId = new Map<string, { status: string; forwardMonths: number; netReturn: number }>((rep?.results ?? []).map((x: { ruleId: string; status: string; forwardMonths: number; netReturn: number }) => [x.ruleId, x]));
+    // forward rules run on daily bars: lengths are in days
+    const words = (params: Record<string, number>) => Object.entries(params).flatMap(([k, v]) =>
+      k === 'lookback' ? [`${v}-day look-back`] : k === 'n' ? [`${v}-day average`] : k === 'period' ? [v === 7 ? 'checked weekly' : `checked every ${v} days`] : k === 'topK' ? [`top ${v}`] : k === 'rebalance' ? [v === 7 ? 'rebalanced weekly' : `rebalanced every ${v} days`] : k === 'threshold' && v === 0 ? [] : [`${k} ${v}`]).join(', ');
+    const label = (r: { kind: string; family?: string; params: Record<string, number>; markets: string[] }) =>
+      `${r.kind === 'xs' ? 'Strongest coins rotation' : plainSpec(`${r.family}()`).name} · ${words(r.params)} · ${r.markets.length} coins`;
+    return {
+      id: reg.id,
+      status: reg.status,
+      startAt: reg.startAt,
+      minMonths: reg.evaluation?.minMonths ?? 12,
+      evaluatedAt: rep?.evaluatedAt ?? null,
+      rules: reg.rules.map((r: { id: string; kind: string; family?: string; params: Record<string, number>; markets: string[] }) => ({
+        id: r.id,
+        label: label(r),
+        status: byId.get(r.id)?.status ?? (reg.status === 'active' ? 'collecting' : reg.status),
+        forwardMonths: byId.get(r.id)?.forwardMonths ?? 0,
+        netReturn: byId.get(r.id)?.netReturn ?? 0
+      }))
+    };
+  })();
   const summary = {
     generatedAt: new Date(now).toISOString(),
+    lastResearchRunAt,
+    forward,
     codeVersion,
     mode: 'paper',
     runs: records.map((r) => ({
