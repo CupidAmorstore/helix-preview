@@ -31,6 +31,8 @@ export type CandidateRow = {
   test?: Window;
   stress?: { doubleCostTestNet: number | null; delayedTestNet: number | null; neighbourPassShare: number };
   ci?: { lo: number; hi: number; mean: number; alpha: number; n: number; blocks?: number };
+  /** walk-forward re-estimation on pre-test data (gates-v2 and later runs only) */
+  walkForward?: { compoundedNet: number; positiveFolds: number; folds: number; embargoBars: number };
 };
 
 export type MarketRow = {

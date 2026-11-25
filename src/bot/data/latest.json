@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-24T19:36:41.194Z",
- "codeVersion": "0b6b578c58de4bdf74db5a4679b84aee6cb381cb",
+ "generatedAt": "2026-11-24T19:37:36.399Z",
+ "codeVersion": "16762adc5393cddeee5f5f5e82c66e29fecc0133+dirty",
  "mode": "paper",
  "runs": [
   {
@@ -5019,6 +5019,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 1.5766892143367275,
+        "positiveFolds": 4,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -5072,6 +5078,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 0.7977694372615696,
+        "positiveFolds": 3,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -5693,6 +5705,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 0.08917990296565992,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -5749,6 +5767,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": -0.277317195164559,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -6320,6 +6344,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 2.330584673555512,
+        "positiveFolds": 3,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -6374,6 +6404,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 2.7510246189298737,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -6947,6 +6983,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 0,
+        "positiveFolds": 0,
+        "folds": 1,
+        "embargoBars": 201
        }
       },
       {
@@ -7003,6 +7045,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": -0.29916806465617596,
+        "positiveFolds": 0,
+        "folds": 2,
+        "embargoBars": 181
        }
       },
       {
@@ -7573,6 +7621,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 1.2209473589641595,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -7628,6 +7682,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": -0.055812544304277956,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -8197,6 +8257,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 0.4825018102026881,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -8254,6 +8320,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": -0.27869132802111063,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -8825,6 +8897,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": -0.38337196365465653,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -8879,6 +8957,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 0.3088628860665419,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -9452,6 +9536,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 1.3468157277144135,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -9506,6 +9596,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": 0.06992939040114421,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -10081,6 +10177,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 1
+       },
+       "walkForward": {
+        "compoundedNet": 0.03477626305470172,
+        "positiveFolds": 2,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -10136,6 +10238,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": -0.2355581941351138,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {
@@ -10711,6 +10819,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": -0.11439810015801843,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 201
        }
       },
       {
@@ -10767,6 +10881,12 @@
         "doubleCostTestNet": null,
         "delayedTestNet": null,
         "neighbourPassShare": 0
+       },
+       "walkForward": {
+        "compoundedNet": -0.11445768050605787,
+        "positiveFolds": 1,
+        "folds": 4,
+        "embargoBars": 181
        }
       },
       {

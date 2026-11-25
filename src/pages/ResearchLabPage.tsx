@@ -243,7 +243,7 @@ function Strategies() {
           const id = `${c.scope}|${c.intervalMs}|${c.key}`;
           return (
             <div key={id} className="rounded-xl border border-ink-600 bg-ink-800/60">
-              <button type="button" onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
+              <button type="button" aria-expanded={open === id} onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm text-slate-100">{c.key.replace('POOLED:', '')}</div>
                   <div className="text-xs text-slate-500">
@@ -285,7 +285,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
   return (
     <div className="space-y-3 border-t border-ink-600 px-4 py-3 text-xs">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] text-left">
+        <table className="stack-sm w-full min-w-[520px] text-left">
           <thead className="text-slate-500">
             <tr>
               <th className="py-1 font-normal">Metric</th>
@@ -313,7 +313,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
               <tr key={label} className="border-t border-white/5">
                 <td className="py-1 font-display text-slate-500">{label}</td>
                 {cols.map(([l, w]) => (
-                  <td key={l} className="py-1">{w ? f(w) : <span className="text-slate-600">not opened</span>}</td>
+                  <td key={l} data-label={l} className="py-1">{w ? f(w) : <span className="text-slate-600">not opened</span>}</td>
                 ))}
               </tr>
             ))}
@@ -324,6 +324,12 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
         <div className="text-slate-400">
           Robustness: 2× costs {pct(c.stress.doubleCostTestNet)} · +1 bar delay {pct(c.stress.delayedTestNet)} · neighbour params positive{' '}
           {(c.stress.neighbourPassShare * 100).toFixed(0)}%
+        </div>
+      )}
+      {c.walkForward && c.walkForward.folds > 0 && (
+        <div className="text-slate-400">
+          Walk-forward (re-selected each fold, {c.walkForward.embargoBars}-bar embargo, before the test window): {pct(c.walkForward.compoundedNet)} ·{' '}
+          {c.walkForward.positiveFolds}/{c.walkForward.folds} folds profitable
         </div>
       )}
       {c.ci && (
@@ -369,7 +375,7 @@ function Lab() {
       </Card>
       <Card title="Datasets">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-xs">
+          <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">TF</th><th className="font-normal">Bars</th><th className="font-normal">Quality</th><th className="font-normal">Dataset id</th><th className="font-normal">Notes</th></tr>
             </thead>
@@ -377,11 +383,11 @@ function Lab() {
               {allMarkets().map((m) => (
                 <tr key={m.symbol + m.intervalMs} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td>{ivLabel(m.intervalMs)}</td>
-                  <td className="font-mono">{m.quality.bars}</td>
-                  <td className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
-                  <td className="font-code text-slate-500">{m.datasetId}</td>
-                  <td className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
+                  <td data-label="Timeframe">{ivLabel(m.intervalMs)}</td>
+                  <td data-label="Bars" className="font-mono">{m.quality.bars}</td>
+                  <td data-label="Quality" className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
+                  <td data-label="Dataset id" className="font-code text-slate-500">{m.datasetId}</td>
+                  <td data-label="Notes" className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
                 </tr>
               ))}
             </tbody>
@@ -480,7 +486,7 @@ function Watchbot() {
       </Card>
       <Card title="Market coverage (hourly)">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-left text-xs">
+          <table className="stack-sm w-full min-w-[520px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Data quality</th><th className="font-normal">Regime</th><th className="font-normal">Volatility</th><th className="font-normal">Min order</th></tr>
             </thead>
@@ -488,10 +494,10 @@ function Watchbot() {
               {markets.map((m) => (
                 <tr key={m.symbol} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td className="font-mono">{m.quality.score}/100</td>
-                  <td>{m.regime ? m.regime.trend : '—'}</td>
-                  <td>{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
-                  <td className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
+                  <td data-label="Data quality" className="font-mono">{m.quality.score}/100</td>
+                  <td data-label="Regime">{m.regime ? m.regime.trend : '—'}</td>
+                  <td data-label="Volatility">{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
+                  <td data-label="Min order" className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
                 </tr>
               ))}
             </tbody>
@@ -545,7 +551,7 @@ function Risk() {
           policy-sized position.
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-xs">
+          <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr>
                 <th className="py-1 font-normal">Capital</th>
@@ -560,7 +566,7 @@ function Risk() {
                     const f = feas.find((x) => x.capitalUsd === cap && x.note.startsWith(v + ':'))!;
                     const tone = f.verdict === 'tradable' ? 'text-up' : f.verdict === 'single_position_only' ? 'text-amber-400' : 'text-rose-400';
                     return (
-                      <td key={v} className={tone}>
+                      <td key={v} data-label={v.replace('_', ' ')} className={tone}>
                         {f.verdict.replace(/_/g, ' ')}
                         <div className="text-[10px] text-slate-500">{f.roundTripCostPct.toFixed(2)}% round trip</div>
                       </td>
@@ -687,7 +693,7 @@ function MeasuredCosts() {
         collected (pre-registered). Exchange fees are separate and dominate: {COST_PRESETS.coinbase_taker.takerFeeBps} bps Coinbase taker.
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[420px] text-left text-xs">
+        <table className="stack-sm w-full min-w-[420px] text-left text-xs">
           <thead className="text-slate-500">
             <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Venue</th><th className="font-normal">Half-spread</th><th className="font-normal">Slippage</th><th className="font-normal">Total vs {total} bps</th></tr>
           </thead>
@@ -697,10 +703,10 @@ function MeasuredCosts() {
               return (
                 <tr key={m.venue + m.symbol} className="border-t border-white/5">
                   <td className="py-1.5 font-display">{m.symbol}</td>
-                  <td className="font-display text-slate-400">{m.venue}</td>
-                  <td>{m.halfSpreadBpsP75.toFixed(2)}</td>
-                  <td>{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
-                  <td className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-up' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
+                  <td data-label="Venue" className="font-display text-slate-400">{m.venue}</td>
+                  <td data-label="Half-spread">{m.halfSpreadBpsP75.toFixed(2)}</td>
+                  <td data-label="Slippage">{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
+                  <td data-label={`Total vs ${total} bps`} className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-up' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
                 </tr>
               );
             })}

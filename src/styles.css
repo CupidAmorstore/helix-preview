@@ -174,3 +174,15 @@ body {
   }
 }
 
+
+/* Research Lab tables reflow into labelled lists on phones (no horizontal scrolling) */
+@media (max-width: 479px) {
+  table.stack-sm { min-width: 0 !important; }
+  table.stack-sm thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  table.stack-sm, table.stack-sm tbody, table.stack-sm tr, table.stack-sm td { display: block; width: 100%; }
+  table.stack-sm tr { padding: 0.5rem 0; }
+  table.stack-sm td { padding: 0.125rem 0; }
+  table.stack-sm td[data-label] { display: flex; justify-content: space-between; gap: 1rem; text-align: right; overflow-wrap: anywhere; }
+  table.stack-sm td[data-label]::before { content: attr(data-label); color: rgb(100 116 139); text-align: left; flex-shrink: 0; font-family: inherit; }
+  table.stack-sm td:first-child:not([data-label]) { font-weight: 600; color: rgb(226 232 240); }
+}

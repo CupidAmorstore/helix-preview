@@ -303,7 +303,8 @@ async function main() {
           validation: c.validation,
           test: c.test,
           stress: c.stress,
-          ci: c.ci
+          ci: c.ci,
+          walkForward: c.walkForward && { compoundedNet: c.walkForward.compoundedNet, positiveFolds: c.walkForward.positiveFolds, folds: c.walkForward.folds.length, embargoBars: c.walkForward.embargoBars }
         }))
       })),
       pooled: r.pooled.map((c) => ({

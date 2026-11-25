@@ -18,6 +18,8 @@ export function plainReasons(s: BotSummary, n = 3): { text: string; count: numbe
     [/trades \d+ < \d+|out-of-sample trades/, 'Too few test trades to trust the result'],
     [/not profitable after costs/, 'Lost money after trading fees'],
     [/(validation|test) net return <= 0/, 'Lost money on data it had not seen'],
+    [/walk-forward unstable/, 'Profitable in too few periods when re-tested step by step'],
+    [/walk-forward/, 'Lost money when re-tested step by step'],
     [/drawdown/, 'Losses from a peak were too deep'],
     [/2x cost stress/, 'Fails if fees are a bit higher'],
     [/delay stress/, 'Fails if orders fill a little late'],
