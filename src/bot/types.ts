@@ -93,4 +93,6 @@ export type BacktestResult = {
   bars: number;
   buyHoldReturn: number;
   rejectedOrders: number;
+  /** equity marked at each close inside the window, ending with the liquidated value (opt.recordEquity) */
+  equity?: { t: number; v: number }[];
 };

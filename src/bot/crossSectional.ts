@@ -5,13 +5,28 @@
 import type { Candle, CandidateStatus, CostModel } from './types';
 import { GATES, commonCutoffs, monthBlockBootstrap } from './validation';
 import { scaleCosts, sideCostFrac } from './costs';
+import { exitProceeds } from './backtest';
+import { monthlyInference, monthlyReturns, requiredBootstrapIterations, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
+import { walkForwardCore, walkForwardRejections, type WalkForward } from './walkForward';
 
 export type XsParams = { lookback: number; topK: number; rebalance: number };
 export const XS_GRID: XsParams[] = [7, 14, 28].flatMap((lookback) => [1, 2, 3].map((topK) => ({ lookback, topK, rebalance: 7 })));
 
 type Series = { symbol: string; candles: Candle[] };
 
-export type XsWindow = { periods: number; trades: number; netReturn: number; grossReturn: number; maxDrawdown: number; buyHoldReturn: number; periodReturns: { entryT: number; netRet: number }[] };
+export type XsWindow = {
+  periods: number;
+  trades: number;
+  netReturn: number;
+  grossReturn: number;
+  maxDrawdown: number;
+  buyHoldReturn: number;
+  periodReturns: { entryT: number; netRet: number }[];
+  rejectedOrders: number;
+  exposure: number;
+  /** equity marked at each close, ending with the liquidated value */
+  equity: { t: number; v: number }[];
+};
 
 export type XsReport = {
   key: string;
@@ -25,6 +40,10 @@ export type XsReport = {
   stress?: { doubleCostTestNet: number; delayedTestNet: number; neighbourPassShare: number };
   ci?: { lo: number; hi: number; mean: number; alpha: number; n: number; blocks: number };
   configsTriedOnTrain: number;
+  walkForward?: WalkForward;
+  inference?: Inference;
+  /** selected rule on the validation window at each account size (orders below venue minimums rejected) */
+  capitalTiers?: { capitalUsd: number; netReturn: number; rejectedOrders: number; feasible: boolean }[];
 };
 
 /** Align all series on a common daily calendar (only days every market has). */
@@ -35,105 +54,155 @@ function align(series: Series[]) {
 }
 
 /**
- * Portfolio simulation with real accounting (cash + quantities per coin), between two calendar cut-offs.
- * - Decision at the CLOSE of rebalance day i using closes <= i only; trades execute at the OPEN of day i+1(+delay).
- * - Target: equal weight 1/topK for each pick (fewer picks → the rest stays in cash). Weights drift between rebalances.
- * - Sells first (proceeds net of per-side cost), then buys from available cash (value received net of cost).
- * - Marked to market at every close for drawdown; everything liquidated (with cost) at the window's last open.
- * - periodReturns: equity change from one execution to the next (costs of that rebalance included).
+ * Chronological, event-driven portfolio simulation (AUD-203) with capital-aware execution (AUD-208).
+ * At every day d of the window, in this order:
+ *   1. execute orders scheduled for d at d's OPEN (sells first, then buys from available cash);
+ *   2. mark holdings to market at d's CLOSE (equity curve, peak, drawdown, exposure);
+ *   3. on a rebalance day, decide from closes <= d and SCHEDULE orders for the open of d+1+delay.
+ * Holdings and cash never change before the simulated execution time.
+ * Costs per fill: proportional side cost (fee + half-spread + slippage) and the fixed cost (gas etc.). An order
+ * below the venue minimum (or not covering twice the fixed cost) is REJECTED and counted, never resized up.
+ * Quantity precision: not modelled (no verified per-venue increments in the stored data) — documented limit.
+ * The window's last open liquidates everything (costs applied, minimums not applied — accounting close-out);
+ * that liquidation value is the final equity and enters peak/drawdown.
  */
-export function simulateXs(series: Series[], p: XsParams, from: number, to: number, cost: CostModel, delay = 0): XsWindow {
+export function simulateXs(series: Series[], p: XsParams, from: number, to: number, cost: CostModel, delay = 0, capitalUsd = 1000): XsWindow {
   const { days, rows } = align(series);
-  const side = sideCostFrac(cost);
-  const empty: XsWindow = { periods: 0, trades: 0, netReturn: 0, grossReturn: 0, maxDrawdown: 0, buyHoldReturn: 0, periodReturns: [] };
+  const empty: XsWindow = { periods: 0, trades: 0, netReturn: 0, grossReturn: 0, maxDrawdown: 0, buyHoldReturn: 0, periodReturns: [], rejectedOrders: 0, exposure: 0, equity: [] };
   const start = days.findIndex((t) => t >= from);
   const end = days.findIndex((t) => t >= to);
   const last = end === -1 ? days.length - 1 : end - 1;
-  if (start < 0 || last <= start) return empty;
-  const run = (c: number) => {
+  if (start < 0 || last <= start || !(capitalUsd > 0) || !(delay >= 0)) return empty;
+  const run = (side: number, fixed: number, minOrder: number) => {
     const n = series.length;
-    let cash = 1;
+    let cash = capitalUsd;
     const qty = new Array<number>(n).fill(0);
     let entries = 0;
-    let peak = 1;
+    let rejected = 0;
+    let peak = capitalUsd;
     let maxDd = 0;
+    let investedDays = 0;
+    const equity: { t: number; v: number }[] = [];
     const periodReturns: { entryT: number; netRet: number }[] = [];
     let prevExecValue: number | null = null;
     let prevExecT = 0;
-    const valueAt = (d: number, field: 'o' | 'c') => cash + qty.reduce((s, q, j) => s + q * rows[d][j][field], 0);
-    const mark = (d: number) => { const v = valueAt(d, 'c'); peak = Math.max(peak, v); maxDd = Math.max(maxDd, (peak - v) / peak); };
+    const pending = new Map<number, number[]>(); // execution day index -> picks
+    const value = (d: number, f: 'o' | 'c') => cash + qty.reduce((s, q, j) => s + q * rows[d][j][f], 0);
+    const execute = (e: number, picks: number[]) => {
+      const V = value(e, 'o');
+      if (prevExecValue !== null) periodReturns.push({ entryT: prevExecT, netRet: V / prevExecValue - 1 });
+      const target = (j: number) => (picks.includes(j) ? V / p.topK : 0);
+      for (let j = 0; j < n; j++) {
+        const px = rows[e][j].o;
+        const cur = qty[j] * px;
+        if (cur > target(j) + 1e-9) {
+          const sellVal = cur - target(j);
+          if (sellVal < minOrder || sellVal * (1 - side) <= fixed) { rejected++; continue; }
+          qty[j] -= sellVal / px;
+          if (qty[j] * px < 1e-9) qty[j] = 0;
+          cash += exitProceeds(sellVal * (1 - side), fixed);
+        }
+      }
+      for (const j of picks) {
+        const px = rows[e][j].o;
+        const need = target(j) - qty[j] * px;
+        if (need <= 1e-9) continue;
+        const notional = Math.min(cash, need / (1 - side) + fixed); // value received = need
+        if (notional < minOrder || notional <= 2 * fixed) { rejected++; continue; }
+        if (qty[j] === 0) entries++;
+        cash -= notional;
+        qty[j] += ((notional - fixed) * (1 - side)) / px;
+      }
+      prevExecValue = V; // pre-trade value: each period includes the costs of its own rebalance
+      prevExecT = days[e];
+    };
     let nextDecision = Math.max(start, p.lookback);
     for (let d = start; d < last; d++) {
-      mark(d); // holdings during day d (trades decided today execute at a later open)
-      if (d === nextDecision && d + 1 + delay < last) {
+      const due = pending.get(d);
+      if (due) { pending.delete(d); execute(d, due); }
+      const v = value(d, 'c');
+      equity.push({ t: days[d], v });
+      peak = Math.max(peak, v);
+      maxDd = Math.max(maxDd, peak > 0 ? (peak - v) / peak : 0);
+      if (qty.some((q) => q > 0)) investedDays++;
+      if (d === nextDecision) {
         const e = d + 1 + delay;
-        if (!(days[e] > days[d])) throw new Error('look-ahead: execution not after decision');
-        const ret = rows[d].map((k, j) => k.c / rows[d - p.lookback][j].c - 1);
-        const picks = ret.map((r, j) => [r, j] as const).filter(([r]) => r > 0).sort((a, b) => b[0] - a[0]).slice(0, p.topK).map(([, j]) => j);
-        const V = valueAt(e, 'o');
-        if (prevExecValue !== null) periodReturns.push({ entryT: prevExecT, netRet: V / prevExecValue - 1 });
-        const target = (j: number) => (picks.includes(j) ? V / p.topK : 0);
-        for (let j = 0; j < n; j++) {
-          const cur = qty[j] * rows[e][j].o;
-          if (cur > target(j) + 1e-12) {
-            const sellVal = cur - target(j);
-            qty[j] -= sellVal / rows[e][j].o;
-            if (qty[j] < 1e-15) qty[j] = 0;
-            cash += sellVal * (1 - c);
-          }
-        }
-        for (const j of picks) {
-          const cur = qty[j] * rows[e][j].o;
-          const need = target(j) - cur;
-          if (need <= 1e-12) continue;
-          const spend = Math.min(cash, need / (1 - c));
-          if (spend <= 0) continue;
-          if (cur === 0) entries++;
-          cash -= spend;
-          qty[j] += (spend * (1 - c)) / rows[e][j].o;
-        }
-        // measured from the PRE-trade value so each period includes the costs of its own rebalance
-        prevExecValue = V;
-        prevExecT = days[e];
-        nextDecision = d + p.rebalance;
-      } else if (d === nextDecision) {
-        nextDecision = Number.POSITIVE_INFINITY; // no room left to execute inside the window
+        if (e < last) {
+          if (!(days[e] > days[d])) throw new Error('look-ahead: execution not after decision');
+          const ret = rows[d].map((k, j) => k.c / rows[d - p.lookback][j].c - 1);
+          const picks = ret.map((r, j) => [r, j] as const).filter(([r]) => r > 0).sort((a, b) => b[0] - a[0]).slice(0, p.topK).map(([, j]) => j);
+          pending.set(e, picks);
+          nextDecision = d + p.rebalance;
+        } else nextDecision = Number.POSITIVE_INFINITY; // no room left to execute inside the window
       }
     }
-    // final liquidation at the last open of the window
-    for (let j = 0; j < n; j++) if (qty[j] > 0) { cash += qty[j] * rows[last][j].o * (1 - c); qty[j] = 0; }
+    // final liquidation at the last open of the window (orders still pending are dropped: never executed)
+    for (let j = 0; j < series.length; j++) if (qty[j] > 0) { cash += exitProceeds(qty[j] * rows[last][j].o * (1 - side), fixed); qty[j] = 0; }
     if (prevExecValue !== null) periodReturns.push({ entryT: prevExecT, netRet: cash / prevExecValue - 1 });
+    equity.push({ t: days[last], v: cash });
     peak = Math.max(peak, cash);
-    maxDd = Math.max(maxDd, (peak - cash) / peak);
-    return { equity: cash, entries, maxDd, periodReturns };
+    maxDd = Math.max(maxDd, peak > 0 ? (peak - cash) / peak : 0);
+    return { equity: cash, entries, rejected, maxDd, periodReturns, curve: equity, exposure: investedDays / Math.max(1, last - start) };
   };
-  const net = run(side);
-  const gross = run(0);
+  const net = run(sideCostFrac(cost), cost.fixedCostUsd, cost.minOrderUsd);
+  const gross = run(0, 0, 0);
   const bh = rows[last].reduce((s, k, j) => s + k.o / rows[start][j].o - 1, 0) / series.length;
-  return { periods: net.periodReturns.length, trades: net.entries, netReturn: net.equity - 1, grossReturn: gross.equity - 1, maxDrawdown: net.maxDd, buyHoldReturn: bh, periodReturns: net.periodReturns };
+  return {
+    periods: net.periodReturns.length,
+    trades: net.entries,
+    netReturn: net.equity / capitalUsd - 1,
+    grossReturn: gross.equity / capitalUsd - 1,
+    maxDrawdown: net.maxDd,
+    buyHoldReturn: bh,
+    periodReturns: net.periodReturns,
+    rejectedOrders: net.rejected,
+    exposure: net.exposure,
+    equity: net.curve
+  };
 }
 
+/** Capital tiers evaluated for feasibility (AUD-208); a tier with rejected orders is infeasible. */
+export const CAPITAL_TIERS = [20, 50, 100, 250, 500, 1000] as const;
+
 export function evaluateCrossSectional(series: Series[], cost: CostModel, intervalMs: number, oosCandidatesInRun: number): XsReport {
-  const warm = Math.max(...XS_GRID.map((g) => g.lookback)) + 1;
+  // dependency horizon: lookback + one rebalance period (a holding is set by data up to one period earlier)
+  const warm = Math.max(...XS_GRID.map((g) => g.lookback + g.rebalance)) + 1;
   const cut = commonCutoffs(series, warm, intervalMs);
-  let best: { p: XsParams; w: XsWindow } | null = null;
-  for (const p of XS_GRID) {
-    const w = simulateXs(series, p, cut.trainStart, cut.trainEnd, cost);
-    const ok = w.trades >= GATES.minTradesValidation * 2;
-    const bestOk = best ? best.w.trades >= GATES.minTradesValidation * 2 : false;
-    if (!best || (ok && !bestOk) || (ok === bestOk && w.netReturn > best.w.netReturn)) best = { p, w };
-  }
-  const p = best!.p;
+  const selectOn = (a: number, b: number) => {
+    let top: { p: XsParams; w: XsWindow } | null = null;
+    for (const p of XS_GRID) {
+      const w = simulateXs(series, p, a, b, cost);
+      const ok = w.trades >= GATES.minTradesValidation * 2;
+      const topOk = top ? top.w.trades >= GATES.minTradesValidation * 2 : false;
+      if (!top || (ok && !topOk) || (ok === topOk && w.netReturn > top.w.netReturn)) top = { p, w };
+    }
+    return top!;
+  };
+  const best = selectOn(cut.trainStart, cut.trainEnd);
+  const p = best.p;
   const rep: XsReport = {
     key: `XS_MOMENTUM(lookback=${p.lookback},topK=${p.topK},rebalance=${p.rebalance})`,
-    params: p, status: 'backtested_candidate', rejectionReasons: [], cutoffs: cut, train: best!.w, configsTriedOnTrain: XS_GRID.length
+    params: p, status: 'backtested_candidate', rejectionReasons: [], cutoffs: cut, train: best.w, configsTriedOnTrain: XS_GRID.length
   };
   const reject = (why: string) => { rep.rejectionReasons.push(why); rep.status = 'rejected'; };
-  if (best!.w.netReturn <= 0) reject('best training config is not profitable after costs');
+  if (best.w.netReturn <= 0) reject('best training config is not profitable after costs');
   const v = simulateXs(series, p, cut.trainEnd, cut.valEnd, cost);
   rep.validation = v;
   if (v.trades < GATES.minTradesValidation) reject(`validation trades ${v.trades} < ${GATES.minTradesValidation}`);
   if (v.netReturn <= 0) reject('validation net return <= 0 after costs');
+  // AUD-201: walk-forward on the common calendar; parameters re-selected from earlier data only
+  const wf = walkForwardCore(
+    { trainStart: cut.trainStart, valEnd: cut.valEnd, embargo: warm * intervalMs, folds: GATES.walkForwardFolds, step: intervalMs },
+    (a, b) => ({ ...selectOn(a, b).p }),
+    (q, a, b) => { const w = simulateXs(series, q as XsParams, a, b, cost); return { netReturn: w.netReturn, trades: w.trades }; }
+  );
+  rep.walkForward = wf;
+  for (const why of walkForwardRejections(wf, GATES.minWalkForwardPositiveShare)) reject(why);
+  // AUD-208: capital tiers on the validation window
+  rep.capitalTiers = CAPITAL_TIERS.map((cap) => {
+    const w = simulateXs(series, p, cut.trainEnd, cut.valEnd, cost, 0, cap);
+    return { capitalUsd: cap, netReturn: w.netReturn, rejectedOrders: w.rejectedOrders, feasible: w.rejectedOrders === 0 };
+  });
   const nb = XS_GRID.filter((g) => (g.lookback === p.lookback) !== (g.topK === p.topK));
   const nbShare = nb.filter((g) => simulateXs(series, g, cut.trainEnd, cut.valEnd, cost).netReturn > 0).length / Math.max(1, nb.length);
   if ((rep.status as CandidateStatus) === 'rejected') {
@@ -153,10 +222,14 @@ export function evaluateCrossSectional(series: Series[], cost: CostModel, interv
   if (nbShare < GATES.minNeighbourPassShare) reject('parameter neighbours unstable on validation');
   const oos = [...v.periodReturns, ...t.periodReturns];
   const alpha = GATES.familyAlpha / Math.max(1, oosCandidatesInRun);
-  const ci = monthBlockBootstrap(oos, alpha);
+  const ci = monthBlockBootstrap(oos, alpha, Math.min(MAX_BOOTSTRAP_ITERATIONS, requiredBootstrapIterations(alpha)));
   rep.ci = { ...ci, alpha, n: oos.length };
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample periods ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('month-block bootstrap lower bound of mean period return <= 0 (multiple-testing adjusted)');
+  // AUD-205: synchronized monthly portfolio returns
+  const monthly = [...monthlyReturns(v.equity, 1000), ...monthlyReturns(t.equity, 1000)].map((m) => m.ret);
+  rep.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
+  for (const why of rep.inference.reasons) reject(why);
   if (rep.status !== 'rejected') rep.status = 'qualified_paper_strategy';
   return rep;
 }

@@ -27,7 +27,9 @@ describe('cross-sectional momentum', () => {
 
   it('a persistent relative-strength edge can qualify (power check)', () => {
     // one coin drifts up strongly, the rest are noise: a top-1 momentum rule should find it
-    const u = [0, 1, 2, 3].map((k) => ({ symbol: `P${k}`, candles: daily(randomWalk(1500, 70 + k, 0.02, k === 0 ? 0.004 : 0)) }));
+    // gates-v3 (monthly inference, mandatory walk-forward) needs a cleaner edge than v2: at 2% daily noise this
+    // fixture's test drawdown is 30% and the monthly t bound is <= 0, so it is rejected (as it should be).
+    const u = [0, 1, 2, 3].map((k) => ({ symbol: `P${k}`, candles: daily(randomWalk(1500, 70 + k, 0.015, k === 0 ? 0.004 : 0)) }));
     const r = evaluateCrossSectional(u, LOW, DAY, 1);
     expect(r.validation!.netReturn).toBeGreaterThan(0);
     expect(r.status).toBe('qualified_paper_strategy');

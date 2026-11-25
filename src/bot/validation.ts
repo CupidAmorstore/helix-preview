@@ -1,15 +1,22 @@
 import type { BacktestResult, Candle, CandidateStatus, CostModel, StrategyFamily, StrategySpec } from './types';
 import { backtest } from './backtest';
-import { PARAM_GRID, neighbours, specKey, warmup } from './strategies';
+import { PARAM_GRID, dependencyHorizon, neighbours, specKey } from './strategies';
+import { walkForwardCore, walkForwardRejections, type WalkForward } from './walkForward';
+export type { WalkForward } from './walkForward';
 import { scaleCosts } from './costs';
-import { bootstrapMeanCI, profitFactor, winRate } from './stats';
+import { bootstrapMeanCI, monthlyInference, monthlyReturns, profitFactor, requiredBootstrapIterations, winRate, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
 
 /**
  * Qualification gates. Fixed BEFORE looking at results and version-controlled.
  * Changing them requires a documented decision in docs/trading-bot/RISK_POLICY.md — never to rescue a candidate.
  */
 export const GATES = {
-  version: 'gates-v2', // v2 = v1 + walk-forward re-estimation with embargo (stricter, nothing relaxed)
+  // v2 = v1 + walk-forward re-estimation with embargo.
+  // v3 (2026-11-25, independent audit AUD-201..208) = v2 + walk-forward mandatory and fail-closed for EVERY
+  // evaluator, embargo = full dependency horizon, final liquidation in drawdown, event-driven capital-aware
+  // cross-sectional simulation, dependence-aware inference on monthly portfolio returns with an explicit
+  // tail-resolution policy, cross-category holdout provenance. Nothing relaxed.
+  version: 'gates-v3',
   split: { train: 0.5, validation: 0.25, test: 0.25 },
   minTradesValidation: 15,
   minTradesTest: 15,
@@ -21,20 +28,14 @@ export const GATES = {
   minNeighbourPassShare: 0.5,
   walkForwardFolds: 4,
   /** at least this share of walk-forward folds must be profitable after costs */
-  minWalkForwardPositiveShare: 0.5
+  minWalkForwardPositiveShare: 0.5,
+  /** minimum calendar months of out-of-sample (validation + test) portfolio returns for inference */
+  minOosMonths: 12
 } as const;
 
-export type WalkForward = {
-  folds: { from: number; to: number; params: Record<string, number>; netReturn: number; trades: number }[];
-  compoundedNet: number;
-  positiveFolds: number;
-  embargoBars: number;
-};
-
 /**
- * Walk-forward re-estimation on the PRE-TEST region only (the final test stays untouched): the second half of
- * [trainStart, valEnd) is cut into `folds` blocks; for each block the configuration is re-selected on all data
- * before it, minus an embargo of `embargo` bars (indicator look-back), then traded on the block.
+ * Single-market walk-forward on bar indices (see walkForward.ts). Fold/training bounds are reported as
+ * candle timestamps. Fail-closed: use walkForwardRejections() on the result.
  */
 export function walkForward(
   candles: Candle[],
@@ -43,26 +44,20 @@ export function walkForward(
   s: Split,
   embargo: number,
   select: (a: number, b: number) => StrategySpec,
-  folds = GATES.walkForwardFolds
+  folds: number = GATES.walkForwardFolds
 ): WalkForward {
-  const first = s.trainStart + Math.floor((s.valEnd - s.trainStart) / 2);
-  const size = Math.floor((s.valEnd - first) / folds);
-  const out: WalkForward['folds'] = [];
-  for (let k = 0; k < folds && size > 0; k++) {
-    const a = first + k * size;
-    const b = k === folds - 1 ? s.valEnd : a + size;
-    const trainEnd = a - embargo;
-    if (trainEnd - s.trainStart < 2 * embargo) continue;
-    const spec = select(s.trainStart, trainEnd);
-    const r = backtest(candles, spec, { start: a, end: b, cost, capitalUsd: CAPITAL });
-    out.push({ from: candles[a].t, to: candles[b - 1].t, params: spec.params, netReturn: r.netReturn, trades: r.trades.length });
-  }
-  void family;
+  const wf = walkForwardCore(
+    { trainStart: s.trainStart, valEnd: Math.min(s.valEnd, candles.length), embargo, folds, step: 1 },
+    (a, b) => select(a, b).params,
+    (params, a, b) => {
+      const r = backtest(candles, { family, params }, { start: a, end: b, cost, capitalUsd: CAPITAL });
+      return { netReturn: r.netReturn, trades: r.trades.length };
+    }
+  );
+  const t = (i: number) => candles[Math.max(0, Math.min(i, candles.length - 1))]?.t ?? NaN;
   return {
-    folds: out,
-    compoundedNet: out.reduce((m, f) => m * (1 + f.netReturn), 1) - 1,
-    positiveFolds: out.filter((f) => f.netReturn > 0).length,
-    embargoBars: embargo
+    ...wf,
+    folds: wf.folds.map((f) => ({ ...f, from: t(f.from), to: t(f.to - 1), trainFrom: t(f.trainFrom), trainTo: t(f.trainTo - 1) }))
   };
 }
 
@@ -118,6 +113,7 @@ export type CandidateReport = {
   periods: { train: [number, number]; validation: [number, number]; test: [number, number] };
   configsTriedOnTrain: number;
   walkForward?: WalkForward;
+  inference?: Inference;
 };
 
 const CAPITAL = 1000; // research normalisation; account-size feasibility is evaluated separately
@@ -136,7 +132,7 @@ export function evaluateFamily(
   oosCandidatesInRun: number
 ): CandidateReport {
   const grid = PARAM_GRID[family];
-  const maxWarm = Math.max(...grid.map((p) => warmup({ family, params: p })));
+  const maxWarm = Math.max(...grid.map((p) => dependencyHorizon({ family, params: p })));
   const s = chronologicalSplit(candles.length, maxWarm);
   const run = (spec: StrategySpec, a: number, b: number, c: CostModel = cost, delayBars = 0) =>
     backtest(candles, spec, { start: a, end: b, cost: c, capitalUsd: CAPITAL, delayBars });
@@ -183,7 +179,7 @@ export function evaluateFamily(
 
   if (best!.r.netReturn <= 0) reject('best training config is not profitable after costs');
 
-  const v = run(spec, s.trainEnd, s.valEnd);
+  const v = backtest(candles, spec, { start: s.trainEnd, end: s.valEnd, cost, capitalUsd: CAPITAL, recordEquity: true });
   report.validation = metrics(v);
   if (v.trades.length < GATES.minTradesValidation)
     reject(`validation trades ${v.trades.length} < ${GATES.minTradesValidation}`);
@@ -192,8 +188,7 @@ export function evaluateFamily(
   // walk-forward re-estimation (pre-test data only, embargoed by the longest indicator look-back)
   const wf = walkForward(candles, family, cost, s, maxWarm, (a, b) => selectOn(a, b).spec);
   report.walkForward = wf;
-  if (wf.folds.length && !(wf.compoundedNet > 0)) reject('walk-forward (re-estimated, embargoed) net return <= 0 after costs');
-  if (wf.folds.length && wf.positiveFolds / wf.folds.length < GATES.minWalkForwardPositiveShare) reject('walk-forward unstable: too few profitable folds');
+  for (const why of walkForwardRejections(wf, GATES.minWalkForwardPositiveShare)) reject(why);
 
   const nb = neighbours(family, spec.params);
   const nbPass = nb.filter((p) => run({ family, params: p }, s.trainEnd, s.valEnd).netReturn > 0).length;
@@ -205,7 +200,7 @@ export function evaluateFamily(
     return report;
   }
 
-  const t = run(spec, s.valEnd, s.testEnd);
+  const t = backtest(candles, spec, { start: s.valEnd, end: s.testEnd, cost, capitalUsd: CAPITAL, recordEquity: true });
   report.test = metrics(t);
   const t2 = run(spec, s.valEnd, s.testEnd, scaleCosts(cost, GATES.costStressFactor));
   const td = run(spec, s.valEnd, s.testEnd, cost, GATES.delayStressBars);
@@ -224,10 +219,14 @@ export function evaluateFamily(
 
   const oos = [...v.trades, ...t.trades].map((x) => x.netRet);
   const alpha = GATES.familyAlpha / Math.max(1, oosCandidatesInRun);
-  const ci = bootstrapMeanCI(oos, alpha);
+  const ci = bootstrapMeanCI(oos, alpha, Math.min(MAX_BOOTSTRAP_ITERATIONS, requiredBootstrapIterations(alpha)));
   report.ci = { ...ci, alpha, n: oos.length };
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample trades ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)');
+  // AUD-205: dependence-aware inference on monthly equity returns (trades are not independent)
+  const monthly = [...monthlyReturns(v.equity ?? [], CAPITAL), ...monthlyReturns(t.equity ?? [], CAPITAL)].map((m) => m.ret);
+  report.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
+  for (const why of report.inference.reasons) reject(why);
 
   if (report.status !== 'rejected') report.status = 'qualified_paper_strategy';
   return report;
@@ -252,6 +251,8 @@ export type PooledReport = {
   stress?: { doubleCostTestNet: number; delayedTestNet: number; neighbourPassShare: number };
   ci?: { lo: number; hi: number; mean: number; alpha: number; n: number; blocks: number };
   configsTriedOnTrain: number;
+  walkForward?: WalkForward;
+  inference?: Inference;
 };
 
 export type PooledWindow = {
@@ -295,9 +296,11 @@ function pooledWindow(
   a: number,
   b: number,
   cost: CostModel,
-  delayBars = 0
-): { w: PooledWindow; trades: BacktestResult['trades'] } {
+  delayBars = 0,
+  recordEquity = false
+): { w: PooledWindow; trades: BacktestResult['trades']; equity?: { t: number; v: number }[] } {
   const all: BacktestResult['trades'] = [];
+  const curves: { t: number; v: number }[][] = [];
   const per: Record<string, number> = {};
   let net = 0;
   let gross = 0;
@@ -310,8 +313,10 @@ function pooledWindow(
       end: indexAtOrAfter(s.candles, b),
       cost,
       capitalUsd: CAPITAL / series.length,
-      delayBars
+      delayBars,
+      recordEquity
     });
+    if (r.equity) curves.push(r.equity);
     per[s.symbol] = r.netReturn;
     net += r.netReturn / series.length;
     gross += r.grossReturn / series.length;
@@ -320,7 +325,20 @@ function pooledWindow(
     costUsd += r.totalCostUsd;
     all.push(...r.trades);
   }
+  // equal-weight portfolio curve: sum of per-market equity; a market without a bar at a timestamp keeps its
+  // last value (its own capital before its first bar). Values are carried, prices are never filled.
+  let equity: { t: number; v: number }[] | undefined;
+  if (recordEquity) {
+    const ts = [...new Set(curves.flatMap((c) => c.map((p) => p.t)))].sort((x, y) => x - y);
+    const idx = curves.map(() => 0);
+    const lastV = curves.map(() => CAPITAL / series.length);
+    equity = ts.map((t) => {
+      curves.forEach((c, k) => { while (idx[k] < c.length && c[idx[k]].t <= t) lastV[k] = c[idx[k]++].v; });
+      return { t, v: lastV.reduce((a, b) => a + b, 0) + (series.length - curves.length) * (CAPITAL / series.length) };
+    });
+  }
   return {
+    equity,
     w: {
       trades: all.length,
       netReturn: net,
@@ -379,18 +397,22 @@ export function evaluatePooled(
   oosCandidatesInRun: number
 ): PooledReport {
   const grid = PARAM_GRID[family];
-  const warm = Math.max(...grid.map((p) => warmup({ family, params: p })));
+  const warm = Math.max(...grid.map((p) => dependencyHorizon({ family, params: p })));
   const cut = commonCutoffs(series, warm, intervalMs);
   const minTrainTrades = GATES.minTradesValidation * 2;
-  let best: { spec: StrategySpec; w: PooledWindow } | null = null;
-  for (const params of grid) {
-    const spec = { family, params };
-    const { w } = pooledWindow(series, spec, cut.trainStart, cut.trainEnd, cost);
-    const ok = w.trades >= minTrainTrades;
-    const bestOk = best ? best.w.trades >= minTrainTrades : false;
-    if (!best || (ok && !bestOk) || (ok === bestOk && w.netReturn > best.w.netReturn)) best = { spec, w };
-  }
-  const spec = best!.spec;
+  const selectOn = (a: number, b: number) => {
+    let top: { spec: StrategySpec; w: PooledWindow } | null = null;
+    for (const params of grid) {
+      const sp = { family, params };
+      const { w } = pooledWindow(series, sp, a, b, cost);
+      const ok = w.trades >= minTrainTrades;
+      const topOk = top ? top.w.trades >= minTrainTrades : false;
+      if (!top || (ok && !topOk) || (ok === topOk && w.netReturn > top.w.netReturn)) top = { spec: sp, w };
+    }
+    return top!;
+  };
+  const best = selectOn(cut.trainStart, cut.trainEnd);
+  const spec = best.spec;
   const rep: PooledReport = {
     key: `POOLED:${specKey(spec)}`,
     spec,
@@ -398,18 +420,26 @@ export function evaluatePooled(
     rejectionReasons: [],
     markets: series.map((s) => s.symbol),
     cutoffs: cut,
-    train: best!.w,
+    train: best.w,
     configsTriedOnTrain: grid.length
   };
   const reject = (why: string) => {
     rep.rejectionReasons.push(why);
     rep.status = 'rejected';
   };
-  if (best!.w.netReturn <= 0) reject('best pooled training config is not profitable after costs');
-  const v = pooledWindow(series, spec, cut.trainEnd, cut.valEnd, cost);
+  if (best.w.netReturn <= 0) reject('best pooled training config is not profitable after costs');
+  const v = pooledWindow(series, spec, cut.trainEnd, cut.valEnd, cost, 0, true);
   rep.validation = v.w;
   if (v.w.trades < GATES.minTradesValidation) reject(`validation trades ${v.w.trades} < ${GATES.minTradesValidation}`);
   if (v.w.netReturn <= 0) reject('pooled validation net return <= 0 after costs');
+  // AUD-201: walk-forward on the common calendar (times), embargo = dependency horizon in calendar time
+  const wf = walkForwardCore(
+    { trainStart: cut.trainStart, valEnd: cut.valEnd, embargo: warm * intervalMs, folds: GATES.walkForwardFolds, step: intervalMs },
+    (a, b) => selectOn(a, b).spec.params,
+    (params, a, b) => { const { w } = pooledWindow(series, { family, params }, a, b, cost); return { netReturn: w.netReturn, trades: w.trades }; }
+  );
+  rep.walkForward = wf;
+  for (const why of walkForwardRejections(wf, GATES.minWalkForwardPositiveShare)) reject(why);
   const nb = neighbours(family, spec.params);
   const nbShare = nb.length
     ? nb.filter((p) => pooledWindow(series, { family, params: p }, cut.trainEnd, cut.valEnd, cost).w.netReturn > 0).length / nb.length
@@ -418,7 +448,7 @@ export function evaluatePooled(
     rep.stress = { doubleCostTestNet: NaN, delayedTestNet: NaN, neighbourPassShare: nbShare };
     return rep;
   }
-  const t = pooledWindow(series, spec, cut.valEnd, cut.testEnd, cost);
+  const t = pooledWindow(series, spec, cut.valEnd, cut.testEnd, cost, 0, true);
   rep.test = t.w;
   const t2 = pooledWindow(series, spec, cut.valEnd, cut.testEnd, scaleCosts(cost, GATES.costStressFactor)).w;
   const td = pooledWindow(series, spec, cut.valEnd, cut.testEnd, cost, GATES.delayStressBars).w;
@@ -433,10 +463,14 @@ export function evaluatePooled(
   if (nbShare < GATES.minNeighbourPassShare) reject('parameter neighbours unstable on validation');
   const oos = [...v.trades, ...t.trades];
   const alpha = GATES.familyAlpha / Math.max(1, oosCandidatesInRun);
-  const ci = monthBlockBootstrap(oos, alpha);
+  const ci = monthBlockBootstrap(oos, alpha, Math.min(MAX_BOOTSTRAP_ITERATIONS, requiredBootstrapIterations(alpha)));
   rep.ci = { ...ci, alpha, n: oos.length };
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample trades ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('month-block bootstrap lower bound of mean OOS trade <= 0 (multiple-testing adjusted)');
+  // AUD-205: synchronized monthly portfolio returns
+  const monthly = [...monthlyReturns(v.equity ?? [], CAPITAL), ...monthlyReturns(t.equity ?? [], CAPITAL)].map((m) => m.ret);
+  rep.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
+  for (const why of rep.inference.reasons) reject(why);
   if (rep.status !== 'rejected') rep.status = 'qualified_paper_strategy';
   return rep;
 }

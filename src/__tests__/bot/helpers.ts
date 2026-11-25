@@ -44,3 +44,8 @@ export function trendingRegimes(n: number, seed = 7, seg = 120): Candle[] {
 export function flat(n: number, px = 100): Candle[] {
   return Array.from({ length: n }, (_, i) => ({ t: T0 + i * HOUR, o: px, h: px, l: px, c: px, v: 1 }));
 }
+
+/** Same bars re-stamped one per UTC day (monthly inference needs calendar months of evidence). */
+export function asDaily(c: Candle[], start = Date.UTC(2000, 0, 1)): Candle[] {
+  return c.map((k, i) => ({ ...k, t: start + i * 86_400_000 }));
+}

@@ -143,6 +143,33 @@ export function warmup(spec: StrategySpec): number {
   return Math.max(p.slow ?? 0, p.entry ?? 0, p.exit ?? 0, p.lookback ?? 0, p.filter ?? 0, p.n ?? 0, p.trend ?? 0, p.er ?? 0, p.vol ?? 0) + 1;
 }
 
+/**
+ * Dependency horizon in bars (audit 4.1): how far back the decision at bar i can depend on data, including
+ * nested rolling windows (a window over another rolling statistic adds both lengths), the memory of
+ * exponential smoothing (Wilder RSI: 4n bars ≈ 98% of the weight) and stateful holds (a position opened
+ * up to maxHold / one rebalance period earlier is still determined by data from that time).
+ * Used as warm-up and as the walk-forward embargo; never shorter than warmup().
+ */
+export function dependencyHorizon(spec: StrategySpec): number {
+  const p = spec.params;
+  const h = (() => {
+    switch (spec.family) {
+      case 'sma_cross': return p.slow;
+      case 'donchian_breakout': return Math.max(p.entry, p.exit);
+      case 'ts_momentum': return p.lookback;
+      case 'trend_filtered_momentum': return Math.max(p.lookback, p.filter);
+      case 'bollinger_reversion': return p.n + p.maxHold;
+      case 'rsi_reversion': return 4 * p.n + p.maxHold;
+      case 'vol_compression_breakout': return p.lookback + p.n;
+      case 'vol_filtered_trend': return Math.max(p.trend, p.lookback + p.vol);
+      case 'regime_switch': return Math.max(p.er, p.trend, p.n) + p.maxHold;
+      case 'weekly_trend': return p.n + p.period;
+      case 'monthly_momentum': return p.lookback + p.period;
+    }
+  })();
+  return Math.max(warmup(spec), h + 1);
+}
+
 /** Small, pre-declared parameter grids. Kept deliberately coarse to limit data snooping. */
 export const PARAM_GRID: Record<StrategyFamily, Record<string, number>[]> = {
   sma_cross: cartesian({ fast: [10, 20, 50], slow: [100, 200] }),

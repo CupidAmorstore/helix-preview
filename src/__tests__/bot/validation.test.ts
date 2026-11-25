@@ -5,7 +5,7 @@ import { DAILY_ONLY } from '../../bot/strategies';
 import { COST_PRESETS } from '../../bot/costs';
 import { HOUR, datasetHash } from '../../bot/candles';
 import type { CostModel, Dataset } from '../../bot/types';
-import { randomWalk, trendingRegimes } from './helpers';
+import { randomWalk, trendingRegimes, asDaily } from './helpers';
 
 const LOW: CostModel = { ...COST_PRESETS.coinbase_taker, takerFeeBps: 1, halfSpreadBps: 0, slippageBps: 0 };
 const mkDataset = (candles: Dataset['candles'], symbol = 'TEST-USD'): Dataset => ({
@@ -55,7 +55,8 @@ describe('false-positive control', () => {
 
 describe('power check (pipeline is not impossible)', () => {
   it('a genuine persistent-trend edge with low costs can qualify', () => {
-    const c = trendingRegimes(8000, 7, 60);
+    // daily bars: a real edge needs >= 12 calendar months of out-of-sample evidence (gates-v3)
+    const c = asDaily(trendingRegimes(8000, 7, 60));
     const r = evaluateFamily(c, 'ts_momentum', LOW, 1);
     expect(r.rejectionReasons).toEqual([]);
     expect(r.status).toBe('qualified_paper_strategy');
@@ -127,8 +128,8 @@ describe('pooled universe evaluation', () => {
     for (const f of ALL_FAMILIES) expect(evaluatePooled(u, f, COST_PRESETS.coinbase_taker, HOUR, 7).status).toBe('rejected');
   });
   it('a genuine shared edge qualifies when pooled', () => {
-    const u = mk([7, 8, 9].map((s) => trendingRegimes(6000, s, 60)));
-    const r = evaluatePooled(u, 'ts_momentum', LOW, HOUR, 1);
+    const u = mk([7, 8, 9].map((s) => asDaily(trendingRegimes(6000, s, 60))));
+    const r = evaluatePooled(u, 'ts_momentum', LOW, 86_400_000, 1);
     expect(r.rejectionReasons).toEqual([]);
   });
 });
