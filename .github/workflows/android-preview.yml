@@ -77,7 +77,9 @@ jobs:
           else
             echo "SIGNING=PUBLIC debug key (testing only; anyone can sign an update with it)" >> "$GITHUB_ENV"
           fi
-      - name: Build debug APK
+      # With the private QA key: a non-debuggable release build (audit SEC-2). Without it: debug build,
+      # signed with the public debug key and labelled as such (owner-only testing).
+      - name: Build APK
         working-directory: android
         env:
           VERSION_CODE: ${{ github.run_number }}
@@ -86,8 +88,15 @@ jobs:
           HELIX_QA_KEY_PASSWORD: ${{ secrets.HELIX_QA_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+          if [ "$SIGNING" = "private QA key" ]; then
+            ./gradlew assembleRelease --no-daemon --stacktrace
+            cp app/build/outputs/apk/release/app-release.apk ../helix-preview.apk
+            echo "BUILD_TYPE=release (not debuggable)" >> "$GITHUB_ENV"
+          else
+            ./gradlew assembleDebug --no-daemon --stacktrace
+            cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+            echo "BUILD_TYPE=debug (debuggable)" >> "$GITHUB_ENV"
+          fi
           sha256sum ../helix-preview.apk
       - name: Record APK identity
         run: |
@@ -97,7 +106,7 @@ jobs:
             echo "version_code=${{ github.run_number }}"
             echo "source_commit=${GITHUB_SHA}"
             echo "workflow_run=${{ github.run_id }}"
-            echo "build_type=debug (debuggable)"
+            echo "build_type=${BUILD_TYPE}"
             echo "signing=${SIGNING}"
             echo "sha256=$(sha256sum helix-preview.apk | cut -d' ' -f1)"
           } | tee apk-identity.txt
@@ -110,6 +119,10 @@ jobs:
           CERT=$("$SIGNER" verify --print-certs helix-preview.apk | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
           PUBLIC=2c87443785d679b0b51b8115738083aa38ac766f4c1280e4e162484c9e1e1cdc
           echo "apk_certificate_sha256=$CERT" | tee -a apk-identity.txt
+          AAPT=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 | sort -V | tail -1)
+          if "$AAPT" dump badging helix-preview.apk | grep -q "application-debuggable"; then DEBUGGABLE=yes; else DEBUGGABLE=no; fi
+          echo "debuggable=$DEBUGGABLE" | tee -a apk-identity.txt
+          if [ "$SIGNING" = "private QA key" ] && [ "$DEBUGGABLE" = "yes" ]; then echo "::error::private QA build must not be debuggable"; exit 1; fi
           if [ -z "$CERT" ]; then echo "::error::could not read the APK signing certificate"; exit 1; fi
           if [ "$CERT" = "$PUBLIC" ]; then
             if [ "$SIGNING" = "private QA key" ]; then echo "::error::claimed private QA key but APK carries the PUBLIC debug certificate"; exit 1; fi

@@ -37,13 +37,25 @@ android {
             }
         }
     }
+    buildFeatures {
+        buildConfig true
+    }
     buildTypes {
         debug {
             signingConfig System.getenv('HELIX_QA_KEYSTORE') ? signingConfigs.qa : signingConfigs.debug
+            buildConfigField 'boolean', 'QA_WEBVIEW_INSPECTION', 'true'
         }
+        // QA release (audit SEC-2): not debuggable, so app storage cannot be read with run-as/adb backup.
+        // Only built when the private QA key exists; WebView inspection stays on for QA builds so the
+        // emulator can test this exact artifact. A future store build must set it to false.
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (System.getenv('HELIX_QA_KEYSTORE')) {
+                signingConfig signingConfigs.qa
+            }
+            buildConfigField 'boolean', 'QA_WEBVIEW_INSPECTION', System.getenv('HELIX_QA_KEYSTORE') ? 'true' : 'false'
         }
     }
 }

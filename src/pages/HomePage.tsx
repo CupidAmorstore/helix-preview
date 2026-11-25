@@ -26,6 +26,7 @@ import { STARTING_CAPITAL_OPTIONS } from '../paper/engine';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { Button, Change, CoinBadge, Money, Note, Panel } from '../components/ui';
 import { fmtAge, fmtUsd } from '../services/marketData';
+import StartHere from '../components/StartHere';
 
 const RANGES = [
   { key: '1D', ms: 86_400_000 },
@@ -139,6 +140,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-7">
+      <StartHere />
       {/* 1. Paper account: what you have, what it did, what you can do */}
       {loading ? (
         <div className="h-48 animate-pulse bg-ink-800" aria-label="Loading account" />
