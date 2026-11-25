@@ -30,7 +30,7 @@ export default [
     }
   },
   {
-    ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**', 'docs/qa/**', 'scripts/android-e2e.cjs']
+    ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**', 'docs/qa/**', 'docs/audits/**', 'scripts/android-e2e.cjs']
   }
 ];
 
