@@ -1,0 +1,814 @@
+{
+ "generatedAt": "2026-11-25T07:50:25.940Z",
+ "datasets": [
+  {
+   "symbol": "ADA-USD",
+   "bars": 2075,
+   "from": "2021-03-18",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "AVAX-USD",
+   "bars": 1879,
+   "from": "2021-09-30",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "BTC-USD",
+   "bars": 2189,
+   "from": "2020-11-24",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "DOGE-USD",
+   "bars": 1998,
+   "from": "2021-06-03",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "DOT-USD",
+   "bars": 1985,
+   "from": "2021-06-16",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "ETH-USD",
+   "bars": 2189,
+   "from": "2020-11-24",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "LINK-USD",
+   "bars": 2189,
+   "from": "2020-11-24",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "LTC-USD",
+   "bars": 2189,
+   "from": "2020-11-24",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "SOL-USD",
+   "bars": 1984,
+   "from": "2021-06-17",
+   "to": "2026-11-21"
+  },
+  {
+   "symbol": "XRP-USD",
+   "bars": 1285,
+   "from": "2020-11-24",
+   "to": "2026-11-21"
+  }
+ ],
+ "power": {
+  "bonferroniN": 199,
+  "alphaTwoSided": 0.0002512562814070352,
+  "zAlpha": 3.6609891975382354,
+  "zPower80": 0.8416215925775017,
+  "medianBuyHoldMonthlySd": 0.30669938766120375,
+  "note": "months of out-of-sample returns needed for 80% power, by true mean monthly edge and strategy volatility (fraction of buy-and-hold volatility)",
+  "table": [
+   {
+    "strategyMonthlySd": 0.07667484691530094,
+    "monthsNeeded": {
+     "edge 0.5%/month": 4768,
+     "edge 1%/month": 1192,
+     "edge 2%/month": 298,
+     "edge 5%/month": 48
+    }
+   },
+   {
+    "strategyMonthlySd": 0.15334969383060187,
+    "monthsNeeded": {
+     "edge 0.5%/month": 19071,
+     "edge 1%/month": 4768,
+     "edge 2%/month": 1192,
+     "edge 5%/month": 191
+    }
+   },
+   {
+    "strategyMonthlySd": 0.30669938766120375,
+    "monthsNeeded": {
+     "edge 0.5%/month": 76281,
+     "edge 1%/month": 19071,
+     "edge 2%/month": 4768,
+     "edge 5%/month": 763
+    }
+   }
+  ],
+  "oosMonthsAvailable": 32,
+  "atBonferroni1": {
+   "edge 0.5%/month": 7384,
+   "edge 1%/month": 1846,
+   "edge 2%/month": 462
+  },
+  "evaluationsRecordedInProvenance": 200
+ },
+ "tradeCounts": [
+  {
+   "family": "sma_cross",
+   "entriesPerYear": 2.93,
+   "expectedValidationTrades": 3.4,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "donchian_breakout",
+   "entriesPerYear": 5.09,
+   "expectedValidationTrades": 5.9,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "ts_momentum",
+   "entriesPerYear": 16.61,
+   "expectedValidationTrades": 19.3,
+   "minRequired": 15,
+   "structurallyPossible": true
+  },
+  {
+   "family": "trend_filtered_momentum",
+   "entriesPerYear": 8.08,
+   "expectedValidationTrades": 9.4,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "bollinger_reversion",
+   "entriesPerYear": 6.97,
+   "expectedValidationTrades": 8.1,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "rsi_reversion",
+   "entriesPerYear": 1.44,
+   "expectedValidationTrades": 1.7,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "vol_compression_breakout",
+   "entriesPerYear": 1.43,
+   "expectedValidationTrades": 1.7,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "vol_filtered_trend",
+   "entriesPerYear": 10.4,
+   "expectedValidationTrades": 12.1,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "regime_switch",
+   "entriesPerYear": 9.3,
+   "expectedValidationTrades": 10.8,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "weekly_trend",
+   "entriesPerYear": 3.17,
+   "expectedValidationTrades": 3.7,
+   "minRequired": 15,
+   "structurallyPossible": false
+  },
+  {
+   "family": "monthly_momentum",
+   "entriesPerYear": 1.6,
+   "expectedValidationTrades": 1.9,
+   "minRequired": 15,
+   "structurallyPossible": false
+  }
+ ],
+ "correlation": {
+  "commonDays": 1228,
+  "from": "2023-07-13",
+  "meanPairwise": 0.7019779324312313,
+  "minPairwise": 0.590771310845079,
+  "maxPairwise": 0.8221346712667397,
+  "firstEigenShare": 0.7324654142953082,
+  "effectiveIndependentAssets": 1.832712835887275
+ },
+ "regimes": [
+  {
+   "year": 2021,
+   "markets": 9,
+   "medianBuyHold": 0.5940363048325494,
+   "positive": 7
+  },
+  {
+   "year": 2022,
+   "markets": 9,
+   "medianBuyHold": -0.7148489503328213,
+   "positive": 0
+  },
+  {
+   "year": 2023,
+   "markets": 10,
+   "medianBuyHold": 1.4173452768729642,
+   "positive": 9
+  },
+  {
+   "year": 2024,
+   "markets": 10,
+   "medianBuyHold": 0.46000710205477335,
+   "positive": 8
+  },
+  {
+   "year": 2025,
+   "markets": 10,
+   "medianBuyHold": -0.3409066836140239,
+   "positive": 0
+  },
+  {
+   "year": 2026,
+   "markets": 10,
+   "medianBuyHold": -0.46601626016260167,
+   "positive": 0
+  }
+ ],
+ "capitalTiers": {
+  "note": "BTC daily, full stored history after warm-up; same rule at each account size. Rejected = orders below venue minimum or not covering 2x fixed cost.",
+  "singleMarket": [
+   {
+    "venue": "coinbase_taker",
+    "family": "sma_cross",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.6393,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 29.7
+     }
+    ]
+   },
+   {
+    "venue": "coinbase_taker",
+    "family": "weekly_trend",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 1.7202,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 44.5
+     }
+    ]
+   },
+   {
+    "venue": "kraken_taker",
+    "family": "sma_cross",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.7337,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 21.2
+     }
+    ]
+   },
+   {
+    "venue": "kraken_taker",
+    "family": "weekly_trend",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 1.9,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 32
+     }
+    ]
+   },
+   {
+    "venue": "dex_solana",
+    "family": "sma_cross",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.6697,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 26.8
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.6794,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 26
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.6826,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 25.8
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.6846,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 25.6
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.6852,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 25.6
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.6856,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 25.6
+     }
+    ]
+   },
+   {
+    "venue": "dex_solana",
+    "family": "weekly_trend",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 1.7836,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 39.7
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 1.7986,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 38.9
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 1.8036,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 38.6
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 1.8067,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 38.5
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 1.8077,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 38.4
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 1.8082,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 38.4
+     }
+    ]
+   },
+   {
+    "venue": "dex_ethereum_l1",
+    "family": "sma_cross",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": -0.8696,
+      "trades": 3,
+      "rejectedOrders": 878,
+      "costSharePct": 92.1
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": -0.9152,
+      "trades": 11,
+      "rejectedOrders": 136,
+      "costSharePct": 138.6
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": -0.2825,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 99.9
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.2985,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 55.3
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.4922,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 40.4
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.589,
+      "trades": 14,
+      "rejectedOrders": 0,
+      "costSharePct": 33
+     }
+    ]
+   },
+   {
+    "venue": "dex_ethereum_l1",
+    "family": "weekly_trend",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": -0.8309,
+      "trades": 3,
+      "rejectedOrders": 126,
+      "costSharePct": 92.1
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": -0.9496,
+      "trades": 14,
+      "rejectedOrders": 18,
+      "costSharePct": 177.1
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.3069,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 119.7
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 1.208,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 70.9
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 1.5083,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 54.6
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 1.6585,
+      "trades": 16,
+      "rejectedOrders": 0,
+      "costSharePct": 46.5
+     }
+    ]
+   }
+  ],
+  "crossSectional": [
+   {
+    "venue": "coinbase_taker",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.5368,
+      "rejectedOrders": 0,
+      "skippedTrims": 147,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.5005,
+      "rejectedOrders": 0,
+      "skippedTrims": 98,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.5035,
+      "rejectedOrders": 0,
+      "skippedTrims": 63,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.5048,
+      "rejectedOrders": 0,
+      "skippedTrims": 31,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.5044,
+      "rejectedOrders": 0,
+      "skippedTrims": 22,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.5045,
+      "rejectedOrders": 0,
+      "skippedTrims": 12,
+      "feasible": true
+     }
+    ]
+   },
+   {
+    "venue": "kraken_taker",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.8111,
+      "rejectedOrders": 0,
+      "skippedTrims": 199,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.8338,
+      "rejectedOrders": 0,
+      "skippedTrims": 175,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.8144,
+      "rejectedOrders": 0,
+      "skippedTrims": 140,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.7937,
+      "rejectedOrders": 0,
+      "skippedTrims": 93,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.801,
+      "rejectedOrders": 0,
+      "skippedTrims": 52,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.8035,
+      "rejectedOrders": 0,
+      "skippedTrims": 34,
+      "feasible": true
+     }
+    ]
+   },
+   {
+    "venue": "dex_solana",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": 0.4715,
+      "rejectedOrders": 0,
+      "skippedTrims": 11,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": 0.5759,
+      "rejectedOrders": 0,
+      "skippedTrims": 4,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": 0.6115,
+      "rejectedOrders": 0,
+      "skippedTrims": 3,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": 0.6329,
+      "rejectedOrders": 0,
+      "skippedTrims": 3,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": 0.6401,
+      "rejectedOrders": 0,
+      "skippedTrims": 3,
+      "feasible": true
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": 0.6436,
+      "rejectedOrders": 0,
+      "skippedTrims": 3,
+      "feasible": true
+     }
+    ]
+   },
+   {
+    "venue": "dex_ethereum_l1",
+    "byCapital": [
+     {
+      "capitalUsd": 20,
+      "netReturn": -0.7402,
+      "rejectedOrders": 307,
+      "skippedTrims": 24,
+      "feasible": false
+     },
+     {
+      "capitalUsd": 50,
+      "netReturn": -0.8944,
+      "rejectedOrders": 289,
+      "skippedTrims": 26,
+      "feasible": false
+     },
+     {
+      "capitalUsd": 100,
+      "netReturn": -0.9769,
+      "rejectedOrders": 245,
+      "skippedTrims": 43,
+      "feasible": false
+     },
+     {
+      "capitalUsd": 250,
+      "netReturn": -0.9751,
+      "rejectedOrders": 161,
+      "skippedTrims": 49,
+      "feasible": false
+     },
+     {
+      "capitalUsd": 500,
+      "netReturn": -0.9912,
+      "rejectedOrders": 27,
+      "skippedTrims": 56,
+      "feasible": false
+     },
+     {
+      "capitalUsd": 1000,
+      "netReturn": -0.3325,
+      "rejectedOrders": 0,
+      "skippedTrims": 39,
+      "feasible": true
+     }
+    ]
+   }
+  ]
+ }
+}

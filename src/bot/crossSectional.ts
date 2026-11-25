@@ -22,7 +22,10 @@ export type XsWindow = {
   maxDrawdown: number;
   buyHoldReturn: number;
   periodReturns: { entryT: number; netRet: number }[];
+  /** entries/full exits refused (below venue minimum or not covering 2x fixed cost): makes a tier infeasible */
   rejectedOrders: number;
+  /** sub-minimum rebalancing trims of positions that stay held: not executed, weights drift (not a rejection) */
+  skippedTrims: number;
   exposure: number;
   /** equity marked at each close, ending with the liquidated value */
   equity: { t: number; v: number }[];
@@ -68,7 +71,7 @@ function align(series: Series[]) {
  */
 export function simulateXs(series: Series[], p: XsParams, from: number, to: number, cost: CostModel, delay = 0, capitalUsd = 1000): XsWindow {
   const { days, rows } = align(series);
-  const empty: XsWindow = { periods: 0, trades: 0, netReturn: 0, grossReturn: 0, maxDrawdown: 0, buyHoldReturn: 0, periodReturns: [], rejectedOrders: 0, exposure: 0, equity: [] };
+  const empty: XsWindow = { periods: 0, trades: 0, netReturn: 0, grossReturn: 0, maxDrawdown: 0, buyHoldReturn: 0, periodReturns: [], rejectedOrders: 0, skippedTrims: 0, exposure: 0, equity: [] };
   const start = days.findIndex((t) => t >= from);
   const end = days.findIndex((t) => t >= to);
   const last = end === -1 ? days.length - 1 : end - 1;
@@ -79,6 +82,7 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
     const qty = new Array<number>(n).fill(0);
     let entries = 0;
     let rejected = 0;
+    let skippedTrims = 0;
     let peak = capitalUsd;
     let maxDd = 0;
     let investedDays = 0;
@@ -97,7 +101,12 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
         const cur = qty[j] * px;
         if (cur > target(j) + 1e-9) {
           const sellVal = cur - target(j);
-          if (sellVal < minOrder || sellVal * (1 - side) <= fixed) { rejected++; continue; }
+          if (sellVal < minOrder || sellVal * (1 - side) <= fixed) {
+            // a sub-minimum TRIM of a position that stays held is simply not done (weights drift); a full exit
+            // that cannot be executed is a rejected order (the position stays open against the rule)
+            if (target(j) > 0) skippedTrims++; else rejected++;
+            continue;
+          }
           qty[j] -= sellVal / px;
           if (qty[j] * px < 1e-9) qty[j] = 0;
           cash += exitProceeds(sellVal * (1 - side), fixed);
@@ -108,7 +117,7 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
         const need = target(j) - qty[j] * px;
         if (need <= 1e-9) continue;
         const notional = Math.min(cash, need / (1 - side) + fixed); // value received = need
-        if (notional < minOrder || notional <= 2 * fixed) { rejected++; continue; }
+        if (notional < minOrder || notional <= 2 * fixed) { if (qty[j] > 0) skippedTrims++; else rejected++; continue; }
         if (qty[j] === 0) entries++;
         cash -= notional;
         qty[j] += ((notional - fixed) * (1 - side)) / px;
@@ -142,7 +151,7 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
     equity.push({ t: days[last], v: cash });
     peak = Math.max(peak, cash);
     maxDd = Math.max(maxDd, peak > 0 ? (peak - cash) / peak : 0);
-    return { equity: cash, entries, rejected, maxDd, periodReturns, curve: equity, exposure: investedDays / Math.max(1, last - start) };
+    return { equity: cash, entries, rejected, skippedTrims, maxDd, periodReturns, curve: equity, exposure: investedDays / Math.max(1, last - start) };
   };
   const net = run(sideCostFrac(cost), cost.fixedCostUsd, cost.minOrderUsd);
   const gross = run(0, 0, 0);
@@ -156,6 +165,7 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
     buyHoldReturn: bh,
     periodReturns: net.periodReturns,
     rejectedOrders: net.rejected,
+    skippedTrims: net.skippedTrims,
     exposure: net.exposure,
     equity: net.curve
   };
