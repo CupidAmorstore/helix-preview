@@ -1,0 +1,47 @@
+{
+ "baseline": "886d4b2",
+ "ranAt": "2026-11-25T05:42:23.231Z",
+ "AUD-202": {
+  "folds": 0,
+  "compoundedNet": 0,
+  "rejectedByWalkForward": false,
+  "reproduced": true
+ },
+ "AUD-203": {
+  "delay0MaxDrawdown": 0.5,
+  "delay2MaxDrawdown": 0.5075187969924813,
+  "reproduced": true
+ },
+ "AUD-205": {
+  "tailProbability": 0.0001256281407035176,
+  "iterations": 4000,
+  "expectedDrawsBelowQuantile": 0.5025125628140704,
+  "quantileIndexUsed": 0,
+  "note": "index 0 = the single smallest of 4000 resamples, i.e. the sample minimum; Monte-Carlo SE of an order statistic with <1 expected exceedance is unbounded",
+  "reproduced": true
+ },
+ "AUD-207": {
+  "trades": 1,
+  "forcedExit": true,
+  "reportedMaxDrawdown": 0.049999999999999885,
+  "finalEquityFraction": 0.9185260344486241,
+  "reproduced": true
+ },
+ "AUD-208": {
+  "netNoCost": 0.46330504585442567,
+  "netWithImpossibleFixedCostAndMinimum": 0.46330504585442567,
+  "tradesWithImpossibleMinimum": 3,
+  "reproduced": true
+ },
+ "4.1-embargo": {
+  "vol_filtered_trend": {
+   "warmup": 251,
+   "trueHorizon": 271
+  },
+  "vol_compression_breakout": {
+   "warmup": 121,
+   "trueHorizon": 141
+  },
+  "reproduced": true
+ }
+}
