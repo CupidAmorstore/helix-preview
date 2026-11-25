@@ -21,7 +21,7 @@ See `INDEPENDENT_AUDIT_REMEDIATION_2026_11_25.md` (severity, reproduction, root 
 | Secrets | none in history; only the public debug keystore | same |
 | Research bottlenecks | 7 studies (costs, trade counts, power, correlation, regimes, capital tiers, survivorship) | `research/research-bottleneck-study.json` |
 | Android | v41, 30/30 emulator on exact artifact; signing fail-closed | `ANDROID_RELEASE_EVIDENCE.md` |
-| Product (section 10) | not addressed this cycle | — |
+| Product (section 10) | partial: Bot overview reviewed (meets the directive's list); USDC label and chart colour fixed | `0b81a56`+ |
 
 ## Totals
 Tests 271 passed / 0 failed / 0 skipped · browser 68/68, 21/21, 10/10, 24/24 · emulator 30/30 · registry 199

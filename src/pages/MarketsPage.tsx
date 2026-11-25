@@ -120,7 +120,7 @@ export default function MarketsPage() {
                   <span className="block text-xs text-slate-500">
                     {r.symbol}
                     {r.cap ? ` · ${fmtUsd(r.cap, { compact: true })}` : ''}
-                    {!r.tradable ? ' · not on Coinbase' : ''}
+                    {!r.tradable ? (r.symbol === 'USDC' ? ' · = USD on Coinbase (no pair)' : ' · no USD pair on Coinbase') : ''}
                   </span>
                 </span>
                 <span className="text-right">

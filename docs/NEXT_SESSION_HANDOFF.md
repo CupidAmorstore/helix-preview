@@ -15,8 +15,9 @@ destructive git; no secrets in chat or repo; no merge into `main` without owner 
 
 ## Next autonomous work (if the owner provides nothing new)
 1. Forward paper-trading harness for ≤ 3 pre-registered rules (protocol in the research master report).
-2. Product pass on Home / Markets / Portfolio / Trading Bot screens (section 10 of the 2026-11-25 directive was
-   not addressed this cycle).
+2. Product pass (started 2026-11-25): Trading Bot overview already shows capital, positions, P&L, fees, drawdown,
+   rejection reasons and why it holds cash; fixed USDC 'not on Coinbase' label and chart colour (red for a falling
+   period). Still to review: onboarding, settings/security screen, watchlists, order-history layout, TalkBack.
 3. (done 2026-11-25) polyfill plugin replaced by explicit shims; full npm audit 0.
 
 ## When the owner provides the private repository

@@ -1,6 +1,7 @@
-﻿import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData, type UTCTimestamp } from 'lightweight-charts';
+import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData, type UTCTimestamp } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { fetchCandles } from '../services/market';
+import { chartTone } from './chartTone';
 
 type MarketChartProps = {
   /** Coinbase product id, e.g. BTC-USD */
@@ -15,6 +16,11 @@ const fmtAxis = (v: number) =>
 
 export default function MarketChart({ symbol, timeframe, livePrice }: MarketChartProps) {
   const lastTime = useRef<UTCTimestamp | null>(null);
+  const firstValue = useRef<number | null>(null);
+  const paint = (last: number | null) => {
+    const t = chartTone(firstValue.current, last);
+    seriesRef.current?.applyOptions({ lineColor: t.line, topColor: t.top, bottomColor: t.bottom });
+  };
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Area'> | null>(null);
@@ -78,6 +84,8 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
         }));
         seriesRef.current?.setData(data);
         lastTime.current = data.length ? (data[data.length - 1].time as UTCTimestamp) : null;
+        firstValue.current = data.length ? data[0].value : null;
+        paint(data.length ? data[data.length - 1].value : null);
         chartRef.current?.timeScale().fitContent();
         setStatus('idle');
       } catch {
@@ -96,6 +104,7 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
     if (!livePrice || lastTime.current === null || status !== 'idle') return;
     try {
       seriesRef.current?.update({ time: lastTime.current, value: livePrice });
+      paint(livePrice);
     } catch {
       /* chart not ready */
     }
