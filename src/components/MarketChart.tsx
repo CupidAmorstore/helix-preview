@@ -33,6 +33,8 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
       height: 280,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
+        // the floating logo overlapped the plot (audit DS-3); attribution is given as a link below the chart
+        attributionLogo: false,
         textColor: '#A6A093',
         fontFamily: 'Instrument Sans, system-ui, sans-serif'
       },
@@ -113,7 +115,10 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
   return (
     <div className="relative">
       <div ref={containerRef} className="h-[280px] w-full" role="img" aria-label={`${symbol} price chart, ${timeframe} intervals`} />
-      <p className="mt-1 text-[11px] text-slate-500">Times in your time zone ({Intl.DateTimeFormat().resolvedOptions().timeZone}). The last point is the current, unfinished interval and moves with the live price.</p>
+      <p className="mt-1 text-[11px] text-slate-500">
+        <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center underline underline-offset-2">Charting by TradingView</a>
+      </p>
+      <p className="text-[11px] text-slate-500">Times in your time zone ({Intl.DateTimeFormat().resolvedOptions().timeZone}). The last point is the current, unfinished interval and moves with the live price.</p>
       {status === 'loading' && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
       )}

@@ -1,7 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { bot, useBotData } from '../bot/botData';
-import { botHeadline, plainReasons, researchAgeHours } from '../bot/insights';
+// the research summary (~400 KB) is loaded after first paint, in its own chunk (audit PERF-1)
+type BotGlance = { tested: number; qualified: number; holdingCash: boolean; ageH: number; reason?: { text: string; count: number } };
+function useBotGlance(): BotGlance | null {
+  const [g, setG] = useState<BotGlance | null>(null);
+  useEffect(() => {
+    let alive = true;
+    void Promise.all([import('../bot/botData'), import('../bot/insights')]).then(([d, i]) => {
+      if (!alive) return;
+      const s = d.bot();
+      const h = i.botHeadline(s);
+      setG({ tested: h.tested, qualified: h.qualified, holdingCash: h.holdingCash, ageH: i.researchAgeHours(s), reason: i.plainReasons(s, 1)[0] });
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return g;
+}
 import { MARKET_COINS, fetchCandles } from '../services/market';
 import { listAddresses, listSnapshots } from '../services/storage';
 import type { SnapshotRecord } from '../types';
@@ -64,7 +80,7 @@ function OpenAccount() {
 }
 
 export default function HomePage() {
-  useBotData();
+  const glance = useBotGlance();
   const { account, loading, value, feed } = usePaper();
   const { list: watchlist } = useWatchlist();
   const [range, setRange] = useState<(typeof RANGES)[number]['key']>('1W');
@@ -117,9 +133,6 @@ export default function HomePage() {
     return r.length ? { top: r[0], bottom: r[r.length - 1] } : null;
   }, [feed.prices, feed.open24h]);
 
-  const head = botHeadline(bot());
-  const reason = plainReasons(bot(), 1)[0];
-  const age = researchAgeHours(bot());
   const recent = account ? [...account.orders].reverse().slice(0, 4) : [];
   const positions = account ? Object.values(account.positions) : [];
   const showWatched = watched && (watched.addresses > 0 || (watched.snap && watched.snap.totalUsd > 0));
@@ -271,15 +284,19 @@ export default function HomePage() {
       <Panel title="Trading Bot" action={<Link to="/bot" className={more}>Open</Link>}>
         <div className="flex items-start gap-3">
           <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-paper" aria-hidden="true" />
-          <div className="space-y-1">
-            <p className="text-sm font-semibold text-white">
-              {head.holdingCash ? 'No strategy approved · holding cash' : `${head.qualified} strategies approved for paper trading`}
-            </p>
-            <p className="text-xs text-slate-400">
-              {head.tested} strategy tests · last research run {age < 48 ? `${Math.floor(age)} h` : `${Math.floor(age / 24)} days`} ago · no bot trades yet
-            </p>
-            {head.holdingCash && reason && <p className="text-xs text-slate-300">Main reason: {reason.text.toLowerCase()} ({reason.count}×)</p>}
-          </div>
+          {!glance ? (
+            <div className="h-12 w-full animate-pulse bg-ink-800/60" aria-label="Loading bot status" />
+          ) : (
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-white">
+                {glance.holdingCash ? 'No strategy approved · holding cash' : `${glance.qualified} strategies approved for paper trading`}
+              </p>
+              <p className="text-xs text-slate-400">
+                {glance.tested} strategy tests · last research run {glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} days`} ago · no bot trades yet
+              </p>
+              {glance.holdingCash && glance.reason && <p className="text-xs text-slate-300">Main reason: {glance.reason.text.toLowerCase()} ({glance.reason.count}×)</p>}
+            </div>
+          )}
         </div>
       </Panel>
 

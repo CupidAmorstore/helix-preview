@@ -126,7 +126,7 @@ export default function ConnectionsPage() {
             onChange={(e) => setVaultPassword(e.target.value)}
             placeholder={vault.hasVault ? 'Enter vault password' : 'Create a vault password'}
             aria-describedby="vault-hint"
-            className="flex-1 min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
+            className="min-w-0 flex-1 basis-48 min-h-[44px] rounded-lg border border-ink-500 bg-ink-800 px-3 py-2 text-sm text-slate-200"
           />
           <button
             type="button"

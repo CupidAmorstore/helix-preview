@@ -5,7 +5,7 @@ export function Card({ title, right, children, className = '' }: { title?: strin
   return (
     <section className={`border-t border-ink-600 pt-4 ${className}`}>
       {(title || right) && (
-        <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           {title && <h2 className="text-sm font-semibold text-slate-200">{title}</h2>}
           {right}
         </div>

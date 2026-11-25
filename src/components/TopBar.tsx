@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 /** Slim brand bar. The money type is always visible as a strip, not a badge. */
 export default function TopBar() {
   return (
-    <header className="app-topbar sticky top-0 z-20 sm:px-6 lg:px-10" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+    <header className="app-topbar sticky top-0 z-20 sm:px-6 lg:px-10" style={{ paddingTop: 'max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px))' }}>
       <div className="flex items-center justify-between gap-3 px-4 py-2.5">
         <Link to="/" className="flex min-h-[44px] items-center gap-2" aria-label="HELIX home">
           <img src={`${import.meta.env.BASE_URL}assets/helix-mark.svg`} alt="" className="h-6 w-6" />

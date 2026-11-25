@@ -57,7 +57,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <nav
         aria-label="Main"
         className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-ink-600 bg-ink-900 lg:hidden"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px))' }}
       >
         {primaryNav.map((item) => {
           const active = isActive(item.path, pathname);

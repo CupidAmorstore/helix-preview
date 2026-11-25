@@ -186,3 +186,7 @@ body {
   table.stack-sm td[data-label]::before { content: attr(data-label); color: rgb(100 116 139); text-align: left; flex-shrink: 0; font-family: inherit; }
   table.stack-sm td:first-child:not([data-label]) { font-weight: 600; color: rgb(226 232 240); }
 }
+
+/* A11Y-1: long words, URLs and big figures wrap instead of widening the page at large text sizes */
+html { overflow-wrap: break-word; }
+input { min-width: 0; }

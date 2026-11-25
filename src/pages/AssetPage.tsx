@@ -97,9 +97,9 @@ export default function AssetPage() {
       />
 
       <section className="space-y-1">
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <CoinBadge symbol={sym} image={coin?.image} size={40} />
-          <div className="font-mono text-3xl font-medium tracking-tight text-white tabular-nums">{fmtUsd(price)}</div>
+          <div className="min-w-0 font-mono text-3xl font-medium tracking-tight text-white tabular-nums">{fmtUsd(price)}</div>
         </div>
         <div className="flex flex-wrap items-center gap-x-2 text-sm">
           <Change pct={pct} abs={price && open ? price - open : null} />

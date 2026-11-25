@@ -121,7 +121,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
         aria-modal="true"
         aria-label={title}
         className="relative mx-auto max-h-[90vh] w-full max-w-xl space-y-4 overflow-y-auto overscroll-contain rounded-t-3xl border border-ink-600 bg-ink-800 px-4 pt-3 outline-none"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)' }}
+        style={{ paddingBottom: 'calc(max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px)) + 20px)' }}
       >
         <div className="mx-auto h-1 w-10 rounded-full bg-ink-600" aria-hidden="true" />
         <h2 className="text-lg font-semibold text-white">{title}</h2>
@@ -134,7 +134,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
 
 export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { value: T; label: string }[]; onChange: (v: T) => void; label: string }) {
   return (
-    <div role="radiogroup" aria-label={label} className="flex gap-5 border-b border-ink-600">
+    <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-x-5 border-b border-ink-600">
       {options.map((o) => (
         <button
           key={o.value}
@@ -142,7 +142,7 @@ export function Segmented<T extends string>({ value, options, onChange, label }:
           role="radio"
           aria-checked={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`-mb-px min-h-[44px] border-b-2 text-sm ${value === o.value ? 'border-white font-semibold text-white' : 'border-transparent text-slate-400'}`}
+          className={`-mb-px min-h-[44px] min-w-[44px] border-b-2 text-sm ${value === o.value ? 'border-white font-semibold text-white' : 'border-transparent text-slate-400'}`}
         >
           {o.label}
         </button>

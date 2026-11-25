@@ -69,7 +69,7 @@ export default function MarketsPage() {
   return (
     <div className="mx-auto max-w-xl space-y-4">
       <h1 className="text-[26px] font-semibold tracking-tight text-white">Markets</h1>
-      <label className="flex min-h-[48px] items-center gap-2 rounded-full border border-ink-500 bg-ink-800 px-4">
+      <label className="flex min-h-[48px] min-w-0 items-center gap-2 rounded-full border border-ink-500 bg-ink-800 px-4">
         <span aria-hidden="true" className="text-slate-400">⌕</span>
         <span className="sr-only">Search coins</span>
         <input
@@ -87,9 +87,9 @@ export default function MarketsPage() {
         options={[{ value: 'all', label: 'All' }, { value: 'watch', label: 'Watchlist' }, { value: 'gainers', label: 'Gainers' }, { value: 'losers', label: 'Losers' }]}
       />
       {tab === 'all' && (
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
           <span id="sort-label">Sort</span>
-          <div role="radiogroup" aria-labelledby="sort-label" className="flex gap-1">
+          <div role="radiogroup" aria-labelledby="sort-label" className="flex flex-wrap gap-1">
             {([['cap', 'Market cap'], ['volume', 'Volume'], ['change', '24h change']] as const).map(([v, l]) => (
               <button key={v} type="button" role="radio" aria-checked={sort === v} onClick={() => setSort(v)}
                 className={`min-h-[44px] px-2 ${sort === v ? 'font-semibold text-white underline decoration-1 underline-offset-4' : 'text-slate-400'}`}>

@@ -42,7 +42,7 @@ export default function AlertWatcher() {
   if (!toast) return null;
   return (
     <div role="alert" className="fixed inset-x-3 z-40 flex items-center justify-between gap-3 rounded-xl border border-ink-500 bg-ink-800 px-4 py-3 shadow-soft"
-      style={{ top: 'calc(env(safe-area-inset-top, 0px) + 64px)' }}>
+      style={{ top: 'calc(max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px)) + 64px)' }}>
       <Link to="/alerts" onClick={() => setToast(null)} className="min-w-0 flex-1 text-sm text-white">
         <span className="eyebrow block text-paper">Price alert</span>
         {toast}

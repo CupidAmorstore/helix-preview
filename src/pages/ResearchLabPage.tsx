@@ -266,7 +266,7 @@ function Strategies() {
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" onClick={onClick} className={`rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-helix-400' : 'border-ink-600 text-slate-400'}`}>
+    <button type="button" onClick={onClick} className={`min-h-[44px] rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-helix-400' : 'border-ink-600 text-slate-400'}`}>
       {children}
     </button>
   );
@@ -286,7 +286,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
   const dd = (w?: CandidateRow['train']) => (w ? (w.maxDrawdown ?? w.maxDrawdownBound) : undefined);
   return (
     <div className="space-y-3 border-t border-ink-600 px-4 py-3 text-xs">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
         <table className="stack-sm w-full min-w-[520px] text-left">
           <thead className="text-slate-500">
             <tr>
@@ -376,7 +376,7 @@ function Lab() {
         </details>
       </Card>
       <Card title="Datasets">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
           <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">TF</th><th className="font-normal">Bars</th><th className="font-normal">Quality</th><th className="font-normal">Dataset id</th><th className="font-normal">Notes</th></tr>
@@ -487,7 +487,7 @@ function Watchbot() {
         )}
       </Card>
       <Card title="Market coverage (hourly)">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
           <table className="stack-sm w-full min-w-[520px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Data quality</th><th className="font-normal">Regime</th><th className="font-normal">Volatility</th><th className="font-normal">Min order</th></tr>
@@ -552,7 +552,7 @@ function Risk() {
           A $20 account is not a scaled-down $1,000 account: venue minimums and fixed costs (gas) bind. Round-trip cost shown for one
           policy-sized position.
         </p>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
           <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr>
@@ -682,7 +682,7 @@ function MeasuredCosts() {
     <Card
       title="Measured execution costs (order books)"
       right={
-        <div className="flex gap-1 text-xs">
+        <div className="flex flex-wrap gap-1 text-xs">
           {[20, 100, 1000, 5000].map((n) => (
             <Chip key={n} on={size === n} onClick={() => setSize(n)}>${n}</Chip>
           ))}
@@ -694,7 +694,7 @@ function MeasuredCosts() {
         {c.collectionDays} day{c.collectionDays === 1 ? '' : 's'}. Research still uses the {total} bps placeholder until {c.requiredDays} days are
         collected (pre-registered). Exchange fees are separate and dominate: {COST_PRESETS.coinbase_taker.takerFeeBps} bps Coinbase taker.
       </p>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
         <table className="stack-sm w-full min-w-[420px] text-left text-xs">
           <thead className="text-slate-500">
             <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Venue</th><th className="font-normal">Half-spread</th><th className="font-normal">Slippage</th><th className="font-normal">Total vs {total} bps</th></tr>

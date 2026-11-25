@@ -169,7 +169,7 @@ export default function PortfolioPage() {
       <PageHeader title="Watched addresses" back subtitle="Read-only balances from public blockchain data" />
 
       <section className="space-y-3 border-t border-ink-600 pt-5">
-        <div className="flex items-end justify-between gap-3">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <div className="eyebrow text-slate-500">Total value</div>
             <div className="font-mono text-[32px] font-semibold leading-tight text-white">${totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
