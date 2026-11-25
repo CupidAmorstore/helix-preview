@@ -325,7 +325,8 @@ async function main() {
         validation: c.validation && { ...c.validation, perMarketNet: c.validation.perMarketNet },
         test: c.test && { ...c.test, perMarketNet: c.test.perMarketNet },
         stress: c.stress,
-        ci: c.ci
+        ci: c.ci,
+        walkForward: c.walkForward && { compoundedNet: c.walkForward.compoundedNet, positiveFolds: c.walkForward.positiveFolds, folds: c.walkForward.folds.length, embargoBars: c.walkForward.embargoBars }
       })).concat(r.crossSectional ? [xsRow(r.crossSectional)] : []),
       feasibility: r.feasibility
     })),
@@ -369,7 +370,8 @@ function xsRow(x: XsReport) {
     validation: w(x.validation),
     test: w(x.test),
     stress: x.stress && { ...x.stress, doubleCostTestNet: Number.isFinite(x.stress.doubleCostTestNet) ? x.stress.doubleCostTestNet : null, delayedTestNet: Number.isFinite(x.stress.delayedTestNet) ? x.stress.delayedTestNet : null },
-    ci: x.ci
+    ci: x.ci,
+    walkForward: x.walkForward && { compoundedNet: x.walkForward.compoundedNet, positiveFolds: x.walkForward.positiveFolds, folds: x.walkForward.folds.length, embargoBars: x.walkForward.embargoBars }
   };
 }
 

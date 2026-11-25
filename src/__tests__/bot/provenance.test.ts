@@ -133,3 +133,35 @@ describe('research cycle integrity (4.3, 4.4, 4.5)', () => {
     expect(datasetSha256(a)).toBe(datasetSha256(a.map((k) => ({ ...k }))));
   });
 });
+
+describe('audit 4.3/4.6 feed trust boundary', async () => {
+  const { validateSummary } = await import('../../bot/feedValidation');
+  const raw = (await import('../../bot/data/latest.json')).default as unknown as { runs: { gates: string; markets: { candidates: Record<string, unknown>[] }[]; totals: Record<string, number> }[] };
+  const forge = (gates: string, wf: unknown) => {
+    const s = JSON.parse(JSON.stringify(raw));
+    const c = s.runs[0].markets[0].candidates[0];
+    s.runs[0].gates = gates;
+    c.status = 'qualified_paper_strategy';
+    c.rejectionReasons = [];
+    c.walkForward = wf;
+    s.runs[0].totals.qualified += 1;
+    return s;
+  };
+  const goodWf = { compoundedNet: 0.2, positiveFolds: 4, folds: 4, embargoBars: 200 };
+
+  it('the real bundled summary is valid', () => {
+    expect(validateSummary(raw, Date.parse('2026-11-26'))).toEqual([]);
+  });
+  it('a candidate qualified under superseded gates is refused (revalidation required)', () => {
+    expect(validateSummary(forge('gates-v2', goodWf), Date.parse('2026-11-26')).join(' ')).toMatch(/revalidation required/);
+  });
+  it.each([[undefined], [{ ...goodWf, folds: 2 }], [{ ...goodWf, compoundedNet: -0.1 }], [{ ...goodWf, positiveFolds: 1 }], [{ ...goodWf, compoundedNet: NaN }]])(
+    'a qualified label without complete positive walk-forward evidence is refused (%j)', (wf) => {
+      expect(validateSummary(forge(GATES.version, wf), Date.parse('2026-11-26')).join(' ')).toMatch(/walk-forward evidence/);
+    });
+  it('a feed claiming live mode is refused; risk and live flags are not read from the feed at all', () => {
+    const s = JSON.parse(JSON.stringify(raw));
+    s.mode = 'live';
+    expect(validateSummary(s, Date.parse('2026-11-26'))[0]).toMatch(/not 'paper'/);
+  });
+});
