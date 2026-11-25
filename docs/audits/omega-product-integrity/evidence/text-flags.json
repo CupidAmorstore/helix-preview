@@ -1,0 +1,501 @@
+{
+ "totalTextElements": 2843,
+ "uniqueTexts": 1337,
+ "flags": [
+  {
+   "issue": "unimplemented feature disclosed",
+   "route": "/markets",
+   "text": "List: CoinGecko , updated 2s ago . Main coins use live Coinbase prices; 24h change from Coinbase where live. E"
+  },
+  {
+   "issue": "unimplemented feature disclosed",
+   "route": "/markets/BTC",
+   "text": "Coinbase stats 2s ago \u00b7 CoinGecko 2s ago . Network and liquidity-pool data are not available yet."
+  },
+  {
+   "issue": "unimplemented feature disclosed",
+   "route": "/markets/USDC",
+   "text": "Coinbase stats unavailable \u00b7 CoinGecko 2s ago . Network and liquidity-pool data are not available yet."
+  },
+  {
+   "issue": "overstated: fees are modelled",
+   "route": "/bot",
+   "text": "Every idea is tested on data it has never seen, with real fees. None passed every test, so the bot places no t"
+  },
+  {
+   "issue": "label shows data-refresh time, not research run",
+   "route": "/bot",
+   "text": "Last successful research run"
+  },
+  {
+   "issue": "unsupported claim (no schedule runs)",
+   "route": "/bot",
+   "text": "GitHub Actions, scheduled daily \u00b7 no published run received yet"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Trend \u00b7 risk Medium \u00b7 22 tests \u00b7 1 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Trend \u00b7 risk Medium \u00b7 22 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Trend \u00b7 risk Medium-high \u00b7 22 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Volatility \u00b7 risk Medium-high \u00b7 22 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Mean reversion \u00b7 risk High \u00b7 22 tests \u00b7 1 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Mean reversion \u00b7 risk High \u00b7 22 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Risk-managed trend \u00b7 risk Medium \u00b7 11 tests \u00b7 1 reached the final test"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot?tab=strategies",
+   "text": "Cross-sectional momentum \u00b7 risk Medium-high \u00b7 1 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Cross-sectional momentum \u00b7 risk Medium-high \u00b7 1 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Hybrid \u00b7 risk Medium-high \u00b7 11 tests \u00b7 1 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Multi-week trend \u00b7 risk Medium \u00b7 11 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "awkward wording",
+   "route": "/bot?tab=strategies",
+   "text": "Multi-month momentum \u00b7 risk Medium-high \u00b7 11 tests \u00b7 0 reached the final test"
+  },
+  {
+   "issue": "label shows data-refresh time, not research run",
+   "route": "/bot?tab=activity",
+   "text": "Last run 7 h ago ."
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d sma_cross(fast=10,slow=100)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d donchian_breakout(entry=20,exit=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d ts_momentum(lookback=24,threshold=0)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d trend_filtered_momentum(filter=200,lookback=24)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d bollinger_reversion(k=2.5,maxHold=24,n=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d rsi_reversion(hi=55,lo=25,maxHold=24,n=14)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d vol_compression_breakout(lookback=120,n=20,pct=0.1)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d sma_cross(fast=10,slow=200)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d donchian_breakout(entry=20,exit=10)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d ts_momentum(lookback=24,threshold=0)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d trend_filtered_momentum(filter=200,lookback=24)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d bollinger_reversion(k=2,maxHold=24,n=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d rsi_reversion(hi=55,lo=25,maxHold=24,n=14)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d vol_compression_breakout(lookback=120,n=20,pct=0.1)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d vol_filtered_trend(lookback=250,trend=100,vol=20)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot?tab=activity",
+   "text": "1 bars \u00b7 0 trades \u00b7 in cash"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d vol_filtered_trend(lookback=250,trend=50,vol=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d weekly_trend(n=100,period=7)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot?tab=activity",
+   "text": "0 bars \u00b7 0 trades \u00b7 in cash"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "BTC-USD 1d monthly_momentum(lookback=90,period=28)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d weekly_trend(n=200,period=7)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot?tab=activity",
+   "text": "ETH-USD 1d monthly_momentum(lookback=90,period=28)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "bollinger_reversion(k=2,maxHold=24,n=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "vol_filtered_trend(lookback=250,trend=100,vol=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=10,slow=100)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "ts_momentum(lookback=24,threshold=0)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "regime_switch(er=20,erTrend=0.4,k=2,maxHold=20,n=20,trend=50)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "donchian_breakout(entry=20,exit=10)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "trend_filtered_momentum(filter=200,lookback=24)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "vol_filtered_trend(lookback=250,trend=50,vol=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "donchian_breakout(entry=55,exit=10)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "monthly_momentum(lookback=90,period=28)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "donchian_breakout(entry=20,exit=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "rsi_reversion(hi=55,lo=25,maxHold=24,n=14)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "ts_momentum(lookback=168,threshold=0)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "weekly_trend(n=200,period=7)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=50,slow=200)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "weekly_trend(n=100,period=7)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=20,slow=200)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "bollinger_reversion(k=2.5,maxHold=24,n=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "donchian_breakout(entry=55,exit=20)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "bollinger_reversion(k=2,maxHold=24,n=50)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "XRP-USD \u00b7 1d \u00b7 validation +14.7% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "trend_filtered_momentum(filter=200,lookback=72)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=50,slow=100)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "vol_compression_breakout(lookback=120,n=20,pct=0.1)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "bollinger_reversion(k=2.5,maxHold=24,n=50)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "DOGE-USD \u00b7 1d \u00b7 validation +4.9% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "ts_momentum(lookback=72,threshold=0)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "SOL-USD \u00b7 1d \u00b7 validation +3.4% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "AVAX-USD \u00b7 1h \u00b7 validation +3.3% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=10,slow=200)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "vol_compression_breakout(lookback=120,n=20,pct=0.2)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "LTC-USD \u00b7 1h \u00b7 validation -0.3% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "ADA-USD \u00b7 1h \u00b7 validation -1.0% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "XRP-USD \u00b7 1d \u00b7 validation -1.0% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "BTC-USD \u00b7 1d \u00b7 validation -1.6% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "rsi_reversion(hi=55,lo=30,maxHold=24,n=14)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "LTC-USD \u00b7 1h \u00b7 validation -3.7% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "XRP-USD \u00b7 1d \u00b7 validation -4.0% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "SOL-USD \u00b7 1d \u00b7 validation -6.2% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "ETH-USD \u00b7 1d \u00b7 validation -6.8% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "DOGE-USD \u00b7 1d \u00b7 validation -10.9% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "DOT-USD \u00b7 1d \u00b7 validation -31.6% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "monthly_momentum(lookback=180,period=28)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "XRP-USD \u00b7 1d \u00b7 validation -32.8% net ( 1 trades)"
+  },
+  {
+   "issue": "internal parameter string shown to users",
+   "route": "/bot/research?tab=strategies",
+   "text": "sma_cross(fast=20,slow=100)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "XRP-USD \u00b7 1d \u00b7 validation -36.5% net ( 1 trades)"
+  },
+  {
+   "issue": "grammar: singular/plural",
+   "route": "/bot/research?tab=strategies",
+   "text": "DOT-USD \u00b7 1d \u00b7 validation -46.8% net ( 1 trades)"
+  },
+  {
+   "issue": "unimplemented feature disclosed",
+   "route": "/bot/research?tab=watchbot",
+   "text": "Same asset on several venues or chains counts as one exposure. DEX/multichain discovery is not yet implemented"
+  },
+  {
+   "issue": "cryptic link label",
+   "route": "/wallet",
+   "text": "uo1"
+  },
+  {
+   "issue": "cryptic link label",
+   "route": "/wallet",
+   "text": "sepoliafaucet"
+  },
+  {
+   "issue": "cryptic link label",
+   "route": "/wallet",
+   "text": "solfaucet"
+  },
+  {
+   "issue": "placeholder visible to users",
+   "route": "/support",
+   "text": "[TODO: Legal review required] Replace this section with official support commitments and response SLAs."
+  },
+  {
+   "issue": "placeholder visible to users",
+   "route": "/privacy",
+   "text": "[TODO: Legal review required] Replace this summary with a full privacy policy before launch."
+  },
+  {
+   "issue": "placeholder visible to users",
+   "route": "/terms",
+   "text": "[TODO: Legal review required] Replace this summary with a full terms of service before launch."
+  },
+  {
+   "issue": "label shows data-refresh time, not research run",
+   "route": "/bot?tab=activity",
+   "text": "Last run 8 h ago ."
+  }
+ ]
+}

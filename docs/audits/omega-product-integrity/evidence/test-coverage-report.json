@@ -1,0 +1,16 @@
+{
+ "discovered": 745,
+ "activatedIndividually": 248,
+ "identicalCopies": 494,
+ "disabled": 3,
+ "verifiedWorkflows": 8,
+ "defectsOnElements": 6,
+ "blocked": 0,
+ "remaining": 0,
+ "notCoveredByCrawler": [
+  "physical device",
+  "TalkBack",
+  "gestures (none implemented)",
+  "Android back (covered by emulator run)"
+ ]
+}
