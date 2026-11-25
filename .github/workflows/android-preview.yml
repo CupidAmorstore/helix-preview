@@ -110,12 +110,14 @@ jobs:
           CERT=$("$SIGNER" verify --print-certs helix-preview.apk | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
           PUBLIC=2c87443785d679b0b51b8115738083aa38ac766f4c1280e4e162484c9e1e1cdc
           echo "apk_certificate_sha256=$CERT" | tee -a apk-identity.txt
+          if [ -z "$CERT" ]; then echo "::error::could not read the APK signing certificate"; exit 1; fi
           if [ "$CERT" = "$PUBLIC" ]; then
-            [ "$SIGNING" = "private QA key" ] && { echo "::error::claimed private QA key but APK carries the PUBLIC debug certificate"; exit 1; }
-            [ "$REQUIRE_PRIVATE" = "true" ] && { echo "::error::restricted QA build signed with the PUBLIC debug key"; exit 1; }
-          else
-            [ "$SIGNING" = "private QA key" ] || { echo "::error::unexpected signing certificate $CERT"; exit 1; }
+            if [ "$SIGNING" = "private QA key" ]; then echo "::error::claimed private QA key but APK carries the PUBLIC debug certificate"; exit 1; fi
+            if [ "$REQUIRE_PRIVATE" = "true" ]; then echo "::error::restricted QA build signed with the PUBLIC debug key"; exit 1; fi
+          elif [ "$SIGNING" != "private QA key" ]; then
+            echo "::error::unexpected signing certificate $CERT"; exit 1
           fi
+          echo "signing certificate consistent with: $SIGNING"
       - uses: actions/upload-artifact@v4
         with:
           name: helix-preview-apk
