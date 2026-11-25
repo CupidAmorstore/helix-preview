@@ -178,8 +178,19 @@ jobs:
           script: |
             adb install -r helix-e2e.apk
             node scripts/android-e2e.cjs
-      - name: Publish evidence
+      # Authoritative evidence: a workflow artifact of this run (does not depend on the Releases API).
+      - name: Keep evidence as a run artifact
         if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-e2e-evidence
+          path: e2e-out/
+          retention-days: 90
+      # Convenience copy on the android-e2e release: best effort. Files are uploaded FIRST; the title/notes that name
+      # the run are changed only after every file uploaded, so the release never claims a run its files don't match.
+      - name: Publish evidence to the android-e2e release (best effort)
+        if: always()
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           TARGET_SHA: ${{ github.sha }}
@@ -194,8 +205,9 @@ jobs:
           # the title, notes and apk-identity.txt.
           for attempt in 1 2 3 4; do
             if gh release view android-e2e >/dev/null 2>&1; then
-              gh release edit android-e2e --prerelease --title "$TITLE" --notes "$NOTES" \
-                && gh release upload android-e2e $FILES --clobber && exit 0
+              gh release edit android-e2e --title "HELIX Android emulator test (updating…)" --notes "Upload in progress or failed; authoritative evidence is the android-e2e-evidence artifact of the latest Android preview APK run." \
+                && gh release upload android-e2e $FILES --clobber \
+                && gh release edit android-e2e --prerelease --title "$TITLE" --notes "$NOTES" && exit 0
             else
               gh release create android-e2e $FILES --prerelease --target "${TARGET_SHA}" --title "$TITLE" --notes "$NOTES" && exit 0
             fi
