@@ -29,6 +29,9 @@ Unit/integration **271 passed / 0 failed / 0 skipped** (29 files; baseline 180) 
 (1 pre-existing warning) · browser functional 68/68 · deep (axe) 21/21 · wallet 10/10 · Research Lab 360/390 px
 24/24 (browser viewport only) · Android: see `ANDROID_RELEASE_EVIDENCE.md`.
 
+## Dependencies
+`npm audit` (full and production): **0 vulnerabilities** (build-only polyfill plugin replaced 2026-11-25).
+
 ## Research
 Registry 199 candidates (provenance 200 evaluation records), **0 qualified**, gates-v3. No new candidates this
 cycle. Financial result after modelled costs: no strategy trades; paper capital stays in cash (0% return, by

@@ -17,7 +17,7 @@ destructive git; no secrets in chat or repo; no merge into `main` without owner 
 1. Forward paper-trading harness for ≤ 3 pre-registered rules (protocol in the research master report).
 2. Product pass on Home / Markets / Portfolio / Trading Bot screens (section 10 of the 2026-11-25 directive was
    not addressed this cycle).
-3. Replace `vite-plugin-node-polyfills` with explicit buffer/process shims (removes the 6 low build-chain advisories).
+3. (done 2026-11-25) polyfill plugin replaced by explicit shims; full npm audit 0.
 
 ## When the owner provides the private repository
 Clone read-only, record branches/SHAs/stashes/worktrees, run OMEGA's tests, fill `THREE_WAY_SOURCE_COMPARISON.md`,

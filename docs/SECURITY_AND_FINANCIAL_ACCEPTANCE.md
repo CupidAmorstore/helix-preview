@@ -66,3 +66,9 @@ Key material in the tree: only the known public `android/app/debug.keystore`.
 orders execute only at their scheduled open and respect venue minimums and fixed costs (`TEMPORAL_ACCOUNTING_VERIFICATION.md`).
 The research feed cannot enable trading, change risk limits, or show a qualification without current-gate
 walk-forward evidence.
+
+**Update (same day): build-chain advisories removed.** `vite-plugin-node-polyfills` replaced by explicit exact-match
+aliases (buffer, stream-browserify, events, util, process) and `src/polyfills.ts` (Buffer/process globals). Full
+`npm audit` → **0 vulnerabilities** (was 6 low). Verified: build has no externalized modules; bundle has no
+elliptic/crypto-browserify; 271 unit tests; browser functional 68/68, wallet 10/10 (incl. in-browser BIP84 vector),
+deep 21/21, Research Lab 24/24.

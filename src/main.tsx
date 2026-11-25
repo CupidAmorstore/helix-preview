@@ -1,4 +1,5 @@
-﻿import React from 'react';
+import './polyfills'; // must stay first: sets Buffer/process before wallet libraries load
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // Fonts are bundled (work offline inside the Android app; no Google Fonts request).

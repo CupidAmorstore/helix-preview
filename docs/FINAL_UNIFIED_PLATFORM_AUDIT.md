@@ -17,7 +17,7 @@ See `INDEPENDENT_AUDIT_REMEDIATION_2026_11_25.md` (severity, reproduction, root 
 | Area | Result | Evidence |
 |---|---|---|
 | Solana vs web3.js | identical on RFC 8032 vectors and 5,000 random seeds; small-order keys now flagged | `research/audit/solana-equivalence.json` |
-| Dependencies | production 0; full 6 low (build-only, not shipped — verified in bundle) | `SECURITY_AND_FINANCIAL_ACCEPTANCE.md` |
+| Dependencies | production 0; full 0 (build-only polyfill plugin replaced by explicit shims) | `SECURITY_AND_FINANCIAL_ACCEPTANCE.md` |
 | Secrets | none in history; only the public debug keystore | same |
 | Research bottlenecks | 7 studies (costs, trade counts, power, correlation, regimes, capital tiers, survivorship) | `research/research-bottleneck-study.json` |
 | Android | v41, 30/30 emulator on exact artifact; signing fail-closed | `ANDROID_RELEASE_EVIDENCE.md` |
