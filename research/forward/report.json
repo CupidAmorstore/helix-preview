@@ -1,0 +1,9 @@
+{
+ "registrationId": "forward-2026-11-25-a",
+ "evaluatedAt": 1795619806097,
+ "state": "not running",
+ "results": [],
+ "problems": [
+  "registration is 'proposed': nothing is traded until the owner activates it"
+ ]
+}

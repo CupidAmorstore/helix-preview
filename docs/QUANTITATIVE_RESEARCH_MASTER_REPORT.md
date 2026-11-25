@@ -95,3 +95,12 @@ grows. The only route to fresh evidence is **forward paper trading**:
   must be written prospectively, justified, independently accepted, and validated only on data observed after
   acceptance — never on the windows that motivated it.
 Holding cash remains the correct outcome.
+
+### Forward protocol implemented (2026-11-25, `src/bot/forward.ts`, `scripts/forward-paper.ts`)
+Registration `research/forward/registration.json` (id `forward-2026-11-25-a`, hash `00bb27b2…c998`) is a
+**PROPOSAL** — status `proposed`, no start date, nothing traded. Rules: F1 pooled ts_momentum(168d), F2 pooled
+weekly_trend(200d, weekly), F3 cross-sectional momentum(28d, top 3, weekly); 10 coins, $1,000, Coinbase taker
+costs; evaluation: ≥ 12 forward months, monthly inference at 0.05/3. Disclosure: chosen by an agent that has seen
+all historical results, so history is not evidence for them. To start: owner sets `status: "active"` and a future
+`startAt` (epoch ms); the hash covers rules, capital, costs and evaluation — any change requires a new registration.
+Tests: `forward.test.ts` (6).
