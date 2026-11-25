@@ -12,7 +12,6 @@ import { mean, stdev, studentTQuantile } from '../src/bot/stats';
 import type { Candle, StrategyFamily } from '../src/bot/types';
 import prov from '../research/provenance.json';
 
-const DAY = 86_400_000;
 const load = (f: string): Candle[] =>
   gunzipSync(readFileSync(`research/data/${f}`)).toString().trim().split('\n').slice(1).map((l) => {
     const [t, o, h, lo, c, v] = l.split(',').map(Number);
