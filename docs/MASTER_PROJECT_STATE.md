@@ -12,7 +12,7 @@ Last updated: 2026-11-24. No secrets in this file.
 ## Branches and SHAs (helix-preview)
 - `main` `dca30a7` (base) · `ccr-8d17e0b5-yaqvtm` (head: run `git log -1` — this file is committed in it) ·
   `claude/helix-mobile-takeover-vrkwgr` `45cc4cb` (handoff only).
-- App code last changed in `2433734` (2026-11-25: Research Lab layout, walk-forward, Solana libs). Tested artifact: version code 30 from `236cc84`, sha256 `5385a710…c94d`.
+- App code last changed in `2433734` (2026-11-25: Research Lab layout, walk-forward, Solana libs). Tested artifact: version code 33 from `0e6c6e6`, sha256 `cc081b0d5268a6c3f7e391415843cb52503b4804b8307ee358d1083c667be142`.
 - Uncommitted work: none.
 
 ## Completed (Preview)
@@ -26,7 +26,8 @@ multi-day families (weekly_trend, monthly_momentum) pre-registered and tested; R
 ## Test results (latest)
 Unit/integration 180 passed / 0 failed / 0 skipped · typecheck clean · lint 0 errors (1 pre-existing warning) · browser
 functional 68/68 · deep 21/21 (axe) · wallet 10/10 · Research Lab 360/390 px viewport 24/24 (browser only) · Android 15
-emulator: see the `android-e2e` release for the latest pushed commit (previous: 30/30 on version code 30).
+emulator 30/30 on the exact artifact: version code 33, commit `0e6c6e6`, run 45530332004, sha256
+`cc081b0d…e142` (public debug key) · CI green on `0e6c6e6`.
 
 ## Gates
 | Gate | Status |
