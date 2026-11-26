@@ -1,0 +1,425 @@
+{
+ "generatedAt": "2026-11-26T05:09:00.671Z",
+ "verdict": "no_profitable_strategy_established",
+ "execution": {
+  "candidates": 180,
+  "zeroCost": {
+   "profitable": 113,
+   "pnl": 18484.2
+  },
+  "realCost": {
+   "profitable": 70,
+   "pnl": -5775.37
+  },
+  "nextCloseRealCost": {
+   "profitable": 70,
+   "pnl": -8345.75
+  },
+  "passiveExposureMatchedPnl": 18804.858973302325,
+  "beatPassive": 76
+ },
+ "failureCauses": {
+  "beta_only": 39,
+  "insufficient_sample": 51,
+  "no_gross_edge": 67,
+  "cost_dominated": 20,
+  "oos_loss": 1,
+  "unstable": 2
+ },
+ "costs": {
+  "legacyRoundTripPct": 1.3,
+  "verified": [
+   {
+    "id": "kraken-pro-spot-tier1-2026-07-09",
+    "venue": "kraken",
+    "regions": [
+     "CA",
+     "US",
+     "NZ",
+     "*"
+    ],
+    "makerBps": 40,
+    "takerBps": 80,
+    "kind": "official",
+    "verifiedAt": "2026-11-26"
+   },
+   {
+    "id": "coinbase-advanced-us-intro-2026-09-16",
+    "venue": "coinbase",
+    "regions": [
+     "US"
+    ],
+    "makerBps": 50,
+    "takerBps": 90,
+    "kind": "secondary",
+    "verifiedAt": "2026-11-26"
+   },
+   {
+    "id": "coinbase-advanced-eu-uk-intro-2026-09-16",
+    "venue": "coinbase",
+    "regions": [
+     "EU",
+     "GB"
+    ],
+    "makerBps": 25,
+    "takerBps": 50,
+    "kind": "secondary",
+    "verifiedAt": "2026-11-26"
+   }
+  ],
+  "medianMovePct": {
+   "1h": 0.2970379107754939,
+   "4h": 0.6113104309460493,
+   "12h": 1.1764147777416856,
+   "1d": 2.2720423972010018,
+   "1w": 6.518391087407246,
+   "1m": 14.946987950314746
+  }
+ },
+ "capital": [
+  {
+   "capitalUsd": 20,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 20,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 20,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 20,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 20,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 20,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 50,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 100,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 250,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 500,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "coinbase",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "coinbase",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "kraken",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "kraken",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1w"
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "ethereum_dex",
+   "allocation": 0.05,
+   "shortestFeasibleHorizon": null
+  },
+  {
+   "capitalUsd": 1000,
+   "venue": "ethereum_dex",
+   "allocation": 0.25,
+   "shortestFeasibleHorizon": "1m"
+  }
+ ],
+ "regime": {
+  "horizonDays": 30,
+  "table": {
+   "strong_bull": {
+    "n": 3999,
+    "meanFwd30d": 0.010156989216334782,
+    "medianFwd30d": -0.034978212846370815,
+    "shareUp": 0.43810952738184544,
+    "persistence7d": 0.8509627406851713
+   },
+   "weak_bull": {
+    "n": 1476,
+    "meanFwd30d": 0.028117826464725774,
+    "medianFwd30d": -0.03209109730848858,
+    "shareUp": 0.41124661246612465,
+    "persistence7d": 0.43902439024390244
+   },
+   "sideways": {
+    "n": 3377,
+    "meanFwd30d": 0.02831780133450934,
+    "medianFwd30d": -0.028300395256916966,
+    "shareUp": 0.4400355344980752,
+    "persistence7d": 0.5712170565590761
+   },
+   "bear": {
+    "n": 7143,
+    "meanFwd30d": 0.01753865690046502,
+    "medianFwd30d": -0.007486631016042855,
+    "shareUp": 0.47739045219095616,
+    "persistence7d": 0.8656026879462411
+   }
+  },
+  "stress": {
+   "samples": 12,
+   "fwd30AfterStress": -0.059324237469696346,
+   "fwd30Otherwise": 0.03203831261311629
+  }
+ },
+ "forward": {
+  "a": {
+   "id": "forward-2026-11-25-a",
+   "state": "running",
+   "dataThrough": "2026-11-26T00:00:00.000Z",
+   "startAt": "2026-11-26",
+   "problems": [],
+   "results": [
+    {
+     "ruleId": "F1-pooled-ts-momentum-168d",
+     "status": "collecting",
+     "forwardMonths": 0,
+     "netReturn": 0,
+     "realizedPnlUsd": 0,
+     "unrealizedPnlUsd": 0
+    },
+    {
+     "ruleId": "F2-pooled-weekly-trend-200d",
+     "status": "collecting",
+     "forwardMonths": 0,
+     "netReturn": 0,
+     "realizedPnlUsd": 0,
+     "unrealizedPnlUsd": 0
+    },
+    {
+     "ruleId": "F3-xs-momentum-28d-top3",
+     "status": "collecting",
+     "forwardMonths": 0,
+     "netReturn": 0,
+     "realizedPnlUsd": null,
+     "unrealizedPnlUsd": null
+    }
+   ]
+  },
+  "b": {
+   "id": "forward-2026-11-26-b",
+   "status": "proposed",
+   "takerFeeBps": 90
+  },
+  "minMonths": 12,
+  "persistentProcess": "workflow .github/workflows/forward-paper.yml — not operational until merged to main"
+ },
+ "hypotheses": [
+  {
+   "id": "H-TSMOM",
+   "name": "Time-series momentum (multi-week)",
+   "status": "forward_registered"
+  },
+  {
+   "id": "H-TREND-W",
+   "name": "Low-turnover trend filter (weekly check vs SMA200)",
+   "status": "forward_registered"
+  },
+  {
+   "id": "H-XSMOM",
+   "name": "Cross-sectional momentum (top-3 of 10, weekly)",
+   "status": "forward_registered"
+  },
+  {
+   "id": "H-HOURLY",
+   "name": "Hourly technical rules (all 7 legacy families)",
+   "status": "blocked_costs"
+  },
+  {
+   "id": "H-MAKER",
+   "name": "Maker execution of existing weekly rules",
+   "status": "blocked_no_data"
+  },
+  {
+   "id": "H-XVENUE",
+   "name": "Cross-venue price discrepancy",
+   "status": "blocked_costs"
+  },
+  {
+   "id": "H-ONCHAIN",
+   "name": "Public on-chain activity / flows",
+   "status": "blocked_no_data"
+  },
+  {
+   "id": "H-MEANREV",
+   "name": "Mean reversion after extreme moves (daily)",
+   "status": "rejected_historical"
+  }
+ ],
+ "nextActions": [
+  "Owner: confirm the Coinbase/Kraken fee tier on the real account and record it as fee evidence",
+  "Owner: decide whether to activate forward registration b (verified-cost version of a)",
+  "Owner: merge so the daily forward-paper workflow runs (state goes to the forward-ledger branch)",
+  "Research: wait for 12 complete forward months; no new history-based candidates (novelty guard blocks all 11 families)"
+ ]
+}

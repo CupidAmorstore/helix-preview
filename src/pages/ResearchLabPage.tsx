@@ -12,6 +12,7 @@ import { COST_PRESETS } from '../bot/costs';
 import { crossVenueDiscrepancies, Discrepancy } from '../bot/watchbot';
 import { fetchQuote, KRAKEN_SYMBOLS, Quote } from '../bot/sources';
 import type { MarketRef } from '../bot/types';
+import { P0Diagnosis } from '../components/bot/P0Diagnosis';
 
 
 const TABS = [
@@ -139,6 +140,8 @@ function Overview() {
         </div>
       </Card>
 
+      <P0Diagnosis />
+
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Real-money capital" value="$0.00" sub="live trading disabled" />
         <Stat label="Bot paper capital" value={usd(initial)} sub={`${paper.length} qualified paper accounts`} />
@@ -161,8 +164,9 @@ function Overview() {
             ))}
           </ul>
           <p className="mt-3 text-xs text-slate-500">
-            Costs modelled at {COST_PRESETS.coinbase_taker.takerFeeBps / 100}% taker fee per side plus spread and slippage. On hourly bars
-            gross edges were consumed by costs; daily rules produced too few trades to be statistically meaningful.
+            Historical research modelled a {COST_PRESETS.coinbase_taker.takerFeeBps / 100}% taker fee per side plus spread and slippage; verified
+            current fees are higher (see the diagnosis above). Before costs, the rules did no better than passive exposure; daily rules
+            produced too few trades to be statistically meaningful.
           </p>
         </Card>
         <Card title="Market conditions (daily, last 48 bars)">
