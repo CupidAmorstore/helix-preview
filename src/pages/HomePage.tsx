@@ -183,7 +183,7 @@ export default function HomePage() {
           <div role="radiogroup" aria-label="Chart range" className="flex gap-6">
             {RANGES.map((r) => (
               <button key={r.key} type="button" role="radio" aria-checked={range === r.key} onClick={() => setRange(r.key)}
-                className={`min-h-[44px] font-mono text-xs ${range === r.key ? 'font-semibold text-white underline decoration-2 underline-offset-[10px]' : 'text-slate-500'}`}>
+                className={`min-w-[44px] min-h-[44px] font-mono text-xs ${range === r.key ? 'font-semibold text-white underline decoration-2 underline-offset-[10px]' : 'text-slate-500'}`}>
                 {r.key}
               </button>
             ))}

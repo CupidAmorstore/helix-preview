@@ -42,7 +42,7 @@ export default function StartHere() {
           <li key={n} className="flex gap-3">
             <span aria-hidden="true" className="mt-0.5 font-mono text-sm text-paper">{n}</span>
             <span className="space-y-0.5">
-              <Link to={to} className="block text-sm font-semibold text-white underline-offset-2 hover:underline">{title}</Link>
+              <Link to={to} className="flex min-h-[44px] items-center text-sm font-semibold text-white underline-offset-2 hover:underline">{title}</Link>
               <span className="block text-sm text-slate-400">{text}</span>
             </span>
           </li>

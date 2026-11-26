@@ -249,7 +249,7 @@ function Strategies() {
                   <div className="text-sm text-slate-100">{plainSpec(c.key).name}</div>
                   <div className="font-code text-[11px] text-slate-500">{c.key.replace('POOLED:', '')}</div>
                   <div className="text-xs text-slate-500">
-                    {c.scope} · {ivLabel(c.intervalMs)} · validation {pct(c.validation?.netReturn)} net ({c.validation?.trades ?? 0} trades)
+                    {c.scope} · {ivLabel(c.intervalMs)} · validation {pct(c.validation?.netReturn)} net ({plural(c.validation?.trades ?? 0, 'trade')})
                     {c.test && ` · test ${pct(c.test.netReturn)}`}
                   </div>
                 </div>
@@ -336,7 +336,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
       )}
       {c.ci && (
         <div className="text-slate-400">
-          Mean OOS trade {pct(c.ci.mean, 2)}; {((1 - c.ci.alpha) * 100).toFixed(2)}% CI [{pct(c.ci.lo, 2)}, {pct(c.ci.hi, 2)}] over {c.ci.n} trades
+          Mean OOS trade {pct(c.ci.mean, 2)}; {((1 - c.ci.alpha) * 100).toFixed(2)}% CI [{pct(c.ci.lo, 2)}, {pct(c.ci.hi, 2)}] over {plural(c.ci.n, 'trade')}
           {c.ci.blocks ? ` (${c.ci.blocks} monthly blocks)` : ''}
         </div>
       )}
@@ -401,7 +401,7 @@ function Lab() {
         </p>
       </Card>
       <Card title="Run research yourself">
-        <pre className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
+        <pre tabIndex={0} aria-label="Research commands" className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
 npm run bot:research -- --watch-only  # data, quotes, paper only (no re-testing)
 npm run bot:research -- --offline     # stored data only`}</pre>
       </Card>
