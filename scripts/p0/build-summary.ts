@@ -13,6 +13,7 @@ const cap = j('research/p0/capital-feasibility.json');
 const lab = j('research/p0/research-lab.json');
 const fwdA = existsSync('research/forward/report-forward-2026-11-25-a.json') ? j('research/forward/report-forward-2026-11-25-a.json') : null;
 const regB = j('research/forward/registration-b.json');
+const scan = existsSync('research/watchbot/scan-latest.json') ? j('research/watchbot/scan-latest.json') : null;
 
 const s = diag.summary;
 const out = {
@@ -40,6 +41,7 @@ const out = {
     minMonths: regB.evaluation.minMonths,
     persistentProcess: 'workflow .github/workflows/forward-paper.yml — not operational until merged to main'
   },
+  marketScreen: scan ? (scan.capital_1000 as { symbol: string; status: string; headroom: number | null; blocking: string[]; facts: { regime: string | null; typicalWeeklyMovePct: number | null } }[]).map((r) => ({ symbol: r.symbol, status: r.status, headroom: r.headroom, regime: r.facts.regime, weeklyMovePct: r.facts.typicalWeeklyMovePct, firstBlocking: r.blocking[0] ?? null })) : [],
   hypotheses: HYPOTHESES.map((h) => ({ id: h.id, name: h.name, status: h.status })),
   nextActions: [
     'Owner: confirm the Coinbase/Kraken fee tier on the real account and record it as fee evidence',

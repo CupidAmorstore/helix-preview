@@ -19,7 +19,7 @@
 | Failed experiments systematically recorded | ✅ | `research/p0/failure-registry.json` (180) |
 | Forward-testing infrastructure works | ✅ code / ⚠️ schedule | ran live 2026-11-26; daily workflow active only after merge |
 | Risk controls operational | ✅ | existing risk tests + admission position limits + regime fail-closed |
-| Regression tests pass | ✅ | 374/374, 0 failed, 0 skipped |
+| Regression tests pass | ✅ | 379/379, 0 failed, 0 skipped |
 | Real-money trading disabled | ✅ | `realMoneyIsolation.test.ts` |
 
 ## Three audit passes
@@ -40,8 +40,8 @@
 | Changed files | 50+ (code: `src/bot/{execution,admission,feeEvidence,capitalTiers,forward,regime,maker,failureRegistry,hypotheses,stats,validation,crossSectional,costs}.ts`, `src/components/bot/P0Diagnosis.tsx`, `src/pages/ResearchLabPage.tsx`; scripts `scripts/forward-paper.ts`, `scripts/p0/*`; workflow; research outputs; 8 docs) |
 | Confirmed defects | 8 implementation (D-1…D-8) + 8 economic/statistical causes (RC-1…RC-8) |
 | Corrected defects | D-1…D-8 |
-| Remaining | R-1…R-8 in `P0_ROOT_CAUSE_REGISTER.md` |
-| Passed / failed / skipped tests | 374 / 0 / 0 |
+| Remaining | R-1…R-6, R-8 in `P0_ROOT_CAUSE_REGISTER.md` (R-7 Watchbot fixed in follow-up) |
+| Passed / failed / skipped tests | 379 / 0 / 0 |
 | Historical results | 199 candidates, 0 qualified (unchanged); 180 diagnosed |
 | Fresh prospective results | forward a: started 2026-11-26, 0 complete months; b: proposed |
 | Statistical confidence | none for any profitability claim |

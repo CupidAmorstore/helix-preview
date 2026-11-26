@@ -67,6 +67,15 @@ fill rates 88–100% and "net benefit" +15…+52 bps per decision. On daily cand
 below the close, so this measures candle range, not queue position. **Classification: unverified_candle_model.** Maker
 profitability is UNVERIFIED until trade-level prints and queue data are recorded.
 
+## 5b. Watchbot v2 opportunity screen (`src/bot/opportunityScanner.ts`, `research/watchbot/scan-latest.json`)
+Order of checks: data quality (staleness, gaps in last 400 bars, ≥ 400 contiguous bars, zero-volume bars, median daily
+USD volume ≥ $1M) → economics (admission layer at 25% sizing, typical 7-day move of the last 365 days) → regime (abnormal
+5σ bar, liquidity deterioration) → forward-registration relevance. Unknowns are always listed (live depth, delisting
+risk, predictive edge). Rank = typical weekly move ÷ stressed break-even ("headroom"), never an expected return.
+Result on stored data (Coinbase US fees, $1,000): 9 coins eligible for research (DOT 1.77× … ETH 1.05×), **BTC rejected**
+(weekly move 3.17% vs stressed break-even 3.76%). All 10 are in a bear regime. Headroom tracks volatility: the highest-
+ranked coins were the year's largest losers — the screen measures affordability, not opportunity.
+
 ## 6. External research (from domain knowledge; not re-fetched or reproduced in this session)
 - Crypto factor studies (e.g. Liu & Tsyvinski, *Risks and Returns of Cryptocurrency*, RFS 2021; Liu, Tsyvinski & Wu,
   *Common Risk Factors in Cryptocurrency*, JF 2022) report market, size and momentum effects mostly at **weekly**

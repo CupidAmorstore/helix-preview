@@ -44,5 +44,5 @@ data duplicates/misalignment/invalid OHLC (none in stored files).
 | R-4 | Legacy `backtest()` still bridges gaps if given gapped data | kept unchanged for comparison; research feeds it contiguous runs only |
 | R-5 | Point-in-time universe incl. delisted coins | needs data source |
 | R-6 | Maker fills | needs trade-level/queue data; candle model shows 88–100% fills = optimistic artifact |
-| R-7 | Watchbot ranking not rewired to admission/regime | modules exist and are tested; integration not done |
+| R-7 | ~~Watchbot ranking not rewired~~ **Fixed (2026-11-26, follow-up)**: `src/bot/opportunityScanner.ts` ranks by data quality → economics (admission) → regime, names unknowns, fails closed; cross-venue check now uses evidence-based fees (Gemini bounded at 0.90%) | `p0Watchbot.test.ts` (5) |
 | R-8 | Persistent process | active only after merge to main |

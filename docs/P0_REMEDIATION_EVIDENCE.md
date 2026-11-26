@@ -3,8 +3,9 @@
 ## Reproducible commands
 | Purpose | Command | Output |
 |---|---|---|
-| Full regression suite | `npx vitest run` | 39 files, 374 tests passing |
-| P0 suites only | `npx vitest run src/__tests__/bot/p0*.test.ts` | 4 files, 47 tests |
+| Full regression suite | `npx vitest run` | 40 files, 379 tests passing |
+| P0 suites only | `npx vitest run src/__tests__/bot/p0*.test.ts` | 5 files, 52 tests |
+| Watchbot v2 screen | `… scripts/p0/watchbot-scan.ts` | `research/watchbot/scan-latest.json` |
 | Typecheck / lint / build | `npx tsc --noEmit -p .` · `npx eslint .` · `npm run build` | clean · 0 errors (1 pre-existing warning in `ScreenGuard.tsx`) · builds |
 | Independent claim reproduction | `python3 -I scripts/p0/reproduce_claims.py` | `research/p0/claims-reproduction.json` |
 | Execution-assumption diagnostic | `npx vite-node --config scripts/vite.node.config.ts scripts/p0/execution-diagnostic.ts` | `research/p0/execution-diagnostic.json` |
@@ -21,6 +22,7 @@
 | `p0Admission.test.ts` | 18 | fee evidence fail-closed (missing/stale/assumed/superseded), break-even maths, feasibility vs admission, position limits, minimums, stale book, depth, maker without fill model, capital tiers |
 | `p0Forward.test.ts` | 9 | complete months, gaps/stale refusal, cost snapshot + v2 hash, unrealized reporting, append-only determinism, committed registration a, gates-v4 boundary month |
 | `p0Research.test.ts` | 7 | failure classification, novelty guard, hypothesis completeness, regime future-mutation, regime fail-closed, maker trade-through rule, random-entry null control |
+| `p0Watchbot.test.ts` | 5 | eligibility, economics rejection, thin/gapped/stale/short rejection, fee evidence fail-closed, deterministic ranking |
 | Real-money isolation (existing) | 7 | still passing |
 
 ## Before / after

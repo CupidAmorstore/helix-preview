@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T05:09:00.671Z",
+ "generatedAt": "2026-11-26T23:45:24.642Z",
  "verdict": "no_profitable_strategy_established",
  "execution": {
   "candidates": 180,
@@ -71,9 +71,9 @@
    "1h": 0.2970379107754939,
    "4h": 0.6113104309460493,
    "12h": 1.1764147777416856,
-   "1d": 2.2720423972010018,
-   "1w": 6.518391087407246,
-   "1m": 14.946987950314746
+   "1d": 2.2690102503251595,
+   "1w": 6.515642548273881,
+   "1m": 14.958377263227923
   }
  },
  "capital": [
@@ -374,6 +374,88 @@
   "minMonths": 12,
   "persistentProcess": "workflow .github/workflows/forward-paper.yml — not operational until merged to main"
  },
+ "marketScreen": [
+  {
+   "symbol": "DOT-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.7699815344409977,
+   "regime": "bear",
+   "weeklyMovePct": 6.659142212189617,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "ADA-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.7457171208567646,
+   "regime": "bear",
+   "weeklyMovePct": 6.567853022099945,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "LINK-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.3780531802358182,
+   "regime": "bear",
+   "weeklyMovePct": 5.184603299293,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "DOGE-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.2956689340214167,
+   "regime": "bear",
+   "weeklyMovePct": 4.874651810584951,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "AVAX-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.2557349308805985,
+   "regime": "bear",
+   "weeklyMovePct": 4.724409448818889,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "SOL-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.1782583569056522,
+   "regime": "bear",
+   "weeklyMovePct": 4.4329219309136025,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "XRP-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.1527021959107888,
+   "regime": "bear",
+   "weeklyMovePct": 4.336772842829384,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "LTC-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.0578994110901259,
+   "regime": "bear",
+   "weeklyMovePct": 3.9800995024875663,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "ETH-USD",
+   "status": "eligible_for_research",
+   "headroom": 1.0515126827988943,
+   "regime": "bear",
+   "weeklyMovePct": 3.9560709286666773,
+   "firstBlocking": null
+  },
+  {
+   "symbol": "BTC-USD",
+   "status": "rejected",
+   "headroom": 0.8429202810436963,
+   "regime": "bear",
+   "weeklyMovePct": 3.171290725799336,
+   "firstBlocking": "economics: break-even move 1.86% > 50% of the typical 3.17% move over the horizon"
+  }
+ ],
  "hypotheses": [
   {
    "id": "H-TSMOM",

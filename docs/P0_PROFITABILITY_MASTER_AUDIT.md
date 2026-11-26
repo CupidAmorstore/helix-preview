@@ -8,7 +8,7 @@ code base; the P0 *profitability* objective is **not resolved** and cannot be un
 | Starting commit | `8479db3` (head of PR #3 branch `ccr-8d17e0b5-yaqvtm`, which contains the referenced `d7174f1`); tag `p0-baseline-8479db3` |
 | Recovery branch | `ccr-1cd67cd2-1dk1jh` |
 | Final commit | see `docs/P0_FINAL_ACCEPTANCE_REPORT.md` |
-| Tests | 326 at baseline → **374 passing, 0 failing, 0 skipped** (`npx vitest run`) |
+| Tests | 326 at baseline → **379 passing, 0 failing, 0 skipped** (`npx vitest run`) |
 | Real money | disabled; no exchange order adapter exists; new code calls `assertPaperOnly()` |
 
 ## 1. What was recovered (and what could not be)
@@ -61,6 +61,7 @@ code base; the P0 *profitability* objective is **not resolved** and cannot be un
 | Regime module (point-in-time) | `src/bot/regime.ts` | future-mutation test; reliability study |
 | Maker research model | `src/bot/maker.ts` | always `unverified_candle_model` |
 | gates-v4 (stricter monthly inference) | `src/bot/stats.ts`, `validation.ts`, `crossSectional.ts` | regression test |
+| Watchbot v2 opportunity screen | `src/bot/opportunityScanner.ts`, `research/watchbot/scan-latest.json` | 5 tests; BTC rejected on cost, 9 eligible for research only |
 | Dashboard diagnosis panel (EN/FR) | `src/components/bot/P0Diagnosis.tsx` | rendered at 390 px, no overflow/errors |
 
 Details: `P0_ROOT_CAUSE_REGISTER.md`, `P0_EXECUTION_ENGINE_VERIFICATION.md`, `P0_CAPITAL_FEASIBILITY_REPORT.md`,

@@ -40,6 +40,23 @@ export function P0Diagnosis() {
             <div className="mt-1">{t('A result is historical, simulated or forward-observed — only forward-observed months count toward qualification.', 'Un résultat est historique, simulé ou observé en temps réel — seuls les mois observés comptent pour la qualification.')}</div>
           </div>
         )}
+        {p0.marketScreen.length > 0 && (
+          <div>
+            <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-500">{t('Market screen ($1,000 account, weekly horizon)', 'Filtre de marchés (compte de 1 000 $, horizon hebdomadaire)')}</div>
+            <ul className="divide-y divide-ink-600 rounded-lg border border-ink-600 text-xs">
+              {p0.marketScreen.map((m) => (
+                <li key={m.symbol} className="flex items-center justify-between gap-3 px-3 py-1.5">
+                  <span className="font-semibold text-slate-200">{m.symbol.replace('-USD', '')}</span>
+                  <span className={`min-w-0 flex-1 truncate ${m.status === 'rejected' ? 'text-rose-400' : 'text-slate-400'}`}>
+                    {m.status === 'rejected' ? (m.firstBlocking ?? t('rejected', 'rejeté')) : t(`weekly move ${m.weeklyMovePct?.toFixed(1)}% · ${m.regime ?? '—'}`, `variation hebdo ${m.weeklyMovePct?.toFixed(1)} % · ${m.regime ?? '—'}`)}
+                  </span>
+                  <span className="font-mono text-slate-500">{m.headroom !== null ? `${m.headroom.toFixed(2)}×` : '—'}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-1 text-xs text-slate-500">{t('Headroom = typical weekly move ÷ stressed break-even. It measures whether costs can be covered, not whether the price will rise — volatile coins score high and were also the year’s biggest losers.', 'Marge = variation hebdomadaire typique ÷ seuil de rentabilité sous stress. Elle mesure si les frais peuvent être couverts, pas si le prix montera — les cryptos volatiles obtiennent un score élevé et ont aussi le plus perdu cette année.')}</p>
+          </div>
+        )}
         <div>
           <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-500">{t('Next required actions', 'Prochaines actions requises')}</div>
           <ol className="list-decimal space-y-1 pl-5 text-slate-400">

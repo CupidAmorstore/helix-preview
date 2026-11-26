@@ -1,0 +1,581 @@
+{
+ "generatedAt": "2026-11-26T23:44:10.423Z",
+ "evaluatedAtMs": 1795654800000,
+ "policy": {
+  "minHistoryBars": 400,
+  "minMedianDailyUsdVolume": 1000000,
+  "maxZeroVolumeBars90": 0,
+  "horizonBars": 7
+ },
+ "note": "Rank = economic headroom (typical weekly move / stressed break-even). Not an expected return, not a signal.",
+ "capital_100": [
+  {
+   "symbol": "DOT-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.7740927951244838,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 1261518.184048716,
+    "typicalWeeklyMovePct": 6.659142212189617,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "ADA-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.7497720208790601,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7931816.605378788,
+    "typicalWeeklyMovePct": 6.567853022099945,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "LINK-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.3812540813466008,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 8073912.61348,
+    "typicalWeeklyMovePct": 5.184603299293,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "DOGE-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.298678475445214,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7347608.346650001,
+    "typicalWeeklyMovePct": 4.874651810584951,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "AVAX-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.2586517147846976,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 5069856.987606036,
+    "typicalWeeklyMovePct": 4.724409448818889,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "SOL-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.1809951805184846,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 89885983.3146577,
+    "typicalWeeklyMovePct": 4.4329219309136025,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "XRP-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.155379658429805,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 86585007.59501845,
+    "typicalWeeklyMovePct": 4.336772842829384,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "LTC-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.0603566685085044,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7153192.41481396,
+    "typicalWeeklyMovePct": 3.9800995024875663,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "ETH-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.053955105313965,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 294132030.47068846,
+    "typicalWeeklyMovePct": 3.9560709286666773,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "BTC-USD",
+   "venue": "coinbase",
+   "status": "rejected",
+   "headroom": 0.844878191306225,
+   "blocking": [
+    "economics: break-even move 1.86% > 50% of the typical 3.17% move over the horizon",
+    "economics: stressed break-even 3.75% exceeds the typical move"
+   ],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 779514219.8844397,
+    "typicalWeeklyMovePct": 3.171290725799336,
+    "stressedBreakEvenPct": 3.7535478586520954,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  }
+ ],
+ "capital_1000": [
+  {
+   "symbol": "DOT-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.7699815344409977,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 1261518.184048716,
+    "typicalWeeklyMovePct": 6.659142212189617,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "ADA-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.7457171208567646,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7931816.605378788,
+    "typicalWeeklyMovePct": 6.567853022099945,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "LINK-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.3780531802358182,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 8073912.61348,
+    "typicalWeeklyMovePct": 5.184603299293,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "DOGE-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.2956689340214167,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7347608.346650001,
+    "typicalWeeklyMovePct": 4.874651810584951,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "AVAX-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.2557349308805985,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 5069856.987606036,
+    "typicalWeeklyMovePct": 4.724409448818889,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "SOL-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.1782583569056522,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 89885983.3146577,
+    "typicalWeeklyMovePct": 4.4329219309136025,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "XRP-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.1527021959107888,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 86585007.59501845,
+    "typicalWeeklyMovePct": 4.336772842829384,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "LTC-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.0578994110901259,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 7153192.41481396,
+    "typicalWeeklyMovePct": 3.9800995024875663,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "ETH-USD",
+   "venue": "coinbase",
+   "status": "eligible_for_research",
+   "headroom": 1.0515126827988943,
+   "blocking": [],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 294132030.47068846,
+    "typicalWeeklyMovePct": 3.9560709286666773,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  },
+  {
+   "symbol": "BTC-USD",
+   "venue": "coinbase",
+   "status": "rejected",
+   "headroom": 0.8429202810436963,
+   "blocking": [
+    "economics: break-even move 1.86% > 50% of the typical 3.17% move over the horizon",
+    "economics: stressed break-even 3.76% exceeds the typical move"
+   ],
+   "warnings": [
+    "fee from secondary sources (coinbase-advanced-us-intro-2026-09-16); confirm on the account",
+    "spread/slippage from dated snapshot measurement, not a live book",
+    "bear regime: labels have no directional power (P0 study) — informational only"
+   ],
+   "unknowns": [
+    "live order-book depth (dated snapshot used)",
+    "delisting risk (no point-in-time universe)",
+    "predictive edge (no forward-validated evidence)"
+   ],
+   "facts": {
+    "lastBar": "2026-11-25",
+    "gapsLast400": 0,
+    "zeroVolumeBarsLast90": 0,
+    "medianDailyUsdVolume30": 779514219.8844397,
+    "typicalWeeklyMovePct": 3.171290725799336,
+    "stressedBreakEvenPct": 3.7622664884426227,
+    "regime": "bear",
+    "abnormal": false,
+    "liquidity": "normal"
+   }
+  }
+ ]
+}
