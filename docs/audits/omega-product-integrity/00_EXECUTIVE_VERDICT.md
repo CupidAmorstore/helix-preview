@@ -82,3 +82,15 @@ Developer session: execute `23_NEXT_IMPLEMENTATION_PROMPT.md` items 1–3.
 | Roadmap evidence-based? | Yes — every item maps to a register ID. |
 | Would I trust it? | As a paper-trading tool for the owner: yes. As a public product: not yet. |
 | Ready for public users? | **No.** |
+
+---
+## Update 2026-11-26 — after remediation (`c42acd2`)
+29 of 38 findings fixed (5 with a stated limit), 2 partial (French 34%, bundle −49%), 1 awaiting device confirmation,
+2 were audit errors, 4 need the owner. Details and before/after measurements: `25_REMEDIATION_RESULTS.md`.
+| Stage | Before | After |
+|---|---|---|
+| Internal development | GO | GO |
+| Private paper-trading testing (owner) | CONDITIONAL GO | **GO** (misleading bot statements fixed) |
+| Closed human beta | NO-GO | **CONDITIONAL GO once SEC-1 is done** (private key → non-debuggable build) and the physical-device checklist passes |
+| Public paper-trading launch | NO-GO | NO-GO (French parity, legal review, human testing, store) |
+| Real-money trading | NO-GO | NO-GO (not authorized) |
