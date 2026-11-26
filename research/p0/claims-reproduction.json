@@ -1,0 +1,429 @@
+{
+ "generatedBy": "scripts/p0/reproduce_claims.py",
+ "datasets": {
+  "BTC-USD": {
+   "1h": {
+    "sha256": "ee307e9faa522d154febe4eb4a2e1eee1d90299cddacb4bc3bd0dd519c9cd68c",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.0011937033306264055,
+     "p99": 1.1595411838287684
+    }
+   },
+   "1d": {
+    "sha256": "dee6baac021a650f7ced0163a7bf03ef5d1a468d19ac28253691e44de4f8ce0f",
+    "bars": 2192,
+    "first": 1606176000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.02017587201419424,
+     "p99": 2.5066788640387676
+    }
+   }
+  },
+  "ETH-USD": {
+   "1h": {
+    "sha256": "c6a403ee7eb2c26a9f706e1f74b8129d539ab9e275131ba458024b889fe8bdbf",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.11169524001264364,
+     "p99": 2.327201928048361
+    }
+   },
+   "1d": {
+    "sha256": "cbd2fccdc907b461d9002221317f699ff00e0fdc652e0bd1176b6c0b57e19639",
+    "bars": 2192,
+    "first": 1606176000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.2568356816678996,
+     "p99": 3.5438144416035615
+    }
+   }
+  },
+  "SOL-USD": {
+   "1h": {
+    "sha256": "5cee66bcbaad7cd1346dc1331f62ab95e1432be67f1362e770d6a1b80d2ecfd8",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.837520943898773,
+     "p99": 3.9825696247677373
+    }
+   },
+   "1d": {
+    "sha256": "2fc6ba5dc6e9be136e572f27efc4744d41036ee3a56ec74ca7ac86a52ccaed15",
+    "bars": 1987,
+    "first": 1623888000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.801025394634447,
+     "p99": 10.18388422860695
+    }
+   }
+  },
+  "XRP-USD": {
+   "1h": {
+    "sha256": "e50cd8c0224aef1bb60dd528bee6a9ee71ee451fc5f174bf3c15374adb782b38",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.7079646017693619,
+     "p99": 3.7509109075612064
+    }
+   },
+   "1d": {
+    "sha256": "c1685982e4d4a9ec7eebfbc3143da1714a2c426b810b1e9d8587f0d6f9b62e1b",
+    "bars": 1288,
+    "first": 1606176000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.7198387561180297,
+     "p99": 6.476146404150669
+    }
+   }
+  },
+  "DOGE-USD": {
+   "1h": {
+    "sha256": "b008c1e91c3f7af438599321adb74ff1f1276f179ebaa3e8b983b41e42e0971c",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.190617947583461,
+     "p99": 7.510691016108333
+    }
+   },
+   "1d": {
+    "sha256": "97391c6ddec2ae5fd9df8bd9356abf70cb49a1269109d152580a086dc56b7fa8",
+    "bars": 2001,
+    "first": 1622678400000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.268472130426801,
+     "p99": 11.933890501308719
+    }
+   }
+  },
+  "ADA-USD": {
+   "1h": {
+    "sha256": "793586e7bb00c4feac9891cfc59924ed4a2f56c0344b142f53b17d56e5e829c3",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 2.3609966365756296,
+     "p99": 11.607234469140481
+    }
+   },
+   "1d": {
+    "sha256": "5558d1d6b4fff68b3856f35fa198c378449d144baf21ff71458148d08d9ddfa5",
+    "bars": 2078,
+    "first": 1616025600000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.8093816438224941,
+     "p99": 8.988710768952222
+    }
+   }
+  },
+  "AVAX-USD": {
+   "1h": {
+    "sha256": "78995eeade63c151c8a27c1d1d8cf47586462d2b9462d3fc26268efbc1f93bc7",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 0.9184001488798943,
+     "p99": 15.974440894568342
+    }
+   },
+   "1d": {
+    "sha256": "74b8e4f0ca0e6d0afc28e5b689753733778f9e1452d9e52007a38a89b0665036",
+    "bars": 1882,
+    "first": 1632960000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 2.7987685418406905,
+     "p99": 16.46312962163645
+    }
+   }
+  },
+  "LINK-USD": {
+   "1h": {
+    "sha256": "d89da133c59ae07a063b7900da0a5bee96c3c4c1f70feb9b350bc2e7fe6948c0",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.1623176653430267,
+     "p99": 7.908454475862097
+    }
+   },
+   "1d": {
+    "sha256": "bcb560fdad9846e1a32c4b9f2cb120c6d6e4c324bf344d7fd9c8ae48e93c05ea",
+    "bars": 2192,
+    "first": 1606176000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.4718869590812922,
+     "p99": 12.82797370132637
+    }
+   }
+  },
+  "LTC-USD": {
+   "1h": {
+    "sha256": "58eaa77c122125ce13d09fd528a71d001443e44a22bba880848856d7c68e40d8",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.4362270344814299,
+     "p99": 7.16734076473121
+    }
+   },
+   "1d": {
+    "sha256": "97bff72aa258e9e1cc795788de1470b1a842d6e32b5ecc0f79d6e1edf2efee6b",
+    "bars": 2192,
+    "first": 1606176000000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 1.4110342881334947,
+     "p99": 8.592761333696242
+    }
+   }
+  },
+  "DOT-USD": {
+   "1h": {
+    "sha256": "3b7cd44d31d0d2ebee79b5aa05a7d23e0759c17b0d63a7925796402cd7348510",
+    "bars": 8821,
+    "first": 1763845200000,
+    "last": 1795615200000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 1,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 3.527751695065473,
+     "p99": 19.34326076933119
+    }
+   },
+   "1d": {
+    "sha256": "96d5200bd2cc5b2ad2dbc976f94593eb96ab27b6ca54b70cac1b2409589d20e1",
+    "bars": 1988,
+    "first": 1623801600000,
+    "last": 1795478400000,
+    "duplicates": 0,
+    "outOfOrder": 0,
+    "gaps": 0,
+    "misaligned": 0,
+    "invalidOhlc": 0,
+    "zeroVolumeBars": 0,
+    "openVsPrevCloseBps": {
+     "median": 2.4521824423717753,
+     "p99": 15.401961467171072
+    }
+   }
+  }
+ },
+ "claims": {
+  "medianHourlyAbsMove": {
+   "claimed": 0.003,
+   "reproduced": 0.002970379107754939,
+   "perMarket": {
+    "BTC-USD": 0.001927588571890515,
+    "ETH-USD": 0.002434073459900765,
+    "SOL-USD": 0.0029387452180396068,
+    "XRP-USD": 0.0027730299938645286,
+    "DOGE-USD": 0.0030020129974702714,
+    "ADA-USD": 0.0037179729639847947,
+    "AVAX-USD": 0.003274215796282065,
+    "LINK-USD": 0.003359886287928715,
+    "LTC-USD": 0.002860561428995767,
+    "DOT-USD": 0.003946329913180779
+   },
+   "verdict": "confirmed"
+  },
+  "pairwiseDailyCorrelation": {
+   "claimed": 0.7,
+   "reproduced": 0.7020006788513365,
+   "commonDays": 1231,
+   "from": 1689206400000,
+   "firstEigenShare": 0.7324853816213629,
+   "effectiveIndependentAssets": 1.8326183921222454,
+   "verdict": "confirmed"
+  },
+  "roundTripCost": {
+   "claimed": 0.013,
+   "legacyReproduced": 0.013,
+   "scenarios": {
+    "legacy_coinbase_60bps": 0.013,
+    "kraken_verified_80bps": 0.017,
+    "coinbase_us_secondary_90bps": 0.019
+   }
+  },
+  "horizonTable": {
+   "1h": {
+    "medianAbsMove": 0.002970379107754939,
+    "moveOver_legacy_coinbase_60bps": 0.22849070059653379,
+    "moveOver_kraken_verified_80bps": 0.17472818280911406,
+    "moveOver_coinbase_us_secondary_90bps": 0.15633574251341786
+   },
+   "4h": {
+    "medianAbsMove": 0.006113104309460493,
+    "moveOver_legacy_coinbase_60bps": 0.47023879303542254,
+    "moveOver_kraken_verified_80bps": 0.35959437114473486,
+    "moveOver_coinbase_us_secondary_90bps": 0.3217423320768681
+   },
+   "12h": {
+    "medianAbsMove": 0.011764147777416856,
+    "moveOver_legacy_coinbase_60bps": 0.9049344444166812,
+    "moveOver_kraken_verified_80bps": 0.6920086927892267,
+    "moveOver_coinbase_us_secondary_90bps": 0.619165672495624
+   },
+   "1d": {
+    "medianAbsMove": 0.022720423972010018,
+    "moveOver_legacy_coinbase_60bps": 1.7477249209238477,
+    "moveOver_kraken_verified_80bps": 1.336495527765295,
+    "moveOver_coinbase_us_secondary_90bps": 1.1958117880005272
+   },
+   "1w": {
+    "medianAbsMove": 0.06518391087407246,
+    "moveOver_legacy_coinbase_60bps": 5.014146990313267,
+    "moveOver_kraken_verified_80bps": 3.8343476984748506,
+    "moveOver_coinbase_us_secondary_90bps": 3.4307321512669717
+   },
+   "1m": {
+    "medianAbsMove": 0.14946987950314747,
+    "moveOver_legacy_coinbase_60bps": 11.497683038703652,
+    "moveOver_kraken_verified_80bps": 8.79234585312632,
+    "moveOver_coinbase_us_secondary_90bps": 7.866835763323551
+   }
+  },
+  "registry": {
+   "claimedCandidates": 199,
+   "claimedQualified": 0,
+   "candidates": 199,
+   "statuses": {
+    "rejected": 199
+   },
+   "verdict": "confirmed"
+  }
+ }
+}
