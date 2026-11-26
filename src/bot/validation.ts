@@ -4,7 +4,7 @@ import { PARAM_GRID, dependencyHorizon, neighbours, specKey } from './strategies
 import { walkForwardCore, walkForwardRejections, type WalkForward } from './walkForward';
 export type { WalkForward } from './walkForward';
 import { scaleCosts } from './costs';
-import { bootstrapMeanCI, monthlyInference, monthlyReturns, profitFactor, requiredBootstrapIterations, winRate, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
+import { bootstrapMeanCI, monthlyInference, windowCompleteMonths, profitFactor, requiredBootstrapIterations, winRate, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
 
 /**
  * Qualification gates. Fixed BEFORE looking at results and version-controlled.
@@ -16,7 +16,7 @@ export const GATES = {
   // evaluator, embargo = full dependency horizon, final liquidation in drawdown, event-driven capital-aware
   // cross-sectional simulation, dependence-aware inference on monthly portfolio returns with an explicit
   // tail-resolution policy, cross-category holdout provenance. Nothing relaxed.
-  version: 'gates-v3',
+  version: 'gates-v4', // v4 (P0 2026-11-26): monthly inference on complete calendar months only
   split: { train: 0.5, validation: 0.25, test: 0.25 },
   minTradesValidation: 15,
   minTradesTest: 15,
@@ -224,7 +224,7 @@ export function evaluateFamily(
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample trades ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('bootstrap lower bound of mean OOS trade return <= 0 (multiple-testing adjusted)');
   // AUD-205: dependence-aware inference on monthly equity returns (trades are not independent)
-  const monthly = [...monthlyReturns(v.equity ?? [], CAPITAL), ...monthlyReturns(t.equity ?? [], CAPITAL)].map((m) => m.ret);
+  const monthly = [...windowCompleteMonths(v.equity ?? [], CAPITAL), ...windowCompleteMonths(t.equity ?? [], CAPITAL)].map((m) => m.ret);
   report.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
   for (const why of report.inference.reasons) reject(why);
 
@@ -468,7 +468,7 @@ export function evaluatePooled(
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample trades ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('month-block bootstrap lower bound of mean OOS trade <= 0 (multiple-testing adjusted)');
   // AUD-205: synchronized monthly portfolio returns
-  const monthly = [...monthlyReturns(v.equity ?? [], CAPITAL), ...monthlyReturns(t.equity ?? [], CAPITAL)].map((m) => m.ret);
+  const monthly = [...windowCompleteMonths(v.equity ?? [], CAPITAL), ...windowCompleteMonths(t.equity ?? [], CAPITAL)].map((m) => m.ret);
   rep.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
   for (const why of rep.inference.reasons) reject(why);
   if (rep.status !== 'rejected') rep.status = 'qualified_paper_strategy';

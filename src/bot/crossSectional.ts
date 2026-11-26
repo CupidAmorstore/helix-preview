@@ -6,7 +6,7 @@ import type { Candle, CandidateStatus, CostModel } from './types';
 import { GATES, commonCutoffs, monthBlockBootstrap } from './validation';
 import { scaleCosts, sideCostFrac } from './costs';
 import { exitProceeds } from './backtest';
-import { monthlyInference, monthlyReturns, requiredBootstrapIterations, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
+import { monthlyInference, windowCompleteMonths, requiredBootstrapIterations, MAX_BOOTSTRAP_ITERATIONS, type Inference } from './stats';
 import { walkForwardCore, walkForwardRejections, type WalkForward } from './walkForward';
 
 export type XsParams = { lookback: number; topK: number; rebalance: number };
@@ -237,7 +237,7 @@ export function evaluateCrossSectional(series: Series[], cost: CostModel, interv
   if (oos.length < GATES.minTradesOos) reject(`out-of-sample periods ${oos.length} < ${GATES.minTradesOos}`);
   if (!(ci.lo > 0)) reject('month-block bootstrap lower bound of mean period return <= 0 (multiple-testing adjusted)');
   // AUD-205: synchronized monthly portfolio returns
-  const monthly = [...monthlyReturns(v.equity, 1000), ...monthlyReturns(t.equity, 1000)].map((m) => m.ret);
+  const monthly = [...windowCompleteMonths(v.equity, 1000), ...windowCompleteMonths(t.equity, 1000)].map((m) => m.ret);
   rep.inference = monthlyInference(monthly, alpha, GATES.minOosMonths);
   for (const why of rep.inference.reasons) reject(why);
   if (rep.status !== 'rejected') rep.status = 'qualified_paper_strategy';

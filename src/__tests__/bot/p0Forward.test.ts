@@ -66,3 +66,18 @@ describe('P0 forward evaluation fixes', () => {
     expect(r.costSnapshot).toEqual(snapshotOf(COST_PRESETS.coinbase_taker));
   });
 });
+
+import { windowCompleteMonths } from '../../bot/stats';
+describe('gates-v4: historical monthly inference', () => {
+  it('validation + test windows split mid-month no longer double-count the boundary month', () => {
+    const D = 86_400_000;
+    const v = Array.from({ length: 200 }, (_, i) => ({ t: Date.UTC(2025, 0, 10) + i * D, v: 1000 + i }));
+    const tStart = v[v.length - 1].t + D;
+    const t = Array.from({ length: 200 }, (_, i) => ({ t: tStart + i * D, v: 1000 + i }));
+    const legacy = [...monthlyReturns(v, 1000), ...monthlyReturns(t, 1000)].map((m) => m.month);
+    const v4 = [...windowCompleteMonths(v, 1000), ...windowCompleteMonths(t, 1000)].map((m) => m.month);
+    expect(legacy.length).toBeGreaterThan(new Set(legacy).size); // boundary month counted twice
+    expect(new Set(v4).size).toBe(v4.length);
+    expect(v4.length).toBeLessThan(legacy.length);
+  });
+});

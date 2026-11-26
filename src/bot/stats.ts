@@ -175,6 +175,17 @@ export function completeMonthlyReturns(equity: { t: number; v: number }[], start
   });
 }
 
+/**
+ * gates-v4: complete calendar months of one evaluation window (bounds taken from its equity marks; the bar interval
+ * is inferred from the last two marks). Concatenating validation + test windows no longer double-counts the
+ * boundary month or counts partial months as independent observations.
+ */
+export function windowCompleteMonths(equity: { t: number; v: number }[], startValue: number): { month: string; ret: number }[] {
+  if (equity.length < 2) return [];
+  const iv = equity[equity.length - 1].t - equity[equity.length - 2].t;
+  return completeMonthlyReturns(equity, startValue, equity[0].t, equity[equity.length - 1].t + iv);
+}
+
 export type Inference = {
   months: number;
   mean: number;
