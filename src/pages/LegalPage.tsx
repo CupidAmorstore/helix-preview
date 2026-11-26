@@ -1,4 +1,6 @@
-﻿type LegalPageProps = {
+import { useLang } from '../i18n';
+
+type LegalPageProps = {
   kind: 'support' | 'privacy' | 'terms' | 'notfound';
 };
 
@@ -105,14 +107,114 @@ const content: Record<LegalPageProps['kind'], Page> = {
   }
 };
 
+const REVIEW_FR = 'Résumé en langage clair du fonctionnement réel de cette préversion. Il n’a pas encore été revu par un avocat.';
+const ISSUES_FR = ISSUES.replace('https://', '');
+
+const contentFr: Record<LegalPageProps['kind'], Page> = {
+  support: {
+    title: 'Aide',
+    eyebrow: 'Aide',
+    sections: [
+      { p: ['HELIX est une préversion indépendante créée par un seul développeur. Il n’y a pas de service d’assistance d’entreprise, pas de compte à récupérer et pas de soutien téléphonique.'] },
+      {
+        h: 'Signaler un problème',
+        p: [
+          `Ouvrez un signalement à ${ISSUES_FR}. Indiquez votre version d’Android, ce que vous avez touché et ce à quoi vous vous attendiez.`,
+          'Ne publiez jamais votre phrase de récupération, votre mot de passe de coffre, vos clés privées ou vos clés API — personne de HELIX ne vous les demandera.'
+        ]
+      },
+      { h: 'Réponse', p: ['Les signalements sont lus au mieux; aucun délai de réponse n’est garanti pendant la préversion.'] },
+      {
+        h: 'Accès perdu',
+        p: [
+          'Les comptes fictifs et le coffre du portefeuille existent seulement sur votre appareil. Si vous oubliez le mot de passe du coffre ou désinstallez l’application, HELIX ne peut pas les restaurer. Vos cryptos restent sur la blockchain et peuvent être récupérées avec votre phrase de récupération écrite dans tout portefeuille compatible.'
+        ]
+      }
+    ]
+  },
+  privacy: {
+    title: 'Politique de confidentialité',
+    eyebrow: 'Mentions légales',
+    updated: '2026-11-26',
+    sections: [
+      { p: [REVIEW_FR] },
+      {
+        h: 'Ce que HELIX recueille',
+        p: [
+          'Rien n’est envoyé à un serveur HELIX — il n’y en a pas. Aucun compte, aucune analyse, aucun identifiant publicitaire, aucun suivi.',
+          'Sur votre appareil, HELIX conserve : votre compte fictif et l’historique des ordres, les alertes de prix, votre liste de suivi, les adresses publiques que vous choisissez de suivre, les données de recherche et — chiffrées avec le mot de passe de votre coffre — votre phrase de récupération et les clés API que vous entrez.'
+        ]
+      },
+      {
+        h: 'Avec qui votre appareil communique',
+        p: [
+          'Pour afficher les prix et les soldes, l’application se connecte directement à des services publics : Coinbase, CoinGecko, Kraken et Gemini (vérifications de prix dans le Labo de recherche), Blockstream et mempool.space (Bitcoin), Etherscan (Ethereum, seulement avec votre propre clé), des points d’accès publics Ethereum et Solana (PublicNode, Cloudflare, Solana) et GitHub (résultats de recherche). Comme tout site Web, ces services peuvent voir votre adresse IP et les données publiques demandées (par exemple une adresse suivie). Leurs propres politiques de confidentialité s’appliquent.'
+        ]
+      },
+      {
+        h: 'Sauvegardes et suppression',
+        p: [
+          'Sur Android, les données de l’application sont exclues de la sauvegarde infonuagique et du transfert d’appareil. Désinstaller l’application, ou supprimer le portefeuille dans Portefeuille, efface ces données de l’appareil. Vous pouvez exporter vos ordres fictifs en CSV depuis Ordres fictifs.'
+        ]
+      },
+      {
+        h: 'Vos droits et contact',
+        p: [
+          `Comme HELIX ne détient aucun renseignement personnel vous concernant sur un serveur, il n’y a rien à consulter ou à corriger à distance. Questions sur la confidentialité : ${ISSUES_FR}.`
+        ]
+      }
+    ]
+  },
+  terms: {
+    title: 'Conditions d’utilisation',
+    eyebrow: 'Mentions légales',
+    updated: '2026-11-26',
+    sections: [
+      { p: [REVIEW_FR] },
+      {
+        h: 'Ce qu’est HELIX',
+        p: [
+          'Une préversion gratuite avec des données de marché en direct, du trading fictif avec de l’argent simulé, un outil de recherche qui teste des stratégies et un portefeuille autonome dont les clés restent chiffrées sur votre appareil.',
+          'HELIX ne négocie pas d’argent réel, ne détient pas vos fonds et, dans cette préversion, le portefeuille ne signe ni n’envoie aucune transaction.'
+        ]
+      },
+      {
+        h: 'Pas un conseil financier',
+        p: [
+          'Rien dans HELIX n’est une recommandation d’acheter ou de vendre. Les résultats simulés et rétrospectifs ne sont pas des gains et ne prédisent pas les résultats futurs. Le robot de trading rapporte le résultat de ses tests; il ne promet aucun rendement.'
+        ]
+      },
+      {
+        h: 'Risques',
+        p: [
+          'Le prix des cryptos est très volatil; vous pouvez perdre tout l’argent investi. Les frais comptent surtout pour les petits montants : un achat et une vente à 0,60 % de frais coûtent environ 1,2 % de la transaction.',
+          'Si vous perdez votre phrase de récupération, personne — y compris HELIX — ne peut récupérer vos cryptos. Les réseaux de test (testnet, Sepolia, devnet) utilisent des cryptos sans valeur.'
+        ]
+      },
+      {
+        h: 'Logiciel en préversion',
+        p: [
+          'L’application est fournie telle quelle, sans garantie, et peut contenir des erreurs. Les données de marché proviennent de tiers et peuvent être retardées ou indisponibles; l’application l’indique lorsque c’est le cas.'
+        ]
+      }
+    ]
+  },
+  notfound: {
+    title: 'Page introuvable',
+    eyebrow: 'Erreur',
+    sections: [{ p: ['La page demandée n’existe pas dans cette version.'] }]
+  }
+};
+
 export default function LegalPage({ kind }: LegalPageProps) {
-  const page = content[kind];
+  const lang = useLang();
+  const page = (lang === 'fr' ? contentFr : content)[kind];
   return (
     <div className="mx-auto max-w-xl space-y-6 fade-in">
       <header className="space-y-2">
         <p className="text-xs eyebrow text-slate-500">{page.eyebrow}</p>
         <h1 className="text-3xl font-semibold text-white">{page.title}</h1>
-        {page.updated && <p className="text-xs text-slate-500">Updated {page.updated}</p>}
+        {page.updated && <p className="text-xs text-slate-500">{lang === 'fr' ? 'Mise à jour' : 'Updated'} {page.updated}</p>}
       </header>
       <div className="space-y-5 border-t border-ink-600 pt-5 text-sm text-slate-300">
         {page.sections.map((s, i) => (
@@ -125,7 +227,7 @@ export default function LegalPage({ kind }: LegalPageProps) {
         ))}
         {kind === 'support' && (
           <a className="inline-flex min-h-[48px] items-center rounded-full bg-white px-5 text-sm font-semibold text-ink-900" href={ISSUES} target="_blank" rel="noreferrer">
-            Report an issue
+            {lang === 'fr' ? 'Signaler un problème' : 'Report an issue'}
           </a>
         )}
       </div>

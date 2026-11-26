@@ -27,6 +27,7 @@ import { useWatchlist } from '../hooks/useWatchlist';
 import { Button, Change, CoinBadge, Money, Note, Panel } from '../components/ui';
 import { fmtAge, fmtUsd } from '../services/marketData';
 import StartHere from '../components/StartHere';
+import { useT } from '../i18n';
 
 const RANGES = [
   { key: '1D', ms: 86_400_000 },
@@ -50,20 +51,21 @@ function Sparkline({ values, up }: { values: number[]; up: boolean }) {
 const more = 'inline-flex min-h-[44px] items-center text-sm font-medium text-helix-400 underline-offset-4 hover:underline';
 
 function OpenAccount() {
+  const t = useT();
   const { start } = usePaper();
   const [cap, setCap] = useState<number>(1000);
   const [busy, setBusy] = useState(false);
   return (
     <section className="space-y-5 pb-2">
       <div className="space-y-2">
-        <p className="eyebrow text-paper">Paper account</p>
-        <h1 className="text-[30px] font-semibold leading-[1.1] tracking-tight text-white">Practise trading without risking money.</h1>
+        <p className="eyebrow text-paper">{t('Paper account', 'Compte fictif')}</p>
+        <h1 className="text-[30px] font-semibold leading-[1.1] tracking-tight text-white">{t('Practise trading without risking money.', 'Exercez-vous à trader sans risquer d’argent.')}</h1>
         <p className="text-[15px] leading-relaxed text-slate-400">
-          A paper account uses simulated dollars at live prices, with real fees modelled. Nothing is sent to an exchange.
+          {t('A paper account uses simulated dollars at live prices, with real fees modelled. Nothing is sent to an exchange.', 'Un compte fictif utilise des dollars simulés aux prix en direct, avec des frais réalistes. Rien n’est envoyé à une plateforme.')}
         </p>
       </div>
       <fieldset className="space-y-2">
-        <legend className="eyebrow pb-1 text-slate-400">Starting balance</legend>
+        <legend className="eyebrow pb-1 text-slate-400">{t('Starting balance', 'Solde de départ')}</legend>
         <div className="grid grid-cols-3 border-l border-t border-ink-600">
           {STARTING_CAPITAL_OPTIONS.map((c) => (
             <button key={c} type="button" aria-pressed={cap === c} onClick={() => setCap(c)}
@@ -74,13 +76,14 @@ function OpenAccount() {
         </div>
       </fieldset>
       <Button kind="primary" className="w-full" disabled={busy} onClick={async () => { setBusy(true); await start(cap); setBusy(false); }}>
-        Open paper account
+        {t('Open paper account', 'Ouvrir un compte fictif')}
       </Button>
     </section>
   );
 }
 
 export default function HomePage() {
+  const t = useT();
   const glance = useBotGlance();
   const { account, loading, value, feed } = usePaper();
   const { list: watchlist } = useWatchlist();
@@ -143,14 +146,14 @@ export default function HomePage() {
       <StartHere />
       {/* 1. Paper account: what you have, what it did, what you can do */}
       {loading ? (
-        <div className="h-48 animate-pulse bg-ink-800" aria-label="Loading account" />
+        <div className="h-48 animate-pulse bg-ink-800" aria-label={t('Loading account', 'Chargement du compte')} />
       ) : !account || !value ? (
         <OpenAccount />
       ) : (
         <section className="space-y-3" aria-labelledby="acct">
           <div className="flex items-center justify-between">
-            <h1 id="acct" className="eyebrow text-slate-400">Paper account · simulated money</h1>
-            {account.halted && <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-400">Paused</span>}
+            <h1 id="acct" className="eyebrow text-slate-400">{t('Paper account · simulated money', 'Compte fictif · argent simulé')}</h1>
+            {account.halted && <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-400">{t('Paused', 'En pause')}</span>}
           </div>
           <div>
             <div className="font-mono text-[44px] font-semibold leading-none tracking-tight text-white">
@@ -160,7 +163,7 @@ export default function HomePage() {
               <Change pct={value.returnPct} abs={value.totalPnl} />
               <span className="text-slate-400">since you started with ${account.startingCash.toLocaleString()}</span>
             </div>
-            {value.missingPrice && <Note tone="warn">Some positions are valued at cost until live prices arrive.</Note>}
+            {value.missingPrice && <Note tone="warn">{t('Some positions are valued at cost until live prices arrive.', 'Certaines positions sont évaluées au coût en attendant les prix en direct.')}</Note>}
             {account.halted && account.haltReason?.startsWith('ledger') && (
               <p role="alert" className="mt-2 border-l-2 border-down pl-3 text-sm text-slate-200">
                 Paper trading is paused: the saved account did not match its own order history ({account.haltReason}). No new paper orders are accepted until this is resolved.
@@ -187,10 +190,10 @@ export default function HomePage() {
           </div>
           <dl className="grid grid-cols-2 border-t border-ink-600 text-sm">
             {[
-              ['Cash available', value.cash],
-              ['Invested', value.positionsValue],
-              ['Realized P&L (paper)', value.realized],
-              ['Fees paid', value.fees]
+              [t('Cash available', 'Liquidités disponibles'), value.cash],
+              [t('Invested', 'Investi'), value.positionsValue],
+              [t('Realized P&L (paper)', 'Gains/pertes réalisés (fictifs)'), value.realized],
+              [t('Fees paid', 'Frais payés'), value.fees]
             ].map(([l, v]) => (
               <div key={l as string} className="border-b border-ink-600 py-2.5 odd:pr-3 even:border-l even:pl-3">
                 <dt className="text-xs text-slate-500">{l}</dt>
@@ -199,15 +202,15 @@ export default function HomePage() {
             ))}
           </dl>
           <div className="flex gap-2">
-            <Link to="/markets" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">Trade</Link>
-            <Link to="/alerts" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">Set alert</Link>
-            <Link to="/wallet" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">Wallet</Link>
+            <Link to="/markets" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">{t('Trade', 'Trader')}</Link>
+            <Link to="/alerts" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">{t('Set alert', 'Créer une alerte')}</Link>
+            <Link to="/wallet" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">{t('Wallet', 'Portefeuille')}</Link>
           </div>
         </section>
       )}
 
       {positions.length > 0 && (
-        <Panel title="Your paper positions">
+        <Panel title={t('Your paper positions', 'Vos positions fictives')}>
           <ul className="divide-y divide-ink-600">
             {positions.map((p) => {
               const px = feed.prices[p.symbol];
@@ -235,7 +238,7 @@ export default function HomePage() {
       {/* 2. Market: highlights + watchlist */}
       {movers && (
         <section aria-label="Market today" className="grid grid-cols-2 border-y border-ink-600">
-          {[['Strongest 24h', movers.top], ['Weakest 24h', movers.bottom]].map(([label, m]) => {
+          {[[t('Strongest 24h', 'Plus forte hausse 24 h'), movers.top], [t('Weakest 24h', 'Plus faible 24 h'), movers.bottom]].map(([label, m]) => {
             const x = m as { sym: string; name: string; pct: number };
             return (
               <Link key={label as string} to={`/markets/${x.sym}`} className="min-h-[64px] py-3 even:border-l even:border-ink-600 even:pl-4">
@@ -250,9 +253,9 @@ export default function HomePage() {
         </section>
       )}
 
-      <Panel title="Watchlist" action={<Link to="/markets" className={more}>All markets</Link>}>
+      <Panel title={t('Watchlist', 'Liste de suivi')} action={<Link to="/markets" className={more}>{t('All markets', 'Tous les marchés')}</Link>}>
         {watchlist.length === 0 ? (
-          <p className="text-sm text-slate-400">Open any coin in Markets and tap ☆ to watch it.</p>
+          <p className="text-sm text-slate-400">{t('Open any coin in Markets and tap ☆ to watch it.', 'Ouvrez une crypto dans Marchés et touchez ☆ pour la suivre.')}</p>
         ) : (
           <ul className="divide-y divide-ink-600">
             {watchlist.map((sym) => {
@@ -279,24 +282,27 @@ export default function HomePage() {
             })}
           </ul>
         )}
-        <Note>{feed.status === 'live' ? 'Live Coinbase prices · 24h change' : feed.status === 'offline' ? 'No connection · showing the last prices received' : feed.status === 'stale' ? 'Prices delayed' : feed.status === 'reconnecting' ? 'Connection lost · retrying, showing the last prices received' : 'Connecting to live prices…'}</Note>
+        <Note>{feed.status === 'live' ? t('Live Coinbase prices · 24h change', 'Prix Coinbase en direct · variation 24 h') : feed.status === 'offline' ? t('No connection · showing the last prices received', 'Hors connexion · derniers prix reçus') : feed.status === 'stale' ? t('Prices delayed', 'Prix retardés') : feed.status === 'reconnecting' ? t('Connection lost · retrying, showing the last prices received', 'Connexion perdue · nouvelle tentative, derniers prix reçus') : t('Connecting to live prices…', 'Connexion aux prix en direct…')}</Note>
       </Panel>
 
       {/* 3. Bot: honest one-glance status */}
-      <Panel title="Trading Bot" action={<Link to="/bot" className={more}>Open</Link>}>
+      <Panel title={t('Trading Bot', 'Robot de trading')} action={<Link to="/bot" className={more}>{t('Open', 'Ouvrir')}</Link>}>
         <div className="flex items-start gap-3">
           <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-paper" aria-hidden="true" />
           {!glance ? (
-            <div className="h-12 w-full animate-pulse bg-ink-800/60" aria-label="Loading bot status" />
+            <div className="h-12 w-full animate-pulse bg-ink-800/60" aria-label={t('Loading bot status', 'Chargement du statut du robot')} />
           ) : (
             <div className="space-y-1">
               <p className="text-sm font-semibold text-white">
-                {glance.holdingCash ? 'No strategy approved · holding cash' : `${glance.qualified} strategies approved for paper trading`}
+                {glance.holdingCash ? t('No strategy approved · holding cash', 'Aucune stratégie approuvée · en liquidités') : t(`${glance.qualified} strategies approved for paper trading`, `${glance.qualified} stratégies approuvées pour le trading fictif`)}
               </p>
               <p className="text-xs text-slate-400">
-                {glance.tested} strategy tests · last research run {glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} days`} ago · no bot trades yet
+                {t(
+                  `${glance.tested} strategy tests · last research run ${glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} days`} ago · no bot trades yet`,
+                  `${glance.tested} tests de stratégies · dernière recherche il y a ${glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} jours`} · aucune transaction du robot`
+                )}
               </p>
-              {glance.holdingCash && glance.reason && <p className="text-xs text-slate-300">Main reason: {glance.reason.text.toLowerCase()} ({glance.reason.count}×)</p>}
+              {glance.holdingCash && glance.reason && <p className="text-xs text-slate-300">{t('Main reason', 'Raison principale')} : {glance.reason.text.toLowerCase()} ({glance.reason.count}×)</p>}
             </div>
           )}
         </div>
@@ -304,9 +310,9 @@ export default function HomePage() {
 
       {/* 4. Activity */}
       {account && (
-        <Panel title="Recent activity" action={<Link to="/orders" className={more}>All orders</Link>}>
+        <Panel title={t('Recent activity', 'Activité récente')} action={<Link to="/orders" className={more}>{t('All orders', 'Tous les ordres')}</Link>}>
           {recent.length === 0 ? (
-            <p className="text-sm text-slate-400">No paper orders yet. Open a coin in Markets and tap Paper buy.</p>
+            <p className="text-sm text-slate-400">{t('No paper orders yet. Open a coin in Markets and tap Paper buy.', 'Aucun ordre fictif pour l’instant. Ouvrez une crypto dans Marchés et touchez Achat fictif.')}</p>
           ) : (
             <ul className="space-y-2 text-sm">
               {recent.map((o) => (
@@ -327,7 +333,7 @@ export default function HomePage() {
 
       {/* 5. Watched (read-only) holdings, only when the user tracks addresses */}
       {showWatched && (
-        <Panel title="Watched addresses · read-only" action={<Link to="/portfolio" className={more}>Details</Link>}>
+        <Panel title={t('Watched addresses · read-only', 'Adresses suivies · lecture seule')} action={<Link to="/portfolio" className={more}>{t('Details', 'Détails')}</Link>}>
           {watched?.snap ? (
             <p className="text-sm text-slate-300">
               <Money v={watched.snap.totalUsd} className="text-lg text-white" /> <span className="text-xs text-slate-500">· updated {watched.snap.date}</span>
@@ -335,7 +341,7 @@ export default function HomePage() {
           ) : (
             <p className="text-sm text-slate-400">Open Details and tap Refresh balances to value your {watched?.addresses} watched address{watched?.addresses === 1 ? '' : 'es'}.</p>
           )}
-          <Note>Tracked from public blockchain data. Not part of your paper account and not tradable here.</Note>
+          <Note>{t('Tracked from public blockchain data. Not part of your paper account and not tradable here.', 'Suivi à partir des données publiques de la blockchain. Ne fait pas partie de votre compte fictif et ne peut pas être échangé ici.')}</Note>
         </Panel>
       )}
     </div>

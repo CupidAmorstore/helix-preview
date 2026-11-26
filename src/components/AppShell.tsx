@@ -2,10 +2,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import TopBar from './TopBar';
 import NavIcon from './NavIcon';
 import { isActive, legalItems, primaryNav, secondaryNav } from './navigation';
+import { useLang } from '../i18n';
 import { useNativeShell } from '../hooks/useNativeShell';
 import AlertWatcher from '../alerts/AlertWatcher';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
+  const lang = useLang();
   const { pathname } = useLocation();
   useNativeShell();
 
@@ -25,7 +27,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               end={item.path === '/'}
               className={({ isActive: a }) => `flex min-h-[44px] items-center rounded-lg px-3 transition ${a ? 'bg-white/10 text-white' : 'text-slate-300 hover:text-white'}`}
             >
-              {item.label}
+              {lang === 'fr' ? item.fr : item.label}
             </NavLink>
           ))}
         </nav>
@@ -45,7 +47,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <div className="flex gap-4">
               {legalItems.map((item) => (
                 <NavLink key={item.path} to={item.path} className="hover:text-slate-200">
-                  {item.label}
+                  {lang === 'fr' ? item.fr : item.label}
                 </NavLink>
               ))}
             </div>
@@ -72,7 +74,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             >
               {active && <span className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-white" aria-hidden="true" />}
               <NavIcon name={item.icon} />
-              <span className={active ? 'font-semibold' : ''}>{item.label}</span>
+              <span className={active ? 'font-semibold' : ''}>{lang === 'fr' ? item.fr : item.label}</span>
             </Link>
           );
         })}
