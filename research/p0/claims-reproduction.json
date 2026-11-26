@@ -19,10 +19,10 @@
     }
    },
    "1d": {
-    "sha256": "dee6baac021a650f7ced0163a7bf03ef5d1a468d19ac28253691e44de4f8ce0f",
-    "bars": 2192,
+    "sha256": "eca10cef98754ddfc2be5b569102c84313ff275e82b85b44126447fa3312d3d0",
+    "bars": 2193,
     "first": 1606176000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -30,8 +30,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 0.02017587201419424,
-     "p99": 2.5066788640387676
+     "median": 0.02035112874221312,
+     "p99": 2.5065193386852336
     }
    }
   },
@@ -53,10 +53,10 @@
     }
    },
    "1d": {
-    "sha256": "cbd2fccdc907b461d9002221317f699ff00e0fdc652e0bd1176b6c0b57e19639",
-    "bars": 2192,
+    "sha256": "1d46be604a1a6b3126ecec366b855a043413c4053df47427bc9729e7501f728b",
+    "bars": 2193,
     "first": 1606176000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -64,8 +64,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 0.2568356816678996,
-     "p99": 3.5438144416035615
+     "median": 0.25861115931336,
+     "p99": 3.5433664061671317
     }
    }
   },
@@ -87,10 +87,10 @@
     }
    },
    "1d": {
-    "sha256": "2fc6ba5dc6e9be136e572f27efc4744d41036ee3a56ec74ca7ac86a52ccaed15",
-    "bars": 1987,
+    "sha256": "1997b2bb356e07cf43b1e3560bc691ca244e12cbccc2b38a896b10cb31571e47",
+    "bars": 1988,
     "first": 1623888000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -98,8 +98,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 0.801025394634447,
-     "p99": 10.18388422860695
+     "median": 0.8007687379874007,
+     "p99": 10.18315461201004
     }
    }
   },
@@ -121,10 +121,10 @@
     }
    },
    "1d": {
-    "sha256": "c1685982e4d4a9ec7eebfbc3143da1714a2c426b810b1e9d8587f0d6f9b62e1b",
-    "bars": 1288,
+    "sha256": "4dd4e264a1572bd04acc09d9edf071384e125555fead04075a3f3e87d87c9ed0",
+    "bars": 1289,
     "first": 1606176000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 1,
@@ -132,8 +132,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 0.7198387561180297,
-     "p99": 6.476146404150669
+     "median": 0.7186509033851873,
+     "p99": 6.473253344165386
     }
    }
   },
@@ -155,10 +155,10 @@
     }
    },
    "1d": {
-    "sha256": "97391c6ddec2ae5fd9df8bd9356abf70cb49a1269109d152580a086dc56b7fa8",
-    "bars": 2001,
+    "sha256": "6abee0b6d40e8dfbf627fe5e8a2a5796148e19b0fa0fd51aa2e5d4c9d15e4ade",
+    "bars": 2002,
     "first": 1622678400000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -166,8 +166,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 1.268472130426801,
-     "p99": 11.933890501308719
+     "median": 1.2685525815037124,
+     "p99": 11.933174224344478
     }
    }
   },
@@ -189,10 +189,10 @@
     }
    },
    "1d": {
-    "sha256": "5558d1d6b4fff68b3856f35fa198c378449d144baf21ff71458148d08d9ddfa5",
-    "bars": 2078,
+    "sha256": "2c44dbb640759878fa4a0bea67845e4b7efe60a7725dae4e465813443df14d76",
+    "bars": 2079,
     "first": 1616025600000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -200,8 +200,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 1.8093816438224941,
-     "p99": 8.988710768952222
+     "median": 1.8077884467643246,
+     "p99": 8.988656887551638
     }
    }
   },
@@ -223,10 +223,10 @@
     }
    },
    "1d": {
-    "sha256": "74b8e4f0ca0e6d0afc28e5b689753733778f9e1452d9e52007a38a89b0665036",
-    "bars": 1882,
+    "sha256": "a2e8bec3c6d97b1c8fe3cc48833838b1d9a0e64aaa7d387154c26821a08954b5",
+    "bars": 1883,
     "first": 1632960000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -234,8 +234,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 2.7987685418406905,
-     "p99": 16.46312962163645
+     "median": 2.8038786529427373,
+     "p99": 16.45830374611921
     }
    }
   },
@@ -257,10 +257,10 @@
     }
    },
    "1d": {
-    "sha256": "bcb560fdad9846e1a32c4b9f2cb120c6d6e4c324bf344d7fd9c8ae48e93c05ea",
-    "bars": 2192,
+    "sha256": "3d94c16b22c6ea49bff221f19a4d12206798920b86d3379dabe51bf2a8dd1459",
+    "bars": 2193,
     "first": 1606176000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -268,8 +268,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 1.4718869590812922,
-     "p99": 12.82797370132637
+     "median": 1.4720872629436776,
+     "p99": 12.827045010869146
     }
    }
   },
@@ -291,10 +291,10 @@
     }
    },
    "1d": {
-    "sha256": "97bff72aa258e9e1cc795788de1470b1a842d6e32b5ecc0f79d6e1edf2efee6b",
-    "bars": 2192,
+    "sha256": "50aa6701d96e5db3b302318179f91604320ba351b93f8d84e69af832855aef3c",
+    "bars": 2193,
     "first": 1606176000000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -302,8 +302,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 1.4110342881334947,
-     "p99": 8.592761333696242
+     "median": 1.4108352425296067,
+     "p99": 8.592677559509145
     }
    }
   },
@@ -325,10 +325,10 @@
     }
    },
    "1d": {
-    "sha256": "96d5200bd2cc5b2ad2dbc976f94593eb96ab27b6ca54b70cac1b2409589d20e1",
-    "bars": 1988,
+    "sha256": "22cb343ef8c097dc2ce9e7ef98a8983639403d241750d40eb7c66cea882ef637",
+    "bars": 1989,
     "first": 1623801600000,
-    "last": 1795478400000,
+    "last": 1795564800000,
     "duplicates": 0,
     "outOfOrder": 0,
     "gaps": 0,
@@ -336,8 +336,8 @@
     "invalidOhlc": 0,
     "zeroVolumeBars": 0,
     "openVsPrevCloseBps": {
-     "median": 2.4521824423717753,
-     "p99": 15.401961467171072
+     "median": 2.4512811256216516,
+     "p99": 15.401568420549689
     }
    }
   }
@@ -362,11 +362,11 @@
   },
   "pairwiseDailyCorrelation": {
    "claimed": 0.7,
-   "reproduced": 0.7020006788513365,
-   "commonDays": 1231,
+   "reproduced": 0.7019837035216479,
+   "commonDays": 1232,
    "from": 1689206400000,
-   "firstEigenShare": 0.7324853816213629,
-   "effectiveIndependentAssets": 1.8326183921222454,
+   "firstEigenShare": 0.7324713773683904,
+   "effectiveIndependentAssets": 1.8326838055742778,
    "verdict": "confirmed"
   },
   "roundTripCost": {
@@ -398,22 +398,22 @@
     "moveOver_coinbase_us_secondary_90bps": 0.619165672495624
    },
    "1d": {
-    "medianAbsMove": 0.022720423972010018,
-    "moveOver_legacy_coinbase_60bps": 1.7477249209238477,
-    "moveOver_kraken_verified_80bps": 1.336495527765295,
-    "moveOver_coinbase_us_secondary_90bps": 1.1958117880005272
+    "medianAbsMove": 0.022690102503251597,
+    "moveOver_legacy_coinbase_60bps": 1.745392500250123,
+    "moveOver_kraken_verified_80bps": 1.3347119119559763,
+    "moveOver_coinbase_us_secondary_90bps": 1.1942159212237682
    },
    "1w": {
-    "medianAbsMove": 0.06518391087407246,
-    "moveOver_legacy_coinbase_60bps": 5.014146990313267,
-    "moveOver_kraken_verified_80bps": 3.8343476984748506,
-    "moveOver_coinbase_us_secondary_90bps": 3.4307321512669717
+    "medianAbsMove": 0.06515642548273881,
+    "moveOver_legacy_coinbase_60bps": 5.012032729441447,
+    "moveOver_kraken_verified_80bps": 3.8327309107493415,
+    "moveOver_coinbase_us_secondary_90bps": 3.4292855517230953
    },
    "1m": {
-    "medianAbsMove": 0.14946987950314747,
-    "moveOver_legacy_coinbase_60bps": 11.497683038703652,
-    "moveOver_kraken_verified_80bps": 8.79234585312632,
-    "moveOver_coinbase_us_secondary_90bps": 7.866835763323551
+    "medianAbsMove": 0.14958377263227923,
+    "moveOver_legacy_coinbase_60bps": 11.506444048636865,
+    "moveOver_kraken_verified_80bps": 8.799045448957601,
+    "moveOver_coinbase_us_secondary_90bps": 7.872830138541013
    }
   },
   "registry": {
