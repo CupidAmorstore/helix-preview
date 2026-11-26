@@ -87,12 +87,20 @@
  "disclosures": [
   "Chosen by an agent that has seen the historical results of all 199 candidates (all rejected). Historical data is NOT evidence for these rules; only forward months after startAt count.",
   "Power is low: ~12-24 forward months can only confirm very large edges (STATISTICAL_CONFIDENCE_VALIDATION.md). Holding cash remains the expected outcome.",
-  "Paper only. Activation (status 'active' + startAt) is an owner decision. Any rule change = new registration, clock restarts."
+  "Paper only. Activation (status 'active' + startAt) is an owner decision. Any rule change = new registration, clock restarts.",
+  "P0 (2026-11-26): costSnapshot records the cost values the experiment was activated with (outside the v1 hash; the evaluator refuses drift). Verified fee evidence shows 60 bps understates the current Coinbase US intro taker fee (90 bps, secondary sources) \u2014 see registration b and docs/P0_FORWARD_PAPER_PROTOCOL.md."
  ],
  "activation": {
   "activatedAt": "2026-11-25T15:49:20+00:00",
   "by": "owner, in chat: \"Start now\"",
   "startAtUtc": "2026-11-26T00:00:00Z",
   "note": "first complete daily bar after activation; paper only"
+ },
+ "costSnapshot": {
+  "takerFeeBps": 60,
+  "halfSpreadBps": 2,
+  "slippageBps": 3,
+  "fixedCostUsd": 0,
+  "minOrderUsd": 1
  }
 }

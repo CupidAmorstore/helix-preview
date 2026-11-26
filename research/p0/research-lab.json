@@ -1,0 +1,266 @@
+{
+ "generatedAt": "2026-11-26T05:05:50.649Z",
+ "note": "Diagnostic on already-inspected history. Cannot qualify anything.",
+ "regime": {
+  "horizonDays": 30,
+  "table": {
+   "strong_bull": {
+    "n": 3999,
+    "meanFwd30d": 0.010156989216334782,
+    "medianFwd30d": -0.034978212846370815,
+    "shareUp": 0.43810952738184544,
+    "persistence7d": 0.8509627406851713
+   },
+   "weak_bull": {
+    "n": 1476,
+    "meanFwd30d": 0.028117826464725774,
+    "medianFwd30d": -0.03209109730848858,
+    "shareUp": 0.41124661246612465,
+    "persistence7d": 0.43902439024390244
+   },
+   "sideways": {
+    "n": 3377,
+    "meanFwd30d": 0.02831780133450934,
+    "medianFwd30d": -0.028300395256916966,
+    "shareUp": 0.4400355344980752,
+    "persistence7d": 0.5712170565590761
+   },
+   "bear": {
+    "n": 7143,
+    "meanFwd30d": 0.01753865690046502,
+    "medianFwd30d": -0.007486631016042855,
+    "shareUp": 0.47739045219095616,
+    "persistence7d": 0.8656026879462411
+   }
+  },
+  "stress": {
+   "samples": 12,
+   "fwd30AfterStress": -0.059324237469696346,
+   "fwd30Otherwise": 0.03203831261311629
+  }
+ },
+ "maker": [
+  {
+   "market": "BTC-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 10,
+   "fillRate": 0.9,
+   "takerFallbacks": 1,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.0531055219600569,
+   "meanFwdRetMakerFills": 0.04751918726471422,
+   "adverseSelectionBps": 55.86334695342678,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 23.986059576694387
+  },
+  {
+   "market": "ETH-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 9,
+   "fillRate": 0.8888888888888888,
+   "takerFallbacks": 1,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.033300838810382274,
+   "meanFwdRetMakerFills": 0.03106013531122681,
+   "adverseSelectionBps": 22.407034991554635,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 14.557663960277075
+  },
+  {
+   "market": "SOL-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 8,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.042819476248029356,
+   "meanFwdRetMakerFills": 0.04396163928437338,
+   "adverseSelectionBps": -11.421630363440267,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 51.42163036344027
+  },
+  {
+   "market": "XRP-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 8,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.09226480212011316,
+   "meanFwdRetMakerFills": 0.09335552912298892,
+   "adverseSelectionBps": -10.907270028757548,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 50.907270028757544
+  },
+  {
+   "market": "DOGE-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 10,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": -0.04305784958133561,
+   "meanFwdRetMakerFills": -0.0420764969144715,
+   "adverseSelectionBps": -9.813526668641034,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 49.813526668640996
+  },
+  {
+   "market": "ADA-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 9,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.038084595092901345,
+   "meanFwdRetMakerFills": 0.039165883042123685,
+   "adverseSelectionBps": -10.812879492223399,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 50.81287949222342
+  },
+  {
+   "market": "AVAX-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 8,
+   "fillRate": 0.875,
+   "takerFallbacks": 1,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.09620635074914562,
+   "meanFwdRetMakerFills": 0.08390249782215338,
+   "adverseSelectionBps": 123.03852926992236,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 21.98108200683582
+  },
+  {
+   "market": "LINK-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 14,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.01746742267231968,
+   "meanFwdRetMakerFills": 0.01851445143850768,
+   "adverseSelectionBps": -10.470287661880004,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 50.470287661879986
+  },
+  {
+   "market": "LTC-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 12,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.021716502593964154,
+   "meanFwdRetMakerFills": 0.022672004436334686,
+   "adverseSelectionBps": -9.55501842370532,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 49.55501842370532
+  },
+  {
+   "market": "DOT-USD",
+   "classification": "unverified_candle_model",
+   "decisions": 10,
+   "fillRate": 1,
+   "takerFallbacks": 0,
+   "missed": 0,
+   "meanFwdRetAllDecisions": 0.051529057348467286,
+   "meanFwdRetMakerFills": 0.05269946113173914,
+   "adverseSelectionBps": -11.704037832718575,
+   "feeSavingBpsPerFill": 40,
+   "netBenefitBpsPerDecision": 51.70403783271856
+  }
+ ],
+ "benchmarks": [
+  {
+   "market": "BTC-USD",
+   "cash": 0,
+   "buyHoldNet": -0.34511123924859677,
+   "simpleMomentumNet": -0.10651406835670352,
+   "momentumExposure": 0.2,
+   "randomEntryMedian": -0.050907837655845944,
+   "randomEntryP90": 0.2685164126216357
+  },
+  {
+   "market": "ETH-USD",
+   "cash": 0,
+   "buyHoldNet": -0.4519568117632977,
+   "simpleMomentumNet": -0.286024367836305,
+   "momentumExposure": 0.3287671232876712,
+   "randomEntryMedian": -0.1200398961607102,
+   "randomEntryP90": 0.4525359513171756
+  },
+  {
+   "market": "SOL-USD",
+   "cash": 0,
+   "buyHoldNet": -0.5171639702546093,
+   "simpleMomentumNet": -0.23761034962860994,
+   "momentumExposure": 0.2493150684931507,
+   "randomEntryMedian": -0.08301463223412131,
+   "randomEntryP90": 0.43610862009150964
+  },
+  {
+   "market": "XRP-USD",
+   "cash": 0,
+   "buyHoldNet": -0.5864887144519756,
+   "simpleMomentumNet": -0.3143806237649194,
+   "momentumExposure": 0.10684931506849316,
+   "randomEntryMedian": -0.06112330622234807,
+   "randomEntryP90": 0.23342147472188746
+  },
+  {
+   "market": "DOGE-USD",
+   "cash": 0,
+   "buyHoldNet": -0.6452202588468765,
+   "simpleMomentumNet": -0.17663346886459796,
+   "momentumExposure": 0.038356164383561646,
+   "randomEntryMedian": -0.05840278330939663,
+   "randomEntryP90": 0.11168625985423875
+  },
+  {
+   "market": "ADA-USD",
+   "cash": 0,
+   "buyHoldNet": -0.6717768870733769,
+   "simpleMomentumNet": -0.18733949500915648,
+   "momentumExposure": 0.024657534246575342,
+   "randomEntryMedian": -0.053653633125910094,
+   "randomEntryP90": 0.11380253510070948
+  },
+  {
+   "market": "AVAX-USD",
+   "cash": 0,
+   "buyHoldNet": -0.5658152630226749,
+   "simpleMomentumNet": -0.15834402161560546,
+   "momentumExposure": 0.09315068493150686,
+   "randomEntryMedian": -0.0385810494744373,
+   "randomEntryP90": 0.27878815952757074
+  },
+  {
+   "market": "LINK-USD",
+   "cash": 0,
+   "buyHoldNet": -0.34019153751522313,
+   "simpleMomentumNet": -0.20424685100284568,
+   "momentumExposure": 0.3287671232876712,
+   "randomEntryMedian": -0.0722264142068989,
+   "randomEntryP90": 0.5403744889696604
+  },
+  {
+   "market": "LTC-USD",
+   "cash": 0,
+   "buyHoldNet": -0.5170719977557439,
+   "simpleMomentumNet": -0.31836974008986796,
+   "momentumExposure": 0.12602739726027398,
+   "randomEntryMedian": -0.015125609907386539,
+   "randomEntryP90": 0.18931759560548378
+  },
+  {
+   "market": "DOT-USD",
+   "cash": 0,
+   "buyHoldNet": -0.7244749506553414,
+   "simpleMomentumNet": -0.13408974576045385,
+   "momentumExposure": 0.010958904109589041,
+   "randomEntryMedian": -0.0509043440857333,
+   "randomEntryP90": 0.02804329303759845
+  }
+ ]
+}

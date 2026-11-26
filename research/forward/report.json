@@ -1,12 +1,13 @@
 {
  "registrationId": "forward-2026-11-25-a",
- "evaluatedAt": 1795621792356,
+ "evaluatedAt": 1795669381612,
  "state": "running",
  "results": [
   {
    "ruleId": "F1-pooled-ts-momentum-168d",
    "forwardMonths": 0,
    "netReturn": 0,
+   "maxDrawdown": 0,
    "inference": {
     "months": 0,
     "mean": null,
@@ -22,12 +23,21 @@
     ]
    },
    "status": "collecting",
-   "equityPoints": 0
+   "realizedPnlUsd": 0,
+   "unrealizedPnlUsd": 0,
+   "totalCostUsd": 0,
+   "fills": 0,
+   "failedOrders": 0,
+   "rejectedOrders": 0,
+   "equityPoints": 0,
+   "lastEquity": null,
+   "markets": 0
   },
   {
    "ruleId": "F2-pooled-weekly-trend-200d",
    "forwardMonths": 0,
    "netReturn": 0,
+   "maxDrawdown": 0,
    "inference": {
     "months": 0,
     "mean": null,
@@ -43,12 +53,21 @@
     ]
    },
    "status": "collecting",
-   "equityPoints": 0
+   "realizedPnlUsd": 0,
+   "unrealizedPnlUsd": 0,
+   "totalCostUsd": 0,
+   "fills": 0,
+   "failedOrders": 0,
+   "rejectedOrders": 0,
+   "equityPoints": 0,
+   "lastEquity": null,
+   "markets": 0
   },
   {
    "ruleId": "F3-xs-momentum-28d-top3",
    "forwardMonths": 0,
    "netReturn": 0,
+   "maxDrawdown": 0,
    "inference": {
     "months": 0,
     "mean": null,
@@ -64,8 +83,15 @@
     ]
    },
    "status": "collecting",
-   "equityPoints": 0
+   "rejectedOrders": 0,
+   "equityPoints": 0,
+   "lastEquity": null,
+   "markets": null
   }
  ],
- "problems": []
+ "problems": [],
+ "warnings": [
+  "F3-xs-momentum-28d-top3: cross-sectional rule uses its own event-driven simulator (liquidation-marked final equity), not exec-v1"
+ ],
+ "dataThrough": "2026-11-26T00:00:00.000Z"
 }

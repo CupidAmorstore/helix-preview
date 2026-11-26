@@ -1,0 +1,100 @@
+{
+ "id": "forward-2026-11-26-b",
+ "status": "proposed",
+ "registeredAt": "2026-11-26T12:00:00Z",
+ "startAt": null,
+ "capitalUsd": 1000,
+ "costPreset": "coinbase_taker_us_2026_09",
+ "rules": [
+  {
+   "id": "F1-pooled-ts-momentum-168d",
+   "kind": "pooled",
+   "family": "ts_momentum",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  },
+  {
+   "id": "F2-pooled-weekly-trend-200d",
+   "kind": "pooled",
+   "family": "weekly_trend",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  },
+  {
+   "id": "F3-xs-momentum-28d-top3",
+   "kind": "xs",
+   "params": {
+    "lookback": 28,
+    "topK": 3,
+    "rebalance": 7
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  }
+ ],
+ "evaluation": {
+  "minMonths": 12,
+  "familyAlpha": 0.05
+ },
+ "costSnapshot": {
+  "takerFeeBps": 90,
+  "halfSpreadBps": 2,
+  "slippageBps": 3,
+  "fixedCostUsd": 0,
+  "minOrderUsd": 1
+ },
+ "hashVersion": 2,
+ "rulesHash": "9daf74dbeaca54c538d6b2e37110c3cb5b1c2ba9b635d751e8232a8a60093f2e",
+ "rationale": [
+  "Identical rules to forward-2026-11-25-a; re-costed with fee evidence gathered in the P0 recovery (90 bps taker vs 60 bps).",
+  "No new hypothesis, no parameter change: this is a cost-realism correction, so it does not add to the multiple-testing count beyond the existing three rules."
+ ],
+ "disclosures": [
+  "Chosen by an agent that has seen the historical results of all 199 candidates (all rejected). Historical data is NOT evidence for these rules; only forward months after startAt count.",
+  "Power is low: ~12-24 forward months can only confirm very large edges (STATISTICAL_CONFIDENCE_VALIDATION.md). Holding cash remains the expected outcome.",
+  "Paper only. Activation (status 'active' + startAt) is an owner decision. Any rule change = new registration, clock restarts.",
+  "The 90 bps figure comes from secondary sources; the official Coinbase page could not be fetched. If the account tier is confirmed lower, record it as fee evidence first — never lower costs without evidence.",
+  "PROPOSED: the owner activates it by setting status \"active\" and a future startAt. Activating b does not stop a."
+ ]
+}

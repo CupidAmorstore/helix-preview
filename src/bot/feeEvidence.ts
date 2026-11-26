@@ -88,7 +88,6 @@ export type EvidenceLookup =
 export function lookupFee(venue: FeeEvidence['venue'], region: string, nowMs: number, opts: { allowAssumed?: boolean } = {}): EvidenceLookup {
   const all = FEE_EVIDENCE.filter((e) => e.venue === venue && (e.regions.includes(region) || e.regions.includes('*')));
   const current = all.filter((e) => !e.supersededBy && Date.parse(e.effectiveFrom) <= nowMs);
-  const reasons: string[] = [];
   if (!all.length) return { ok: false, reasons: [`no fee evidence for ${venue} in region ${region}`] };
   if (!current.length) return { ok: false, reasons: [`only superseded fee evidence for ${venue}/${region}`] };
   const usable = current.filter((e) => opts.allowAssumed || e.kind !== 'assumed');
