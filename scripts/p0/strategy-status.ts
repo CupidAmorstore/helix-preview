@@ -18,6 +18,12 @@ const rows = report.results.map((r) => {
   const o = overrides[r.key];
   return { candidate: r.key, screenState: r.state, status: o?.status ?? statusFromScreen(r), source: o?.source ?? 'screen', note: o?.note ?? r.reasons.join('; ') };
 });
+// An approved candidate becomes 'collecting' once its registration is active (checked from the registration files).
+for (const [file, key] of [['research/forward/registration-e1.json', 'bollinger_reversion|XRP-USD|86400000|0f197877-1285'], ['research/forward/registration-e2.json', 'rsi_reversion|ETH-USD|86400000|d42a807a-2189']] as const) {
+  const reg = JSON.parse(readFileSync(file, 'utf8')) as { status: string };
+  const row = rows.find((r) => r.candidate === key);
+  if (row && reg.status === 'active') { row.status = 'collecting_forward_evidence'; row.source = 'owner_approved_and_activated'; row.note = `experimental paper account ${file.split('/').pop()}; active from 2026-11-28 00:00 UTC`; }
+}
 const out = {
   generatedAt: new Date().toISOString(),
   scope: 'evidence status only; no status permits real money (real-money permitted = false for every status)',
