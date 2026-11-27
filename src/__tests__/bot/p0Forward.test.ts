@@ -81,3 +81,39 @@ describe('gates-v4: historical monthly inference', () => {
     expect(v4.length).toBeLessThan(legacy.length);
   });
 });
+
+import { simulateXs } from '../../bot/crossSectional';
+import { completeMonthlyReturns as cmr } from '../../bot/stats';
+describe('P0 D-9: cross-sectional forward evidence does not depend on the evaluation date', () => {
+  const D = 86_400_000;
+  const s0 = Date.UTC(2027, 0, 1);
+  const mk = (seed: number, drift: number) => { const r = mulberry32(seed); let px = 100; return Array.from({ length: 200 }, (_, i) => { const o = px; const c = o * Math.exp(drift + 0.03 * (r() - 0.5)); px = c; return { t: s0 - 60 * D + i * D, o, h: Math.max(o, c), l: Math.min(o, c), c, v: 1e6 }; }); };
+  const series = [mk(1, 0.004), mk(2, 0.002), mk(3, -0.001), mk(4, 0.003)].map((c, i) => ({ symbol: `S${i}`, candles: c }));
+  const evalAt = (now: number, terminal: 'mark' | 'liquidate') => {
+    const done = series.map((x) => ({ ...x, candles: x.candles.filter((k) => k.t + D <= now) }));
+    const w = simulateXs(done, { lookback: 14, topK: 2, rebalance: 7 }, s0, now + D, COST_PRESETS.coinbase_taker, 0, 1000, { terminal });
+    return cmr(w.equity, 1000, s0, now).find((m) => m.month === '2027-02')?.ret;
+  };
+  const mar1 = Date.UTC(2027, 2, 1), mar2 = Date.UTC(2027, 2, 2);
+  it('mark mode: February is identical whether evaluated on Mar 1 or Mar 2', () => {
+    expect(evalAt(mar1, 'mark')).toBeDefined();
+    expect(evalAt(mar1, 'mark')).toBeCloseTo(evalAt(mar2, 'mark')!, 12);
+  });
+  it('legacy liquidate mode differed (documents the defect)', () => {
+    expect(Math.abs(evalAt(mar1, 'liquidate')! - evalAt(mar2, 'liquidate')!)).toBeGreaterThan(1e-6);
+  });
+});
+
+import { barsAgree } from '../../bot/candles';
+describe('P0 D-10: new bars must be confirmed by an independent ranged read', () => {
+  const stored = { o: 71369.9, h: 71429.46, l: 67555, c: 68236.54 };
+  it('rejects the observed broken row (BTC 2026-11-13, −604 bps close)', () => {
+    expect(barsAgree(stored, { ...stored, c: 68236.54 * (1 - 0.0604263) })).toBe(false);
+  });
+  it('accepts the observed benign jitter (ADA 2026-11-25 close 0.14575 vs 0.14563, ~8 bps)', () => {
+    expect(barsAgree({ o: 0.14437, h: 0.1478, l: 0.13538, c: 0.14575 }, { o: 0.14438, h: 0.1478, l: 0.13538, c: 0.14563 })).toBe(true);
+  });
+  it('rejects non-positive prices', () => {
+    expect(barsAgree(stored, { ...stored, l: 0 })).toBe(false);
+  });
+});

@@ -8,7 +8,7 @@ code base; the P0 *profitability* objective is **not resolved** and cannot be un
 | Starting commit | `8479db3` (head of PR #3 branch `ccr-8d17e0b5-yaqvtm`, which contains the referenced `d7174f1`); tag `p0-baseline-8479db3` |
 | Recovery branch | `ccr-1cd67cd2-1dk1jh` |
 | Final commit | see `docs/P0_FINAL_ACCEPTANCE_REPORT.md` |
-| Tests | 326 at baseline → **379 passing, 0 failing, 0 skipped** (`npx vitest run`) |
+| Tests | 326 at baseline → **384 passing, 0 failing, 0 skipped** (`npx vitest run`) |
 | Real money | disabled; no exchange order adapter exists; new code calls `assertPaperOnly()` |
 
 ## 1. What was recovered (and what could not be)

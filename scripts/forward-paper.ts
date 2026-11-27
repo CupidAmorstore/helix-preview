@@ -15,6 +15,7 @@ import { gunzipSync, gzipSync } from 'node:zlib';
 import { evaluateForward, registrationHash, type ForwardRegistration } from '../src/bot/forward';
 import { COST_PRESETS } from '../src/bot/costs';
 import type { Candle } from '../src/bot/types';
+import { barsAgree } from '../src/bot/candles';
 
 const DIR = 'research/forward';
 const DAY = 86_400_000;
@@ -41,9 +42,26 @@ async function refresh(sym: string, nowMs: number): Promise<string> {
   const fresh = rows.map(([t, l, h, o, c, v]) => ({ t: t * 1000, o, h, l, c, v })).filter((k) => k.t > lastT && k.t + DAY <= nowMs).sort((a, b) => a.t - b.t);
   // a stored bar that the venue now reports differently is a revision: report it, keep the stored value
   const byT = new Map(rows.map(([t, , , , c]) => [t * 1000, c]));
-  const revised = have.slice(-30).filter((k) => byT.has(k.t) && Math.abs(byT.get(k.t)! / k.c - 1) > 1e-6).length;
-  if (fresh.length) writeFileSync(p, gzipSync('t,o,h,l,c,v\n' + [...have, ...fresh].map((k) => [k.t, k.o, k.h, k.l, k.c, k.v].join(',')).join('\n') + '\n'));
-  return `${sym}: +${fresh.length} bars${revised ? `, ${revised} recent stored bars differ from venue (kept stored)` : ''}`;
+  const revBps = have.slice(-30).filter((k) => byT.has(k.t)).map((k) => ({ day: new Date(k.t).toISOString().slice(0, 10), bps: (byT.get(k.t)! / k.c - 1) * 1e4 })).filter((x) => Math.abs(x.bps) > 0.01);
+  const revised = revBps.length;
+  if (revised) writeFileSync(`${DIR}/revisions.jsonl`, (existsSync(`${DIR}/revisions.jsonl`) ? readFileSync(`${DIR}/revisions.jsonl`, 'utf8') : '') + JSON.stringify({ checkedAt: new Date(nowMs).toISOString(), symbol: sym, revisions: revBps.map((x) => ({ ...x, bps: +x.bps.toFixed(3) })) }) + '\n');
+  // P0 D-10: the unranged endpoint has returned inconsistent rows (2026-11-27: BTC 2026-11-13 close off by -604 bps vs
+  // the ranged endpoint and the stored bar). A new bar is appended only if an independent RANGED query agrees within
+  // tolerance (`barsAgree`); any disagreement stops the append at that bar (no gaps are created, nothing is guessed).
+  const accepted: Candle[] = [];
+  let rejectedNote = '';
+  if (fresh.length) {
+    const q = `start=${new Date(fresh[0].t).toISOString()}&end=${new Date(fresh[fresh.length - 1].t).toISOString()}`;
+    const r2 = await fetch(`https://api.exchange.coinbase.com/products/${sym}/candles?granularity=86400&${q}`);
+    const confirm = r2.ok ? new Map(((await r2.json()) as number[][]).map(([t, l, h, o, c]) => [t * 1000, [o, h, l, c]])) : new Map<number, number[]>();
+    for (const k of fresh) {
+      const c2 = confirm.get(k.t);
+      if (!c2 || !barsAgree(k, { o: c2[0], h: c2[1], l: c2[2], c: c2[3] })) { rejectedNote = `; bar ${new Date(k.t).toISOString().slice(0, 10)} NOT appended (ranged re-query disagrees${r2.ok ? '' : `: HTTP ${r2.status}`})`; break; }
+      accepted.push(k);
+    }
+  }
+  if (accepted.length) writeFileSync(p, gzipSync('t,o,h,l,c,v\n' + [...have, ...accepted].map((k) => [k.t, k.o, k.h, k.l, k.c, k.v].join(',')).join('\n') + '\n'));
+  return `${sym}: +${accepted.length} bars${rejectedNote}${revised ? `, ${revised} recent stored bars differ from venue (max ${Math.max(...revBps.map((x) => Math.abs(x.bps))).toFixed(1)} bps; kept stored, logged)` : ''}`;
 }
 
 const now = Date.now();

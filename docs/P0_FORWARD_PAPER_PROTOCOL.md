@@ -31,9 +31,9 @@ b exists because the fee evidence gathered in P0 shows a understates current cos
 | Completed bars only | bars whose close time > now are excluded |
 | Duplicate events / crash recovery | exec-v1 ignores duplicate/out-of-order bars; deterministic full replay each run |
 | Append-only ledger | `research/forward/ledger-<id>.json`: stored fills must be a prefix of recomputed fills, else problem reported and ledger kept |
-| Venue revisions | refresh appends only new completed bars; reports stored bars the venue now reports differently (observed 2026-11-26: ADA) |
+| Venue revisions / bad rows | refresh appends only new completed bars **confirmed by an independent ranged read** (`barsAgree`); stored bars are never rewritten; differences are logged with magnitude to `revisions.jsonl` (observed: ADA ≤ 24 bps jitter; one broken unranged row, BTC 2026-11-13 −604 bps) |
 | Concurrency | `.lock` file (stale after 30 min) + workflow `concurrency` group |
-| Realized vs unrealized | reported separately per rule; open positions are marked, not liquidated |
+| Realized vs unrealized | reported separately per rule; open positions are marked, not liquidated (pooled: exec-v1; cross-sectional: `simulateXs` mark mode, D-9) |
 
 ## Running it
 ```

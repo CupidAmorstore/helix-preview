@@ -69,7 +69,10 @@ function align(series: Series[]) {
  * The window's last open liquidates everything (costs applied, minimums not applied — accounting close-out);
  * that liquidation value is the final equity and enters peak/drawdown.
  */
-export function simulateXs(series: Series[], p: XsParams, from: number, to: number, cost: CostModel, delay = 0, capitalUsd = 1000): XsWindow {
+export function simulateXs(series: Series[], p: XsParams, from: number, to: number, cost: CostModel, delay = 0, capitalUsd = 1000, opts: { terminal?: 'liquidate' | 'mark' } = {}): XsWindow {
+  // P0 D-9: 'mark' (forward use) marks every completed day INCLUDING the last at its close and never liquidates, so a
+  // month's recorded return does not depend on the evaluation date. 'liquidate' (default) is the unchanged research rule.
+  const mark = opts.terminal === 'mark';
   const { days, rows } = align(series);
   const empty: XsWindow = { periods: 0, trades: 0, netReturn: 0, grossReturn: 0, maxDrawdown: 0, buyHoldReturn: 0, periodReturns: [], rejectedOrders: 0, skippedTrims: 0, exposure: 0, equity: [] };
   const start = days.findIndex((t) => t >= from);
@@ -126,7 +129,8 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
       prevExecT = days[e];
     };
     let nextDecision = Math.max(start, p.lookback);
-    for (let d = start; d < last; d++) {
+    const endExcl = mark ? last + 1 : last;
+    for (let d = start; d < endExcl; d++) {
       const due = pending.get(d);
       if (due) { pending.delete(d); execute(d, due); }
       const v = value(d, 'c');
@@ -136,7 +140,7 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
       if (qty.some((q) => q > 0)) investedDays++;
       if (d === nextDecision) {
         const e = d + 1 + delay;
-        if (e < last) {
+        if (e < endExcl) {
           if (!(days[e] > days[d])) throw new Error('look-ahead: execution not after decision');
           const ret = rows[d].map((k, j) => k.c / rows[d - p.lookback][j].c - 1);
           const picks = ret.map((r, j) => [r, j] as const).filter(([r]) => r > 0).sort((a, b) => b[0] - a[0]).slice(0, p.topK).map(([, j]) => j);
@@ -144,6 +148,12 @@ export function simulateXs(series: Series[], p: XsParams, from: number, to: numb
           nextDecision = d + p.rebalance;
         } else nextDecision = Number.POSITIVE_INFINITY; // no room left to execute inside the window
       }
+    }
+    if (mark) {
+      // forward: positions stay open (unrealized); pending orders for days not yet observed are not executed
+      const v = value(last, 'c');
+      if (prevExecValue !== null) periodReturns.push({ entryT: prevExecT, netRet: v / prevExecValue - 1 });
+      return { equity: v, entries, rejected, skippedTrims, maxDd, periodReturns, curve: equity, exposure: investedDays / Math.max(1, last + 1 - start) };
     }
     // final liquidation at the last open of the window (orders still pending are dropped: never executed)
     for (let j = 0; j < series.length; j++) if (qty[j] > 0) { cash += exitProceeds(qty[j] * rows[last][j].o * (1 - side), fixed); qty[j] = 0; }

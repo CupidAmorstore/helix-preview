@@ -28,6 +28,8 @@ Each entry: location · reproduction · financial impact · root cause · correc
 | D-6 | Forward force-liquidated open positions at every evaluation | old `forward.ts` (backtest `end` liquidation) | equity curve last point = liquidated value | Each evaluation's last month understated by one exit cost; realized/unrealized mixed | Reuse of research backtest | exec-v1 `terminal: 'mark'`; realized vs unrealized reported | `p0Forward.test.ts` "open positions are reported as unrealized" |
 | D-7 | No persistent forward process; no append-only ledger | repo had no workflow; report recomputed and overwritten | Forward clock advances only when someone runs it manually | Evidence collection depended on manual runs | — | `.github/workflows/forward-paper.yml` (daily, `forward-ledger` branch); `ledger-<id>.json` prefix-verified | dry-run; `p0Forward.test.ts` "re-evaluation is deterministic and append-only" |
 | D-8 | Venue history is **not immutable** | live refresh 2026-11-26: ADA closes differ 1–24 bps (two −134/−142 bps) vs stored; LINK transient | Silent rewrites of past fills if data re-downloaded | Stored snapshot treated as canonical | Refresh appends only new completed bars, reports revisions; ledger refuses rewrites | runner behaviour (logged) |
+| D-9 | Cross-sectional forward rule (F3) liquidated at the **last open** each evaluation and never marked the last close | `crossSectional.ts simulateXs` used by `forward.ts` | evaluate on Mar 1 vs Mar 2 → February's recorded return differs | A complete month's evidence depended on the evaluation date (exit cost + missing last close) | research simulator's accounting close-out reused forward | `simulateXs(..., { terminal: 'mark' })` for forward: marks every completed day incl. the last, no liquidation; research default unchanged (baseline fixture passes) | `p0Forward.test.ts` "D-9 …" (2) |
+| D-10 | Refresh trusted the **unranged** Coinbase candles endpoint | `scripts/forward-paper.ts refresh` | 2026-11-27: unranged response gave BTC 2026-11-13 close −604 bps vs the ranged endpoint and the stored bar | A corrupted bar could have been appended and traded on | single-read ingestion | every new bar must agree with an independent ranged read (`barsAgree`: close ≤ 10 bps, OHLC ≤ 25 bps; observed benign jitter ≤ 8 bps); disagreement stops the append; revision magnitudes logged to `research/forward/revisions.jsonl` | `p0Forward.test.ts` "D-10 …" (3) |
 
 ## C. Checked and NOT defective
 Look-ahead (future-mutation tests pass for exec-v1 and regime), fee duplication (exec-v1 = legacy to 1e-10 and the
@@ -40,7 +42,7 @@ data duplicates/misalignment/invalid OHLC (none in stored files).
 |---|---|---|
 | R-1 | Trading Lab (Python) audit, 0/11 table, 189 tests | source + recovery zip not accessible |
 | R-2 | Coinbase fee from official source | help.coinbase.com refused automated fetch (403); owner must confirm account tier |
-| R-3 | Cross-sectional rule not on exec-v1 | has its own event-driven simulator (verified in prior audit); forward guards gaps before it runs |
+| R-3 | Cross-sectional rule not on exec-v1 | own event-driven portfolio simulator (verified in prior audit, same fill rules); forward now uses its `mark` mode (D-9) and gap guard |
 | R-4 | Legacy `backtest()` still bridges gaps if given gapped data | kept unchanged for comparison; research feeds it contiguous runs only |
 | R-5 | Point-in-time universe incl. delisted coins | needs data source |
 | R-6 | Maker fills | needs trade-level/queue data; candle model shows 88–100% fills = optimistic artifact |

@@ -142,3 +142,13 @@ export function resample(candles: Candle[], baseMs: number, targetMs: number): C
   }
   return out;
 }
+
+/**
+ * P0 D-10: two independent venue reads of the same bar. Venue candles are not perfectly stable between queries
+ * (observed 2026-11-27: ≤ 8 bps on closes, sub-bp on wicks) but a broken row is off by percent (BTC 2026-11-13:
+ * −604 bps). Tolerances: close ≤ 10 bps, open/high/low ≤ 25 bps.
+ */
+export function barsAgree(a: Pick<Candle, 'o' | 'h' | 'l' | 'c'>, b: Pick<Candle, 'o' | 'h' | 'l' | 'c'>): boolean {
+  const bps = (x: number, y: number) => (x > 0 && y > 0 ? Math.abs(x / y - 1) * 1e4 : Infinity);
+  return bps(a.c, b.c) <= 10 && bps(a.o, b.o) <= 25 && bps(a.h, b.h) <= 25 && bps(a.l, b.l) <= 25;
+}

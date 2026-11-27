@@ -57,6 +57,8 @@ export function registrationHash(r: Pick<ForwardRegistration, 'rules' | 'capital
   return bytesToHex(sha256(utf8ToBytes(canonical(body))));
 }
 
+const DAY_MS = 86_400_000;
+
 export const snapshotOf = (c: CostModel): CostSnapshot => ({ takerFeeBps: c.takerFeeBps, halfSpreadBps: c.halfSpreadBps, slippageBps: c.slippageBps, fixedCostUsd: c.fixedCostUsd, minOrderUsd: c.minOrderUsd });
 
 export type ForwardRuleResult = {
@@ -122,10 +124,10 @@ export function evaluateForward(reg: ForwardRegistration, data: Record<string, C
     let extra: Partial<ForwardRuleResult> = {};
     let lastBarEnd = start;
     if (rule.kind === 'xs') {
-      const w = simulateXs(series, rule.params, start, nowMs, cost, 0, reg.capitalUsd);
+      const w = simulateXs(series, rule.params, start, nowMs + DAY_MS, cost, 0, reg.capitalUsd, { terminal: 'mark' });
       equity = w.equity;
       extra = { rejectedOrders: w.rejectedOrders };
-      warnings.push(`${rule.id}: cross-sectional rule uses its own event-driven simulator (liquidation-marked final equity), not exec-v1`);
+      warnings.push(`${rule.id}: cross-sectional rule uses its own event-driven portfolio simulator (mark mode, same fill rules), not exec-v1`);
       lastBarEnd = Math.max(start, ...series.map((s) => (s.candles.length ? s.candles[s.candles.length - 1].t + rule.intervalMs : start)));
     } else {
       const contract = contractFor(cost, rule.intervalMs, { terminal: 'mark' });
