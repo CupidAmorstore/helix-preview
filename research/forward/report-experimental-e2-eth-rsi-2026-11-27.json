@@ -1,0 +1,49 @@
+{
+ "registrationId": "experimental-e2-eth-rsi-2026-11-27",
+ "evaluatedAt": 1795769153257,
+ "state": "running",
+ "results": [
+  {
+   "ruleId": "E2-eth-rsi-14-25-55",
+   "forwardMonths": 0,
+   "netReturn": 0,
+   "realizedPnlUsd": 0,
+   "unrealizedPnlUsd": 0,
+   "totalCostUsd": 0,
+   "fills": 0,
+   "failedOrders": 0,
+   "rejectedOrders": 0,
+   "maxDrawdown": 0,
+   "inference": {
+    "months": 0,
+    "mean": null,
+    "rho1": 0,
+    "nEff": 0,
+    "tLower": null,
+    "bootstrap": [],
+    "requiredIterations": 20000,
+    "pass": false,
+    "reasons": [
+     "out-of-sample months 0 < 12: too little independent evidence",
+     "dependence-adjusted t lower bound of mean monthly return <= 0 (multiple-testing adjusted)"
+    ]
+   },
+   "status": "collecting",
+   "experimental": {
+    "policy": "experimental-v1",
+    "suspendedAt": null,
+    "suspendedBars": 0,
+    "entriesRejectedBySuspension": 0,
+    "doubleCostNetReturn": 0,
+    "doubleCostDeltaPctPoints": 0,
+    "openPositionAtEnd": false
+   },
+   "equityPoints": 0,
+   "lastEquity": null,
+   "markets": 1
+  }
+ ],
+ "problems": [],
+ "warnings": [],
+ "dataThrough": "2026-11-27T00:00:00.000Z"
+}
