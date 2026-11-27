@@ -43,14 +43,14 @@
 | Remaining | R-1…R-6, R-8 in `P0_ROOT_CAUSE_REGISTER.md` (R-7 Watchbot fixed in follow-up) |
 | Passed / failed / skipped tests | 384 / 0 / 0 |
 | Historical results | 199 candidates, 0 qualified (unchanged); 180 diagnosed |
-| Fresh prospective results | forward a: started 2026-11-26; bars through 2026-11-26 evaluated, all three rules in cash, 0 complete months; b: proposed |
+| Fresh prospective results | forward a: started 2026-11-26; bars through 2026-11-26 evaluated, all three rules in cash, 0 complete months; b: active from 2026-11-28 (owner approval 2026-11-27) |
 | Statistical confidence | none for any profitability claim |
 
 ## Outstanding blockers / owner decisions
 1. Provide the Trading Lab source and `HELIX_Trading_Bot_P0_Recovery.zip` (or attach the repository) to audit the Python stack.
 2. Confirm the actual Coinbase/Kraken fee tier on the account; record it as fee evidence (never lower without evidence).
-3. Decide whether to activate forward registration b (verified-cost twin of a).
-4. Merge so the daily forward-paper workflow runs.
+3. ~~Decide whether to activate forward registration b~~ — activated 2026-11-27 (owner delegated all decisions); starts 2026-11-28.
+4. Merge so the daily forward-paper workflow runs — owner approved 2026-11-27.
 5. Expect the forward verdict no earlier than 2027-12-01.
 
 **Holding cash is the correct state.** The objective was not to make the bot look profitable; on current evidence it is not.

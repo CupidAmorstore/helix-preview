@@ -45,7 +45,6 @@ const out = {
   hypotheses: HYPOTHESES.map((h) => ({ id: h.id, name: h.name, status: h.status })),
   nextActions: [
     'Owner: confirm the Coinbase/Kraken fee tier on the real account and record it as fee evidence',
-    'Owner: decide whether to activate forward registration b (verified-cost version of a)',
     'Owner: merge so the daily forward-paper workflow runs (state goes to the forward-ledger branch)',
     'Research: wait for 12 complete forward months; no new history-based candidates (novelty guard blocks all 11 families)'
   ]

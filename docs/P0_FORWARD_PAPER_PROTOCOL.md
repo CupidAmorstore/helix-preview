@@ -7,12 +7,12 @@ Paper only: public candles, simulated money, no credentials, no order adapter.
 | ID | Status | Start | Costs | Hash |
 |---|---|---|---|---|
 | `forward-2026-11-25-a` (`research/forward/registration.json`) | **active** (owner, 2026-11-25) | 2026-11-26 00:00 UTC | `coinbase_taker` 0.60% (+2 + 3 bps), frozen in `costSnapshot` | v1 `00bb27b2…c998` (unchanged) |
-| `forward-2026-11-26-b` (`research/forward/registration-b.json`) | **proposed** | — (owner sets) | `coinbase_taker_us_2026_09` 0.90% (+2 + 3 bps) | v2 (binds cost values) `9daf74db…3f2e` |
+| `forward-2026-11-26-b` (`research/forward/registration-b.json`) | **active** (owner, 2026-11-27: "I approve everything") | 2026-11-28 00:00 UTC | `coinbase_taker_us_2026_09` 0.90% (+2 + 3 bps) | v2 (binds cost values) `9daf74db…3f2e` |
 
 Rules (identical in a and b; ≤ 3 distinct hypotheses): F1 pooled ts_momentum(168d), F2 pooled weekly_trend(SMA200,
 weekly), F3 cross-sectional momentum(28d, top-3, weekly); 10 Coinbase USD coins; $1,000 (pooled sleeves $100 each).
 b exists because the fee evidence gathered in P0 shows a understates current costs. It is not a new hypothesis.
-**Activation of b is an owner decision**; activating it does not stop a.
+b was activated by the owner on 2026-11-27; a keeps running. b is the decision-relevant test (realistic fees); a is kept for continuity.
 
 ## Evaluation (unchanged thresholds, stricter counting)
 - Only bars opening at/after `startAt` trade; earlier bars may feed indicators.
@@ -46,7 +46,7 @@ Outputs: `research/forward/report-<id>.json` (+ legacy `report.json` for a), `le
 `.github/workflows/forward-paper.yml` runs daily at 01:17 UTC, restores data + ledgers from the `forward-ledger` branch,
 refreshes public candles, evaluates, and commits state to `forward-ledger` (never to main). GitHub only runs scheduled
 workflows from the default branch, so it starts **after this work is merged to main**. Until then the forward clock
-advances only on manual runs. First run in this session (2026-11-26): a `running`, 0 complete months; b `proposed`.
+advances only on manual runs. Manual runs 2026-11-26/27: a `running` (bars through 2026-11-26, all rules in cash), b `running` from 2026-11-28; 0 complete months.
 
 ## Timeline
 Earliest possible forward verdict for a: on 2027-12-01 (12 complete months, Dec 2026 – Nov 2027). With 12 months only

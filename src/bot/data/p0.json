@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T23:45:24.642Z",
+ "generatedAt": "2026-11-27T01:03:16.496Z",
  "verdict": "no_profitable_strategy_established",
  "execution": {
   "candidates": 180,
@@ -336,7 +336,7 @@
   "a": {
    "id": "forward-2026-11-25-a",
    "state": "running",
-   "dataThrough": "2026-11-26T00:00:00.000Z",
+   "dataThrough": "2026-11-27T00:00:00.000Z",
    "startAt": "2026-11-26",
    "problems": [],
    "results": [
@@ -368,7 +368,7 @@
   },
   "b": {
    "id": "forward-2026-11-26-b",
-   "status": "proposed",
+   "status": "active",
    "takerFeeBps": 90
   },
   "minMonths": 12,
@@ -500,7 +500,6 @@
  ],
  "nextActions": [
   "Owner: confirm the Coinbase/Kraken fee tier on the real account and record it as fee evidence",
-  "Owner: decide whether to activate forward registration b (verified-cost version of a)",
   "Owner: merge so the daily forward-paper workflow runs (state goes to the forward-ledger branch)",
   "Research: wait for 12 complete forward months; no new history-based candidates (novelty guard blocks all 11 families)"
  ]
