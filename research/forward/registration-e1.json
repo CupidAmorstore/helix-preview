@@ -1,7 +1,7 @@
 {
- "status": "proposed",
- "registeredAt": "2026-11-27T08:43:31.200Z",
- "startAt": null,
+ "status": "active",
+ "registeredAt": "2026-11-27T08:45:52.564Z",
+ "startAt": 1795824000000,
  "capitalUsd": 1000,
  "costPreset": "coinbase_experimental_conservative_2026_11",
  "evaluation": {
@@ -48,5 +48,5 @@
   "Experimental approval is not a validation: the final qualification gates (gates-v4) are unchanged and a validated status requires them all.",
   "Activation starts at the next 00:00 UTC bar; registrations a and b are untouched."
  ],
- "rulesHash": "580070b27a28d32e785e798b5f5e09afb2fb24f17a514fe5c6736fc315a29df1"
+ "rulesHash": "4686043c6788d4d25324aeb538acb2c60dc984c018395a7ebd3a08a58a85023a"
 }

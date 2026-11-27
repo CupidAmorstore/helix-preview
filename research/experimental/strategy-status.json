@@ -1,10 +1,10 @@
 {
- "generatedAt": "2026-11-27T08:44:35.421Z",
+ "generatedAt": "2026-11-27T08:46:00.891Z",
  "scope": "evidence status only; no status permits real money (real-money permitted = false for every status)",
  "statusCounts": {
   "rejected": 23,
   "insufficient_evidence": 3,
-  "approved_experimental_paper": 2
+  "collecting_forward_evidence": 2
  },
  "rows": [
   {
@@ -52,9 +52,9 @@
   {
    "candidate": "rsi_reversion|ETH-USD|86400000|d42a807a-2189",
    "screenState": "experimental_research_eligible",
-   "status": "approved_experimental_paper",
-   "source": "owner_approved",
-   "note": "experimental paper account E2 (separate $1,000 simulated account)"
+   "status": "collecting_forward_evidence",
+   "source": "owner_approved_and_activated",
+   "note": "experimental paper account registration-e2.json; active from 2026-11-28 00:00 UTC"
   },
   {
    "candidate": "sma_cross|SOL-USD|86400000|9ba1194d-1984",
@@ -87,9 +87,9 @@
   {
    "candidate": "bollinger_reversion|XRP-USD|86400000|0f197877-1285",
    "screenState": "experimental_research_eligible",
-   "status": "approved_experimental_paper",
-   "source": "owner_approved",
-   "note": "experimental paper account E1 (separate $1,000 simulated account)"
+   "status": "collecting_forward_evidence",
+   "source": "owner_approved_and_activated",
+   "note": "experimental paper account registration-e1.json; active from 2026-11-28 00:00 UTC"
   },
   {
    "candidate": "donchian_breakout|DOGE-USD|86400000|0118ae7c-1998",
