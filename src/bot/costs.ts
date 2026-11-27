@@ -25,6 +25,26 @@ export const COST_PRESETS: Record<string, CostModel> = {
     minOrderUsd: 5,
     provenance: 'assumed lowest-tier taker fee; spread/slippage placeholder'
   },
+  // P0 (2026-11-26) evidence-based presets. See src/bot/feeEvidence.ts. Legacy presets above are kept unchanged so
+  // historical runs and forward registration a replay identically.
+  coinbase_taker_us_2026_09: {
+    venue: 'coinbase',
+    takerFeeBps: 90, // Coinbase Advanced US Intro taker since 2026-09-16 (secondary sources; official page 403)
+    halfSpreadBps: 2,
+    slippageBps: 3,
+    fixedCostUsd: 0,
+    minOrderUsd: 1,
+    provenance: 'feeEvidence coinbase-advanced-us-intro-2026-09-16 (secondary); spread/slippage placeholder >= measured p75'
+  },
+  kraken_taker_tier1_2026_07: {
+    venue: 'kraken',
+    takerFeeBps: 80, // Kraken Pro Tier 1 taker since 2026-07-09 (official)
+    halfSpreadBps: 2,
+    slippageBps: 3,
+    fixedCostUsd: 0,
+    minOrderUsd: 5,
+    provenance: 'feeEvidence kraken-pro-spot-tier1-2026-07-09 (official); spread/slippage placeholder >= measured p75'
+  },
   kraken_maker: {
     venue: 'kraken',
     takerFeeBps: 25, // maker tier; assumes limit order fills — optimistic, used only as a sensitivity case

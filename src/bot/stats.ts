@@ -161,6 +161,31 @@ export function monthlyReturns(equity: { t: number; v: number }[], startValue: n
   return out;
 }
 
+/**
+ * P0: monthly returns restricted to COMPLETE calendar months inside [fromMs, toMs). The month containing `fromMs`
+ * counts only if fromMs is its first instant; the month containing `toMs` counts only if toMs is the next month's
+ * first instant. Returns stay chained (a month's base is the previous month's last mark), so nothing is lost —
+ * partial months are just never counted as independent evidence.
+ */
+export function completeMonthlyReturns(equity: { t: number; v: number }[], startValue: number, fromMs: number, toMs: number): { month: string; ret: number }[] {
+  const monthStart = (y: number, m: number) => Date.UTC(y, m, 1);
+  return monthlyReturns(equity, startValue).filter(({ month }) => {
+    const [y, m] = month.split('-').map(Number);
+    return monthStart(y, m - 1) >= fromMs && monthStart(y, m) <= toMs;
+  });
+}
+
+/**
+ * gates-v4: complete calendar months of one evaluation window (bounds taken from its equity marks; the bar interval
+ * is inferred from the last two marks). Concatenating validation + test windows no longer double-counts the
+ * boundary month or counts partial months as independent observations.
+ */
+export function windowCompleteMonths(equity: { t: number; v: number }[], startValue: number): { month: string; ret: number }[] {
+  if (equity.length < 2) return [];
+  const iv = equity[equity.length - 1].t - equity[equity.length - 2].t;
+  return completeMonthlyReturns(equity, startValue, equity[0].t, equity[equity.length - 1].t + iv);
+}
+
 export type Inference = {
   months: number;
   mean: number;

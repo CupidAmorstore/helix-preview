@@ -1,0 +1,30 @@
+{
+ "registrationId": "forward-2026-11-25-a",
+ "rules": {
+  "F1-pooled-ts-momentum-168d": {
+   "BTC-USD": [],
+   "ETH-USD": [],
+   "SOL-USD": [],
+   "XRP-USD": [],
+   "DOGE-USD": [],
+   "ADA-USD": [],
+   "AVAX-USD": [],
+   "LINK-USD": [],
+   "LTC-USD": [],
+   "DOT-USD": []
+  },
+  "F2-pooled-weekly-trend-200d": {
+   "BTC-USD": [],
+   "ETH-USD": [],
+   "SOL-USD": [],
+   "XRP-USD": [],
+   "DOGE-USD": [],
+   "ADA-USD": [],
+   "AVAX-USD": [],
+   "LINK-USD": [],
+   "LTC-USD": [],
+   "DOT-USD": []
+  }
+ },
+ "updatedAt": "2026-11-27T01:03:05.196Z"
+}

@@ -189,10 +189,12 @@ async function main() {
         }
       }
       watch.push(
+        // P0: evidence-based fees (src/bot/feeEvidence.ts). Gemini has no verified evidence: bounded by the most
+        // expensive verified schedule instead of an optimistic assumption.
         ...crossVenueDiscrepancies(base, quotes, {
-          coinbase: COST_PRESETS.coinbase_taker,
-          kraken: COST_PRESETS.kraken_taker,
-          gemini: { ...COST_PRESETS.coinbase_taker, venue: 'gemini', takerFeeBps: 40, provenance: 'assumed Gemini ActiveTrader taker 0.40%' }
+          coinbase: COST_PRESETS.coinbase_taker_us_2026_09,
+          kraken: COST_PRESETS.kraken_taker_tier1_2026_07,
+          gemini: { ...COST_PRESETS.coinbase_taker_us_2026_09, venue: 'gemini', provenance: 'no Gemini fee evidence; bounded by Coinbase US 0.90% taker' }
         })
       );
     }
