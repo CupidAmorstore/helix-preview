@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      # the github-pages environment only accepts main; branch pushes are rejected before running
+      - main
+  workflow_dispatch:
+  # daily research refresh: fetch new public candles, re-run the validation pipeline, publish the
+  # result at /data/latest.json (the app checks it; the bundled snapshot remains the fallback)
+  schedule:
+    - cron: '41 4 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # research uses public market data only (no keys, no orders); on any failure the committed
+      # snapshot is published unchanged rather than a partial result
+      - name: Daily research run (paper only)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          cp src/bot/data/latest.json /tmp/latest.backup.json
+          # publish only a validated, strictly newer result; anything else restores the last good snapshot
+          if timeout 15m npm run bot:research && npx vite-node --config scripts/vite.node.config.ts scripts/validate-feed.ts src/bot/data/latest.json /tmp/latest.backup.json; then
+            echo "new research run validated"
+          else
+            echo "::warning::research run failed or invalid; republishing the previous snapshot"
+            cp /tmp/latest.backup.json src/bot/data/latest.json
+          fi
+      - run: npm run build
+        env:
+          # project site lives at https://cupidamorstore.github.io/helix-preview/
+          VITE_BASE: /helix-preview/
+      # single-page app: unknown paths (e.g. /markets/BTC) are served the app shell
+      - run: cp dist/index.html dist/404.html
+      - name: Publish research feed
+        run: |
+          mkdir -p dist/data
+          cp src/bot/data/latest.json dist/data/latest.json
+          npx vite-node --config scripts/vite.node.config.ts scripts/validate-feed.ts dist/data/latest.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

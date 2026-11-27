@@ -1,0 +1,56 @@
+{
+ "buy": {
+  "Amount": "0.00082920 BTC",
+  "Fill price": "$59,937.07",
+  "Fee": "$0.30",
+  "Cash spent": "$50.00",
+  "Spread & price impact": "Under 1¢"
+ },
+ "sell": {
+  "Amount": "0.00082920 BTC",
+  "Fill price": "$59,947.16",
+  "Fee": "$0.2982",
+  "Cash received": "$49.41",
+  "Spread & price impact": "Under 1¢",
+  "Realized P&L": "▼ −$0.59"
+ },
+ "checks": {
+  "buy fee = 0.60% of cash spent": [
+   0.3,
+   0.3
+  ],
+  "buy qty = (spent - fee) / fill": [
+   0.0008292,
+   0.0008292
+  ],
+  "sell qty = bought qty (sell All)": [
+   0.0008292,
+   0.0008292
+  ],
+  "sell fee = 0.60% of gross": [
+   0.2982,
+   0.3
+  ],
+  "cash received = gross - fee": [
+   49.41,
+   49.41
+  ],
+  "expected final cash": [
+   null,
+   999.41
+  ]
+ },
+ "ok": {
+  "buy fee = 0.60% of cash spent": true,
+  "buy qty = (spent - fee) / fill": true,
+  "sell qty = bought qty (sell All)": true,
+  "sell fee = 0.60% of gross": true,
+  "cash received = gross - fee": true
+ },
+ "homeShowsFinal": true,
+ "finalCash": 999.41,
+ "roundTripCostUsd": 0.59,
+ "homeExcerpt": "PAPER ACCOUNT · SIMULATED MONEY\n$999.41\n▼ −$0.59 (0.06%)\nsince you started with $1,000\n1D\n1W\n1M\nAll\nCash available\n$999.41\nInvested\n$0.00\nRealized P&L (paper)\n−$0.5901\nFees paid\n$0.5982\nTrade\nSet alert\nWallet\nSTRONGEST 24H\nLINK\n▲ +1.80%\nWEAKEST 24H\nETH\n▲ +0.20%\nWATCHLIST\nAll markets\nBTC\nBitcoin\nBTC\n$59,960.24\n▲ +0.37%\nETH\nEthereum\nETH\n$1,680.98\n▲ +0.20%\nSOL\nSolana\nSOL\n$70.27\n▲ +1.01%\n\nLive Coinbase prices · 24h change\n\nTRADING BOT\nOpen\n\nNo strategy approved · holding cash\n\n199 strategies tested · research 7 h old · no bot trades yet\n\nMain reason: too few test trades to trust the result (139×)\n\nRECENT ACTIVITY\nAll orders\nPaper sell BTC\n0.000829 @ $59,947.16 · 5s ago\n$49.41\nPaper buy BTC\n0.000829 @ $59,937.07 · 9s ago\n−$50.00",
+ "ordersExcerpt": "‹\nPaper orders\nSimulated orders · nothing was sent to an exchange\n2\nOrders\n2\nFilled\n$0.60\nFees paid\nAll\nFilled\nRefused\nSell BTC\nNov 25, 11:02 PM · 0.00082920 @ $59,947.16\n$49.41\nBuy BTC\nNov 25, 11:02 PM · 0.00082920 @ $59,937.07\n−$50.00\n\nEvery order is kept, including refusals, so the history matches the account balance exactly.",
+ "errors": []
+}

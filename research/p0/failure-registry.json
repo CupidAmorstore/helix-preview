@@ -1,0 +1,6833 @@
+{
+ "generatedAt": "2026-11-26T05:05:44.234Z",
+ "n": 180,
+ "primaryCauseCounts": {
+  "beta_only": 39,
+  "insufficient_sample": 51,
+  "no_gross_edge": 67,
+  "cost_dominated": 20,
+  "oos_loss": 1,
+  "unstable": 2
+ },
+ "categoryCounts": {
+  "beta_only": 39,
+  "insufficient_sample": 137,
+  "cost_dominated": 43,
+  "no_gross_edge": 67,
+  "unstable": 11,
+  "oos_loss": 2
+ },
+ "noveltyGuard": {
+  "sma_cross": {
+   "allowed": false,
+   "reasons": [
+    "38 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge, oos_loss)",
+    "60 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 60
+  },
+  "donchian_breakout": {
+   "allowed": false,
+   "reasons": [
+    "38 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge, oos_loss)",
+    "60 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 60
+  },
+  "ts_momentum": {
+   "allowed": false,
+   "reasons": [
+    "20 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge)",
+    "40 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 40
+  },
+  "trend_filtered_momentum": {
+   "allowed": false,
+   "reasons": [
+    "20 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge)",
+    "40 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 40
+  },
+  "bollinger_reversion": {
+   "allowed": false,
+   "reasons": [
+    "19 prior failures of this mechanism were non-retestable (no_gross_edge, beta_only)",
+    "40 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 40
+  },
+  "rsi_reversion": {
+   "allowed": false,
+   "reasons": [
+    "19 prior failures of this mechanism were non-retestable (no_gross_edge, beta_only)",
+    "40 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 40
+  },
+  "vol_compression_breakout": {
+   "allowed": false,
+   "reasons": [
+    "14 prior failures of this mechanism were non-retestable (no_gross_edge, beta_only)",
+    "20 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 20
+  },
+  "vol_filtered_trend": {
+   "allowed": false,
+   "reasons": [
+    "38 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge, oos_loss)",
+    "60 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 60
+  },
+  "regime_switch": {
+   "allowed": false,
+   "reasons": [
+    "38 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge, oos_loss)",
+    "60 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 60
+  },
+  "weekly_trend": {
+   "allowed": false,
+   "reasons": [
+    "8 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge)",
+    "10 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 10
+  },
+  "monthly_momentum": {
+   "allowed": false,
+   "reasons": [
+    "10 prior failures of this mechanism were non-retestable (beta_only, no_gross_edge, unstable)",
+    "10 prior failures of the same mechanism (limit 10) — requires new information, not a new name"
+   ],
+   "priorFailures": 10
+  }
+ },
+ "failures": [
+  {
+   "id": "F-sma_cross|BTC-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 447.99,
+   "netPnlUsd": 356.86,
+   "passiveExposureMatchedPnlUsd": 590.12,
+   "trades": 5,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|BTC-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 399.35,
+   "netPnlUsd": 277.63,
+   "passiveExposureMatchedPnlUsd": 915.3,
+   "trades": 7,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|BTC-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 208.53,
+   "netPnlUsd": -115.39,
+   "passiveExposureMatchedPnlUsd": 636.24,
+   "trades": 24,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|BTC-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 202.67,
+   "netPnlUsd": -60.55,
+   "passiveExposureMatchedPnlUsd": 443.02,
+   "trades": 19,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|BTC-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 320.73,
+   "netPnlUsd": 237.61,
+   "passiveExposureMatchedPnlUsd": 110.74,
+   "trades": 5,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|BTC-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -3.09,
+   "netPnlUsd": -15.96,
+   "passiveExposureMatchedPnlUsd": 80.81,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|BTC-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -84.04,
+   "netPnlUsd": -107.55,
+   "passiveExposureMatchedPnlUsd": 29.64,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|ETH-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -265.64,
+   "netPnlUsd": -302.86,
+   "passiveExposureMatchedPnlUsd": -75.13,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|ETH-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -69.32,
+   "netPnlUsd": -161.25,
+   "passiveExposureMatchedPnlUsd": 22.92,
+   "trades": 8,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|ETH-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 212.5,
+   "netPnlUsd": -89.1,
+   "passiveExposureMatchedPnlUsd": -42.72,
+   "trades": 22,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|ETH-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -19.77,
+   "netPnlUsd": -161.36,
+   "passiveExposureMatchedPnlUsd": -34.58,
+   "trades": 12,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|ETH-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -11.78,
+   "netPnlUsd": -143.46,
+   "passiveExposureMatchedPnlUsd": 64.99,
+   "trades": 11,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|ETH-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 273.79,
+   "netPnlUsd": 241.1,
+   "passiveExposureMatchedPnlUsd": 16.37,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|ETH-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -56.11,
+   "netPnlUsd": -68.3,
+   "passiveExposureMatchedPnlUsd": -0.02,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|SOL-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 86.23,
+   "netPnlUsd": 31.19,
+   "passiveExposureMatchedPnlUsd": 184.2,
+   "trades": 4,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|SOL-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -486.78,
+   "netPnlUsd": -519.08,
+   "passiveExposureMatchedPnlUsd": 10.9,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|SOL-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 253.39,
+   "netPnlUsd": -20.93,
+   "passiveExposureMatchedPnlUsd": 108.55,
+   "trades": 19,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|SOL-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 175,
+   "netPnlUsd": -20.52,
+   "passiveExposureMatchedPnlUsd": 120.63,
+   "trades": 14,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|SOL-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 0,
+   "netPnlUsd": 0,
+   "passiveExposureMatchedPnlUsd": 0,
+   "trades": 0,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|SOL-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -49.36,
+   "netPnlUsd": -61.63,
+   "passiveExposureMatchedPnlUsd": 7.31,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|SOL-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 47.62,
+   "netPnlUsd": 34.09,
+   "passiveExposureMatchedPnlUsd": 8.49,
+   "trades": 1,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-sma_cross|XRP-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -356.5,
+   "netPnlUsd": -364.81,
+   "passiveExposureMatchedPnlUsd": -154.89,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|XRP-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 161.73,
+   "netPnlUsd": 146.73,
+   "passiveExposureMatchedPnlUsd": -17.82,
+   "trades": 1,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|XRP-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -419.7,
+   "netPnlUsd": -483.78,
+   "passiveExposureMatchedPnlUsd": -194.16,
+   "trades": 9,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|XRP-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 100.48,
+   "netPnlUsd": 4.75,
+   "passiveExposureMatchedPnlUsd": -72.47,
+   "trades": 7,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|XRP-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 823,
+   "netPnlUsd": 664.43,
+   "passiveExposureMatchedPnlUsd": -40.33,
+   "trades": 7,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|XRP-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 30,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -27.75,
+   "netPnlUsd": -40.31,
+   "passiveExposureMatchedPnlUsd": -16.29,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|XRP-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 0,
+   "netPnlUsd": 0,
+   "passiveExposureMatchedPnlUsd": 0,
+   "trades": 0,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|DOGE-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -366.49,
+   "netPnlUsd": -390.72,
+   "passiveExposureMatchedPnlUsd": 165.61,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|DOGE-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 1097.18,
+   "netPnlUsd": 939.82,
+   "passiveExposureMatchedPnlUsd": 107.34,
+   "trades": 6,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|DOGE-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 2321.62,
+   "netPnlUsd": 1805.13,
+   "passiveExposureMatchedPnlUsd": 145.68,
+   "trades": 13,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|DOGE-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 892.93,
+   "netPnlUsd": 662.17,
+   "passiveExposureMatchedPnlUsd": 93.1,
+   "trades": 10,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|DOGE-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 63.14,
+   "netPnlUsd": 49.41,
+   "passiveExposureMatchedPnlUsd": 33.46,
+   "trades": 1,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|DOGE-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 30,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -7.97,
+   "netPnlUsd": -58.24,
+   "passiveExposureMatchedPnlUsd": 48.23,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|DOGE-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -97.52,
+   "netPnlUsd": -109.18,
+   "passiveExposureMatchedPnlUsd": 2.39,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|ADA-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 339.55,
+   "netPnlUsd": 255.25,
+   "passiveExposureMatchedPnlUsd": 237.74,
+   "trades": 5,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-donchian_breakout|ADA-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 485.87,
+   "netPnlUsd": 410.58,
+   "passiveExposureMatchedPnlUsd": 0.1,
+   "trades": 4,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|ADA-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -55.85,
+   "netPnlUsd": -326.64,
+   "passiveExposureMatchedPnlUsd": 256.17,
+   "trades": 26,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|ADA-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 261.24,
+   "netPnlUsd": 93.18,
+   "passiveExposureMatchedPnlUsd": 145.56,
+   "trades": 11,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|ADA-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 222.62,
+   "netPnlUsd": 116.28,
+   "passiveExposureMatchedPnlUsd": 8.02,
+   "trades": 7,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|ADA-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 0,
+   "netPnlUsd": 0,
+   "passiveExposureMatchedPnlUsd": 0,
+   "trades": 0,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|ADA-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.2
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -115.23,
+   "netPnlUsd": -137.94,
+   "passiveExposureMatchedPnlUsd": 10.5,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|AVAX-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 136.57,
+   "netPnlUsd": 78.97,
+   "passiveExposureMatchedPnlUsd": 256.63,
+   "trades": 4,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|AVAX-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -461.54,
+   "netPnlUsd": -514.72,
+   "passiveExposureMatchedPnlUsd": -118.87,
+   "trades": 8,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|AVAX-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -282.32,
+   "netPnlUsd": -514.09,
+   "passiveExposureMatchedPnlUsd": 81.18,
+   "trades": 30,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|AVAX-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 114.31,
+   "netPnlUsd": -46.64,
+   "passiveExposureMatchedPnlUsd": 111.43,
+   "trades": 12,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|AVAX-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -82.25,
+   "netPnlUsd": -117.36,
+   "passiveExposureMatchedPnlUsd": -62.15,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|AVAX-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 0,
+   "netPnlUsd": 0,
+   "passiveExposureMatchedPnlUsd": 0,
+   "trades": 0,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|AVAX-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.2
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 41.42,
+   "netPnlUsd": 1.59,
+   "passiveExposureMatchedPnlUsd": -3.11,
+   "trades": 3,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-sma_cross|LINK-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -299.42,
+   "netPnlUsd": -334.92,
+   "passiveExposureMatchedPnlUsd": -104.45,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|LINK-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -494.19,
+   "netPnlUsd": -561.58,
+   "passiveExposureMatchedPnlUsd": -55.31,
+   "trades": 11,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|LINK-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -331.95,
+   "netPnlUsd": -541.78,
+   "passiveExposureMatchedPnlUsd": -143.64,
+   "trades": 29,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|LINK-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -5.71,
+   "netPnlUsd": -68.28,
+   "passiveExposureMatchedPnlUsd": -72.11,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|LINK-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 83.6,
+   "netPnlUsd": 55.78,
+   "passiveExposureMatchedPnlUsd": -1.48,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|LINK-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 335.77,
+   "netPnlUsd": 301.49,
+   "passiveExposureMatchedPnlUsd": 2.81,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|LINK-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -145.38,
+   "netPnlUsd": -178.07,
+   "passiveExposureMatchedPnlUsd": -5.34,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|LTC-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -10.11,
+   "netPnlUsd": -35.52,
+   "passiveExposureMatchedPnlUsd": 10.85,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|LTC-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 415.57,
+   "netPnlUsd": 343.84,
+   "passiveExposureMatchedPnlUsd": 88.08,
+   "trades": 4,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|LTC-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 69.04,
+   "netPnlUsd": -217.49,
+   "passiveExposureMatchedPnlUsd": 123.75,
+   "trades": 24,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|LTC-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -197.82,
+   "netPnlUsd": -356.88,
+   "passiveExposureMatchedPnlUsd": 7.46,
+   "trades": 17,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|LTC-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -148.74,
+   "netPnlUsd": -202.31,
+   "passiveExposureMatchedPnlUsd": 43.61,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|LTC-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 0,
+   "netPnlUsd": 0,
+   "passiveExposureMatchedPnlUsd": 0,
+   "trades": 0,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|LTC-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 136.37,
+   "netPnlUsd": 107.2,
+   "passiveExposureMatchedPnlUsd": 12.24,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-sma_cross|DOT-USD|86400000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -460.73,
+   "netPnlUsd": -467.69,
+   "passiveExposureMatchedPnlUsd": -72.28,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|DOT-USD|86400000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 195.76,
+   "netPnlUsd": 165.07,
+   "passiveExposureMatchedPnlUsd": -67.2,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|DOT-USD|86400000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -156.67,
+   "netPnlUsd": -358.15,
+   "passiveExposureMatchedPnlUsd": -140.15,
+   "trades": 21,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|DOT-USD|86400000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 335.93,
+   "netPnlUsd": 268.24,
+   "passiveExposureMatchedPnlUsd": -32.85,
+   "trades": 4,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|DOT-USD|86400000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 270.4,
+   "netPnlUsd": 159.9,
+   "passiveExposureMatchedPnlUsd": -160.76,
+   "trades": 7,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|DOT-USD|86400000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 117.61,
+   "netPnlUsd": 88.93,
+   "passiveExposureMatchedPnlUsd": -52.28,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|DOT-USD|86400000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.2
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -47.93,
+   "netPnlUsd": -96.18,
+   "passiveExposureMatchedPnlUsd": -45.57,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|BTC-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 134.14,
+   "netPnlUsd": 76.67,
+   "passiveExposureMatchedPnlUsd": 150.56,
+   "trades": 4,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|BTC-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 220.68,
+   "netPnlUsd": 85.9,
+   "passiveExposureMatchedPnlUsd": 102.92,
+   "trades": 9,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|BTC-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 220.39,
+   "netPnlUsd": -34.23,
+   "passiveExposureMatchedPnlUsd": 235.15,
+   "trades": 18,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|BTC-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 203.99,
+   "netPnlUsd": -107.17,
+   "passiveExposureMatchedPnlUsd": 124.34,
+   "trades": 23,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|BTC-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 50.52,
+   "netPnlUsd": -89.46,
+   "passiveExposureMatchedPnlUsd": 38.99,
+   "trades": 11,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|BTC-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 30,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 30.93,
+   "netPnlUsd": -46.43,
+   "passiveExposureMatchedPnlUsd": 33.22,
+   "trades": 6,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|BTC-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 36.26,
+   "netPnlUsd": -78.16,
+   "passiveExposureMatchedPnlUsd": 37.08,
+   "trades": 9,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|ETH-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 110.47,
+   "netPnlUsd": 13.87,
+   "passiveExposureMatchedPnlUsd": 205.77,
+   "trades": 7,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|ETH-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 137.21,
+   "netPnlUsd": 11.64,
+   "passiveExposureMatchedPnlUsd": 103.04,
+   "trades": 9,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|ETH-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 200.76,
+   "netPnlUsd": -339.69,
+   "passiveExposureMatchedPnlUsd": 265.29,
+   "trades": 46,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|ETH-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 50.14,
+   "netPnlUsd": -437.34,
+   "passiveExposureMatchedPnlUsd": 162.43,
+   "trades": 48,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|ETH-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 102.16,
+   "netPnlUsd": -81.24,
+   "passiveExposureMatchedPnlUsd": 61.1,
+   "trades": 14,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|ETH-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -14.45,
+   "netPnlUsd": -39.74,
+   "passiveExposureMatchedPnlUsd": 17.65,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|ETH-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -5.59,
+   "netPnlUsd": -92.09,
+   "passiveExposureMatchedPnlUsd": 42.1,
+   "trades": 7,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|SOL-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 320.78,
+   "netPnlUsd": 237.66,
+   "passiveExposureMatchedPnlUsd": 319,
+   "trades": 5,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-donchian_breakout|SOL-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 437.33,
+   "netPnlUsd": 152.33,
+   "passiveExposureMatchedPnlUsd": 290.2,
+   "trades": 17,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|SOL-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 432.76,
+   "netPnlUsd": 133.83,
+   "passiveExposureMatchedPnlUsd": 419.37,
+   "trades": 18,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|SOL-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 304.47,
+   "netPnlUsd": -193.63,
+   "passiveExposureMatchedPnlUsd": 216.66,
+   "trades": 37,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|SOL-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 36.8,
+   "netPnlUsd": -89.6,
+   "passiveExposureMatchedPnlUsd": 97.21,
+   "trades": 10,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|SOL-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 26.78,
+   "netPnlUsd": 0.43,
+   "passiveExposureMatchedPnlUsd": 24.39,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|SOL-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 9.83,
+   "netPnlUsd": -78.01,
+   "passiveExposureMatchedPnlUsd": 53.6,
+   "trades": 7,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|XRP-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 106.89,
+   "netPnlUsd": 37.23,
+   "passiveExposureMatchedPnlUsd": 230.32,
+   "trades": 5,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|XRP-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 521.35,
+   "netPnlUsd": 389.02,
+   "passiveExposureMatchedPnlUsd": 118.85,
+   "trades": 7,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|XRP-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 218.39,
+   "netPnlUsd": -96.49,
+   "passiveExposureMatchedPnlUsd": 299.62,
+   "trades": 23,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|XRP-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 272.86,
+   "netPnlUsd": -171.17,
+   "passiveExposureMatchedPnlUsd": 168.88,
+   "trades": 33,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|XRP-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 31.59,
+   "netPnlUsd": -105.87,
+   "passiveExposureMatchedPnlUsd": 68.65,
+   "trades": 11,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|XRP-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 28.4,
+   "netPnlUsd": 2.01,
+   "passiveExposureMatchedPnlUsd": 15.4,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|XRP-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -21.83,
+   "netPnlUsd": -129.83,
+   "passiveExposureMatchedPnlUsd": 49.31,
+   "trades": 9,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|DOGE-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 168.63,
+   "netPnlUsd": 95.08,
+   "passiveExposureMatchedPnlUsd": 166.76,
+   "trades": 5,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-donchian_breakout|DOGE-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 93.45,
+   "netPnlUsd": -14.55,
+   "passiveExposureMatchedPnlUsd": 133.32,
+   "trades": 8,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|DOGE-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 147.17,
+   "netPnlUsd": -56.07,
+   "passiveExposureMatchedPnlUsd": 213.05,
+   "trades": 15,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|DOGE-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 148.23,
+   "netPnlUsd": -308.43,
+   "passiveExposureMatchedPnlUsd": 108.3,
+   "trades": 39,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|DOGE-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 61.67,
+   "netPnlUsd": -126.43,
+   "passiveExposureMatchedPnlUsd": 61.27,
+   "trades": 15,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|DOGE-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 65.1,
+   "netPnlUsd": 24.36,
+   "passiveExposureMatchedPnlUsd": 20.2,
+   "trades": 3,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|DOGE-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 29.31,
+   "netPnlUsd": -47.93,
+   "passiveExposureMatchedPnlUsd": 28.24,
+   "trades": 6,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-sma_cross|ADA-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 238.3,
+   "netPnlUsd": 115.99,
+   "passiveExposureMatchedPnlUsd": 256.54,
+   "trades": 8,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|ADA-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 170.32,
+   "netPnlUsd": -73.85,
+   "passiveExposureMatchedPnlUsd": 174.19,
+   "trades": 18,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|ADA-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 430.13,
+   "netPnlUsd": -6.22,
+   "passiveExposureMatchedPnlUsd": 289.51,
+   "trades": 28,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|ADA-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 24,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 102.89,
+   "netPnlUsd": -401.35,
+   "passiveExposureMatchedPnlUsd": 198.42,
+   "trades": 47,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|ADA-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 184.6,
+   "netPnlUsd": -25.28,
+   "passiveExposureMatchedPnlUsd": 65.09,
+   "trades": 15,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|ADA-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 3.35,
+   "netPnlUsd": -9.61,
+   "passiveExposureMatchedPnlUsd": 7.8,
+   "trades": 1,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|ADA-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -33.87,
+   "netPnlUsd": -94.67,
+   "passiveExposureMatchedPnlUsd": 30.47,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|AVAX-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 334.8,
+   "netPnlUsd": 142,
+   "passiveExposureMatchedPnlUsd": 434.48,
+   "trades": 12,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|AVAX-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 418.94,
+   "netPnlUsd": 137.59,
+   "passiveExposureMatchedPnlUsd": 347.83,
+   "trades": 17,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|AVAX-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 621.33,
+   "netPnlUsd": 299.84,
+   "passiveExposureMatchedPnlUsd": 512.64,
+   "trades": 17,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|AVAX-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 579.59,
+   "netPnlUsd": 126.55,
+   "passiveExposureMatchedPnlUsd": 362.06,
+   "trades": 26,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|AVAX-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 157.09,
+   "netPnlUsd": -10.04,
+   "passiveExposureMatchedPnlUsd": 132.93,
+   "trades": 12,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|AVAX-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 46.89,
+   "netPnlUsd": 33.37,
+   "passiveExposureMatchedPnlUsd": 8.29,
+   "trades": 1,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|AVAX-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -52.07,
+   "netPnlUsd": -111.73,
+   "passiveExposureMatchedPnlUsd": 27.66,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|LINK-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 20,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 306,
+   "netPnlUsd": 256.05,
+   "passiveExposureMatchedPnlUsd": 244.91,
+   "trades": 3,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-donchian_breakout|LINK-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 20,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 472.15,
+   "netPnlUsd": 227.18,
+   "passiveExposureMatchedPnlUsd": 220.96,
+   "trades": 14,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|LINK-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 312.29,
+   "netPnlUsd": 38.49,
+   "passiveExposureMatchedPnlUsd": 313.75,
+   "trades": 18,
+   "categories": [
+    "beta_only"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|LINK-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 294.96,
+   "netPnlUsd": 11.54,
+   "passiveExposureMatchedPnlUsd": 199.7,
+   "trades": 19,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|LINK-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 165.09,
+   "netPnlUsd": -136.02,
+   "passiveExposureMatchedPnlUsd": 131.36,
+   "trades": 23,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|LINK-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 14.23,
+   "netPnlUsd": -24.56,
+   "passiveExposureMatchedPnlUsd": 28.73,
+   "trades": 3,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|LINK-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 125.62,
+   "netPnlUsd": -24.36,
+   "passiveExposureMatchedPnlUsd": 67.86,
+   "trades": 11,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-sma_cross|LTC-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 360.18,
+   "netPnlUsd": 291.25,
+   "passiveExposureMatchedPnlUsd": 321.95,
+   "trades": 4,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-donchian_breakout|LTC-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 20
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 249.81,
+   "netPnlUsd": 97.45,
+   "passiveExposureMatchedPnlUsd": 271.5,
+   "trades": 10,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-ts_momentum|LTC-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 520.26,
+   "netPnlUsd": 42.77,
+   "passiveExposureMatchedPnlUsd": 351.67,
+   "trades": 29,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-trend_filtered_momentum|LTC-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 335.49,
+   "netPnlUsd": -163.65,
+   "passiveExposureMatchedPnlUsd": 274.54,
+   "trades": 36,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-bollinger_reversion|LTC-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "k": 2.5,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 17.56,
+   "netPnlUsd": -82.95,
+   "passiveExposureMatchedPnlUsd": 66.39,
+   "trades": 8,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-rsi_reversion|LTC-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -24.85,
+   "netPnlUsd": -37.45,
+   "passiveExposureMatchedPnlUsd": 12.16,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_compression_breakout|LTC-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 10.38,
+   "netPnlUsd": -2.67,
+   "passiveExposureMatchedPnlUsd": 12.94,
+   "trades": 1,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-sma_cross|DOT-USD|3600000",
+   "hypothesisId": "sma_cross",
+   "family": "sma_cross",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "fast": 50,
+    "slow": 200
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 247.5,
+   "netPnlUsd": 153.89,
+   "passiveExposureMatchedPnlUsd": 397.68,
+   "trades": 6,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-donchian_breakout|DOT-USD|3600000",
+   "hypothesisId": "donchian_breakout",
+   "family": "donchian_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 401.53,
+   "netPnlUsd": 263.09,
+   "passiveExposureMatchedPnlUsd": 166.63,
+   "trades": 8,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-ts_momentum|DOT-USD|3600000",
+   "hypothesisId": "ts_momentum",
+   "family": "ts_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 101.18,
+   "netPnlUsd": -183.42,
+   "passiveExposureMatchedPnlUsd": 454.1,
+   "trades": 23,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-trend_filtered_momentum|DOT-USD|3600000",
+   "hypothesisId": "trend_filtered_momentum",
+   "family": "trend_filtered_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 72,
+    "filter": 200
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 104.07,
+   "netPnlUsd": -262.14,
+   "passiveExposureMatchedPnlUsd": 314.72,
+   "trades": 31,
+   "categories": [
+    "beta_only",
+    "cost_dominated"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-bollinger_reversion|DOT-USD|3600000",
+   "hypothesisId": "bollinger_reversion",
+   "family": "bollinger_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 50,
+    "k": 2,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 170.35,
+   "netPnlUsd": 1.3,
+   "passiveExposureMatchedPnlUsd": 114.89,
+   "trades": 12,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-rsi_reversion|DOT-USD|3600000",
+   "hypothesisId": "rsi_reversion",
+   "family": "rsi_reversion",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 72.35,
+   "netPnlUsd": 44.83,
+   "passiveExposureMatchedPnlUsd": 13.89,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_compression_breakout|DOT-USD|3600000",
+   "hypothesisId": "vol_compression_breakout",
+   "family": "vol_compression_breakout",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 20,
+    "lookback": 120,
+    "pct": 0.1
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 3600000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 74.23,
+   "netPnlUsd": 6.63,
+   "passiveExposureMatchedPnlUsd": 44.04,
+   "trades": 5,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_filtered_trend|BTC-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 100,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 261.27,
+   "netPnlUsd": 37.82,
+   "passiveExposureMatchedPnlUsd": 298.62,
+   "trades": 15,
+   "categories": [
+    "beta_only",
+    "insufficient_sample",
+    "unstable",
+    "oos_loss"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|BTC-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 990.26,
+   "netPnlUsd": 637.65,
+   "passiveExposureMatchedPnlUsd": 880.41,
+   "trades": 15,
+   "categories": [
+    "insufficient_sample",
+    "oos_loss"
+   ],
+   "primaryCause": "oos_loss",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon this parameterisation; the test window is spent",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|ETH-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 245.04,
+   "netPnlUsd": 107.57,
+   "passiveExposureMatchedPnlUsd": 7.79,
+   "trades": 9,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-regime_switch|ETH-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 76.15,
+   "netPnlUsd": -102.92,
+   "passiveExposureMatchedPnlUsd": 107.33,
+   "trades": 14,
+   "categories": [
+    "beta_only",
+    "cost_dominated",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|SOL-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 100,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -44.31,
+   "netPnlUsd": -243.71,
+   "passiveExposureMatchedPnlUsd": 259.71,
+   "trades": 18,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|SOL-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -262.42,
+   "netPnlUsd": -400.93,
+   "passiveExposureMatchedPnlUsd": -21.91,
+   "trades": 16,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|XRP-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -166.71,
+   "netPnlUsd": -258.72,
+   "passiveExposureMatchedPnlUsd": -74.18,
+   "trades": 9,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|XRP-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 504.89,
+   "netPnlUsd": 304.37,
+   "passiveExposureMatchedPnlUsd": -90.08,
+   "trades": 11,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_filtered_trend|DOGE-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 911.28,
+   "netPnlUsd": 635.21,
+   "passiveExposureMatchedPnlUsd": 198.18,
+   "trades": 12,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-regime_switch|DOGE-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -20.23,
+   "netPnlUsd": -172.58,
+   "passiveExposureMatchedPnlUsd": 323.44,
+   "trades": 13,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|ADA-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -119.84,
+   "netPnlUsd": -256.69,
+   "passiveExposureMatchedPnlUsd": 222.25,
+   "trades": 13,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|ADA-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 1569.23,
+   "netPnlUsd": 1086.74,
+   "passiveExposureMatchedPnlUsd": 17.91,
+   "trades": 16,
+   "categories": [],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_filtered_trend|AVAX-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -231.6,
+   "netPnlUsd": -375.9,
+   "passiveExposureMatchedPnlUsd": -38.05,
+   "trades": 16,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|AVAX-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -444.67,
+   "netPnlUsd": -537.08,
+   "passiveExposureMatchedPnlUsd": -219.4,
+   "trades": 14,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|LINK-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 100,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -248.89,
+   "netPnlUsd": -357.38,
+   "passiveExposureMatchedPnlUsd": -8.86,
+   "trades": 12,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|LINK-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 138.09,
+   "netPnlUsd": -87.58,
+   "passiveExposureMatchedPnlUsd": -8.1,
+   "trades": 17,
+   "categories": [
+    "cost_dominated"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-vol_filtered_trend|LTC-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -204.18,
+   "netPnlUsd": -370.22,
+   "passiveExposureMatchedPnlUsd": 36.21,
+   "trades": 18,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|LTC-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -300.78,
+   "netPnlUsd": -446.67,
+   "passiveExposureMatchedPnlUsd": 111.08,
+   "trades": 18,
+   "categories": [
+    "no_gross_edge"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-vol_filtered_trend|DOT-USD|86400000",
+   "hypothesisId": "vol_filtered_trend",
+   "family": "vol_filtered_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -145.94,
+   "netPnlUsd": -269.3,
+   "passiveExposureMatchedPnlUsd": -41.01,
+   "trades": 12,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-regime_switch|DOT-USD|86400000",
+   "hypothesisId": "regime_switch",
+   "family": "regime_switch",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "er": 20,
+    "erTrend": 0.4,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -393.98,
+   "netPnlUsd": -481.52,
+   "passiveExposureMatchedPnlUsd": -228.82,
+   "trades": 12,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|BTC-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 100,
+    "period": 7
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 387.97,
+   "netPnlUsd": 283.82,
+   "passiveExposureMatchedPnlUsd": 574.54,
+   "trades": 6,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|BTC-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "BTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 111.04,
+   "netPnlUsd": 54.74,
+   "passiveExposureMatchedPnlUsd": 817.55,
+   "trades": 4,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|ETH-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -488.57,
+   "netPnlUsd": -520.76,
+   "passiveExposureMatchedPnlUsd": -77.96,
+   "trades": 5,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|ETH-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "ETH-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -344.31,
+   "netPnlUsd": -377.53,
+   "passiveExposureMatchedPnlUsd": -65.65,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|SOL-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 350.62,
+   "netPnlUsd": 298.96,
+   "passiveExposureMatchedPnlUsd": 180.13,
+   "trades": 3,
+   "categories": [
+    "insufficient_sample"
+   ],
+   "primaryCause": "insufficient_sample",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only testable on new, unseen data (forward paper) or a larger point-in-time universe",
+   "retestEligible": true
+  },
+  {
+   "id": "F-monthly_momentum|SOL-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "SOL-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -274.46,
+   "netPnlUsd": -311.22,
+   "passiveExposureMatchedPnlUsd": 93.14,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|XRP-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 3.08,
+   "netPnlUsd": -9.88,
+   "passiveExposureMatchedPnlUsd": -139.26,
+   "trades": 1,
+   "categories": [
+    "cost_dominated",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "cost_dominated",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "only retest with a structurally lower-turnover version or VERIFIED lower costs (never assumed)",
+   "retestEligible": true
+  },
+  {
+   "id": "F-monthly_momentum|XRP-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 180,
+    "period": 28
+   },
+   "dataset": {
+    "market": "XRP-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -319.41,
+   "netPnlUsd": -328.21,
+   "passiveExposureMatchedPnlUsd": -168.31,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|DOGE-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -49.17,
+   "netPnlUsd": -97.35,
+   "passiveExposureMatchedPnlUsd": 145.02,
+   "trades": 4,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|DOGE-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 180,
+    "period": 28
+   },
+   "dataset": {
+    "market": "DOGE-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -722.1,
+   "netPnlUsd": -729.23,
+   "passiveExposureMatchedPnlUsd": 221.21,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|ADA-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 100,
+    "period": 7
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 199.5,
+   "netPnlUsd": 124.01,
+   "passiveExposureMatchedPnlUsd": 242.59,
+   "trades": 5,
+   "categories": [
+    "beta_only",
+    "insufficient_sample"
+   ],
+   "primaryCause": "beta_only",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon as a timing rule; the gross gain is market exposure — benchmark against passive exposure",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|ADA-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "ADA-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -91.27,
+   "netPnlUsd": -114.6,
+   "passiveExposureMatchedPnlUsd": 151.44,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|AVAX-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -183.66,
+   "netPnlUsd": -214.89,
+   "passiveExposureMatchedPnlUsd": 160.96,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|AVAX-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "AVAX-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 443,
+   "netPnlUsd": 405.96,
+   "passiveExposureMatchedPnlUsd": 70.45,
+   "trades": 2,
+   "categories": [
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "unstable",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon; parameter/period sensitivity indicates overfitting",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|LINK-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -278.06,
+   "netPnlUsd": -305.67,
+   "passiveExposureMatchedPnlUsd": -89.07,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|LINK-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "LINK-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -373.01,
+   "netPnlUsd": -396.99,
+   "passiveExposureMatchedPnlUsd": -88.89,
+   "trades": 3,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|LTC-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 100,
+    "period": 7
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -48.47,
+   "netPnlUsd": -142.46,
+   "passiveExposureMatchedPnlUsd": 10.27,
+   "trades": 8,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|LTC-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "LTC-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": 131.11,
+   "netPnlUsd": 87.85,
+   "passiveExposureMatchedPnlUsd": 114.77,
+   "trades": 3,
+   "categories": [
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "unstable",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon; parameter/period sensitivity indicates overfitting",
+   "retestEligible": false
+  },
+  {
+   "id": "F-weekly_trend|DOT-USD|86400000",
+   "hypothesisId": "weekly_trend",
+   "family": "weekly_trend",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -257.07,
+   "netPnlUsd": -276.13,
+   "passiveExposureMatchedPnlUsd": -78.85,
+   "trades": 2,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  },
+  {
+   "id": "F-monthly_momentum|DOT-USD|86400000",
+   "hypothesisId": "monthly_momentum",
+   "family": "monthly_momentum",
+   "version": "gates-v3 / exec-v1 replay",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   },
+   "dataset": {
+    "market": "DOT-USD",
+    "intervalMs": 86400000,
+    "window": [
+     0,
+     0
+    ],
+    "kind": "validation"
+   },
+   "costPreset": "coinbase_taker",
+   "grossPnlUsd": -307.26,
+   "netPnlUsd": -316.21,
+   "passiveExposureMatchedPnlUsd": -112.42,
+   "trades": 1,
+   "categories": [
+    "no_gross_edge",
+    "insufficient_sample",
+    "unstable"
+   ],
+   "primaryCause": "no_gross_edge",
+   "confirmed": true,
+   "limitations": [
+    "validation window already inspected",
+    "single path; no point-in-time universe",
+    "legacy 60 bps cost (verified fees are higher → conservative for rejection)"
+   ],
+   "correctiveAction": "abandon the signal; no cost or execution change can rescue a negative gross result",
+   "retestEligible": false
+  }
+ ]
+}

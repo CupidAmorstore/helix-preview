@@ -1,0 +1,30 @@
+# Creator Outreach Email / DM Templates
+Send these to micro-influencers (5k - 25k followers) on YouTube, Twitter, and TikTok who focus on crypto risk management and trading setups. Do not target "meme coin promoters". Target actual analysts.
+
+## Template: The "Free Pro Tier" Strategy
+**Subject:** Hey [Name] - Built a tool for your workflow (Free Lifetime Pro Account)
+
+Hey [Name],
+
+I’ve been following your crypto analysis for a while, and I really respect how much you emphasize risk management and avoiding bad setups rather than just shilling 100x coins. 
+
+Because of that, I think you'll actually like a tool I just finished building. It's called Cryptofinancial. Most apps flash "BUY" endlessly to trap people. I programmed Apex to actively analyze volume/momentum and print a huge "NO TRADE" signal with a 0% confidence score when the market is noisy.
+
+It runs on Binance sub-second WebSockets, so the latency is basically zero.
+
+I’m giving free lifetime Pro accounts to a few creators whose work I respect to test the beta. I've already upgraded the account under this email if you want to log in and mess around with it. 
+
+URL: [Insert URL]
+
+Absolutely no obligation to post about it or shout it out. I genuinely just want to see if an analyst of your caliber finds the NO TRADE engine useful.
+
+Cheers,
+[Your Name]
+Founder, Apex Crypto
+
+---
+
+## Strategy Rules for Creator Outreach
+1. **Never pay for initial reviews:** Paying for app reviews kills trust. Building relationships gets you organic screentime.
+2. **Follow up once:** If they don't reply in 4 days, send a 1-sentence bump: *"Just checking to see if you managed to log in — let me know if you hit any bugs!"*
+3. **If they make a video:** Put their logo or quote on the main landing page as Social Proof.

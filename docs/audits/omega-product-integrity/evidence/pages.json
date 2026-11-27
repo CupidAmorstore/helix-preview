@@ -1,0 +1,1242 @@
+[
+ {
+  "state": "fresh",
+  "key": "home",
+  "route": "/",
+  "url": "http://localhost:4173/",
+  "loadMs": 2271,
+  "title": "Practise trading without risking money.",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1131,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 110,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 428,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927463"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 20,
+  "textCount": 47
+ },
+ {
+  "state": "fresh",
+  "key": "markets",
+  "route": "/markets",
+  "url": "http://localhost:4173/markets",
+  "loadMs": 2242,
+  "title": "Markets",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 6600,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 494,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 114,
+  "textCount": 419
+ },
+ {
+  "state": "fresh",
+  "key": "asset-btc",
+  "route": "/markets/BTC",
+  "url": "http://localhost:4173/markets/BTC",
+  "loadMs": 2242,
+  "title": "Bitcoin",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1261,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 414,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 19,
+  "textCount": 45
+ },
+ {
+  "state": "fresh",
+  "key": "asset-usdc",
+  "route": "/markets/USDC",
+  "url": "http://localhost:4173/markets/USDC",
+  "loadMs": 2240,
+  "title": "USDC",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 8,
+  "textCount": 36
+ },
+ {
+  "state": "fresh",
+  "key": "asset-unknown",
+  "route": "/markets/NOTACOIN",
+  "url": "http://localhost:4173/markets/NOTACOIN",
+  "loadMs": 2234,
+  "title": "NOTACOIN",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 91,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 8,
+  "textCount": 11
+ },
+ {
+  "state": "fresh",
+  "key": "bot-overview",
+  "route": "/bot",
+  "url": "http://localhost:4173/bot",
+  "loadMs": 2241,
+  "title": "Trading Bot",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 2173,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 465,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927467"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 12,
+  "textCount": 92
+ },
+ {
+  "state": "fresh",
+  "key": "bot-strategies",
+  "route": "/bot?tab=strategies",
+  "url": "http://localhost:4173/bot?tab=strategies",
+  "loadMs": 2242,
+  "title": "Trading Bot",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 2061,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 467,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927467"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 21,
+  "textCount": 73
+ },
+ {
+  "state": "fresh",
+  "key": "bot-activity",
+  "route": "/bot?tab=activity",
+  "url": "http://localhost:4173/bot?tab=activity",
+  "loadMs": 2242,
+  "title": "Trading Bot",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 2045,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 465,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927468"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 9,
+  "textCount": 90
+ },
+ {
+  "state": "fresh",
+  "key": "lab-overview",
+  "route": "/bot/research?tab=overview",
+  "url": "http://localhost:4173/bot/research?tab=overview",
+  "loadMs": 2249,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1926,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927469"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 14,
+  "textCount": 96
+ },
+ {
+  "state": "fresh",
+  "key": "lab-strategies",
+  "route": "/bot/research?tab=strategies",
+  "url": "http://localhost:4173/bot/research?tab=strategies",
+  "loadMs": 2240,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 14574,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927469"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 219,
+  "textCount": 623
+ },
+ {
+  "state": "fresh",
+  "key": "lab-lab",
+  "route": "/bot/research?tab=lab",
+  "url": "http://localhost:4173/bot/research?tab=lab",
+  "loadMs": 2242,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 3671,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [
+   {
+    "id": "scrollable-region-focusable",
+    "impact": "serious",
+    "nodes": 1,
+    "help": "Scrollable region must have keyboard access"
+   }
+  ],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927471"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 15,
+  "textCount": 166
+ },
+ {
+  "state": "fresh",
+  "key": "lab-watchbot",
+  "route": "/bot/research?tab=watchbot",
+  "url": "http://localhost:4173/bot/research?tab=watchbot",
+  "loadMs": 2243,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 3013,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927471"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 15,
+  "textCount": 145
+ },
+ {
+  "state": "fresh",
+  "key": "lab-risk",
+  "route": "/bot/research?tab=risk",
+  "url": "http://localhost:4173/bot/research?tab=risk",
+  "loadMs": 2243,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 4765,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 432,
+    "cw": 412
+   },
+   "200": {
+    "sw": 661,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927471"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 18,
+  "textCount": 233
+ },
+ {
+  "state": "fresh",
+  "key": "lab-activity",
+  "route": "/bot/research?tab=activity",
+  "url": "http://localhost:4173/bot/research?tab=activity",
+  "loadMs": 2250,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1740,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927472"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 36,
+  "textCount": 189
+ },
+ {
+  "state": "fresh",
+  "key": "lab-settings",
+  "route": "/bot/research?tab=settings",
+  "url": "http://localhost:4173/bot/research?tab=settings",
+  "loadMs": 2245,
+  "title": "Research Lab",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 919,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 145,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927473"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 15,
+  "textCount": 35
+ },
+ {
+  "state": "fresh",
+  "key": "portfolio",
+  "route": "/portfolio",
+  "url": "http://localhost:4173/portfolio",
+  "loadMs": 2242,
+  "title": "Watched addresses",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 428,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 10,
+  "textCount": 18
+ },
+ {
+  "state": "fresh",
+  "key": "more",
+  "route": "/more",
+  "url": "http://localhost:4173/more",
+  "loadMs": 2241,
+  "title": "More",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 13,
+  "textCount": 28
+ },
+ {
+  "state": "fresh",
+  "key": "connections",
+  "route": "/connections",
+  "url": "http://localhost:4173/connections",
+  "loadMs": 2241,
+  "title": "Connections",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1525,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 109,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 446,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 19,
+  "textCount": 25
+ },
+ {
+  "state": "fresh",
+  "key": "alerts",
+  "route": "/alerts",
+  "url": "http://localhost:4173/alerts",
+  "loadMs": 2238,
+  "title": "Price alerts",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 12,
+  "textCount": 21
+ },
+ {
+  "state": "fresh",
+  "key": "orders",
+  "route": "/orders",
+  "url": "http://localhost:4173/orders",
+  "loadMs": 2237,
+  "title": "Paper orders",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 8,
+  "textCount": 12
+ },
+ {
+  "state": "fresh",
+  "key": "wallet",
+  "route": "/wallet",
+  "url": "http://localhost:4173/wallet",
+  "loadMs": 2237,
+  "title": "Wallet",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1579,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 24,
+  "textCount": 50
+ },
+ {
+  "state": "fresh",
+  "key": "access",
+  "route": "/access",
+  "url": "http://localhost:4173/access",
+  "loadMs": 2244,
+  "title": "Access",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 91,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 10,
+  "textCount": 16
+ },
+ {
+  "state": "fresh",
+  "key": "support",
+  "route": "/support",
+  "url": "http://localhost:4173/support",
+  "loadMs": 2247,
+  "title": "Support",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 109,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 487,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 6,
+  "textCount": 11
+ },
+ {
+  "state": "fresh",
+  "key": "privacy",
+  "route": "/privacy",
+  "url": "http://localhost:4173/privacy",
+  "loadMs": 2243,
+  "title": "Privacy Policy",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 109,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 6,
+  "textCount": 13
+ },
+ {
+  "state": "fresh",
+  "key": "terms",
+  "route": "/terms",
+  "url": "http://localhost:4173/terms",
+  "loadMs": 2248,
+  "title": "Terms of Service",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 109,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 6,
+  "textCount": 13
+ },
+ {
+  "state": "fresh",
+  "key": "notfound",
+  "route": "/does-not-exist",
+  "url": "http://localhost:4173/does-not-exist",
+  "loadMs": 2237,
+  "title": "Page Not Found",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 109,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [],
+  "interactiveCount": 6,
+  "textCount": 10
+ },
+ {
+  "state": "account",
+  "key": "home",
+  "route": "/",
+  "url": "http://localhost:4173/",
+  "loadMs": 2223,
+  "title": "Paper account · simulated money",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1351,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 428,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927476"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927476"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 21,
+  "textCount": 58
+ },
+ {
+  "state": "account",
+  "key": "asset-btc",
+  "route": "/markets/BTC",
+  "url": "http://localhost:4173/markets/BTC",
+  "loadMs": 2225,
+  "title": "Bitcoin",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 1261,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 414,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927477"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 19,
+  "textCount": 45
+ },
+ {
+  "state": "account",
+  "key": "bot-overview",
+  "route": "/bot",
+  "url": "http://localhost:4173/bot",
+  "loadMs": 2226,
+  "title": "Trading Bot",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 2269,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 465,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927479"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927479"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 13,
+  "textCount": 94
+ },
+ {
+  "state": "account",
+  "key": "bot-activity",
+  "route": "/bot?tab=activity",
+  "url": "http://localhost:4173/bot?tab=activity",
+  "loadMs": 2220,
+  "title": "Trading Bot",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 2045,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 465,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927480"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927480"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 9,
+  "textCount": 90
+ },
+ {
+  "state": "account",
+  "key": "portfolio",
+  "route": "/portfolio",
+  "url": "http://localhost:4173/portfolio",
+  "loadMs": 2218,
+  "title": "Watched addresses",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 428,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927480"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 10,
+  "textCount": 18
+ },
+ {
+  "state": "account",
+  "key": "orders",
+  "route": "/orders",
+  "url": "http://localhost:4173/orders",
+  "loadMs": 2220,
+  "title": "Paper orders",
+  "layout": {
+   "scrollWidth": 412,
+   "clientWidth": 412,
+   "scrollHeight": 915,
+   "viewport": 915,
+   "headerBottom": 65,
+   "h1Top": 85,
+   "navTop": 858,
+   "mainPaddingBottom": "112px",
+   "firstContentTop": 65
+  },
+  "axe": [],
+  "fontScale": {
+   "130": {
+    "sw": 412,
+    "cw": 412
+   },
+   "200": {
+    "sw": 412,
+    "cw": 412
+   }
+  },
+  "errorsOnLoad": [
+   {
+    "kind": "http",
+    "msg": "404 https://cupidamorstore.github.io/helix-preview/data/latest.json?t=29927480"
+   },
+   {
+    "kind": "console",
+    "msg": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   }
+  ],
+  "interactiveCount": 10,
+  "textCount": 21
+ }
+]

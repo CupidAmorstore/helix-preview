@@ -1,0 +1,34 @@
+{
+ "auditDate": "2026-11-25",
+ "sourceCommit": "d7174f1abfcfc9b1c303c436e2834e6864070263",
+ "branch": "ccr-8d17e0b5-yaqvtm",
+ "webBuild": "npx vite build (local), served by npx vite preview --port 4173",
+ "browser": "Chromium via Playwright 1.63.0",
+ "viewports": [
+  "412x915 (primary, mobile+touch)",
+  "320x640",
+  "360x740",
+  "768x1024"
+ ],
+ "textZoom": [
+  "100%",
+  "130%",
+  "200% (root font-size approximation of Android text zoom)"
+ ],
+ "axe": "axe-core min.js (wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa)",
+ "android": "Android 15 / API 35 emulator (pixel_6), GitHub Actions run 45651406413, version code 47, exact artifact; no physical device",
+ "apkPublic": {
+  "versionCode": 48,
+  "sha256": "dd379b52c5d15cd1f938789dbefd7b51702cc3d59b33a28f1b5dd9ad0ca60e38",
+  "signing": "public debug key 2c87\u20261cdc"
+ },
+ "isolation": "every activation in a fresh browser context; paper money only; no credentials; no real orders possible (verified)",
+ "node": "v22.23.5",
+ "tools": [
+  "tools/interaction-audit.cjs",
+  "tools/market-data-check.cjs",
+  "tools/reconciliation.cjs",
+  "tools/verify-no-effect.cjs",
+  "tools/perf.cjs"
+ ]
+}

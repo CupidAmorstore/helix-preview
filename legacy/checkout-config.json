@@ -1,0 +1,8 @@
+﻿{
+  "monthly_usd": null,
+  "annual_usd": null,
+  "checkout_monthly_url": "",
+  "checkout_annual_url": "",
+  "support_email": "support@helix.app",
+  "_todo": "TODO: Replace with real checkout integration (Stripe or Lemon Squeezy)."
+}

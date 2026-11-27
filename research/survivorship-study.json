@@ -1,0 +1,473 @@
+{
+ "generatedAt": "2026-11-23T21:13:33.513Z",
+ "universeSnapshot": "research/universe-snapshot-2026-11-23.json",
+ "costPerSideBps": 65,
+ "markets": [
+  {
+   "id": "BTC-USD",
+   "group": "survivor",
+   "bars": 3248,
+   "from": "2018-01-01",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "ETH-USD",
+   "group": "survivor",
+   "bars": 3248,
+   "from": "2018-01-01",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "SOL-USD",
+   "group": "survivor",
+   "bars": 1985,
+   "from": "2021-06-17",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "XRP-USD",
+   "group": "survivor",
+   "bars": 1923,
+   "from": "2019-02-26",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "DOGE-USD",
+   "group": "survivor",
+   "bars": 1999,
+   "from": "2021-06-03",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "ADA-USD",
+   "group": "survivor",
+   "bars": 2076,
+   "from": "2021-03-18",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "AVAX-USD",
+   "group": "survivor",
+   "bars": 1880,
+   "from": "2021-09-30",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "LINK-USD",
+   "group": "survivor",
+   "bars": 2706,
+   "from": "2019-06-27",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "LTC-USD",
+   "group": "survivor",
+   "bars": 3248,
+   "from": "2018-01-01",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "DOT-USD",
+   "group": "survivor",
+   "bars": 1986,
+   "from": "2021-06-16",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "ACX-USD",
+   "group": "delisted",
+   "bars": 707,
+   "from": "2024-08-21",
+   "to": "2026-07-28"
+  },
+  {
+   "id": "ANT-USD",
+   "group": "delisted",
+   "bars": 394,
+   "from": "2022-12-08",
+   "to": "2024-01-05"
+  },
+  {
+   "id": "ATA-USD",
+   "group": "delisted",
+   "bars": 568,
+   "from": "2022-06-16",
+   "to": "2024-01-04"
+  },
+  {
+   "id": "BADGER-USD",
+   "group": "delisted",
+   "bars": 1811,
+   "from": "2021-10-14",
+   "to": "2026-09-28"
+  },
+  {
+   "id": "BAL-USD",
+   "group": "delisted",
+   "bars": 2226,
+   "from": "2020-10-06",
+   "to": "2026-11-09"
+  },
+  {
+   "id": "BIT-USD",
+   "group": "delisted",
+   "bars": 945,
+   "from": "2022-06-07",
+   "to": "2025-01-06"
+  },
+  {
+   "id": "BLAST-USD",
+   "group": "delisted",
+   "bars": 847,
+   "from": "2024-06-26",
+   "to": "2026-10-20"
+  },
+  {
+   "id": "BOND-USD",
+   "group": "delisted",
+   "bars": 805,
+   "from": "2021-06-24",
+   "to": "2023-09-06"
+  },
+  {
+   "id": "CLV-USD",
+   "group": "delisted",
+   "bars": 1610,
+   "from": "2021-07-15",
+   "to": "2025-12-10"
+  },
+  {
+   "id": "COVAL-USD",
+   "group": "delisted",
+   "bars": 955,
+   "from": "2021-12-08",
+   "to": "2024-07-19"
+  },
+  {
+   "id": "CRPT-USD",
+   "group": "delisted",
+   "bars": 590,
+   "from": "2022-03-24",
+   "to": "2023-11-03"
+  },
+  {
+   "id": "DAR-USD",
+   "group": "delisted",
+   "bars": 1066,
+   "from": "2022-06-16",
+   "to": "2025-05-16"
+  },
+  {
+   "id": "DDX-USD",
+   "group": "delisted",
+   "bars": 736,
+   "from": "2021-09-01",
+   "to": "2023-09-06"
+  },
+  {
+   "id": "DESO-USD",
+   "group": "delisted",
+   "bars": 1061,
+   "from": "2021-12-14",
+   "to": "2024-11-08"
+  },
+  {
+   "id": "DREP-USD",
+   "group": "delisted",
+   "bars": 561,
+   "from": "2022-06-23",
+   "to": "2024-01-04"
+  },
+  {
+   "id": "DYP-USD",
+   "group": "delisted",
+   "bars": 941,
+   "from": "2022-06-22",
+   "to": "2025-01-17"
+  },
+  {
+   "id": "ENJ-USD",
+   "group": "delisted",
+   "bars": 1163,
+   "from": "2021-04-09",
+   "to": "2024-06-14"
+  },
+  {
+   "id": "EOS-USD",
+   "group": "delisted",
+   "bars": 2438,
+   "from": "2019-04-09",
+   "to": "2025-12-10"
+  },
+  {
+   "id": "ERN-USD",
+   "group": "delisted",
+   "bars": 1264,
+   "from": "2022-03-08",
+   "to": "2025-08-22"
+  },
+  {
+   "id": "FIS-USD",
+   "group": "delisted",
+   "bars": 1514,
+   "from": "2022-06-16",
+   "to": "2026-08-07"
+  },
+  {
+   "id": "FORTH-USD",
+   "group": "delisted",
+   "bars": 2042,
+   "from": "2021-04-21",
+   "to": "2026-11-22"
+  },
+  {
+   "id": "FX-USD",
+   "group": "delisted",
+   "bars": 1409,
+   "from": "2021-10-07",
+   "to": "2025-08-15"
+  },
+  {
+   "id": "GAL-USD",
+   "group": "delisted",
+   "bars": 1108,
+   "from": "2022-05-05",
+   "to": "2025-05-16"
+  },
+  {
+   "id": "GALA-USD",
+   "group": "delisted",
+   "bars": 543,
+   "from": "2021-11-16",
+   "to": "2023-05-12"
+  },
+  {
+   "id": "GYEN-USD",
+   "group": "delisted",
+   "bars": 1260,
+   "from": "2021-11-15",
+   "to": "2025-05-07"
+  },
+  {
+   "id": "IDEX-USD",
+   "group": "delisted",
+   "bars": 1705,
+   "from": "2021-12-07",
+   "to": "2026-08-07"
+  },
+  {
+   "id": "IOTX-USD",
+   "group": "delisted",
+   "bars": 1867,
+   "from": "2021-08-12",
+   "to": "2026-09-23"
+  },
+  {
+   "id": "IP-USD",
+   "group": "delisted",
+   "bars": 600,
+   "from": "2025-02-13",
+   "to": "2026-10-05"
+  },
+  {
+   "id": "JUP-USD",
+   "group": "delisted",
+   "bars": 441,
+   "from": "2022-06-23",
+   "to": "2023-09-06"
+  },
+  {
+   "id": "KEEP-USD",
+   "group": "delisted",
+   "bars": 600,
+   "from": "2021-06-17",
+   "to": "2023-02-06"
+  }
+ ],
+ "buyHold": {
+  "survivors": {
+   "n": 10,
+   "mean": 0.48701934090584176,
+   "median": 0.7434567901234568
+  },
+  "delisted": {
+   "n": 30,
+   "mean": -0.6937626895163684,
+   "median": -0.9041162227602906
+  }
+ },
+ "families": [
+  {
+   "family": "vol_filtered_trend",
+   "params": {
+    "lookback": 250,
+    "trend": 50,
+    "vol": 20
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 0.8748702490055347,
+    "median": -0.19468576924297942
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.0629071568977033,
+    "median": -0.21670921057552717
+   },
+   "gapMean": 0.937777405903238
+  },
+  {
+   "family": "regime_switch",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "k": 2,
+    "maxHold": 20,
+    "n": 20,
+    "trend": 50
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 0.28871971172811667,
+    "median": 0.38291131502730646
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.3153136114411346,
+    "median": -0.6435703378531461
+   },
+   "gapMean": 0.6040333231692513
+  },
+  {
+   "family": "sma_cross",
+   "params": {
+    "fast": 10,
+    "slow": 100
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 1.4453427356365562,
+    "median": 0.2705799362734782
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.16440630681081664,
+    "median": -0.3414400155520615
+   },
+   "gapMean": 1.6097490424473728
+  },
+  {
+   "family": "donchian_breakout",
+   "params": {
+    "entry": 55,
+    "exit": 10
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 1.9259010592845243,
+    "median": 1.5193895393908865
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.24130578960108587,
+    "median": -0.4218974245963727
+   },
+   "gapMean": 2.16720684888561
+  },
+  {
+   "family": "ts_momentum",
+   "params": {
+    "lookback": 24,
+    "threshold": 0
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 0.835552769979676,
+    "median": 0.18791310567246744
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.6059991069063086,
+    "median": -0.7835954988773287
+   },
+   "gapMean": 1.4415518768859847
+  },
+  {
+   "family": "trend_filtered_momentum",
+   "params": {
+    "filter": 200,
+    "lookback": 24
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 1.4861202863322562,
+    "median": 1.2549084305844227
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.40696623777957547,
+    "median": -0.4936644840731995
+   },
+   "gapMean": 1.8930865241118318
+  },
+  {
+   "family": "bollinger_reversion",
+   "params": {
+    "k": 2,
+    "maxHold": 24,
+    "n": 20
+   },
+   "survivors": {
+    "n": 10,
+    "mean": -0.6766797611820119,
+    "median": -0.7552123605415623
+   },
+   "delisted": {
+    "n": 30,
+    "mean": 0.020527746337241658,
+    "median": -0.49186104556067
+   },
+   "gapMean": -0.6972075075192535
+  },
+  {
+   "family": "rsi_reversion",
+   "params": {
+    "hi": 55,
+    "lo": 30,
+    "maxHold": 24,
+    "n": 14
+   },
+   "survivors": {
+    "n": 10,
+    "mean": -0.3867089212320369,
+    "median": -0.36022797919108307
+   },
+   "delisted": {
+    "n": 30,
+    "mean": 0.18686040665804343,
+    "median": -0.20496872738930783
+   },
+   "gapMean": -0.5735693278900803
+  },
+  {
+   "family": "vol_compression_breakout",
+   "params": {
+    "lookback": 120,
+    "n": 20,
+    "pct": 0.2
+   },
+   "survivors": {
+    "n": 10,
+    "mean": 0.04551208451134958,
+    "median": -0.07039429172209544
+   },
+   "delisted": {
+    "n": 30,
+    "mean": -0.07592272607543607,
+    "median": -0.13176929708378005
+   },
+   "gapMean": 0.12143481058678565
+  }
+ ],
+ "note": "Full-life backtests with each family's pooled daily parameters. Not a validation run: no splits, used only to measure how much a survivors-only universe flatters results."
+}

@@ -1,0 +1,51 @@
+{
+ "before": {
+  "pageStates": 32,
+  "elements": 745,
+  "activated": 248,
+  "touchUnder24": 41,
+  "touch24to43": 39,
+  "axeViolations": 1,
+  "overflow130": 1,
+  "overflow200": 15,
+  "overflowSmallViewports": 1,
+  "feed404Errors": 404,
+  "textElements": 2843,
+  "uniqueTexts": 1337,
+  "ruleHits": {
+   "overstated fees": 2,
+   "wrong research time label": 2,
+   "false schedule claim": 2,
+   "awkward wording": 12,
+   "grammar": 34,
+   "internal key": 44,
+   "cryptic link": 3,
+   "placeholder": 3
+  },
+  "advancedKeyHits": {
+   "internal key": 220
+  },
+  "noVisibleEffect": 58
+ },
+ "after": {
+  "pageStates": 32,
+  "elements": 670,
+  "activated": 265,
+  "touchUnder24": 19,
+  "touch24to43": 30,
+  "axeViolations": 1,
+  "overflow130": 0,
+  "overflow200": 0,
+  "overflowSmallViewports": 0,
+  "feed404Errors": 256,
+  "textElements": 2712,
+  "uniqueTexts": 1010,
+  "ruleHits": {
+   "grammar": 29
+  },
+  "advancedKeyHits": {
+   "internal key": 198
+  },
+  "noVisibleEffect": 65
+ }
+}

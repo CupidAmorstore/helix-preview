@@ -1,0 +1,36 @@
+# ASO (App Store Optimization) Strategy
+Use this copy directly for Google Play Console and Apple App Store Connect.
+
+## App Name / Title (30 characters limit per platform)
+Option 1: Apex Crypto Live Market 
+Option 2: Apex: Crypto Signals & Tracker
+Option 3: Apex Crypto Intelligence
+
+## Subtitle / Short Description (Google Play: 80 chars, iOS: 30 chars)
+"Real-time crypto market scanner & tracking."
+"Clear crypto intelligence without the hype."
+"Live crypto charts & No-Trade signal engine."
+
+## Keywords (Max 100 characters for iOS, natural embedding for Google)
+crypto scanner,crypto tracker,live crypto charts,bitcoin signals,altcoin momentum,crypto volatility,market intelligence,real time crypto
+
+## Long Description (Ready to paste)
+Cryptofinancial is a premium, real-time market intelligence engine designed for crypto investors who value clarity and capital preservation over hype.
+
+Stop staring at spreadsheets and cluttered exchanges. Apex delivers sub-second live price action via direct WebSocket connections alongside a multi-factor analysis engine that actively tells you when it’s too risky to trade.
+
+CORE FEATURES:
+⚡ TRUE LIVE STREAMING: Sub-second price feeds for BTC, ETH, SOL, BNB, and more directly to your dashboard. No delayed polling.
+📈 SLIDING TIMEFRAMES: Interactive Live, 1D, 1W, 1M, and 1Y charts that animate in front of you.
+🛡️ STRICT "NO TRADE" ENGINE: Our signal engine analyzes momentum, volume, and volatility. If conditions are mixed or noisy, it explicitly advises "NO TRADE" to protect your capital.
+🔎 EXPLAINABLE ANALYSIS: Never guess why a signal fired again. Our Signal Explanation Card details the exact bullish and bearish variables, risk score, and invalidation criteria.
+📊 MARKET REGIME TRACKER: Know at a glance whether the broader market is Bullish, Bearish, or Mixed.
+
+We do not guarantee profits, and we do not promise perfect timing. We give you institutional-grade context, beautifully designed in our graphite and emerald interface, so you can make rational, emotion-free decisions.
+
+Download Apex today and strip the noise out of your crypto workflow.
+
+## Target Audience Info for Ads (If ever used):
+- **Age:** 24-45
+- **Interests:** Cryptocurrency, Day Trading, Technical Analysis, Wealthsimple, Webull, Binance.
+- **Pain Point:** Overwhelmed by complex charts (TradingView) and scammed by fake "guaranteed profit" signal groups.

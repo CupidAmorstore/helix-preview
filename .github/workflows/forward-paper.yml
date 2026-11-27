@@ -1,0 +1,44 @@
+# Daily forward PAPER evaluation (no exchange credentials, no orders — public candles only).
+# Scheduled workflows run only from the default branch: this is NOT operational until merged to main.
+# State (append-only ledgers, refreshed daily candles, reports) is persisted to the dedicated `forward-ledger`
+# branch; this job never pushes to main. Registrations are always read from main (owner-controlled).
+name: forward-paper
+on:
+  schedule:
+    - cron: '17 1 * * *' # 01:17 UTC, after the daily bar closes at 00:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: forward-paper
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Restore persisted forward state (data + ledgers, never registrations)
+        run: |
+          if git ls-remote --exit-code origin forward-ledger >/dev/null; then
+            git fetch origin forward-ledger
+            files=$(git ls-tree --name-only origin/forward-ledger research/forward/ | grep -E '/(ledger|report)-' || true)
+            git checkout origin/forward-ledger -- research/data $files
+          fi
+      - name: Refresh public daily bars and evaluate
+        run: npx vite-node --config scripts/vite.node.config.ts scripts/forward-paper.ts --refresh
+      - name: Persist to forward-ledger
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A research/forward research/data
+          tree=$(git write-tree)
+          parent=$(git rev-parse -q --verify origin/forward-ledger || true)
+          commit=$(git commit-tree "$tree" ${parent:+-p "$parent"} -m "forward paper $(date -u +%F)")
+          git push origin "$commit:refs/heads/forward-ledger"

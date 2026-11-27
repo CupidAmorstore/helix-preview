@@ -1,0 +1,84 @@
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import TopBar from './TopBar';
+import NavIcon from './NavIcon';
+import { isActive, legalItems, primaryNav, secondaryNav } from './navigation';
+import { useLang } from '../i18n';
+import { useNativeShell } from '../hooks/useNativeShell';
+import AlertWatcher from '../alerts/AlertWatcher';
+
+export default function AppShell({ children }: { children: React.ReactNode }) {
+  const lang = useLang();
+  const { pathname } = useLocation();
+  useNativeShell();
+
+  return (
+    <div className="app-shell bg-ink-900 text-slate-100">
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:flex flex-col gap-6 border-r border-ink-600 px-6 py-8">
+        <div className="flex items-center gap-3">
+          <img src={`${import.meta.env.BASE_URL}assets/helix-mark.svg`} alt="" className="h-7 w-7" />
+          <div className="text-lg font-semibold tracking-wide">HELIX</div>
+        </div>
+        <nav className="flex flex-col gap-1 text-sm" aria-label="Main">
+          {[...primaryNav.filter((i) => i.path !== '/more'), ...secondaryNav.map((i) => ({ ...i, icon: undefined }))].map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === '/'}
+              className={({ isActive: a }) => `flex min-h-[44px] items-center rounded-lg px-3 transition ${a ? 'bg-white/10 text-white' : 'text-slate-300 hover:text-white'}`}
+            >
+              {lang === 'fr' ? item.fr : item.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="mt-auto rounded-lg border border-ink-600 px-3 py-2 text-xs">
+          <div className="text-slate-300">Mode</div>
+          <div className="text-amber-400">Paper trading only · no custody</div>
+        </div>
+      </aside>
+
+      <div className="flex min-h-screen min-w-0 flex-col">
+        <TopBar />
+        <AlertWatcher />
+        <main className="min-w-0 flex-1 px-4 pb-28 pt-5 sm:px-6 sm:pt-8 lg:px-10 lg:pb-8">{children}</main>
+        <footer className="section-divider hidden px-6 py-6 text-xs text-slate-400 lg:block lg:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>HELIX is a market intelligence app. No custody. The Trading Bot runs in paper mode only — no real-money orders.</div>
+            <div className="flex gap-4">
+              {legalItems.map((item) => (
+                <NavLink key={item.path} to={item.path} className="hover:text-slate-200">
+                  {lang === 'fr' ? item.fr : item.label}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        </footer>
+      </div>
+
+      {/* Phone bottom navigation: every primary area one tap away, in thumb reach */}
+      <nav
+        aria-label="Main"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-ink-600 bg-ink-900 lg:hidden"
+        style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px))' }}
+      >
+        {primaryNav.map((item) => {
+          const active = isActive(item.path, pathname);
+          return (
+            // Plain Link: NavLink would override aria-current with its own path match, but a tab also
+            // owns nested pages (More → Alerts), so the active state comes from isActive().
+            <Link
+              key={item.path}
+              to={item.path}
+              aria-current={active ? 'page' : undefined}
+              className={`relative flex min-h-[56px] flex-col items-center justify-center gap-1 text-[11px] ${active ? 'text-white' : 'text-slate-500'}`}
+            >
+              {active && <span className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-white" aria-hidden="true" />}
+              <NavIcon name={item.icon} />
+              <span className={active ? 'font-semibold' : ''}>{lang === 'fr' ? item.fr : item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}

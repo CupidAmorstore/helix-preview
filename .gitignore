@@ -1,0 +1,27 @@
+﻿# Node
+node_modules/
+.npm-cache/
+
+# Build outputs
+/dist/
+/build/
+
+# Capacitor
+android/app/build/
+ios/App/build/
+
+# Logs
+*.log
+deploy-*.zip
+
+# Env
+.env
+.env.*
+
+# Netlify local state
+.netlify/state/
+
+# OS
+.DS_Store
+Thumbs.db
+dist-pages

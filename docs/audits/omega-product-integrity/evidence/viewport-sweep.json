@@ -1,0 +1,470 @@
+[
+ {
+  "vp": "320x640",
+  "key": "home",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "markets",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "asset-btc",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "asset-usdc",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "asset-unknown",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "bot-overview",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "bot-strategies",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "bot-activity",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-overview",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-strategies",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-lab",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-watchbot",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-risk",
+  "sw": 335,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-activity",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "lab-settings",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "portfolio",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "more",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "connections",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "alerts",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "orders",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "wallet",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "access",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "support",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "privacy",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "terms",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "320x640",
+  "key": "notfound",
+  "sw": 320,
+  "cw": 320
+ },
+ {
+  "vp": "360x740",
+  "key": "home",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "markets",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "asset-btc",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "asset-usdc",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "asset-unknown",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "bot-overview",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "bot-strategies",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "bot-activity",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-overview",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-strategies",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-lab",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-watchbot",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-risk",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-activity",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "lab-settings",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "portfolio",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "more",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "connections",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "alerts",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "orders",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "wallet",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "access",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "support",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "privacy",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "terms",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "360x740",
+  "key": "notfound",
+  "sw": 360,
+  "cw": 360
+ },
+ {
+  "vp": "768x1024",
+  "key": "home",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "markets",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "asset-btc",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "asset-usdc",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "asset-unknown",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "bot-overview",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "bot-strategies",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "bot-activity",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-overview",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-strategies",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-lab",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-watchbot",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-risk",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-activity",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "lab-settings",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "portfolio",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "more",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "connections",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "alerts",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "orders",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "wallet",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "access",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "support",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "privacy",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "terms",
+  "sw": 768,
+  "cw": 768
+ },
+ {
+  "vp": "768x1024",
+  "key": "notfound",
+  "sw": 768,
+  "cw": 768
+ }
+]

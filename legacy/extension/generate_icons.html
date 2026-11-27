@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head><title>Icon Generator</title></head>
+<body>
+<script>
+// Generate PNG icons for the extension at 16x16, 48x48, 128x128
+// and trigger downloads
+
+function makeIcon(size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  const r = size / 2;
+
+  // Background circle - emerald gradient
+  const grad = ctx.createRadialGradient(r, r * 0.8, 0, r, r, r);
+  grad.addColorStop(0, '#10b981');
+  grad.addColorStop(1, '#065f46');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(r, r, r, 0, Math.PI * 2);
+  ctx.fill();
+
+  // White "A" letter
+  ctx.fillStyle = 'white';
+  ctx.font = `bold ${Math.round(size * 0.55)}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('A', r, r + size * 0.04);
+
+  return canvas.toDataURL('image/png');
+}
+
+function downloadIcon(size) {
+  const dataUrl = makeIcon(size);
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = `icon${size}.png`;
+  a.click();
+}
+
+window.onload = () => {
+  [16, 48, 128].forEach(size => {
+    setTimeout(() => downloadIcon(size), size);
+  });
+};
+</script>
+<p>Generating icons... check your downloads folder and move them to the extension/icons/ directory.</p>
+</body>
+</html>
+

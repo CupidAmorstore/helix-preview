@@ -1,0 +1,50 @@
+[
+ {
+  "sym": "BTC",
+  "appShown": "$59,940.13",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 59940.13,
+  "diffPct": 0,
+  "at": "2026-11-25T23:01:45.288Z"
+ },
+ {
+  "sym": "ETH",
+  "appShown": "$1,679.27",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 1679.27,
+  "diffPct": 0,
+  "at": "2026-11-25T23:01:49.430Z"
+ },
+ {
+  "sym": "SOL",
+  "appShown": "$70.19",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 70.19,
+  "diffPct": 0,
+  "at": "2026-11-25T23:01:53.517Z"
+ },
+ {
+  "sym": "XRP",
+  "appShown": "$0.9332",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 0.9332,
+  "diffPct": 0,
+  "at": "2026-11-25T23:01:57.618Z"
+ },
+ {
+  "sym": "DOGE",
+  "appShown": "$0.0557",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 0.05572,
+  "diffPct": -0.036,
+  "at": "2026-11-25T23:02:01.699Z"
+ },
+ {
+  "sym": "LINK",
+  "appShown": "$9.00",
+  "status": "Live · Coinbase",
+  "coinbaseTicker": 8.999,
+  "diffPct": 0.011,
+  "at": "2026-11-25T23:02:05.801Z"
+ }
+]

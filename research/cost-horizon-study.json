@@ -1,0 +1,925 @@
+{
+ "generatedAt": "2026-11-24T18:50:28.986Z",
+ "roundTripCostPct": 1.3,
+ "costSource": "assumed lowest-tier taker fee; spread/slippage placeholder",
+ "summaryAcrossMarkets": {
+  "1d": {
+   "medianMovePct": 1.91,
+   "moveToCost": 1.47
+  },
+  "3d": {
+   "medianMovePct": 3.58,
+   "moveToCost": 2.76
+  },
+  "1w": {
+   "medianMovePct": 6.58,
+   "moveToCost": 5.06
+  },
+  "2w": {
+   "medianMovePct": 9.68,
+   "moveToCost": 7.45
+  },
+  "1m": {
+   "medianMovePct": 15.34,
+   "moveToCost": 11.8
+  },
+  "3m": {
+   "medianMovePct": 29.54,
+   "moveToCost": 22.72
+  },
+  "1h": {
+   "medianMovePct": 0.3,
+   "moveToCost": 0.23
+  },
+  "4h": {
+   "medianMovePct": 0.62,
+   "moveToCost": 0.48
+  },
+  "12h": {
+   "medianMovePct": 1.28,
+   "moveToCost": 0.98
+  }
+ },
+ "rows": [
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 2075,
+   "medianAbsMove": 0.023157828782118205,
+   "moveToCost": 1.7813714447783235
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 2075,
+   "medianAbsMove": 0.04092369657690367,
+   "moveToCost": 3.147976659761821
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 2075,
+   "medianAbsMove": 0.065758840110121,
+   "moveToCost": 5.058372316163154
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 2075,
+   "medianAbsMove": 0.10744459770884289,
+   "moveToCost": 8.264969054526377
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 2075,
+   "medianAbsMove": 0.15843566782548443,
+   "moveToCost": 12.187359063498803
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 2075,
+   "medianAbsMove": 0.35051349499468387,
+   "moveToCost": 26.962576538052605
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0037090502030858482,
+   "moveToCost": 0.2853115540835268
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.007776284012427282,
+   "moveToCost": 0.5981756932636371
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.015768980414936528,
+   "moveToCost": 1.212998493456656
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.022606218398337822,
+   "moveToCost": 1.738939876795217
+  },
+  {
+   "market": "ADA-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.03902284615882899,
+   "moveToCost": 3.0017573968329994
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 1879,
+   "medianAbsMove": 0.02611959419613877,
+   "moveToCost": 2.0091995535491365
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 1879,
+   "medianAbsMove": 0.04518516927770862,
+   "moveToCost": 3.4757822521314323
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 1879,
+   "medianAbsMove": 0.07048207503841918,
+   "moveToCost": 5.421698079878398
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 1879,
+   "medianAbsMove": 0.12087422822605626,
+   "moveToCost": 9.298017555850482
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 1879,
+   "medianAbsMove": 0.16977797762059382,
+   "moveToCost": 13.059844432353371
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 1879,
+   "medianAbsMove": 0.3948404568358245,
+   "moveToCost": 30.372342833524964
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0032697576815567068,
+   "moveToCost": 0.25151982165820824
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.006562181769339366,
+   "moveToCost": 0.5047832130261051
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.014293811257144904,
+   "moveToCost": 1.0995239428573005
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.018368965972377797,
+   "moveToCost": 1.4129973824906
+  },
+  {
+   "market": "AVAX-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.03268109931453142,
+   "moveToCost": 2.513930716502417
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 2189,
+   "medianAbsMove": 0.013743480622578094,
+   "moveToCost": 1.057190817121392
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 2189,
+   "medianAbsMove": 0.02602915404640947,
+   "moveToCost": 2.0022426189545746
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 2189,
+   "medianAbsMove": 0.04570117700622077,
+   "moveToCost": 3.5154751543246747
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 2189,
+   "medianAbsMove": 0.05799981303162263,
+   "moveToCost": 4.461524079355588
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 2189,
+   "medianAbsMove": 0.09703539477572343,
+   "moveToCost": 7.46426113659411
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 2189,
+   "medianAbsMove": 0.211980741851631,
+   "moveToCost": 16.30621091166392
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0019228975862555996,
+   "moveToCost": 0.14791519894273844
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.0037816339218755563,
+   "moveToCost": 0.2908949170673505
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.007649825511915216,
+   "moveToCost": 0.5884481163011704
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.01121794457446987,
+   "moveToCost": 0.8629188134207593
+  },
+  {
+   "market": "BTC-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.02250526085394726,
+   "moveToCost": 1.731173911842097
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 1998,
+   "medianAbsMove": 0.02232650877926141,
+   "moveToCost": 1.7174237522508777
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 1998,
+   "medianAbsMove": 0.039856277400296174,
+   "moveToCost": 3.065867492330475
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 1998,
+   "medianAbsMove": 0.05931131523092302,
+   "moveToCost": 4.562408863917155
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 1998,
+   "medianAbsMove": 0.09680614356116765,
+   "moveToCost": 7.446626427782127
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 1998,
+   "medianAbsMove": 0.15336774414275325,
+   "moveToCost": 11.797518780211789
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 1998,
+   "medianAbsMove": 0.3099285302951751,
+   "moveToCost": 23.84065617655193
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0029942276594349332,
+   "moveToCost": 0.23032520457191796
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.00621248632996565,
+   "moveToCost": 0.47788356384351155
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.012343607838510913,
+   "moveToCost": 0.9495082952700703
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.016394699767759913,
+   "moveToCost": 1.2611307513661472
+  },
+  {
+   "market": "DOGE-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.03558270124952554,
+   "moveToCost": 2.7371308653481186
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 1985,
+   "medianAbsMove": 0.024273036356206333,
+   "moveToCost": 1.8671566427851027
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 1985,
+   "medianAbsMove": 0.041738791389666456,
+   "moveToCost": 3.2106762607435737
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 1985,
+   "medianAbsMove": 0.06730002028063842,
+   "moveToCost": 5.176924636972186
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 1985,
+   "medianAbsMove": 0.09190635771300379,
+   "moveToCost": 7.0697198240772146
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 1985,
+   "medianAbsMove": 0.15101443521248584,
+   "moveToCost": 11.616495016345064
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 1985,
+   "medianAbsMove": 0.36419377635275985,
+   "moveToCost": 28.01490587328922
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.003942186445739182,
+   "moveToCost": 0.3032451112107063
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.008242031327099317,
+   "moveToCost": 0.6340024097768705
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.015961050931332748,
+   "moveToCost": 1.2277731485640575
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.02145260069979229,
+   "moveToCost": 1.6502000538301762
+  },
+  {
+   "market": "DOT-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.04435078119118289,
+   "moveToCost": 3.4115985531679147
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 2189,
+   "medianAbsMove": 0.01911447035908167,
+   "moveToCost": 1.470343873775513
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 2189,
+   "medianAbsMove": 0.035834713698020576,
+   "moveToCost": 2.756516438309275
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 2189,
+   "medianAbsMove": 0.0605494358635041,
+   "moveToCost": 4.657648912577239
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 2189,
+   "medianAbsMove": 0.08779156512487647,
+   "moveToCost": 6.7531973172981905
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 2189,
+   "medianAbsMove": 0.11963988106749499,
+   "moveToCost": 9.203067774422692
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 2189,
+   "medianAbsMove": 0.21661668064937026,
+   "moveToCost": 16.6628215884131
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.002426008958716802,
+   "moveToCost": 0.18661607374744632
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.004893797031670011,
+   "moveToCost": 0.3764459255130778
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.009515485786045639,
+   "moveToCost": 0.7319604450804338
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.013773623536097221,
+   "moveToCost": 1.0595095027767094
+  },
+  {
+   "market": "ETH-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.030185180033958703,
+   "moveToCost": 2.321936925689131
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 2189,
+   "medianAbsMove": 0.02720388060699469,
+   "moveToCost": 2.0926062005380532
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 2189,
+   "medianAbsMove": 0.04423405732835749,
+   "moveToCost": 3.4026197944890377
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 2189,
+   "medianAbsMove": 0.07564200572493084,
+   "moveToCost": 5.81861582499468
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 2189,
+   "medianAbsMove": 0.11157922162792759,
+   "moveToCost": 8.583017048302123
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 2189,
+   "medianAbsMove": 0.1565626473805849,
+   "moveToCost": 12.0432805677373
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 2189,
+   "medianAbsMove": 0.29536620844701333,
+   "moveToCost": 22.72047757284718
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0033554993268616303,
+   "moveToCost": 0.25811533283551
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.006839971947776944,
+   "moveToCost": 0.5261516882905342
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.013215894036141608,
+   "moveToCost": 1.0166072335493546
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.01791578864161524,
+   "moveToCost": 1.378137587816557
+  },
+  {
+   "market": "LINK-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.03330223276214483,
+   "moveToCost": 2.561710212472679
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 2189,
+   "medianAbsMove": 0.02044952418602242,
+   "moveToCost": 1.5730403220017246
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 2189,
+   "medianAbsMove": 0.038597520820935066,
+   "moveToCost": 2.969040063148851
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 2189,
+   "medianAbsMove": 0.06306236553988667,
+   "moveToCost": 4.850951195375898
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 2189,
+   "medianAbsMove": 0.09131838956534469,
+   "moveToCost": 7.024491505026515
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 2189,
+   "medianAbsMove": 0.13430225869492105,
+   "moveToCost": 10.330942976532388
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 2189,
+   "medianAbsMove": 0.19303340988075535,
+   "moveToCost": 14.848723836981181
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0028543218412738626,
+   "moveToCost": 0.2195632185595279
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.005563891948049346,
+   "moveToCost": 0.4279916883114882
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.010517555934282472,
+   "moveToCost": 0.8090427641755749
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.013888715236747982,
+   "moveToCost": 1.0683627105190756
+  },
+  {
+   "market": "LTC-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.02747987152632499,
+   "moveToCost": 2.1138362712557686
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 1984,
+   "medianAbsMove": 0.02707176671253034,
+   "moveToCost": 2.082443593271565
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 1984,
+   "medianAbsMove": 0.04900222839220225,
+   "moveToCost": 3.769402184015558
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 1984,
+   "medianAbsMove": 0.07691428594629365,
+   "moveToCost": 5.916483534330282
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 1984,
+   "medianAbsMove": 0.12497933999026531,
+   "moveToCost": 9.613795383866563
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 1984,
+   "medianAbsMove": 0.1775366426855879,
+   "moveToCost": 13.656664821968299
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 1984,
+   "medianAbsMove": 0.26885587770399844,
+   "moveToCost": 20.681221361846035
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0029340541672235407,
+   "moveToCost": 0.22569647440181084
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.006023758839426865,
+   "moveToCost": 0.46336606457129736
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.012782673886382304,
+   "moveToCost": 0.9832826066447926
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.017073435675343814,
+   "moveToCost": 1.313341205795678
+  },
+  {
+   "market": "SOL-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.030268340972710545,
+   "moveToCost": 2.3283339209777343
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "1d",
+   "bars": 1285,
+   "medianAbsMove": 0.01716526313009421,
+   "moveToCost": 1.320404856161093
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "3d",
+   "bars": 1285,
+   "medianAbsMove": 0.031352536004750256,
+   "moveToCost": 2.411733538826943
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "1w",
+   "bars": 1285,
+   "medianAbsMove": 0.047236179360488365,
+   "moveToCost": 3.633552258499105
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "2w",
+   "bars": 1285,
+   "medianAbsMove": 0.06603994829830473,
+   "moveToCost": 5.079996022946518
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "1m",
+   "bars": 1285,
+   "medianAbsMove": 0.12197770428726781,
+   "moveToCost": 9.382900329789832
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1d",
+   "horizon": "3m",
+   "bars": 1285,
+   "medianAbsMove": 0.19531258298253185,
+   "moveToCost": 15.024044844810144
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1h",
+   "horizon": "1h",
+   "bars": 8754,
+   "medianAbsMove": 0.0027602254758726684,
+   "moveToCost": 0.21232503660558988
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1h",
+   "horizon": "4h",
+   "bars": 8754,
+   "medianAbsMove": 0.005591453881324474,
+   "moveToCost": 0.4301118370249596
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1h",
+   "horizon": "12h",
+   "bars": 8754,
+   "medianAbsMove": 0.011195329039991245,
+   "moveToCost": 0.8611791569224035
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1h",
+   "horizon": "1d",
+   "bars": 8754,
+   "medianAbsMove": 0.015970680247312664,
+   "moveToCost": 1.2285138651778973
+  },
+  {
+   "market": "XRP-USD",
+   "interval": "1h",
+   "horizon": "3d",
+   "bars": 8754,
+   "medianAbsMove": 0.025449348177157414,
+   "moveToCost": 1.9576421674736473
+  }
+ ]
+}

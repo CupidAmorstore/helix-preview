@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HELIX | System Health</title>
+  <meta name="description" content="HELIX system health and data source status.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://helix.app/health">
+  <!-- TODO: Replace canonical domain with production URL -->
+  <meta name="theme-color" content="#10b981">
+  <link rel="icon" href="./assets/helix_icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="subpage">
+
+  <!-- HEADER -->
+  <header class="checkout-header">
+    <div class="shell checkout-header-inner" style="justify-content:flex-start">
+      <a class="brand" href="./index.html" aria-label="Back to HELIX">
+        <img src="./assets/helix_logo.png" alt="HELIX" width="30" height="30">
+        <span class="brand-name">HELIX</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="health-hero">
+      <div class="shell">
+        <h1>System Health</h1>
+        <p class="section-sub light" style="margin: 1rem 0 0">
+          Live diagnostics for the preview build. This page only checks availability of public data sources and local demo storage.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="health-grid">
+          <article class="health-card">
+            <h3>Frontend Status</h3>
+            <div class="status-pill info" id="health-frontend">Checking...</div>
+            <p>Confirms browser connectivity and protocol constraints.</p>
+          </article>
+          <article class="health-card">
+            <h3>CoinGecko REST</h3>
+            <div class="status-pill info" id="health-coingecko">Checking...</div>
+            <p>Used for 24h stats and historical chart data.</p>
+          </article>
+          <article class="health-card">
+            <h3>Binance WebSocket</h3>
+            <div class="status-pill info" id="health-binance">Checking...</div>
+            <p>Used for live price streaming in the preview dashboard.</p>
+          </article>
+          <article class="health-card">
+            <h3>Portfolio Tracking</h3>
+            <div class="status-pill info" id="health-portfolio">Checking...</div>
+            <p>Read-only portfolio tracking is not enabled in this preview build.</p>
+          </article>
+          <article class="health-card">
+            <h3>Stripe Status</h3>
+            <div class="status-pill info" id="health-stripe">Checking...</div>
+            <p>Checks whether Stripe checkout is configured.</p>
+          </article>
+          <article class="health-card">
+            <h3>Pilot Gate</h3>
+            <div class="status-pill info" id="health-gate">Checking...</div>
+            <p>Minimal access gate for staging or pilot use only.</p>
+          </article>
+        </div>
+
+        <div class="health-notes">
+          <strong>Data Sources:</strong>
+          <ul>
+            <li>Live prices: <code>Binance WebSocket</code> (public data)</li>
+            <li>Market stats: <code>CoinGecko REST</code> (public data)</li>
+            <li>Portfolio tracking: not enabled in this preview build</li>
+          </ul>
+          <p>Note: Running from <code>file://</code> will block live API calls due to browser CORS rules. Use a local server or deploy to test live data.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const setStatus = (id, state, text) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = `status-pill ${state}`;
+        el.textContent = text;
+      };
+
+      const isFile = window.location.protocol === 'file:';
+      const online = navigator.onLine;
+      setStatus('health-frontend', online ? 'ok' : 'warn', online ? 'Online' : 'Offline');
+
+      if (isFile) {
+        setStatus('health-coingecko', 'warn', 'Blocked in file mode');
+        setStatus('health-binance', 'warn', 'Blocked in file mode');
+      } else {
+        // CoinGecko check
+        const cgController = new AbortController();
+        const cgTimer = setTimeout(() => cgController.abort(), 5000);
+        fetch('https://api.coingecko.com/api/v3/ping', { signal: cgController.signal })
+          .then(res => {
+            clearTimeout(cgTimer);
+            setStatus('health-coingecko', res.ok ? 'ok' : 'warn', res.ok ? 'Reachable' : 'Unavailable');
+          })
+          .catch(() => {
+            clearTimeout(cgTimer);
+            setStatus('health-coingecko', 'warn', 'Unavailable');
+          });
+
+        // Binance WebSocket check
+        let wsStatusSet = false;
+        const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@miniTicker');
+        const wsTimeout = setTimeout(() => {
+          if (!wsStatusSet) {
+            wsStatusSet = true;
+            setStatus('health-binance', 'warn', 'Timeout');
+            try { ws.close(); } catch (_) {}
+          }
+        }, 5000);
+        ws.addEventListener('open', () => {
+          if (wsStatusSet) return;
+          wsStatusSet = true;
+          clearTimeout(wsTimeout);
+          setStatus('health-binance', 'ok', 'Connected');
+          try { ws.close(); } catch (_) {}
+        });
+        ws.addEventListener('error', () => {
+          if (wsStatusSet) return;
+          wsStatusSet = true;
+          clearTimeout(wsTimeout);
+          setStatus('health-binance', 'warn', 'Unavailable');
+        });
+      }
+
+      // Portfolio tracking check (not enabled in preview build)
+      setStatus('health-portfolio', 'info', 'Not enabled');
+
+      // Stripe config status
+      if (isFile) {
+        setStatus('health-stripe', 'info', 'Not available in file mode');
+      } else {
+        fetch('/api/stripe-status')
+          .then(res => res.ok ? res.json() : { enabled: false })
+          .then(data => {
+            setStatus('health-stripe', data.enabled ? 'ok' : 'info', data.enabled ? 'Enabled' : 'Not configured');
+          })
+          .catch(() => setStatus('health-stripe', 'warn', 'Unavailable'));
+      }
+
+      // Pilot gate status (best-effort)
+      if (isFile) {
+        setStatus('health-gate', 'info', 'Not available in file mode');
+      } else {
+        fetch('/pilot')
+          .then(res => {
+            setStatus('health-gate', res.ok ? 'ok' : 'info', res.ok ? 'Gate reachable' : 'Access required');
+          })
+          .catch(() => setStatus('health-gate', 'warn', 'Unavailable'));
+      }
+    })();
+  </script>
+</body>
+</html>

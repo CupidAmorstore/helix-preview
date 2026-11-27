@@ -1,0 +1,11 @@
+node_modules/
+.npm-cache/
+.git/
+legacy/
+android/
+ios/
+.deployments/
+.deploy/
+coverage/
+*.log
+deploy-*.zip
