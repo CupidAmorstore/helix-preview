@@ -10,7 +10,7 @@ export type LiveFeed = {
   updatedAt: number | null;
 };
 
-export const STALE_MS = 30_000;
+export const STALE_MS = 15_000;
 
 /** Live prices keyed by base symbol (BTC, ETH, ...), with honest connection status. */
 export function useLiveFeed(products: string[]): LiveFeed {

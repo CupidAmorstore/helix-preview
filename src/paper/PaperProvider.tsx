@@ -2,7 +2,9 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { getSetting, setSetting } from '../services/storage';
 import { MARKET_COINS } from '../services/market';
 import { useLiveFeed, type LiveFeed } from '../hooks/useLivePrices';
-import { createAccount, placeOrder, recordEquity, setHalted, valueAccount, type OrderRequest, type PaperAccount, type PaperOrder } from './engine';
+import { fetchBook } from './book';
+import { createSerialStore, type Mutation } from './serialStore';
+import { createAccount, placeOrder, reconcileAccount, recordEquity, setHalted, valueAccount, type OrderRequest, type PaperAccount, type PaperOrder } from './engine';
 
 const KEY = 'paper_account_v1';
 const CORE_PRODUCTS = MARKET_COINS.map((c) => c.product);
@@ -27,15 +29,21 @@ export function PaperProvider({ children }: { children: React.ReactNode }) {
   const feed = useLiveFeed(CORE_PRODUCTS);
   const prev = useRef<Record<string, number>>({});
   const [priceTs, setPriceTs] = useState<Record<string, number>>({});
-  const accRef = useRef<PaperAccount | null>(null);
-  accRef.current = account;
+  // Single source of truth for writes: updated synchronously inside the mutation queue (never from render),
+  // so two quick orders or an order + valuation snapshot can never start from the same stale account.
+  const store = useRef(createSerialStore<PaperAccount | null>(null, (a) => setSetting(KEY, a), setAccount)).current;
 
   useEffect(() => {
     getSetting<PaperAccount>(KEY)
-      .then((a) => setAccount(a && a.version === 1 ? a : null))
+      .then((a) => {
+        const acc = a && a.version === 1 ? a : null;
+        // fail-closed: a ledger that does not reconcile with its own order history is paused, not used
+        const problems = acc ? reconcileAccount(acc) : [];
+        store.hydrate(acc && problems.length ? setHalted(acc, true, `ledger check failed (${problems[0]})`) : acc);
+      })
       .catch(() => setAccount(null))
       .finally(() => setLoading(false));
-  }, []);
+  }, [store]);
 
   // track when each price last changed (used to refuse stale quotes)
   useEffect(() => {
@@ -46,36 +54,46 @@ export function PaperProvider({ children }: { children: React.ReactNode }) {
     if (Object.keys(changed).length) setPriceTs((t) => ({ ...t, ...changed }));
   }, [feed.prices]);
 
-  const persist = useCallback(async (a: PaperAccount | null) => {
-    setAccount(a);
-    await setSetting(KEY, a);
-  }, []);
+  const mutate = useCallback(<T,>(fn: Mutation<PaperAccount | null, T>) => store.mutate(fn), [store]);
 
   // hourly valuation point for the equity chart (only with live prices for every position)
   useEffect(() => {
     if (!account || feed.status !== 'live') return;
-    const v = valueAccount(account, feed.prices);
-    if (v.missingPrice) return;
-    const next = recordEquity(account, v.equity, Date.now());
-    if (next !== account) persist(next).catch(() => undefined);
-  }, [account, feed.prices, feed.status, persist]);
+    mutate((a) => {
+      if (!a) return null;
+      const v = valueAccount(a, feed.prices);
+      if (v.missingPrice) return null;
+      return { next: recordEquity(a, v.equity, Date.now()), result: undefined };
+    }).catch(() => undefined);
+  }, [account, feed.prices, feed.status, mutate]);
 
-  const start = useCallback(async (cash: number) => persist(createAccount(cash, Date.now())), [persist]);
+  const start = useCallback(async (cash: number) => {
+    await mutate(() => ({ next: createAccount(cash, Date.now()), result: undefined }));
+  }, [mutate]);
 
   const place = useCallback(
     async (req: OrderRequest, price: number, ts: number) => {
-      const acc = accRef.current;
-      if (!acc) throw new Error('Open a paper account first');
-      const r = placeOrder(acc, req, { symbol: req.symbol, product: req.product, price, ts }, Date.now());
-      if (!r.duplicate) await persist(r.account);
-      return r.order;
+      if (!store.get()) throw new Error('Open a paper account first');
+      const book = await fetchBook(req.product); // network outside the lock
+      const order = await mutate((a) => {
+        if (!a) return null;
+        const r = placeOrder(a, req, { symbol: req.symbol, product: req.product, price, ts, book: book ?? undefined }, Date.now());
+        return { next: r.duplicate ? a : r.account, result: r.order };
+      });
+      if (!order) throw new Error('Open a paper account first');
+      return order;
     },
-    [persist]
+    [mutate, store]
   );
 
   const pause = useCallback(async (halted: boolean) => {
-    if (accRef.current) await persist(setHalted(accRef.current, halted));
-  }, [persist]);
+    await mutate((a) => {
+      if (!a) return null;
+      // resuming is refused while the ledger does not reconcile
+      if (!halted && reconcileAccount(a).length) return { next: setHalted(a, true, `ledger check failed (${reconcileAccount(a)[0]})`), result: undefined };
+      return { next: setHalted(a, halted), result: undefined };
+    });
+  }, [mutate]);
 
   const value = useMemo(() => (account ? valueAccount(account, feed.prices) : null), [account, feed.prices]);
 

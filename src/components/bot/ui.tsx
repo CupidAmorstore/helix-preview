@@ -3,9 +3,9 @@ import { STATUS_LABEL } from './format';
 
 export function Card({ title, right, children, className = '' }: { title?: string; right?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section className={`rounded-2xl border border-white/10 bg-ink-800/60 p-4 sm:p-5 ${className}`}>
+    <section className={`border-t border-ink-600 pt-4 ${className}`}>
       {(title || right) && (
-        <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           {title && <h2 className="text-sm font-semibold text-slate-200">{title}</h2>}
           {right}
         </div>
@@ -16,7 +16,7 @@ export function Card({ title, right, children, className = '' }: { title?: strin
 }
 
 export function Stat({ label, value, sub, tone = 'default' }: { label: string; value: ReactNode; sub?: ReactNode; tone?: 'default' | 'good' | 'bad' | 'warn' }) {
-  const toneCls = { default: 'text-white', good: 'text-mint-400', bad: 'text-rose-500', warn: 'text-amber-500' }[tone];
+  const toneCls = { default: 'text-white', good: 'text-up', bad: 'text-rose-500', warn: 'text-amber-500' }[tone];
   return (
     <div className="min-w-0 rounded-xl border border-white/10 bg-ink-900/60 px-3 py-3">
       <div className="text-[11px] uppercase tracking-wider text-slate-500">{label}</div>

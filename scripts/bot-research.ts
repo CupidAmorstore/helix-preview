@@ -16,10 +16,13 @@
  *   src/bot/data/latest.json          compact summary rendered by the app
  */
 import { execSync } from 'node:child_process';
+import type { XsReport, XsWindow } from '../src/bot/crossSectional';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { join } from 'node:path';
-import { DAY, HOUR, datasetHash, validateCandles } from '../src/bot/candles';
+import { DAY, HOUR, datasetHash, datasetSha256, validateCandles } from '../src/bot/candles';
+import type { Provenance } from '../src/bot/provenance';
+import { plainSpec } from '../src/bot/insights';
 import { COST_PRESETS } from '../src/bot/costs';
 import { runResearchCycle, Registry, RunRecord } from '../src/bot/research';
 import {
@@ -93,7 +96,7 @@ async function loadOrFetch(m: MarketRef, iv: (typeof INTERVALS)[number]): Promis
   candles = validateCandles(candles, iv.ms, now, Infinity).candles;
   if (!candles.length) return null;
   writeFileSync(f, gzipSync(toCsv(candles)));
-  return { id: datasetHash(candles), market: m, intervalMs: iv.ms, candles, fetchedAt: now, source: 'coinbase-exchange-public' };
+  return { id: datasetHash(candles), sha256: datasetSha256(candles), market: m, intervalMs: iv.ms, candles, fetchedAt: now, source: 'coinbase-exchange-public' };
 }
 
 async function main() {
@@ -105,6 +108,9 @@ async function main() {
   const records: RunRecord[] = [];
   const allDatasets: Dataset[] = [];
   let reg = registry;
+  // AUD-204: unified provenance (built once from run records by scripts/migrate-provenance.ts; append-only)
+  if (!watchOnly && !existsSync(R('provenance.json'))) throw new Error('research/provenance.json missing: run scripts/migrate-provenance.ts first');
+  let prov: Provenance | null = existsSync(R('provenance.json')) ? JSON.parse(readFileSync(R('provenance.json'), 'utf8')) : null;
   for (const iv of INTERVALS) {
     const datasets: Dataset[] = [];
     for (const m of RESEARCH_UNIVERSE) {
@@ -125,14 +131,18 @@ async function main() {
     };
     allDatasets.push(...datasets);
     if (watchOnly) continue;
-    const { record, registry: next } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars });
+    const survivorship = existsSync(R('survivorship-study.json')) ? JSON.parse(readFileSync(R('survivorship-study.json'), 'utf8')).families : null;
+    const { record, registry: next, provenance: nextProv } = runResearchCycle({ datasets, costFor, nowMs: now, codeVersion, registry: reg, minBars: iv.minBars, survivorship, provenance: prov });
     reg = next;
+    const baseId = record.runId;
     record.runId += `-${iv.label}`;
+    prov = { version: 1, records: nextProv.records.map((x) => (x.runId === baseId ? { ...x, runId: record.runId, id: x.id.replace(baseId, record.runId) } : x)) };
     records.push(record);
     writeFileSync(R('runs', `${record.runId}.json`), JSON.stringify(record, null, 1));
     console.log(`  run ${record.runId}: evaluated ${record.totals.oosCandidates} candidates, qualified ${record.totals.qualified}, rejected ${record.totals.rejected}`);
   }
   writeFileSync(R('registry.json'), JSON.stringify(reg, null, 1));
+  if (prov && !watchOnly) writeFileSync(R('provenance.json'), JSON.stringify(prov, null, 1));
 
   // ---- R2: measured execution costs from public order books (appended, never overwritten)
   if (!offline) {
@@ -242,32 +252,74 @@ async function main() {
       if (last) records.push(last);
     }
   }
+  // Evidence is the union over runs on IDENTICAL datasets (newest wins per candidate key), so a run that
+  // only tests new families still shows the earlier families' results.
   for (const rec of records) {
     for (const m of rec.markets) {
-      if (m.candidates.length) continue;
+      const have = new Set(m.candidates.map((c) => c.key));
       for (const old of [...history].reverse()) {
+        if (old.runId === rec.runId) continue;
         const om = old.markets.find((x) => x.market.symbol === m.market.symbol && x.intervalMs === m.intervalMs && x.datasetId === m.datasetId);
-        if (om && om.candidates.length) {
-          m.candidates = om.candidates;
-          m.skipped = m.skipped.map((x) => ({ ...x, reason: `${x.reason}; evidence from ${old.runId}` }));
-          break;
-        }
+        for (const c of om?.candidates ?? []) if (!have.has(c.key)) { have.add(c.key); m.candidates.push(c); }
       }
+      m.skipped = m.skipped.filter((x) => !m.candidates.some((c) => c.spec.family === x.family));
     }
-    if (!rec.pooled.length)
-      for (const old of [...history].reverse())
-        if (old.pooled?.length && old.markets[0]?.intervalMs === rec.markets[0]?.intervalMs) {
-          rec.pooled = old.pooled;
-          break;
-        }
+    const iv = rec.markets[0]?.intervalMs;
+    const havePooled = new Set(rec.pooled.map((c) => c.spec.family));
+    for (const old of [...history].reverse()) {
+      if (old.runId === rec.runId || old.markets[0]?.intervalMs !== iv) continue;
+      for (const c of old.pooled ?? []) if (!havePooled.has(c.spec.family)) { havePooled.add(c.spec.family); rec.pooled.push(c); }
+      if (!rec.crossSectional && old.crossSectional) rec.crossSectional = old.crossSectional;
+    }
   }
+  // last time strategies were actually tested (a watch-only refresh does not count)
+  const researchRuns = history.filter((h) => (h.totals?.oosCandidates ?? 0) > 0);
+  const lastResearchRunAt = (researchRuns.length ? researchRuns : history).map((h) => h.finishedAt).sort().at(-1);
+  // forward paper-trading protocol (research/forward): registration + latest evaluation
+  const forward = (() => {
+    if (!existsSync(R('forward', 'registration.json'))) return undefined;
+    const reg = JSON.parse(readFileSync(R('forward', 'registration.json'), 'utf8'));
+    const rep = existsSync(R('forward', 'report.json')) ? JSON.parse(readFileSync(R('forward', 'report.json'), 'utf8')) : null;
+    const byId = new Map<string, { status: string; forwardMonths: number; netReturn: number }>((rep?.results ?? []).map((x: { ruleId: string; status: string; forwardMonths: number; netReturn: number }) => [x.ruleId, x]));
+    // forward rules run on daily bars: lengths are in days
+    const words = (params: Record<string, number>) => Object.entries(params).flatMap(([k, v]) =>
+      k === 'lookback' ? [`${v}-day look-back`] : k === 'n' ? [`${v}-day average`] : k === 'period' ? [v === 7 ? 'checked weekly' : `checked every ${v} days`] : k === 'topK' ? [`top ${v}`] : k === 'rebalance' ? [v === 7 ? 'rebalanced weekly' : `rebalanced every ${v} days`] : k === 'threshold' && v === 0 ? [] : [`${k} ${v}`]).join(', ');
+    const label = (r: { kind: string; family?: string; params: Record<string, number>; markets: string[] }) =>
+      `${r.kind === 'xs' ? 'Strongest coins rotation' : plainSpec(`${r.family}()`).name} · ${words(r.params)} · ${r.markets.length} coins`;
+    return {
+      id: reg.id,
+      status: reg.status,
+      startAt: reg.startAt,
+      minMonths: reg.evaluation?.minMonths ?? 12,
+      evaluatedAt: rep?.evaluatedAt ?? null,
+      rules: reg.rules.map((r: { id: string; kind: string; family?: string; params: Record<string, number>; markets: string[] }) => ({
+        id: r.id,
+        label: label(r),
+        status: byId.get(r.id)?.status ?? (reg.status === 'active' ? 'collecting' : reg.status),
+        forwardMonths: byId.get(r.id)?.forwardMonths ?? 0,
+        netReturn: byId.get(r.id)?.netReturn ?? 0
+      }))
+    };
+  })();
   const summary = {
     generatedAt: new Date(now).toISOString(),
+    lastResearchRunAt,
+    forward,
     codeVersion,
     mode: 'paper',
     runs: records.map((r) => ({
       runId: r.runId,
-      totals: r.totals,
+      totals: (() => {
+        const all = [...r.markets.flatMap((m) => m.candidates), ...r.pooled, ...(r.crossSectional ? [r.crossSectional] : [])];
+        return {
+          ...r.totals,
+          newThisRun: r.totals.oosCandidates,
+          oosCandidates: all.length,
+          marketsEvaluated: r.markets.filter((m) => m.candidates.length).length,
+          qualified: all.filter((c) => c.status === 'qualified_paper_strategy').length,
+          rejected: all.filter((c) => c.status === 'rejected').length
+        };
+      })(),
       gates: r.gates.version,
       assumptions: r.assumptions,
       markets: r.markets.map((m) => ({
@@ -290,7 +342,8 @@ async function main() {
           validation: c.validation,
           test: c.test,
           stress: c.stress,
-          ci: c.ci
+          ci: c.ci,
+          walkForward: c.walkForward && { compoundedNet: c.walkForward.compoundedNet, positiveFolds: c.walkForward.positiveFolds, folds: c.walkForward.folds.length, embargoBars: c.walkForward.embargoBars }
         }))
       })),
       pooled: r.pooled.map((c) => ({
@@ -304,8 +357,9 @@ async function main() {
         validation: c.validation && { ...c.validation, perMarketNet: c.validation.perMarketNet },
         test: c.test && { ...c.test, perMarketNet: c.test.perMarketNet },
         stress: c.stress,
-        ci: c.ci
-      })),
+        ci: c.ci,
+        walkForward: c.walkForward && { compoundedNet: c.walkForward.compoundedNet, positiveFolds: c.walkForward.positiveFolds, folds: c.walkForward.folds.length, embargoBars: c.walkForward.embargoBars }
+      })).concat(r.crossSectional ? [xsRow(r.crossSectional)] : []),
       feasibility: r.feasibility
     })),
     watchbot: watch,
@@ -333,6 +387,24 @@ async function main() {
   writeFileSync(join(ROOT, 'src/bot/data/latest.json'), JSON.stringify(summary, null, 1));
   console.log(`  paper accounts: ${accounts.length} (${accounts.filter((a) => a.kind === 'qualified').length} qualified)`);
   console.log('done.');
+}
+
+function xsRow(x: XsReport) {
+  const w = (v?: XsWindow) => v && { trades: v.trades, grossReturn: v.grossReturn, netReturn: v.netReturn, totalCostUsd: 0, maxDrawdown: v.maxDrawdown, profitFactor: null, winRate: null, buyHoldReturn: v.buyHoldReturn, periods: v.periods };
+  return {
+    key: `POOLED:${x.key}`,
+    family: 'xs_momentum',
+    status: x.status,
+    rejectionReasons: x.rejectionReasons,
+    markets: undefined as string[] | undefined,
+    cutoffs: x.cutoffs,
+    train: w(x.train)!,
+    validation: w(x.validation),
+    test: w(x.test),
+    stress: x.stress && { ...x.stress, doubleCostTestNet: Number.isFinite(x.stress.doubleCostTestNet) ? x.stress.doubleCostTestNet : null, delayedTestNet: Number.isFinite(x.stress.delayedTestNet) ? x.stress.delayedTestNet : null },
+    ci: x.ci,
+    walkForward: x.walkForward && { compoundedNet: x.walkForward.compoundedNet, positiveFolds: x.walkForward.positiveFolds, folds: x.walkForward.folds.length, embargoBars: x.walkForward.embargoBars }
+  };
 }
 
 main().catch((e) => {

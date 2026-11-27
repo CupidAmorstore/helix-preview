@@ -1,0 +1,50 @@
+[
+ {
+  "id": "I-0137 watchlist star",
+  "expect": "toggles BTC in/out of the watchlist",
+  "actual": "Remove from watchlist → Add to watchlist; Bitcoin still in Watchlist tab: false",
+  "pass": true
+ },
+ {
+  "id": "I-0029 sort 24h change",
+  "expect": "reorders the list",
+  "actual": "BitcoinBTC ·|EthereumETH |TetherUSDT ·|BNBBNB · $72|USDCUSDC · $ → Venice Token|PieversePIEV|BitwayBTW · |World Libert|MemeCoreM · ",
+  "pass": true
+ },
+ {
+  "id": "I-0142 chart 1H",
+  "expect": "loads 1-hour candles",
+  "actual": "candle requests: 1",
+  "pass": true
+ },
+ {
+  "id": "I-0174 Bot Check now",
+  "expect": "reports the result of checking for new research",
+  "actual": "before: \"No newer research online right now. Showing the latest copy on this phone.\" → after: \"No newer research online right now. Showing the latest copy on this phone.\"",
+  "pass": true
+ },
+ {
+  "id": "I-0487 Risk $5000",
+  "expect": "recomputes the example for $5,000",
+  "actual": "content changed",
+  "pass": true
+ },
+ {
+  "id": "I-0546 Refresh balances (no addresses)",
+  "expect": "feedback (nothing to refresh) or disabled",
+  "actual": "no feedback, enabled",
+  "pass": false
+ },
+ {
+  "id": "I-0568 Lock vault (no vault)",
+  "expect": "disabled or hidden when no vault exists",
+  "actual": "disabled=false; change=false",
+  "pass": false
+ },
+ {
+  "id": "I-0002 Home $20",
+  "expect": "selects $20 (announced to screen readers)",
+  "actual": "aria-pressed=true",
+  "pass": true
+ }
+]

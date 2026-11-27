@@ -21,6 +21,8 @@ export type Dataset = {
   candles: Candle[];
   fetchedAt: number;
   source: string;
+  /** SHA-256 of the canonical candle serialisation (audit 4.4); `id` stays FNV-based for registry compatibility */
+  sha256?: string;
 };
 
 /**
@@ -36,7 +38,13 @@ export type StrategyFamily =
   | 'trend_filtered_momentum'
   | 'bollinger_reversion'
   | 'rsi_reversion'
-  | 'vol_compression_breakout';
+  | 'vol_compression_breakout'
+  | 'vol_filtered_trend'
+  | 'regime_switch'
+  // multi-day horizon (registered 2026-11-24 after research/cost-horizon-study.json): daily data only,
+  // decisions only on calendar rebalance days so turnover stays far below the 1.3% round-trip cost
+  | 'weekly_trend'
+  | 'monthly_momentum';
 
 export type StrategySpec = {
   family: StrategyFamily;
@@ -87,4 +95,6 @@ export type BacktestResult = {
   bars: number;
   buyHoldReturn: number;
   rejectedOrders: number;
+  /** equity marked at each close inside the window, ending with the liquidated value (opt.recordEquity) */
+  equity?: { t: number; v: number }[];
 };

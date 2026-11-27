@@ -1,0 +1,71 @@
+{
+ "registrationId": "forward-2026-11-25-a",
+ "evaluatedAt": 1795621792356,
+ "state": "running",
+ "results": [
+  {
+   "ruleId": "F1-pooled-ts-momentum-168d",
+   "forwardMonths": 0,
+   "netReturn": 0,
+   "inference": {
+    "months": 0,
+    "mean": null,
+    "rho1": 0,
+    "nEff": 0,
+    "tLower": null,
+    "bootstrap": [],
+    "requiredIterations": 12000,
+    "pass": false,
+    "reasons": [
+     "out-of-sample months 0 < 12: too little independent evidence",
+     "dependence-adjusted t lower bound of mean monthly return <= 0 (multiple-testing adjusted)"
+    ]
+   },
+   "status": "collecting",
+   "equityPoints": 0
+  },
+  {
+   "ruleId": "F2-pooled-weekly-trend-200d",
+   "forwardMonths": 0,
+   "netReturn": 0,
+   "inference": {
+    "months": 0,
+    "mean": null,
+    "rho1": 0,
+    "nEff": 0,
+    "tLower": null,
+    "bootstrap": [],
+    "requiredIterations": 12000,
+    "pass": false,
+    "reasons": [
+     "out-of-sample months 0 < 12: too little independent evidence",
+     "dependence-adjusted t lower bound of mean monthly return <= 0 (multiple-testing adjusted)"
+    ]
+   },
+   "status": "collecting",
+   "equityPoints": 0
+  },
+  {
+   "ruleId": "F3-xs-momentum-28d-top3",
+   "forwardMonths": 0,
+   "netReturn": 0,
+   "inference": {
+    "months": 0,
+    "mean": null,
+    "rho1": 0,
+    "nEff": 0,
+    "tLower": null,
+    "bootstrap": [],
+    "requiredIterations": 12000,
+    "pass": false,
+    "reasons": [
+     "out-of-sample months 0 < 12: too little independent evidence",
+     "dependence-adjusted t lower bound of mean monthly return <= 0 (multiple-testing adjusted)"
+    ]
+   },
+   "status": "collecting",
+   "equityPoints": 0
+  }
+ ],
+ "problems": []
+}

@@ -43,12 +43,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -102,12 +120,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -161,12 +197,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -220,12 +274,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -280,12 +352,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -341,12 +431,36 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
-  "pendingOrder": null,
-  "posHistory": [],
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": "buy",
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
-  "decisions": [],
-  "equity": [],
+  "decisions": [
+   {
+    "t": 1795478400000,
+    "action": "enter",
+    "reason": "rsi_reversion entry signal; buy at next open"
+   }
+  ],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -401,12 +515,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -460,12 +592,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -519,12 +669,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -578,12 +746,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -637,12 +823,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -697,12 +901,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -758,12 +980,30 @@
   "cash": 1000,
   "units": 0,
   "entryNotional": 0,
-  "lastProcessedT": null,
+  "lastProcessedT": 1795478400000,
   "pendingOrder": null,
-  "posHistory": [],
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
   "fills": [],
   "decisions": [],
-  "equity": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
   "risk": {
    "equityPeak": 1000,
    "dayStartEquity": 1000,
@@ -803,6 +1043,546 @@
   },
   "initialCash": 1000,
   "createdAt": 1795377626711,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": null,
+  "posHistory": [
+   [
+    1795392000000,
+    0
+   ],
+   [
+    1795478400000,
+    0
+   ]
+  ],
+  "fills": [],
+  "decisions": [],
+  "equity": [
+   [
+    1795392000000,
+    1000
+   ],
+   [
+    1795478400000,
+    1000
+   ]
+  ],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|vol_filtered_trend(lookback=250,trend=100,vol=20)",
+  "label": "BTC-USD 1d vol_filtered_trend(lookback=250,trend=100,vol=20)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "vol_filtered_trend",
+   "params": {
+    "trend": 100,
+    "vol": 20,
+    "lookback": 250
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795432039870,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": null,
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
+  "fills": [],
+  "decisions": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+  "label": "BTC-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "regime_switch",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795432039870,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": null,
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
+  "fills": [],
+  "decisions": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|vol_filtered_trend(lookback=250,trend=50,vol=20)",
+  "label": "ETH-USD 1d vol_filtered_trend(lookback=250,trend=50,vol=20)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "vol_filtered_trend",
+   "params": {
+    "trend": 50,
+    "vol": 20,
+    "lookback": 250
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795432039870,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": null,
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
+  "fills": [],
+  "decisions": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+  "label": "ETH-USD 1d regime_switch(er=20,erTrend=0.3,k=2,maxHold=20,n=20,trend=50)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "regime_switch",
+   "params": {
+    "er": 20,
+    "erTrend": 0.3,
+    "trend": 50,
+    "n": 20,
+    "k": 2,
+    "maxHold": 20
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795432039870,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": 1795478400000,
+  "pendingOrder": null,
+  "posHistory": [
+   [
+    1795478400000,
+    0
+   ]
+  ],
+  "fills": [],
+  "decisions": [],
+  "equity": [
+   [
+    1795478400000,
+    1000
+   ]
+  ],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|weekly_trend(n=100,period=7)",
+  "label": "BTC-USD 1d weekly_trend(n=100,period=7)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "weekly_trend",
+   "params": {
+    "n": 100,
+    "period": 7
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795549001194,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "BTC-USD|86400000|monthly_momentum(lookback=90,period=28)",
+  "label": "BTC-USD 1d monthly_momentum(lookback=90,period=28)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "BTC-USD",
+   "base": "BTC",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "monthly_momentum",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795549001194,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|weekly_trend(n=200,period=7)",
+  "label": "ETH-USD 1d weekly_trend(n=200,period=7)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "weekly_trend",
+   "params": {
+    "n": 200,
+    "period": 7
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795549001194,
+  "policy": {
+   "maxPositionFraction": 0.25,
+   "maxOpenPositions": 3,
+   "maxCorrelatedPositionsPerBase": 1,
+   "maxDailyLossFraction": 0.03,
+   "maxWeeklyLossFraction": 0.06,
+   "maxDrawdownKill": 0.15,
+   "maxStaleBars": 2,
+   "leverage": 1,
+   "allowAveragingDown": false,
+   "allowMartingale": false
+  },
+  "cash": 1000,
+  "units": 0,
+  "entryNotional": 0,
+  "lastProcessedT": null,
+  "pendingOrder": null,
+  "posHistory": [],
+  "fills": [],
+  "decisions": [],
+  "equity": [],
+  "risk": {
+   "equityPeak": 1000,
+   "dayStartEquity": 1000,
+   "weekStartEquity": 1000,
+   "killSwitch": false
+  },
+  "realizedPnl": 0,
+  "totalCostUsd": 0
+ },
+ {
+  "id": "ETH-USD|86400000|monthly_momentum(lookback=90,period=28)",
+  "label": "ETH-USD 1d monthly_momentum(lookback=90,period=28)",
+  "kind": "diagnostic",
+  "market": {
+   "venue": "coinbase",
+   "symbol": "ETH-USD",
+   "base": "ETH",
+   "quote": "USD"
+  },
+  "intervalMs": 86400000,
+  "spec": {
+   "family": "monthly_momentum",
+   "params": {
+    "lookback": 90,
+    "period": 28
+   }
+  },
+  "cost": {
+   "venue": "coinbase",
+   "takerFeeBps": 60,
+   "halfSpreadBps": 2,
+   "slippageBps": 3,
+   "fixedCostUsd": 0,
+   "minOrderUsd": 1,
+   "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+  },
+  "initialCash": 1000,
+  "createdAt": 1795549001194,
   "policy": {
    "maxPositionFraction": 0.25,
    "maxOpenPositions": 3,

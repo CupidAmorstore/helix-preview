@@ -1,0 +1,104 @@
+{
+ "web3Version": "1.98.4",
+ "ranAt": "2026-11-25T07:47:24.375Z",
+ "rfc8032": [
+  {
+   "ok": true
+  },
+  {
+   "ok": true
+  },
+  {
+   "ok": true
+  }
+ ],
+ "randomSeeds": {
+  "n": 5000,
+  "mismatches": 0
+ },
+ "invalidSeedLengths": [
+  {
+   "length": 0,
+   "mineThrows": true,
+   "refThrows": true
+  },
+  {
+   "length": 31,
+   "mineThrows": true,
+   "refThrows": true
+  },
+  {
+   "length": 33,
+   "mineThrows": true,
+   "refThrows": true
+  },
+  {
+   "length": 64,
+   "mineThrows": true,
+   "refThrows": true
+  }
+ ],
+ "addresses": [
+  {
+   "label": "system program (off-curve? no: all-zero is small-order point)",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  },
+  {
+   "label": "random wallet",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  },
+  {
+   "label": "PDA (off-curve)",
+   "mine": "off-curve",
+   "web3": "off-curve",
+   "agree": true
+  },
+  {
+   "label": "small-order identity",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  },
+  {
+   "label": "small-order order2",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  },
+  {
+   "label": "small-order order4",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  },
+  {
+   "label": "31 bytes",
+   "mine": "invalid",
+   "web3": "invalid",
+   "agree": true
+  },
+  {
+   "label": "invalid base58 (0/O/I/l)",
+   "mine": "invalid",
+   "web3": "invalid",
+   "agree": true
+  },
+  {
+   "label": "empty",
+   "mine": "invalid",
+   "web3": "invalid",
+   "agree": true
+  },
+  {
+   "label": "whitespace-padded wallet",
+   "mine": "ok",
+   "web3": "ok",
+   "agree": true
+  }
+ ],
+ "allAgree": true
+}

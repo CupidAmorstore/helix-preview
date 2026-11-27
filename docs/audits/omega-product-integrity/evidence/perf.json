@@ -1,0 +1,56 @@
+[
+ {
+  "route": "/",
+  "loadMs": 1242,
+  "domContentLoaded": 1238,
+  "fcp": 520,
+  "jsKB": 226,
+  "requests": 24,
+  "heapMB": 10
+ },
+ {
+  "route": "/markets",
+  "loadMs": 1223,
+  "domContentLoaded": 1221,
+  "fcp": 508,
+  "jsKB": 226,
+  "requests": 35,
+  "heapMB": 10
+ },
+ {
+  "route": "/markets/BTC",
+  "loadMs": 1237,
+  "domContentLoaded": 1234,
+  "fcp": 512,
+  "jsKB": 226,
+  "requests": 25,
+  "heapMB": 10
+ },
+ {
+  "route": "/bot",
+  "loadMs": 1226,
+  "domContentLoaded": 1223,
+  "fcp": 500,
+  "jsKB": 226,
+  "requests": 20,
+  "heapMB": 10
+ },
+ {
+  "route": "/bot/research",
+  "loadMs": 1260,
+  "domContentLoaded": 1258,
+  "fcp": 524,
+  "jsKB": 236,
+  "requests": 21,
+  "heapMB": 10
+ },
+ {
+  "route": "/wallet",
+  "loadMs": 1234,
+  "domContentLoaded": 1232,
+  "fcp": 508,
+  "jsKB": 556,
+  "requests": 21,
+  "heapMB": 10
+ }
+]

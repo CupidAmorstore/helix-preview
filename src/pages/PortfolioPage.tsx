@@ -1,4 +1,6 @@
-﻿import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Note, PageHeader } from '../components/ui';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchPriceMap } from '../services/market';
 import { listAddresses, listExchanges, saveSnapshot, getSetting, setSetting } from '../services/storage';
 import { useVault } from '../services/vault';
@@ -44,6 +46,11 @@ export default function PortfolioPage() {
     setNotes([]);
     try {
       const [addresses, exchanges] = await Promise.all([listAddresses(), listExchanges()]);
+      if (addresses.length === 0 && exchanges.length === 0) {
+        setNotes(['Nothing to refresh yet: add a public address in Connections first.']);
+        setStatus('idle');
+        return;
+      }
       const assetTotals = new Map<string, number>();
       const localNotes: string[] = [];
       let etherscanKey: string | null = null;
@@ -67,7 +74,7 @@ export default function PortfolioPage() {
           }
         }
       } else {
-        localNotes.push('Unlock the vault to load encrypted API keys and exchange balances.');
+        localNotes.push('Ethereum tokens need an Etherscan key: unlock the vault in Connections to use a saved key.');
       }
 
       // On-chain balances
@@ -158,90 +165,70 @@ export default function PortfolioPage() {
   }, [refresh]);
 
   return (
-    <div className="space-y-8 slide-up">
-      <header className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Portfolio</p>
-        <h1 className="text-3xl font-semibold text-white">Read-only Portfolio View</h1>
-        <p className="text-sm text-slate-400">
-          Aggregates exchange balances and public address holdings. No keys stored on servers.
-        </p>
-      </header>
+    <div className="mx-auto max-w-xl space-y-6">
+      <PageHeader title="Watched addresses" back subtitle="Read-only balances from public blockchain data" />
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <section className="space-y-3 border-t border-ink-600 pt-5">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="text-xs text-slate-500">Total value</div>
-            <div className="text-2xl font-semibold text-white">${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+            <div className="eyebrow text-slate-500">Total value</div>
+            <div className="font-mono text-[32px] font-semibold leading-tight text-white">${totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
           </div>
-          <button
-            type="button"
-            onClick={refresh}
-            className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300"
-          >
-            Refresh balances
+          <button type="button" onClick={refresh} disabled={status === 'loading'} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm text-white disabled:opacity-50">
+            {status === 'loading' ? 'Refreshing…' : 'Refresh balances'}
           </button>
         </div>
-        {notes.length > 0 && (
-          <div className="mt-4 space-y-1 text-xs text-amber-400">
-            {notes.map((note) => (
-              <div key={note}>{note}</div>
-            ))}
-          </div>
-        )}
+        {notes.length > 0 && <div className="space-y-1 text-xs text-slate-400">{notes.map((n) => <p key={n}>{n}</p>)}</div>}
+        <Note>Not part of your paper account and not tradable here. Add or remove addresses in <Link className="underline" to="/connections">Connections</Link>.</Note>
       </section>
 
-      <section tabIndex={0} aria-label="Holdings table (scrolls sideways)" className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
-        <div className="min-w-[560px]">
-        <div className="grid grid-cols-5 gap-4 border-b border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.2em] text-slate-500">
-          <div>Asset</div>
-          <div>Quantity</div>
-          <div>Price</div>
-          <div>Cost Basis</div>
-          <div>P&amp;L</div>
-        </div>
-        {status === 'loading' && (
-          <div className="px-4 py-6 text-sm text-slate-400">Loading balances...</div>
-        )}
-        {status === 'error' && (
-          <div className="px-4 py-6 text-sm text-rose-400">Unable to load portfolio data.</div>
-        )}
+      <section className="border-t border-ink-600" aria-label="Holdings">
+        {status === 'loading' && rows.length === 0 && <p className="py-6 text-sm text-slate-400">Loading balances…</p>}
+        {status === 'error' && <p role="alert" className="py-6 text-sm text-down">Balances could not be loaded. Check your connection and try again.</p>}
         {status === 'idle' && rows.length === 0 && (
-          <div className="px-4 py-6 text-sm text-slate-400">No balances found. Add exchanges or addresses.</div>
+          <p className="py-6 text-sm text-slate-400">No balances yet. <Link className="text-helix-400 underline" to="/connections">Add a public address</Link> to track it here.</p>
         )}
-        {rows.map((row) => {
-          // P&L is only meaningful once the user has entered what they paid. Never treat a missing
-          // cost basis as zero, which would show the whole holding as profit.
-          const costBasis = costBasisMap[row.symbol] ?? 0;
-          const pnl = costBasis > 0 ? row.usdValue - costBasis : null;
-          return (
-          <div key={row.symbol} className="grid grid-cols-5 gap-4 border-b border-white/5 px-4 py-3 text-sm text-slate-200">
-            <div className="font-semibold text-white">{row.symbol}</div>
-            <div>{row.quantity.toFixed(6)}</div>
-            <div>${row.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-            <div>
-              <input
-                type="number"
-                min={0}
-                placeholder="What you paid"
-                aria-label={`Cost basis for ${row.symbol} in US dollars`}
-                value={costBasis || ''}
-                onChange={(e) => updateCostBasis(row.symbol, Math.max(0, Number(e.target.value) || 0))}
-                className="w-28 rounded-md border border-white/10 bg-transparent px-2 py-1 text-xs text-slate-200"
-              />
-            </div>
-            {pnl === null ? (
-              <div className="text-slate-500">Set cost basis</div>
-            ) : (
-              <div className={pnl >= 0 ? 'text-mint-300' : 'text-rose-400'}>
-                {pnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(pnl).toLocaleString(undefined, { maximumFractionDigits: 2 })}
-              </div>
-            )}
-          </div>
-          );
-        })}
-        </div>
+        <ul className="divide-y divide-ink-600">
+          {rows.map((row) => {
+            // P&L only once the user has entered what they paid; a missing cost basis is never treated as zero.
+            const costBasis = costBasisMap[row.symbol] ?? 0;
+            const pnl = costBasis > 0 ? row.usdValue - costBasis : null;
+            return (
+              <li key={row.symbol} className="space-y-2 py-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span>
+                    <span className="block text-[15px] font-semibold text-white">{row.symbol}</span>
+                    <span className="block font-mono text-xs text-slate-500">{row.quantity.toFixed(6)} × ${row.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
+                  </span>
+                  <span className="font-mono text-[15px] text-white">${row.usdValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <label className="flex items-center gap-2 text-xs text-slate-400">
+                    You paid $
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      min={0}
+                      placeholder="optional"
+                      aria-label={`What you paid for ${row.symbol}, in US dollars`}
+                      value={costBasis || ''}
+                      onChange={(e) => updateCostBasis(row.symbol, Math.max(0, Number(e.target.value) || 0))}
+                      className="min-h-[40px] w-28 rounded-lg border border-ink-500 bg-ink-800 px-2 font-mono text-sm text-white"
+                    />
+                  </label>
+                  {pnl === null ? (
+                    <span className="text-xs text-slate-500">Enter what you paid to see P&amp;L</span>
+                  ) : (
+                    <span className={`font-mono text-sm ${pnl >= 0 ? 'text-up' : 'text-down'}`}>
+                      {pnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(pnl).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                    </span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </section>
     </div>
   );
 }
-

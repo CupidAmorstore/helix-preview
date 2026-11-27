@@ -1,14 +1,26 @@
-﻿import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData, type UTCTimestamp } from 'lightweight-charts';
+import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData, type UTCTimestamp } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { fetchCandles } from '../services/market';
+import { chartTone } from './chartTone';
 
 type MarketChartProps = {
   /** Coinbase product id, e.g. BTC-USD */
   symbol: string;
   timeframe: string;
+  /** live last-trade price: keeps the newest point in step with the price shown above the chart */
+  livePrice?: number | null;
 };
 
-export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
+const fmtAxis = (v: number) =>
+  v >= 1000 ? v.toLocaleString('en-US', { maximumFractionDigits: 0 }) : v >= 1 ? v.toLocaleString('en-US', { maximumFractionDigits: 2 }) : v.toPrecision(4);
+
+export default function MarketChart({ symbol, timeframe, livePrice }: MarketChartProps) {
+  const lastTime = useRef<UTCTimestamp | null>(null);
+  const firstValue = useRef<number | null>(null);
+  const paint = (last: number | null) => {
+    const t = chartTone(firstValue.current, last);
+    seriesRef.current?.applyOptions({ lineColor: t.line, topColor: t.top, bottomColor: t.bottom });
+  };
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Area'> | null>(null);
@@ -21,20 +33,29 @@ export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
       height: 280,
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: '#cbd5f5'
+        // the floating logo overlapped the plot (audit DS-3); attribution is given as a link below the chart
+        attributionLogo: false,
+        textColor: '#A6A093',
+        fontFamily: 'Instrument Sans, system-ui, sans-serif'
       },
+      localization: { priceFormatter: fmtAxis },
       grid: {
-        vertLines: { color: 'rgba(148, 163, 184, 0.12)' },
-        horzLines: { color: 'rgba(148, 163, 184, 0.12)' }
+        vertLines: { visible: false },
+        horzLines: { color: 'rgba(243, 239, 230, 0.06)' }
       },
-      rightPriceScale: { borderColor: 'rgba(148, 163, 184, 0.2)' },
-      timeScale: { borderColor: 'rgba(148, 163, 184, 0.2)' }
+      crosshair: {
+        vertLine: { color: 'rgba(243, 239, 230, 0.35)', labelBackgroundColor: '#2E2D28' },
+        horzLine: { color: 'rgba(243, 239, 230, 0.35)', labelBackgroundColor: '#2E2D28' }
+      },
+      rightPriceScale: { borderVisible: false },
+      timeScale: { borderVisible: false }
     });
 
     const series = chart.addAreaSeries({
-      lineColor: '#10b981',
-      topColor: 'rgba(16, 185, 129, 0.25)',
-      bottomColor: 'rgba(16, 185, 129, 0.02)'
+      lineColor: '#4CC38A',
+      lineWidth: 2,
+      topColor: 'rgba(76, 195, 138, 0.18)',
+      bottomColor: 'rgba(76, 195, 138, 0)'
     });
 
     chartRef.current = chart;
@@ -64,6 +85,9 @@ export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
           value: k.c
         }));
         seriesRef.current?.setData(data);
+        lastTime.current = data.length ? (data[data.length - 1].time as UTCTimestamp) : null;
+        firstValue.current = data.length ? data[0].value : null;
+        paint(data.length ? data[data.length - 1].value : null);
         chartRef.current?.timeScale().fitContent();
         setStatus('idle');
       } catch {
@@ -77,14 +101,29 @@ export default function MarketChart({ symbol, timeframe }: MarketChartProps) {
     };
   }, [symbol, timeframe]);
 
+  // move the newest point with the live price (same bucket), so chart and header never disagree
+  useEffect(() => {
+    if (!livePrice || lastTime.current === null || status !== 'idle') return;
+    try {
+      seriesRef.current?.update({ time: lastTime.current, value: livePrice });
+      paint(livePrice);
+    } catch {
+      /* chart not ready */
+    }
+  }, [livePrice, status]);
+
   return (
     <div className="relative">
-      <div ref={containerRef} className="h-[280px] w-full" />
+      <div ref={containerRef} className="h-[280px] w-full" role="img" aria-label={`${symbol} price chart, ${timeframe} intervals`} />
+      <p className="mt-1 text-[11px] text-slate-500">
+        <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center underline underline-offset-2">Charting by TradingView</a>
+      </p>
+      <p className="text-[11px] text-slate-500">Times in your time zone ({Intl.DateTimeFormat().resolvedOptions().timeZone}). The last point is the current, unfinished interval and moves with the live price.</p>
       {status === 'loading' && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
       )}
       {status === 'error' && (
-        <div className="absolute inset-0 flex items-center justify-center text-xs text-rose-400">Chart unavailable</div>
+        <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Chart unavailable · check your connection</div>
       )}
     </div>
   );

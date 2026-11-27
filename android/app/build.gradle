@@ -18,22 +18,44 @@ android {
         }
     }
     signingConfigs {
-        // Fixed DEBUG-ONLY key (password "android", like Android's default debug key) so preview builds from
-        // different CI runners can be installed over each other. Never use it for a store release.
+        // PUBLIC debug key (committed; password "android"). Anyone can sign with it, so a build signed with
+        // it is for testing only: it could be "updated" by someone else's APK signed with the same key.
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        // PRIVATE QA key, used automatically when the owner provides it through CI secrets
+        // (HELIX_QA_KEYSTORE_B64 etc.). Never committed. Not a store/production key.
+        if (System.getenv('HELIX_QA_KEYSTORE')) {
+            qa {
+                storeFile file(System.getenv('HELIX_QA_KEYSTORE'))
+                storePassword System.getenv('HELIX_QA_STORE_PASSWORD')
+                keyAlias System.getenv('HELIX_QA_KEY_ALIAS')
+                keyPassword System.getenv('HELIX_QA_KEY_PASSWORD')
+            }
+        }
+    }
+    buildFeatures {
+        buildConfig true
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig System.getenv('HELIX_QA_KEYSTORE') ? signingConfigs.qa : signingConfigs.debug
+            buildConfigField 'boolean', 'QA_WEBVIEW_INSPECTION', 'true'
         }
+        // QA release (audit SEC-2): not debuggable, so app storage cannot be read with run-as/adb backup.
+        // Only built when the private QA key exists; WebView inspection stays on for QA builds so the
+        // emulator can test this exact artifact. A future store build must set it to false.
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (System.getenv('HELIX_QA_KEYSTORE')) {
+                signingConfig signingConfigs.qa
+            }
+            buildConfigField 'boolean', 'QA_WEBVIEW_INSPECTION', System.getenv('HELIX_QA_KEYSTORE') ? 'true' : 'false'
         }
     }
 }

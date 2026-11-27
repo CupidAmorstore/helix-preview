@@ -1,8 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import raw from '../bot/data/latest.json';
-import type { BotSummary } from '../bot/summary';
-import { botHeadline, plainReasons, snapshotAgeHours } from '../bot/insights';
+// the research summary (~400 KB) is loaded after first paint, in its own chunk (audit PERF-1)
+type BotGlance = { tested: number; qualified: number; holdingCash: boolean; ageH: number; reason?: { text: string; count: number } };
+function useBotGlance(): BotGlance | null {
+  const [g, setG] = useState<BotGlance | null>(null);
+  useEffect(() => {
+    let alive = true;
+    void Promise.all([import('../bot/botData'), import('../bot/insights')]).then(([d, i]) => {
+      if (!alive) return;
+      const s = d.bot();
+      const h = i.botHeadline(s);
+      setG({ tested: h.tested, qualified: h.qualified, holdingCash: h.holdingCash, ageH: i.researchAgeHours(s), reason: i.plainReasons(s, 1)[0] });
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return g;
+}
 import { MARKET_COINS, fetchCandles } from '../services/market';
 import { listAddresses, listSnapshots } from '../services/storage';
 import type { SnapshotRecord } from '../types';
@@ -11,8 +26,9 @@ import { STARTING_CAPITAL_OPTIONS } from '../paper/engine';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { Button, Change, CoinBadge, Money, Note, Panel } from '../components/ui';
 import { fmtAge, fmtUsd } from '../services/marketData';
+import StartHere from '../components/StartHere';
+import { useT } from '../i18n';
 
-const S = raw as unknown as BotSummary;
 const RANGES = [
   { key: '1D', ms: 86_400_000 },
   { key: '1W', ms: 7 * 86_400_000 },
@@ -27,45 +43,48 @@ function Sparkline({ values, up }: { values: number[]; up: boolean }) {
   const pts = values.map((v, i) => `${(i / (values.length - 1)) * 56},${22 - ((v - min) / (max - min || 1)) * 20}`).join(' ');
   return (
     <svg viewBox="0 0 56 24" className="h-6 w-14" aria-hidden="true">
-      <polyline fill="none" stroke={up ? '#35C48F' : '#F26E6E'} strokeWidth="1.6" points={pts} />
+      <polyline fill="none" stroke={up ? '#4CC38A' : '#F07A6A'} strokeWidth="1.4" points={pts} />
     </svg>
   );
 }
 
-const more = 'inline-flex min-h-[44px] items-center text-sm font-medium text-helix-400';
+const more = 'inline-flex min-h-[44px] items-center text-sm font-medium text-helix-400 underline-offset-4 hover:underline';
 
 function OpenAccount() {
+  const t = useT();
   const { start } = usePaper();
   const [cap, setCap] = useState<number>(1000);
   const [busy, setBusy] = useState(false);
   return (
-    <section className="space-y-4 rounded-2xl border border-ink-600 bg-ink-800 p-4">
-      <div className="space-y-1">
-        <span className="rounded-md border border-dashed border-paper px-2 py-0.5 text-[11px] font-bold tracking-wider text-paper">PAPER MONEY</span>
-        <h1 className="pt-2 text-xl font-semibold text-white">Practise trading without risking money</h1>
-        <p className="text-sm text-slate-400">
-          A paper account uses simulated dollars at live prices, with real fees modelled. Nothing is sent to an exchange.
+    <section className="space-y-5 pb-2">
+      <div className="space-y-2">
+        <p className="eyebrow text-paper">{t('Paper account', 'Compte fictif')}</p>
+        <h1 className="text-[30px] font-semibold leading-[1.1] tracking-tight text-white">{t('Practise trading without risking money.', 'Exercez-vous à trader sans risquer d’argent.')}</h1>
+        <p className="text-[15px] leading-relaxed text-slate-400">
+          {t('A paper account uses simulated dollars at live prices, with real fees modelled. Nothing is sent to an exchange.', 'Un compte fictif utilise des dollars simulés aux prix en direct, avec des frais réalistes. Rien n’est envoyé à une plateforme.')}
         </p>
       </div>
       <fieldset className="space-y-2">
-        <legend className="text-sm text-slate-300">Starting balance</legend>
-        <div className="grid grid-cols-3 gap-2">
+        <legend className="eyebrow pb-1 text-slate-400">{t('Starting balance', 'Solde de départ')}</legend>
+        <div className="grid grid-cols-3 border-l border-t border-ink-600">
           {STARTING_CAPITAL_OPTIONS.map((c) => (
             <button key={c} type="button" aria-pressed={cap === c} onClick={() => setCap(c)}
-              className={`min-h-[48px] rounded-xl border font-mono text-sm ${cap === c ? 'border-helix-400 bg-helix-400/15 text-helix-300' : 'border-ink-600 text-slate-300'}`}>
+              className={`min-h-[52px] border-b border-r border-ink-600 font-mono text-[15px] ${cap === c ? 'bg-white text-ink-900 font-semibold' : 'text-slate-300'}`}>
               ${c.toLocaleString()}
             </button>
           ))}
         </div>
       </fieldset>
       <Button kind="primary" className="w-full" disabled={busy} onClick={async () => { setBusy(true); await start(cap); setBusy(false); }}>
-        Open paper account
+        {t('Open paper account', 'Ouvrir un compte fictif')}
       </Button>
     </section>
   );
 }
 
 export default function HomePage() {
+  const t = useT();
+  const glance = useBotGlance();
   const { account, loading, value, feed } = usePaper();
   const { list: watchlist } = useWatchlist();
   const [range, setRange] = useState<(typeof RANGES)[number]['key']>('1W');
@@ -118,77 +137,80 @@ export default function HomePage() {
     return r.length ? { top: r[0], bottom: r[r.length - 1] } : null;
   }, [feed.prices, feed.open24h]);
 
-  const head = botHeadline(S);
-  const reason = plainReasons(S, 1)[0];
-  const age = snapshotAgeHours(S);
   const recent = account ? [...account.orders].reverse().slice(0, 4) : [];
   const positions = account ? Object.values(account.positions) : [];
   const showWatched = watched && (watched.addresses > 0 || (watched.snap && watched.snap.totalUsd > 0));
 
   return (
-    <div className="mx-auto max-w-xl space-y-4 fade-in">
+    <div className="mx-auto max-w-xl space-y-7">
+      <StartHere />
       {/* 1. Paper account: what you have, what it did, what you can do */}
       {loading ? (
-        <div className="h-48 animate-pulse rounded-2xl bg-ink-800" aria-label="Loading account" />
+        <div className="h-48 animate-pulse bg-ink-800" aria-label={t('Loading account', 'Chargement du compte')} />
       ) : !account || !value ? (
         <OpenAccount />
       ) : (
         <section className="space-y-3" aria-labelledby="acct">
           <div className="flex items-center justify-between">
-            <h1 id="acct" className="text-sm text-slate-400">Paper account · simulated money</h1>
-            {account.halted && <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-400">Paused</span>}
+            <h1 id="acct" className="eyebrow text-slate-400">{t('Paper account · simulated money', 'Compte fictif · argent simulé')}</h1>
+            {account.halted && <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs text-amber-400">{t('Paused', 'En pause')}</span>}
           </div>
           <div>
-            <div className="font-mono text-4xl font-medium tracking-tight text-white tabular-nums">
+            <div className="font-mono text-[44px] font-semibold leading-none tracking-tight text-white">
               <Money v={value.equity} />
             </div>
             <div className="mt-1 flex flex-wrap items-center gap-x-2 text-sm">
               <Change pct={value.returnPct} abs={value.totalPnl} />
               <span className="text-slate-400">since you started with ${account.startingCash.toLocaleString()}</span>
             </div>
-            {value.missingPrice && <Note tone="warn">Some positions are valued at cost until live prices arrive.</Note>}
+            {value.missingPrice && <Note tone="warn">{t('Some positions are valued at cost until live prices arrive.', 'Certaines positions sont évaluées au coût en attendant les prix en direct.')}</Note>}
+            {account.halted && account.haltReason?.startsWith('ledger') && (
+              <p role="alert" className="mt-2 border-l-2 border-down pl-3 text-sm text-slate-200">
+                Paper trading is paused: the saved account did not match its own order history ({account.haltReason}). No new paper orders are accepted until this is resolved.
+              </p>
+            )}
           </div>
           {chart ? (
             <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" role="img" aria-label={`Paper account value, ${range}`}>
-              <line x1="0" x2="300" y1={chart.base} y2={chart.base} stroke="#253142" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-              <polyline fill="none" stroke={chart.up ? '#35C48F' : '#F26E6E'} strokeWidth="2" points={chart.line} vectorEffect="non-scaling-stroke" />
+              <line x1="0" x2="300" y1={chart.base} y2={chart.base} stroke="#46443D" strokeDasharray="3 5" vectorEffect="non-scaling-stroke" />
+              <polyline fill="none" stroke={chart.up ? '#4CC38A' : '#F07A6A'} strokeWidth="1.75" points={chart.line} vectorEffect="non-scaling-stroke" />
             </svg>
           ) : (
-            <p className="rounded-xl border border-dashed border-ink-600 p-3 text-xs text-slate-400">
+            <p className="border-y border-ink-600 py-3 text-xs text-slate-400">
               The value chart builds up as your account is valued (about once an hour while the app is open).
             </p>
           )}
-          <div role="radiogroup" aria-label="Chart range" className="flex gap-1">
+          <div role="radiogroup" aria-label="Chart range" className="flex gap-6">
             {RANGES.map((r) => (
               <button key={r.key} type="button" role="radio" aria-checked={range === r.key} onClick={() => setRange(r.key)}
-                className={`min-h-[36px] flex-1 rounded-lg font-mono text-xs ${range === r.key ? 'bg-ink-700 text-white' : 'text-slate-400'}`}>
+                className={`min-w-[44px] min-h-[44px] font-mono text-xs ${range === r.key ? 'font-semibold text-white underline decoration-2 underline-offset-[10px]' : 'text-slate-500'}`}>
                 {r.key}
               </button>
             ))}
           </div>
-          <dl className="grid grid-cols-2 gap-2 text-sm">
+          <dl className="grid grid-cols-2 border-t border-ink-600 text-sm">
             {[
-              ['Cash available', value.cash],
-              ['Invested', value.positionsValue],
-              ['Realized P&L', value.realized],
-              ['Fees paid', value.fees]
+              [t('Cash available', 'Liquidités disponibles'), value.cash],
+              [t('Invested', 'Investi'), value.positionsValue],
+              [t('Realized P&L (paper)', 'Gains/pertes réalisés (fictifs)'), value.realized],
+              [t('Fees paid', 'Frais payés'), value.fees]
             ].map(([l, v]) => (
-              <div key={l as string} className="rounded-xl bg-ink-800 px-3 py-2">
-                <dt className="text-xs text-slate-400">{l}</dt>
-                <dd className="font-mono text-white"><Money v={v as number} /></dd>
+              <div key={l as string} className="border-b border-ink-600 py-2.5 odd:pr-3 even:border-l even:pl-3">
+                <dt className="text-xs text-slate-500">{l}</dt>
+                <dd className="font-mono text-base text-white"><Money v={v as number} /></dd>
               </div>
             ))}
           </dl>
-          <div className="grid grid-cols-3 gap-2">
-            <Link to="/markets" className="flex min-h-[48px] items-center justify-center rounded-xl bg-helix-400 text-sm font-semibold text-ink-900">Trade</Link>
-            <Link to="/alerts" className="flex min-h-[48px] items-center justify-center rounded-xl bg-ink-700 text-sm font-semibold text-white">Set alert</Link>
-            <Link to="/wallet" className="flex min-h-[48px] items-center justify-center rounded-xl bg-ink-700 text-sm font-semibold text-white">Wallet</Link>
+          <div className="flex gap-2">
+            <Link to="/markets" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">{t('Trade', 'Trader')}</Link>
+            <Link to="/alerts" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">{t('Set alert', 'Créer une alerte')}</Link>
+            <Link to="/wallet" className="flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-ink-500 text-sm font-semibold text-white">{t('Wallet', 'Portefeuille')}</Link>
           </div>
         </section>
       )}
 
       {positions.length > 0 && (
-        <Panel title="Your paper positions">
+        <Panel title={t('Your paper positions', 'Vos positions fictives')}>
           <ul className="divide-y divide-ink-600">
             {positions.map((p) => {
               const px = feed.prices[p.symbol];
@@ -215,23 +237,25 @@ export default function HomePage() {
 
       {/* 2. Market: highlights + watchlist */}
       {movers && (
-        <div className="grid grid-cols-2 gap-2">
-          {[['Top mover', movers.top], ['Weakest', movers.bottom]].map(([label, m]) => {
+        <section aria-label="Market today" className="grid grid-cols-2 border-y border-ink-600">
+          {[[t('Strongest 24h', 'Plus forte hausse 24 h'), movers.top], [t('Weakest 24h', 'Plus faible 24 h'), movers.bottom]].map(([label, m]) => {
             const x = m as { sym: string; name: string; pct: number };
             return (
-              <Link key={label as string} to={`/markets/${x.sym}`} className="min-h-[64px] rounded-2xl border border-ink-600 bg-ink-800 p-3">
-                <span className="block text-xs text-slate-400">{label as string} · 24h</span>
-                <span className="block text-sm font-semibold text-white">{x.name}</span>
-                <Change pct={x.pct} className="text-sm" />
+              <Link key={label as string} to={`/markets/${x.sym}`} className="min-h-[64px] py-3 even:border-l even:border-ink-600 even:pl-4">
+                <span className="eyebrow block text-slate-500">{label as string}</span>
+                <span className="mt-1 flex items-baseline gap-2">
+                  <span className="text-[15px] font-semibold text-white">{x.sym}</span>
+                  <Change pct={x.pct} className="text-sm" />
+                </span>
               </Link>
             );
           })}
-        </div>
+        </section>
       )}
 
-      <Panel title="Watchlist" action={<Link to="/markets" className={more}>All markets</Link>}>
+      <Panel title={t('Watchlist', 'Liste de suivi')} action={<Link to="/markets" className={more}>{t('All markets', 'Tous les marchés')}</Link>}>
         {watchlist.length === 0 ? (
-          <p className="text-sm text-slate-400">Open any coin in Markets and tap ☆ to watch it.</p>
+          <p className="text-sm text-slate-400">{t('Open any coin in Markets and tap ☆ to watch it.', 'Ouvrez une crypto dans Marchés et touchez ☆ pour la suivre.')}</p>
         ) : (
           <ul className="divide-y divide-ink-600">
             {watchlist.map((sym) => {
@@ -258,30 +282,37 @@ export default function HomePage() {
             })}
           </ul>
         )}
-        <Note>{feed.status === 'live' ? 'Live Coinbase prices · 24h change' : feed.status === 'stale' ? 'Prices delayed' : 'Connecting to live prices…'}</Note>
+        <Note>{feed.status === 'live' ? t('Live Coinbase prices · 24h change', 'Prix Coinbase en direct · variation 24 h') : feed.status === 'offline' ? t('No connection · showing the last prices received', 'Hors connexion · derniers prix reçus') : feed.status === 'stale' ? t('Prices delayed', 'Prix retardés') : feed.status === 'reconnecting' ? t('Connection lost · retrying, showing the last prices received', 'Connexion perdue · nouvelle tentative, derniers prix reçus') : t('Connecting to live prices…', 'Connexion aux prix en direct…')}</Note>
       </Panel>
 
       {/* 3. Bot: honest one-glance status */}
-      <Panel title="Trading Bot" action={<Link to="/bot" className={more}>Open</Link>}>
+      <Panel title={t('Trading Bot', 'Robot de trading')} action={<Link to="/bot" className={more}>{t('Open', 'Ouvrir')}</Link>}>
         <div className="flex items-start gap-3">
           <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-paper" aria-hidden="true" />
-          <div className="space-y-1">
-            <p className="text-sm font-semibold text-white">
-              {head.holdingCash ? 'No strategy approved · holding cash' : `${head.qualified} strategies approved for paper trading`}
-            </p>
-            <p className="text-xs text-slate-400">
-              {head.tested} strategies tested · research {age < 48 ? `${Math.floor(age)} h` : `${Math.floor(age / 24)} days`} old · no bot trades yet
-            </p>
-            {head.holdingCash && reason && <p className="text-xs text-slate-300">Main reason: {reason.text.toLowerCase()} ({reason.count}×)</p>}
-          </div>
+          {!glance ? (
+            <div className="h-12 w-full animate-pulse bg-ink-800/60" aria-label={t('Loading bot status', 'Chargement du statut du robot')} />
+          ) : (
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-white">
+                {glance.holdingCash ? t('No strategy approved · holding cash', 'Aucune stratégie approuvée · en liquidités') : t(`${glance.qualified} strategies approved for paper trading`, `${glance.qualified} stratégies approuvées pour le trading fictif`)}
+              </p>
+              <p className="text-xs text-slate-400">
+                {t(
+                  `${glance.tested} strategy tests · last research run ${glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} days`} ago · no bot trades yet`,
+                  `${glance.tested} tests de stratégies · dernière recherche il y a ${glance.ageH < 48 ? `${Math.floor(glance.ageH)} h` : `${Math.floor(glance.ageH / 24)} jours`} · aucune transaction du robot`
+                )}
+              </p>
+              {glance.holdingCash && glance.reason && <p className="text-xs text-slate-300">{t('Main reason', 'Raison principale')} : {glance.reason.text.toLowerCase()} ({glance.reason.count}×)</p>}
+            </div>
+          )}
         </div>
       </Panel>
 
       {/* 4. Activity */}
       {account && (
-        <Panel title="Recent activity">
+        <Panel title={t('Recent activity', 'Activité récente')} action={<Link to="/orders" className={more}>{t('All orders', 'Tous les ordres')}</Link>}>
           {recent.length === 0 ? (
-            <p className="text-sm text-slate-400">No paper orders yet. Open a coin in Markets and tap Paper buy.</p>
+            <p className="text-sm text-slate-400">{t('No paper orders yet. Open a coin in Markets and tap Paper buy.', 'Aucun ordre fictif pour l’instant. Ouvrez une crypto dans Marchés et touchez Achat fictif.')}</p>
           ) : (
             <ul className="space-y-2 text-sm">
               {recent.map((o) => (
@@ -302,7 +333,7 @@ export default function HomePage() {
 
       {/* 5. Watched (read-only) holdings, only when the user tracks addresses */}
       {showWatched && (
-        <Panel title="Watched addresses · read-only" action={<Link to="/portfolio" className={more}>Details</Link>}>
+        <Panel title={t('Watched addresses · read-only', 'Adresses suivies · lecture seule')} action={<Link to="/portfolio" className={more}>{t('Details', 'Détails')}</Link>}>
           {watched?.snap ? (
             <p className="text-sm text-slate-300">
               <Money v={watched.snap.totalUsd} className="text-lg text-white" /> <span className="text-xs text-slate-500">· updated {watched.snap.date}</span>
@@ -310,7 +341,7 @@ export default function HomePage() {
           ) : (
             <p className="text-sm text-slate-400">Open Details and tap Refresh balances to value your {watched?.addresses} watched address{watched?.addresses === 1 ? '' : 'es'}.</p>
           )}
-          <Note>Tracked from public blockchain data. Not part of your paper account and not tradable here.</Note>
+          <Note>{t('Tracked from public blockchain data. Not part of your paper account and not tradable here.', 'Suivi à partir des données publiques de la blockchain. Ne fait pas partie de votre compte fictif et ne peut pas être échangé ici.')}</Note>
         </Panel>
       )}
     </div>

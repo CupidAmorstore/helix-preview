@@ -1,0 +1,3317 @@
+{
+ "runId": "run-2026-11-24T19-36-41-194Z-1d",
+ "startedAt": "2026-11-24T19:36:42.053Z",
+ "finishedAt": "2026-11-24T19:36:42.092Z",
+ "codeVersion": "0b6b578c58de4bdf74db5a4679b84aee6cb381cb",
+ "gates": {
+  "version": "gates-v2",
+  "split": {
+   "train": 0.5,
+   "validation": 0.25,
+   "test": 0.25
+  },
+  "minTradesValidation": 15,
+  "minTradesTest": 15,
+  "minTradesOos": 30,
+  "familyAlpha": 0.05,
+  "maxTestDrawdown": 0.25,
+  "costStressFactor": 2,
+  "delayStressBars": 1,
+  "minNeighbourPassShare": 0.5,
+  "walkForwardFolds": 4,
+  "minWalkForwardPositiveShare": 0.5
+ },
+ "riskPolicy": {
+  "maxPositionFraction": 0.25,
+  "maxOpenPositions": 3,
+  "maxCorrelatedPositionsPerBase": 1,
+  "maxDailyLossFraction": 0.03,
+  "maxWeeklyLossFraction": 0.06,
+  "maxDrawdownKill": 0.15,
+  "maxStaleBars": 2,
+  "leverage": 1,
+  "allowAveragingDown": false,
+  "allowMartingale": false
+ },
+ "assumptions": [
+  "Long-only spot, no leverage, no shorting.",
+  "Signals decided at bar close; fills at next bar open with fee + half-spread + slippage per side.",
+  "Fee/spread/slippage presets are assumptions (see src/bot/costs.ts); min order from venue metadata when available.",
+  "Historical candles are indicative; executable depth was not verified.",
+  "Bonferroni alpha uses the cumulative number of candidates (all earlier registry entries + this run).",
+  "Recent history already inspected by earlier tests on the same market/timeframe (even with refreshed data) is not fresh evidence: such candidates cannot qualify without forward paper results.",
+  "Universe = coins that are large and listed today (survivorship bias). Measured in research/survivorship-study.json; qualification also requires a non-negative median on delisted markets.",
+  "Research capital normalised to $1,000; account-size feasibility evaluated separately."
+ ],
+ "markets": [
+  {
+   "datasetId": "596997c7-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "BTC-USD",
+    "base": "BTC",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.451442187840927,
+    "realizedVolAnnPct": 40.80232681047994,
+    "volPercentile": 0.32
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=100,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 100,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 6 < 15"
+     ],
+     "train": {
+      "trades": 7,
+      "grossReturn": 2.17085066262375,
+      "netReturn": 1.895039103261861,
+      "totalCostUsd": 130.0279350764947,
+      "maxDrawdown": 0.3561484242701781,
+      "profitFactor": 5.564736773414265,
+      "winRate": 0.42857142857142855,
+      "exposure": 0.4959758551307847,
+      "buyHoldReturn": 0.5902959971539328,
+      "meanTradeNet": 0.22481657353392429,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1623542400000,
+       1709337600000
+      ],
+      "validation": [
+       1709424000000,
+       1752278400000
+      ],
+      "test": [
+       1752364800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 6,
+      "grossReturn": 0.3879702776565004,
+      "netReturn": 0.28382172161733554,
+      "totalCostUsd": 70.94707024623756,
+      "maxDrawdown": 0.34523068987057043,
+      "profitFactor": 1.9271381940254657,
+      "winRate": 0.5,
+      "exposure": 0.6680080482897385,
+      "buyHoldReturn": 0.8600838990228565,
+      "meanTradeNet": 0.06124057180358857,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1687910400000,
+        "to": 1703894400000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.27373662375787644,
+        "trades": 2
+       },
+       {
+        "from": 1703980800000,
+        "to": 1719964800000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.40635154301947707,
+        "trades": 2
+       },
+       {
+        "from": 1720051200000,
+        "to": 1736035200000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.15858252998071998,
+        "trades": 3
+       },
+       {
+        "from": 1736121600000,
+        "to": 1752278400000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.2415423369467209,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": 1.5766892143367275,
+      "positiveFolds": 4,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 4 < 15"
+     ],
+     "train": {
+      "trades": 3,
+      "grossReturn": 0.6348966905935078,
+      "netReturn": 0.5723621879172924,
+      "totalCostUsd": 41.47651112610879,
+      "maxDrawdown": 0.40417889305056187,
+      "profitFactor": 4.629811592333584,
+      "winRate": 0.6666666666666666,
+      "exposure": 0.5089641434262948,
+      "buyHoldReturn": 0.33368288331666607,
+      "meanTradeNet": 0.19470322918280583,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1621814400000,
+       1708473600000
+      ],
+      "validation": [
+       1708560000000,
+       1751846400000
+      ],
+      "test": [
+       1751932800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 4,
+      "grossReturn": 0.11103528627632886,
+      "netReturn": 0.05473709690417472,
+      "totalCostUsd": 45.885419439934026,
+      "maxDrawdown": 0.325557102285341,
+      "profitFactor": 1.2044729185533514,
+      "winRate": 0.5,
+      "exposure": 0.7350597609561753,
+      "buyHoldReturn": 1.1122236810531678,
+      "meanTradeNet": 0.030758579564043403,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1686873600000,
+        "to": 1703030400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.0658128976739103,
+        "trades": 2
+       },
+       {
+        "from": 1703116800000,
+        "to": 1719273600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.4271161018021836,
+        "trades": 1
+       },
+       {
+        "from": 1719360000000,
+        "to": 1735516800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.30641259522335496,
+        "trades": 2
+       },
+       {
+        "from": 1735603200000,
+        "to": 1751846400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.09528173850331378,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": 0.7977694372615696,
+      "positiveFolds": 3,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "d42a807a-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ETH-USD",
+    "base": "ETH",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4683774789885816,
+    "realizedVolAnnPct": 56.859365058149095,
+    "volPercentile": 0.30857142857142855
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 5 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 4,
+      "grossReturn": 1.6281213906174083,
+      "netReturn": 1.4949496744985842,
+      "totalCostUsd": 66.3796134140041,
+      "maxDrawdown": 0.35982044514640776,
+      "profitFactor": 9.853740491643299,
+      "winRate": 0.75,
+      "exposure": 0.545271629778672,
+      "buyHoldReturn": 0.3640343713524259,
+      "meanTradeNet": 0.3165307312763094,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1623542400000,
+       1709337600000
+      ],
+      "validation": [
+       1709424000000,
+       1752278400000
+      ],
+      "test": [
+       1752364800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 5,
+      "grossReturn": -0.48857002522516135,
+      "netReturn": -0.5207560495617942,
+      "totalCostUsd": 38.75160131283633,
+      "maxDrawdown": 0.6111443212800192,
+      "profitFactor": 0.09595814396475888,
+      "winRate": 0.2,
+      "exposure": 0.49899396378269617,
+      "buyHoldReturn": -0.15622734293730112,
+      "meanTradeNet": -0.12490036921726247,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1687910400000,
+        "to": 1703894400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.14760221600049084,
+        "trades": 2
+       },
+       {
+        "from": 1703980800000,
+        "to": 1719964800000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.4699066111487915,
+        "trades": 1
+       },
+       {
+        "from": 1720051200000,
+        "to": 1736035200000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.23227552989924682,
+        "trades": 2
+       },
+       {
+        "from": 1736121600000,
+        "to": 1752278400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.15896684921974624,
+        "trades": 3
+       }
+      ],
+      "compoundedNet": 0.08917990296565992,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 4 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 5,
+      "grossReturn": 0.7237310271818787,
+      "netReturn": 0.615250782520602,
+      "totalCostUsd": 68.16584393058463,
+      "maxDrawdown": 0.39652916647245945,
+      "profitFactor": 3.9154079554505103,
+      "winRate": 0.8,
+      "exposure": 0.5089641434262948,
+      "buyHoldReturn": 0.11961572698058265,
+      "meanTradeNet": 0.12051346730759185,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1621814400000,
+       1708473600000
+      ],
+      "validation": [
+       1708560000000,
+       1751846400000
+      ],
+      "test": [
+       1751932800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 4,
+      "grossReturn": -0.34430869807752473,
+      "netReturn": -0.37753377521168563,
+      "totalCostUsd": 40.8859477572131,
+      "maxDrawdown": 0.4508230514400341,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.45617529880478086,
+      "buyHoldReturn": -0.1439135017189883,
+      "meanTradeNet": -0.10840811926993887,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1686873600000,
+        "to": 1703030400000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": -0.13055823597588823,
+        "trades": 2
+       },
+       {
+        "from": 1703116800000,
+        "to": 1719273600000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": 0.32505601510373094,
+        "trades": 1
+       },
+       {
+        "from": 1719360000000,
+        "to": 1735516800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.1673162934695097,
+        "trades": 2
+       },
+       {
+        "from": 1735603200000,
+        "to": 1751846400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.24665671947005785,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": -0.277317195164559,
+      "positiveFolds": 1,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "9ba1194d-1984",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "SOL-USD",
+    "base": "SOL",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1984,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1984,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "low",
+    "efficiency": 0.532911786047476,
+    "realizedVolAnnPct": 56.41294031930919,
+    "volPercentile": 0.08860759493670886
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15"
+     ],
+     "train": {
+      "trades": 5,
+      "grossReturn": 3.021907900568902,
+      "netReturn": 2.7687955842163094,
+      "totalCostUsd": 66.61682200588814,
+      "maxDrawdown": 0.4797997135257051,
+      "profitFactor": 7.429277554525425,
+      "winRate": 0.2,
+      "exposure": 0.40852974186307517,
+      "buyHoldReturn": -0.0747674695921774,
+      "meanTradeNet": 1.0199918941293367,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1641254400000,
+       1718150400000
+      ],
+      "validation": [
+       1718236800000,
+       1756598400000
+      ],
+      "test": [
+       1756684800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": 0.3506212355961653,
+      "netReturn": 0.2989602176505721,
+      "totalCostUsd": 43.47154433706032,
+      "maxDrawdown": 0.41940807576018074,
+      "profitFactor": null,
+      "winRate": 1,
+      "exposure": 0.4966292134831461,
+      "buyHoldReturn": 0.3626978197378252,
+      "meanTradeNet": 0.09168819118483085,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1698969600000,
+        "to": 1713312000000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 2.0152258696600005,
+        "trades": 1
+       },
+       {
+        "from": 1713398400000,
+        "to": 1727740800000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": -0.22802624507686764,
+        "trades": 4
+       },
+       {
+        "from": 1727827200000,
+        "to": 1742169600000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.2550844470423608,
+        "trades": 1
+       },
+       {
+        "from": 1742256000000,
+        "to": 1756598400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.1400532712602669,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": 2.330584673555512,
+      "positiveFolds": 3,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 4 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 3,
+      "grossReturn": 3.252530347974391,
+      "netReturn": 3.08987183141115,
+      "totalCostUsd": 50.59143200886922,
+      "maxDrawdown": 0.594089956903966,
+      "profitFactor": 8.497546163040292,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.5249722530521642,
+      "buyHoldReturn": -0.08708069664557305,
+      "meanTradeNet": 1.8302884029216868,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1639526400000,
+       1717286400000
+      ],
+      "validation": [
+       1717372800000,
+       1756166400000
+      ],
+      "test": [
+       1756252800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 4,
+      "grossReturn": -0.27445907031504535,
+      "netReturn": -0.31122355580096606,
+      "totalCostUsd": 37.08021680290278,
+      "maxDrawdown": 0.5336348629513253,
+      "profitFactor": 0.31423083974731886,
+      "winRate": 0.25,
+      "exposure": 0.4955555555555556,
+      "buyHoldReturn": 0.1879548762736536,
+      "meanTradeNet": -0.07159168690777012,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1697846400000,
+        "to": 1712361600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 4.438394425139186,
+        "trades": 1
+       },
+       {
+        "from": 1712448000000,
+        "to": 1726963200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.3365211390427091,
+        "trades": 2
+       },
+       {
+        "from": 1727049600000,
+        "to": 1741564800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.1756709780857555,
+        "trades": 1
+       },
+       {
+        "from": 1741651200000,
+        "to": 1756166400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.2611058256354244,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": 2.7510246189298737,
+      "positiveFolds": 2,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "0f197877-1285",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "XRP-USD",
+    "base": "XRP",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 70,
+    "bars": 1285,
+    "gaps": 1,
+    "missingBars": 904,
+    "stale": false,
+    "longestContiguous": 1228,
+    "reasons": [
+     "41.30% bars missing (gaps not filled)"
+    ]
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4526348086216154,
+    "realizedVolAnnPct": 57.88443046214715,
+    "volPercentile": 0.42105263157894735
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 6,
+      "grossReturn": 1.5248354736614704,
+      "netReturn": 1.3353804305302206,
+      "totalCostUsd": 68.32477874506833,
+      "maxDrawdown": 0.5477162927525318,
+      "profitFactor": 4.064625721390664,
+      "winRate": 0.16666666666666666,
+      "exposure": 0.6276803118908382,
+      "buyHoldReturn": 3.2806811509101577,
+      "meanTradeNet": 0.43529662975251737,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1706572800000,
+       1750809600000
+      ],
+      "validation": [
+       1750896000000,
+       1772928000000
+      ],
+      "test": [
+       1773014400000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": 0.003077306940574731,
+      "netReturn": -0.009878485399442694,
+      "totalCostUsd": 12.935919021474206,
+      "maxDrawdown": 0.331409588694012,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.3828125,
+      "buyHoldReturn": -0.36378311651315154,
+      "meanTradeNet": -0.009878485399442694,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1764633600000,
+        "to": 1772928000000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0,
+        "trades": 0
+       }
+      ],
+      "compoundedNet": 0,
+      "positiveFolds": 0,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=180,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 180,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 3,
+      "grossReturn": 0.7485359902646993,
+      "netReturn": 0.6816548049324489,
+      "totalCostUsd": 40.898994580888484,
+      "maxDrawdown": 0.4551332645255297,
+      "profitFactor": 5.7086731543929305,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.5889101338432122,
+      "buyHoldReturn": 2.606060606060606,
+      "meanTradeNet": 0.2721462916080912,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1704844800000,
+       1749945600000
+      ],
+      "validation": [
+       1750032000000,
+       1772496000000
+      ],
+      "test": [
+       1772582400000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": -0.31941484208486726,
+      "netReturn": -0.32820531108923556,
+      "totalCostUsd": 10.85325735364961,
+      "maxDrawdown": 0.369488903276319,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.42911877394636017,
+      "buyHoldReturn": -0.39222867351496205,
+      "meanTradeNet": -0.32820531108923556,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1755648000000,
+        "to": 1764028800000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": -0.29916806465617596,
+        "trades": 1
+       },
+       {
+        "from": 1764115200000,
+        "to": 1772496000000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": 0,
+        "trades": 0
+       }
+      ],
+      "compoundedNet": -0.29916806465617596,
+      "positiveFolds": 0,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "0118ae7c-1998",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOGE-USD",
+    "base": "DOGE",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1998,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1998,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "low",
+    "efficiency": 0.4901109503135554,
+    "realizedVolAnnPct": 59.748928675644784,
+    "volPercentile": 0.16981132075471697
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 4 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 6,
+      "grossReturn": -0.16560584882844331,
+      "netReturn": -0.22821594027706538,
+      "totalCostUsd": 39.41003594624067,
+      "maxDrawdown": 0.676866584312274,
+      "profitFactor": 0.6592700894553936,
+      "winRate": 0.16666666666666666,
+      "exposure": 0.3897550111358575,
+      "buyHoldReturn": -0.045263157894737005,
+      "meanTradeNet": 0.06658524033250017,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1640044800000,
+       1717545600000
+      ],
+      "validation": [
+       1717632000000,
+       1756339200000
+      ],
+      "test": [
+       1756425600000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 4,
+      "grossReturn": -0.04916912613768576,
+      "netReturn": -0.09734946501512931,
+      "totalCostUsd": 51.51629536933126,
+      "maxDrawdown": 0.6907679935754236,
+      "profitFactor": 0.7869472702138632,
+      "winRate": 0.25,
+      "exposure": 0.36080178173719374,
+      "buyHoldReturn": 0.40193689472039984,
+      "meanTradeNet": 0.00183510643658924,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1698192000000,
+        "to": 1712620800000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.7882241968719692,
+        "trades": 3
+       },
+       {
+        "from": 1712707200000,
+        "to": 1727136000000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": -0.35215119100895254,
+        "trades": 2
+       },
+       {
+        "from": 1727222400000,
+        "to": 1741651200000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 1.5447448387391267,
+        "trades": 1
+       },
+       {
+        "from": 1741737600000,
+        "to": 1756339200000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": -0.24664722737546774,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": 1.2209473589641595,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=180,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 180,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 2 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 2,
+      "grossReturn": 0.9592082904266652,
+      "netReturn": 0.9089246862126332,
+      "totalCostUsd": 30.4161735878522,
+      "maxDrawdown": 0.4088802035993456,
+      "profitFactor": 8.715204421681204,
+      "winRate": 0.5,
+      "exposure": 0.3898678414096916,
+      "buyHoldReturn": -0.2071599045346062,
+      "meanTradeNet": 0.5230184501812661,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1638316800000,
+       1716681600000
+      ],
+      "validation": [
+       1716768000000,
+       1755907200000
+      ],
+      "test": [
+       1755993600000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": -0.7220975916202546,
+      "netReturn": -0.729230031178302,
+      "totalCostUsd": 16.06511322020839,
+      "maxDrawdown": 0.7749541198476758,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.5550660792951542,
+      "buyHoldReturn": 0.39853184939616404,
+      "meanTradeNet": -0.47401783052943364,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1697155200000,
+        "to": 1711756800000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": 1.5949221704689616,
+        "trades": 1
+       },
+       {
+        "from": 1711843200000,
+        "to": 1726444800000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": -0.5073476438797724,
+        "trades": 1
+       },
+       {
+        "from": 1726531200000,
+        "to": 1741132800000,
+        "params": {
+         "lookback": 180,
+         "period": 28
+        },
+        "netReturn": -0.4654589656928728,
+        "trades": 1
+       },
+       {
+        "from": 1741219200000,
+        "to": 1755907200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.3816952856736364,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": -0.055812544304277956,
+      "positiveFolds": 2,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "da286594-2075",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "ADA-USD",
+    "base": "ADA",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2075,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2075,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.43015636634400567,
+    "realizedVolAnnPct": 72.15739833839963,
+    "volPercentile": 0.3696969696969697
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=100,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 100,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 5 < 15"
+     ],
+     "train": {
+      "trades": 7,
+      "grossReturn": 0.21531999327578233,
+      "netReturn": 0.10960725617963951,
+      "totalCostUsd": 68.024182716866,
+      "maxDrawdown": 0.4584904874292468,
+      "profitFactor": 1.2417584648536792,
+      "winRate": 0.2857142857142857,
+      "exposure": 0.33617929562433296,
+      "buyHoldReturn": -0.7941874524204021,
+      "meanTradeNet": 0.06477960760603345,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1633392000000,
+       1714262400000
+      ],
+      "validation": [
+       1714348800000,
+       1754697600000
+      ],
+      "test": [
+       1754784000000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 5,
+      "grossReturn": 0.19950214744297967,
+      "netReturn": 0.12401340565298113,
+      "totalCostUsd": 79.60683957654612,
+      "maxDrawdown": 0.6712204595493432,
+      "profitFactor": 1.1561600649463406,
+      "winRate": 0.4,
+      "exposure": 0.32051282051282054,
+      "buyHoldReturn": 0.7568927789934352,
+      "meanTradeNet": 0.09643721687328237,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1694044800000,
+        "to": 1709078400000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 1.212150756549664,
+        "trades": 1
+       },
+       {
+        "from": 1709164800000,
+        "to": 1724198400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.40377659437209945,
+        "trades": 1
+       },
+       {
+        "from": 1724284800000,
+        "to": 1739318400000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": 0.7683564071711604,
+        "trades": 2
+       },
+       {
+        "from": 1739404800000,
+        "to": 1754697600000,
+        "params": {
+         "n": 100,
+         "period": 7
+        },
+        "netReturn": -0.36437394571885784,
+        "trades": 3
+       }
+      ],
+      "compoundedNet": 0.4825018102026881,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 2 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 3,
+      "grossReturn": -0.3437010623236296,
+      "netReturn": -0.36880437797082277,
+      "totalCostUsd": 27.84324757312629,
+      "maxDrawdown": 0.5518627286407232,
+      "profitFactor": 0.21333235866194222,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.3632523759239704,
+      "buyHoldReturn": -0.8170605141306083,
+      "meanTradeNet": -0.11612713656743119,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1631664000000,
+       1713398400000
+      ],
+      "validation": [
+       1713484800000,
+       1754265600000
+      ],
+      "test": [
+       1754352000000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": -0.09127352912304842,
+      "netReturn": -0.11459623678188557,
+      "totalCostUsd": 24.04035186026249,
+      "maxDrawdown": 0.4854376830458836,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.24735729386892177,
+      "buyHoldReturn": 0.6122143924834509,
+      "meanTradeNet": -0.05839958779365079,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1693008000000,
+        "to": 1708214400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.6065070083595063,
+        "trades": 1
+       },
+       {
+        "from": 1708300800000,
+        "to": 1723507200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.41719837143307603,
+        "trades": 1
+       },
+       {
+        "from": 1723593600000,
+        "to": 1738800000000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.13086327310489032,
+        "trades": 1
+       },
+       {
+        "from": 1738886400000,
+        "to": 1754265600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.11360015754826513,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": -0.27869132802111063,
+      "positiveFolds": 1,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "6fae5cd5-1879",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "AVAX-USD",
+    "base": "AVAX",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1879,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1879,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.36081652180846857,
+    "realizedVolAnnPct": 78.70916275744955,
+    "volPercentile": 0.37583892617449666
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 4,
+      "grossReturn": 0.8180945409187985,
+      "netReturn": 0.7259683663270149,
+      "totalCostUsd": 63.754749990827804,
+      "maxDrawdown": 0.5137865921530016,
+      "profitFactor": 2.6372510296567877,
+      "winRate": 0.25,
+      "exposure": 0.3253873659117998,
+      "buyHoldReturn": -0.7354260089686099,
+      "meanTradeNet": 0.2927848573826505,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1650326400000,
+       1722729600000
+      ],
+      "validation": [
+       1722816000000,
+       1758931200000
+      ],
+      "test": [
+       1759017600000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": -0.18366446640886658,
+      "netReturn": -0.21488915290053234,
+      "totalCostUsd": 30.75989969257273,
+      "maxDrawdown": 0.620426230654959,
+      "profitFactor": 0.2722918787330423,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.3412887828162291,
+      "buyHoldReturn": 0.471611253196931,
+      "meanTradeNet": -0.06686744898976711,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1704672000000,
+        "to": 1718150400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.2396135988150726,
+        "trades": 2
+       },
+       {
+        "from": 1718236800000,
+        "to": 1731715200000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.046916244651023176,
+        "trades": 1
+       },
+       {
+        "from": 1731801600000,
+        "to": 1745280000000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.24081760730201607,
+        "trades": 1
+       },
+       {
+        "from": 1745366400000,
+        "to": 1758931200000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.020306985027520374,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": -0.38337196365465653,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 2 < 15",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 3,
+      "grossReturn": 0.5800979121556478,
+      "netReturn": 0.5196594528420453,
+      "totalCostUsd": 41.28046731690483,
+      "maxDrawdown": 0.4612722478576138,
+      "profitFactor": 9.977592377620903,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.3627797408716137,
+      "buyHoldReturn": -0.714973317986816,
+      "meanTradeNet": 0.18476076214478773,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1648598400000,
+       1721865600000
+      ],
+      "validation": [
+       1721952000000,
+       1758499200000
+      ],
+      "test": [
+       1758585600000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": 0.4429972191415674,
+      "netReturn": 0.4059623099877978,
+      "totalCostUsd": 25.778351106033597,
+      "maxDrawdown": 0.546498703223416,
+      "profitFactor": 2.8333313479692883,
+      "winRate": 0.5,
+      "exposure": 0.3915094339622642,
+      "buyHoldReturn": 0.17995127044900805,
+      "meanTradeNet": 0.29220102059349046,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1703548800000,
+        "to": 1717200000000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.06906260803114916,
+        "trades": 1
+       },
+       {
+        "from": 1717286400000,
+        "to": 1730937600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0,
+        "trades": 0
+       },
+       {
+        "from": 1731024000000,
+        "to": 1744675200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.2214342270629185,
+        "trades": 1
+       },
+       {
+        "from": 1744761600000,
+        "to": 1758499200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.8058362682498998,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": 0.3088628860665419,
+      "positiveFolds": 1,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "dd2f0bba-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LINK-USD",
+    "base": "LINK",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.38461538461538486,
+    "realizedVolAnnPct": 67.09142604162703,
+    "volPercentile": 0.22285714285714286
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 9,
+      "grossReturn": 0.3147583357349395,
+      "netReturn": 0.1695876208195266,
+      "totalCostUsd": 72.7778847956456,
+      "maxDrawdown": 0.6850024448722052,
+      "profitFactor": 1.274478646442205,
+      "winRate": 0.1111111111111111,
+      "exposure": 0.34808853118712274,
+      "buyHoldReturn": -0.08216815060053784,
+      "meanTradeNet": 0.12951679796515148,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1623542400000,
+       1709337600000
+      ],
+      "validation": [
+       1709424000000,
+       1752278400000
+      ],
+      "test": [
+       1752364800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": -0.27805745736625664,
+      "netReturn": -0.30567162902869616,
+      "totalCostUsd": 27.488752558512033,
+      "maxDrawdown": 0.48246150164113777,
+      "profitFactor": 0.18862686330180078,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.3380281690140845,
+      "buyHoldReturn": -0.26351186705005114,
+      "meanTradeNet": -0.09155887145621959,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1687910400000,
+        "to": 1703894400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 1.0906247693328788,
+        "trades": 2
+       },
+       {
+        "from": 1703980800000,
+        "to": 1719964800000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.11496630118534978,
+        "trades": 2
+       },
+       {
+        "from": 1720051200000,
+        "to": 1736035200000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.7235948188625785,
+        "trades": 1
+       },
+       {
+        "from": 1736121600000,
+        "to": 1752278400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.26411845536672984,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": 1.3468157277144135,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 5,
+      "grossReturn": 0.42340997687375936,
+      "netReturn": 0.33382995533349913,
+      "totalCostUsd": 52.78948273364301,
+      "maxDrawdown": 0.6555913765981369,
+      "profitFactor": 1.7501584646865247,
+      "winRate": 0.2,
+      "exposure": 0.3695219123505976,
+      "buyHoldReturn": -0.2967639494813553,
+      "meanTradeNet": 0.17202732807991888,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1621814400000,
+       1708473600000
+      ],
+      "validation": [
+       1708560000000,
+       1751846400000
+      ],
+      "test": [
+       1751932800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": -0.3730062097347524,
+      "netReturn": -0.3969886087945236,
+      "totalCostUsd": 27.00518518906904,
+      "maxDrawdown": 0.567594365426696,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.34462151394422313,
+      "buyHoldReturn": -0.25793979563656444,
+      "meanTradeNet": -0.14265800898043066,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1686873600000,
+        "to": 1703030400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.46640670766195913,
+        "trades": 2
+       },
+       {
+        "from": 1703116800000,
+        "to": 1719273600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.12947115965624145,
+        "trades": 1
+       },
+       {
+        "from": 1719360000000,
+        "to": 1735516800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.42292481327511533,
+        "trades": 1
+       },
+       {
+        "from": 1735603200000,
+        "to": 1751846400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.4109725118010782,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": 0.06992939040114421,
+      "positiveFolds": 2,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "975956d0-2189",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "LTC-USD",
+    "base": "LTC",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 2189,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 2189,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.4818997837619201,
+    "realizedVolAnnPct": 59.202978285702876,
+    "volPercentile": 0.30857142857142855
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=100,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 100,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "best training config is not profitable after costs",
+      "validation trades 8 < 15",
+      "validation net return <= 0 after costs"
+     ],
+     "train": {
+      "trades": 14,
+      "grossReturn": -0.44726113131457346,
+      "netReturn": -0.5392373192069486,
+      "totalCostUsd": 106.53486012053173,
+      "maxDrawdown": 0.7345879519285831,
+      "profitFactor": 0.35942333802327747,
+      "winRate": 0.21428571428571427,
+      "exposure": 0.41851106639839036,
+      "buyHoldReturn": -0.4464390129809379,
+      "meanTradeNet": -0.041565986040585985,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1623542400000,
+       1709337600000
+      ],
+      "validation": [
+       1709424000000,
+       1752278400000
+      ],
+      "test": [
+       1752364800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 8,
+      "grossReturn": -0.048473000909518116,
+      "netReturn": -0.14246105328184377,
+      "totalCostUsd": 97.92756061148191,
+      "maxDrawdown": 0.5098952178857702,
+      "profitFactor": 0.7481549925154388,
+      "winRate": 0.25,
+      "exposure": 0.4567404426559356,
+      "buyHoldReturn": 0.022476862053768087,
+      "meanTradeNet": -0.004900265265576603,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1687910400000,
+        "to": 1703894400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.19959839672812496,
+        "trades": 2
+       },
+       {
+        "from": 1703980800000,
+        "to": 1719964800000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.011184404354690258,
+        "trades": 2
+       },
+       {
+        "from": 1720051200000,
+        "to": 1736035200000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.5121341742251524,
+        "trades": 1
+       },
+       {
+        "from": 1736121600000,
+        "to": 1752278400000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.15449181429673364,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": 0.03477626305470172,
+      "positiveFolds": 2,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 1
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 3 < 15",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 4,
+      "grossReturn": 0.10313526598369038,
+      "netReturn": 0.047237385084158534,
+      "totalCostUsd": 54.60744254508677,
+      "maxDrawdown": 0.5590604545815766,
+      "profitFactor": 2.557750822292104,
+      "winRate": 0.75,
+      "exposure": 0.3904382470119522,
+      "buyHoldReturn": -0.6283033114011434,
+      "meanTradeNet": 0.01209161063108316,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1621814400000,
+       1708473600000
+      ],
+      "validation": [
+       1708560000000,
+       1751846400000
+      ],
+      "test": [
+       1751932800000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 3,
+      "grossReturn": 0.13111263394634287,
+      "netReturn": 0.08784778030660623,
+      "totalCostUsd": 39.39248607819684,
+      "maxDrawdown": 0.362290299051787,
+      "profitFactor": 1.5364468386489536,
+      "winRate": 0.3333333333333333,
+      "exposure": 0.45617529880478086,
+      "buyHoldReturn": 0.2515997673065735,
+      "meanTradeNet": 0.043226983534542206,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1686873600000,
+        "to": 1703030400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.15581543592231173,
+        "trades": 2
+       },
+       {
+        "from": 1703116800000,
+        "to": 1719273600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.13803282230507197,
+        "trades": 2
+       },
+       {
+        "from": 1719360000000,
+        "to": 1735516800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.3996029664872287,
+        "trades": 1
+       },
+       {
+        "from": 1735603200000,
+        "to": 1751846400000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.24939502301098415,
+        "trades": 2
+       }
+      ],
+      "compoundedNet": -0.2355581941351138,
+      "positiveFolds": 1,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  },
+  {
+   "datasetId": "81a55b83-1985",
+   "market": {
+    "venue": "coinbase",
+    "symbol": "DOT-USD",
+    "base": "DOT",
+    "quote": "USD"
+   },
+   "intervalMs": 86400000,
+   "quality": {
+    "score": 100,
+    "bars": 1985,
+    "gaps": 0,
+    "missingBars": 0,
+    "stale": false,
+    "longestContiguous": 1985,
+    "reasons": []
+   },
+   "regime": {
+    "trend": "down",
+    "volatility": "normal",
+    "efficiency": 0.40125346159451963,
+    "realizedVolAnnPct": 80.21981351803743,
+    "volPercentile": 0.5189873417721519
+   },
+   "cost": {
+    "venue": "coinbase",
+    "takerFeeBps": 60,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1,
+    "provenance": "assumed lowest-tier taker fee; spread/slippage placeholder"
+   },
+   "candidates": [
+    {
+     "key": "weekly_trend(n=200,period=7)",
+     "spec": {
+      "family": "weekly_trend",
+      "params": {
+       "n": 200,
+       "period": 7
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 2 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 4,
+      "grossReturn": 0.058463252279466804,
+      "netReturn": 0.004828983992622771,
+      "totalCostUsd": 48.69620173867327,
+      "maxDrawdown": 0.4636572050451079,
+      "profitFactor": 1.0206760500243213,
+      "winRate": 0.25,
+      "exposure": 0.27466367713004486,
+      "buyHoldReturn": -0.7762047191758059,
+      "meanTradeNet": 0.013306860399418724,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1641168000000,
+       1718150400000
+      ],
+      "validation": [
+       1718236800000,
+       1756684800000
+      ],
+      "test": [
+       1756771200000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 2,
+      "grossReturn": -0.25706722519529557,
+      "netReturn": -0.276134793349459,
+      "totalCostUsd": 21.692135569685092,
+      "maxDrawdown": 0.6236451118717774,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.18834080717488788,
+      "buyHoldReturn": -0.41865953429830083,
+      "meanTradeNet": -0.1480373589118057,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1698969600000,
+        "to": 1713312000000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": 0.2900930362340792,
+        "trades": 1
+       },
+       {
+        "from": 1713398400000,
+        "to": 1727740800000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.051669308279514214,
+        "trades": 1
+       },
+       {
+        "from": 1727827200000,
+        "to": 1742169600000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.19247985163476478,
+        "trades": 1
+       },
+       {
+        "from": 1742256000000,
+        "to": 1756684800000,
+        "params": {
+         "n": 200,
+         "period": 7
+        },
+        "netReturn": -0.10359486618884683,
+        "trades": 1
+       }
+      ],
+      "compoundedNet": -0.11439810015801843,
+      "positiveFolds": 1,
+      "embargoBars": 201
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    },
+    {
+     "key": "monthly_momentum(lookback=90,period=28)",
+     "spec": {
+      "family": "monthly_momentum",
+      "params": {
+       "lookback": 90,
+       "period": 28
+      }
+     },
+     "status": "rejected",
+     "rejectionReasons": [
+      "validation trades 1 < 15",
+      "validation net return <= 0 after costs",
+      "walk-forward (re-estimated, embargoed) net return <= 0 after costs",
+      "walk-forward unstable: too few profitable folds"
+     ],
+     "train": {
+      "trades": 2,
+      "grossReturn": 0.11519747422516002,
+      "netReturn": 0.08657563310268568,
+      "totalCostUsd": 24.173576706130234,
+      "maxDrawdown": 0.4459634853335641,
+      "profitFactor": 1.4701572870428745,
+      "winRate": 0.5,
+      "exposure": 0.2793791574279379,
+      "buyHoldReturn": -0.7333206106870229,
+      "meanTradeNet": 0.0738387270790119,
+      "rejectedOrders": 0
+     },
+     "periods": {
+      "train": [
+       1639440000000,
+       1717286400000
+      ],
+      "validation": [
+       1717372800000,
+       1756252800000
+      ],
+      "test": [
+       1756339200000,
+       1795219200000
+      ]
+     },
+     "configsTriedOnTrain": 2,
+     "validation": {
+      "trades": 1,
+      "grossReturn": -0.3072625698324022,
+      "netReturn": -0.3162099981405777,
+      "totalCostUsd": 10.931737005553032,
+      "maxDrawdown": 0.6381665107577175,
+      "profitFactor": 0,
+      "winRate": 0,
+      "exposure": 0.24833702882483372,
+      "buyHoldReturn": -0.4527036667142246,
+      "meanTradeNet": -0.3162099981405777,
+      "rejectedOrders": 0
+     },
+     "walkForward": {
+      "folds": [
+       {
+        "from": 1697846400000,
+        "to": 1712361600000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0.6212291155037675,
+        "trades": 1
+       },
+       {
+        "from": 1712448000000,
+        "to": 1726963200000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.18054072006804156,
+        "trades": 1
+       },
+       {
+        "from": 1727049600000,
+        "to": 1741564800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": -0.33344260907453493,
+        "trades": 1
+       },
+       {
+        "from": 1741651200000,
+        "to": 1756252800000,
+        "params": {
+         "lookback": 90,
+         "period": 28
+        },
+        "netReturn": 0,
+        "trades": 0
+       }
+      ],
+      "compoundedNet": -0.11445768050605787,
+      "positiveFolds": 1,
+      "embargoBars": 181
+     },
+     "stress": {
+      "doubleCostTestNet": null,
+      "delayedTestNet": null,
+      "neighbourPassShare": 0
+     }
+    }
+   ],
+   "skipped": [
+    {
+     "family": "sma_cross",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "donchian_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "ts_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "trend_filtered_momentum",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "bollinger_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "rsi_reversion",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_compression_breakout",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "vol_filtered_trend",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    },
+    {
+     "family": "regime_switch",
+     "reason": "already evaluated on identical dataset (no new evidence)"
+    }
+   ]
+  }
+ ],
+ "pooled": [
+  {
+   "key": "POOLED:weekly_trend(n=200,period=7)",
+   "spec": {
+    "family": "weekly_trend",
+    "params": {
+     "n": 200,
+     "period": 7
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "pooled validation net return <= 0 after costs"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1706572800000,
+    "trainEnd": 1750896000000,
+    "valEnd": 1773014400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 35,
+    "netReturn": 0.24744669195432673,
+    "grossReturn": 0.30706554378950535,
+    "buyHoldReturn": 0.5495838051889036,
+    "maxDrawdownBound": 0.6872302618267782,
+    "profitFactor": 1.9495987117896854,
+    "winRate": 0.37142857142857144,
+    "totalCostUsd": 46.596600863570444,
+    "perMarketNet": {
+     "BTC-USD": 0.549008816577806,
+     "ETH-USD": -0.2897581585029543,
+     "SOL-USD": 0.5946458095408016,
+     "XRP-USD": 1.335380430530221,
+     "DOGE-USD": 1.204326391723793,
+     "ADA-USD": -0.4009923129230154,
+     "AVAX-USD": -0.31958276038863953,
+     "LINK-USD": -0.09476550194439848,
+     "LTC-USD": 0.1482572143222458,
+     "DOT-USD": -0.2520530093925928
+    }
+   },
+   "configsTriedOnTrain": 2,
+   "validation": {
+    "trades": 16,
+    "netReturn": -0.12550490357819113,
+    "grossReturn": -0.10815753014612654,
+    "buyHoldReturn": -0.41204009625223004,
+    "maxDrawdownBound": 0.48645469955866716,
+    "profitFactor": 0.20758798244311388,
+    "winRate": 0.125,
+    "totalCostUsd": 19.30998343453139,
+    "perMarketNet": {
+     "BTC-USD": -0.09122885297349514,
+     "ETH-USD": 0.31069368138034714,
+     "SOL-USD": -0.07746773369334436,
+     "XRP-USD": -0.009878485399442472,
+     "DOGE-USD": -0.3343536891443266,
+     "ADA-USD": -0.1369306463147082,
+     "AVAX-USD": -0.22226860682469474,
+     "LINK-USD": -0.16395204584564516,
+     "LTC-USD": -0.15853117774068992,
+     "DOT-USD": -0.37113147922591205
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 1
+   }
+  },
+  {
+   "key": "POOLED:monthly_momentum(lookback=90,period=28)",
+   "spec": {
+    "family": "monthly_momentum",
+    "params": {
+     "lookback": 90,
+     "period": 28
+    }
+   },
+   "status": "rejected",
+   "rejectionReasons": [
+    "validation trades 10 < 15"
+   ],
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "cutoffs": {
+    "trainStart": 1704844800000,
+    "trainEnd": 1750032000000,
+    "valEnd": 1772582400000,
+    "testEnd": 1795305600000
+   },
+   "train": {
+    "trades": 29,
+    "netReturn": 0.16010302145809843,
+    "grossReturn": 0.20523300496649685,
+    "buyHoldReturn": 0.46733633585965145,
+    "maxDrawdownBound": 0.6381665107577176,
+    "profitFactor": 1.5909602458613292,
+    "winRate": 0.3103448275862069,
+    "totalCostUsd": 40.72440736249824,
+    "perMarketNet": {
+     "BTC-USD": 0.7604030818804075,
+     "ETH-USD": -0.010981724273302684,
+     "SOL-USD": -0.08461177156289212,
+     "XRP-USD": 0.17253163598820964,
+     "DOGE-USD": 1.7065775679911286,
+     "ADA-USD": -0.23426580244957673,
+     "AVAX-USD": -0.2752040098657409,
+     "LINK-USD": -0.1872670944100413,
+     "LTC-USD": 0.1120773195735234,
+     "DOT-USD": -0.35822898829073113
+    }
+   },
+   "configsTriedOnTrain": 2,
+   "validation": {
+    "trades": 10,
+    "netReturn": 0.029085758364093932,
+    "grossReturn": 0.04255139989276338,
+    "buyHoldReturn": -0.4298561767341436,
+    "maxDrawdownBound": 0.46317130681818186,
+    "profitFactor": 1.5857721880685494,
+    "winRate": 0.7,
+    "totalCostUsd": 13.190843615800162,
+    "perMarketNet": {
+     "BTC-USD": -0.02469184606658703,
+     "ETH-USD": 0.1606038485315846,
+     "SOL-USD": 0.16720166962006577,
+     "XRP-USD": 0.044874823650301376,
+     "DOGE-USD": 0.11084230277681062,
+     "ADA-USD": -0.19318527566364263,
+     "AVAX-USD": 0.01318601245171358,
+     "LINK-USD": 0.25241736236586076,
+     "LTC-USD": 0.03826859615794054,
+     "DOT-USD": -0.2786599101831083
+    }
+   },
+   "stress": {
+    "doubleCostTestNet": null,
+    "delayedTestNet": null,
+    "neighbourPassShare": 0
+   }
+  }
+ ],
+ "totals": {
+  "markets": 10,
+  "marketsEvaluated": 10,
+  "configsTried": 44,
+  "oosCandidates": 22,
+  "bonferroniN": 199,
+  "qualified": 0,
+  "rejected": 22
+ },
+ "feasibility": [
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.5,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 20,
+   "positionNotionalUsd": 5,
+   "meetsMinimum": false,
+   "roundTripCostPct": 121.09999999999998,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: position below venue minimum or fixed costs"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.26,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 50,
+   "positionNotionalUsd": 12.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 49.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.18,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 100,
+   "positionNotionalUsd": 25,
+   "meetsMinimum": true,
+   "roundTripCostPct": 25.1,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1320000000000001,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 250,
+   "positionNotionalUsd": 62.5,
+   "meetsMinimum": true,
+   "roundTripCostPct": 10.7,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1159999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 500,
+   "positionNotionalUsd": 125,
+   "meetsMinimum": true,
+   "roundTripCostPct": 5.8999999999999995,
+   "maxConcurrentPositions": 3,
+   "verdict": "not_tradable",
+   "note": "dex_ethereum_l1: round-trip cost >= 5% of position"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.3,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "coinbase_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 0.8999999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "kraken_taker: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 1.1079999999999999,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_solana: policy sizing fits venue minimum"
+  },
+  {
+   "capitalUsd": 1000,
+   "positionNotionalUsd": 250,
+   "meetsMinimum": true,
+   "roundTripCostPct": 3.5000000000000004,
+   "maxConcurrentPositions": 3,
+   "verdict": "tradable",
+   "note": "dex_ethereum_l1: policy sizing fits venue minimum"
+  }
+ ]
+}

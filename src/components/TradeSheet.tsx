@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Money, Note, Segmented, Sheet } from './ui';
 import { usePaper } from '../paper/PaperProvider';
+import { useLang } from '../i18n';
+import { reasonFr } from '../paper/reasonFr';
 import { previewBuy, previewSell, type PaperOrder } from '../paper/engine';
 import { fmtAge } from '../services/marketData';
 
@@ -12,7 +14,10 @@ export default function TradeSheet({
 }: {
   open: boolean; onClose: () => void; symbol: string; product: string; name: string; price: number | null; priceTs: number | null; initialSide?: 'buy' | 'sell';
 }) {
-  const { account, value, place } = usePaper();
+  const { account, value, place, pause } = usePaper();
+  const lang = useLang();
+  const t = (en: string, fr: string) => (lang === 'fr' ? fr : en);
+  const why = (r?: string) => (lang === 'fr' ? reasonFr(r) : r ?? '');
   const [side, setSide] = useState<'buy' | 'sell'>(initialSide);
   const [amount, setAmount] = useState('');
   const [busy, setBusy] = useState(false);
@@ -55,48 +60,58 @@ export default function TradeSheet({
   };
 
   return (
-    <Sheet open={open} onClose={onClose} title={`${side === 'buy' ? 'Buy' : 'Sell'} ${name}`}>
+    <Sheet open={open} onClose={onClose} title={`${side === 'buy' ? t('Buy', 'Acheter') : t('Sell', 'Vendre')} ${name}`}>
       <div className="flex items-center gap-2">
-        <span className="rounded-md border border-dashed border-paper px-2 py-0.5 text-[11px] font-bold tracking-wider text-paper">PAPER ORDER</span>
-        <span className="text-xs text-slate-400">Simulated. No real order is sent.</span>
+        <span className="eyebrow text-paper">{t('Paper order', 'Ordre fictif')}</span>
+        <span className="text-xs text-slate-400">{t('Simulated. No real order is sent.', 'Simulé. Aucun ordre réel n’est envoyé.')}</span>
       </div>
 
       {!account ? (
         <div className="space-y-3">
-          <p className="text-sm text-slate-300">Open a paper account first to practise trading with simulated money.</p>
-          <Link to="/" onClick={onClose} className="flex min-h-[48px] items-center justify-center rounded-xl bg-helix-400 text-sm font-semibold text-ink-900">
-            Open paper account on Home
+          <p className="text-sm text-slate-300">{t('Open a paper account first to practise trading with simulated money.', 'Ouvrez d’abord un compte fictif pour vous exercer avec de l’argent simulé.')}</p>
+          <Link to="/" onClick={onClose} className="flex min-h-[48px] items-center justify-center rounded-full bg-white text-sm font-semibold text-ink-900">
+            {t('Open paper account on Home', 'Ouvrir un compte fictif à l’accueil')}
           </Link>
         </div>
       ) : result?.status === 'filled' ? (
         <div className="space-y-3" role="status">
-          <p className="text-base font-semibold text-up">✓ Paper {result.side === 'buy' ? 'buy' : 'sell'} filled</p>
+          <p className={`text-base font-semibold ${result.partial ? 'text-paper' : 'text-up'}`}>
+            ✓ {result.side === 'buy' ? t('Paper buy', 'Achat fictif') : t('Paper sell', 'Vente fictive')} {result.partial ? t('partly filled', 'exécuté en partie') : t('filled', 'exécuté')}
+          </p>
+          {result.partial && <p className="text-sm text-slate-300">{why(result.reason)}. {t('The rest was not filled and no money was taken for it.', 'Le reste n’a pas été exécuté et aucun argent n’a été pris pour cette partie.')}</p>}
           <dl className="grid grid-cols-2 gap-y-1 text-sm">
-            <dt className="text-slate-400">Amount</dt>
+            <dt className="text-slate-400">{t('Amount', 'Quantité')}</dt>
             <dd className="text-right font-mono text-white">{result.qty.toFixed(8)} {symbol}</dd>
-            <dt className="text-slate-400">Fill price</dt>
+            <dt className="text-slate-400">{t('Fill price', 'Prix d’exécution')}</dt>
             <dd className="text-right"><Money v={result.fillPx} className="text-white" /></dd>
-            <dt className="text-slate-400">Fee</dt>
+            <dt className="text-slate-400">{t('Fee', 'Frais')}</dt>
             <dd className="text-right"><Money v={result.feeUsd} className="text-white" /></dd>
-            <dt className="text-slate-400">{result.side === 'buy' ? 'Cash spent' : 'Cash received'}</dt>
+            <dt className="text-slate-400">{result.side === 'buy' ? t('Cash spent', 'Montant dépensé') : t('Cash received', 'Montant reçu')}</dt>
             <dd className="text-right"><Money v={result.cashUsd} className="text-white" /></dd>
+            <dt className="text-slate-400">{t('Spread & price impact', 'Écart et impact sur le prix')}</dt>
+            <dd className="text-right text-white">{result.slippageUsd > 0.005 ? <Money v={result.slippageUsd} /> : result.slippageUsd < -0.005 ? <>{t('Better than last price', 'Meilleur que le dernier prix')}</> : <>{t('Under 1¢', 'Moins de 1 ¢')}</>}</dd>
             {result.realizedPnl !== undefined && (
               <>
-                <dt className="text-slate-400">Realized P&amp;L</dt>
+                <dt className="text-slate-400">{t('Realized P&L', 'Gain/perte réalisé')}</dt>
                 <dd className={`text-right font-mono ${result.realizedPnl >= 0 ? 'text-up' : 'text-down'}`}>
                   {result.realizedPnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(result.realizedPnl).toFixed(2)}
                 </dd>
               </>
             )}
           </dl>
-          <Button kind="primary" className="w-full" onClick={onClose}>Done</Button>
+          <p className="text-xs text-slate-500">
+            {result.fillModel === 'book'
+              ? t('Simulated against the live Coinbase order book at the time of your order. No real order was sent.', 'Simulé contre le carnet d’ordres Coinbase en direct au moment de votre ordre. Aucun ordre réel n’a été envoyé.')
+              : t('Order book unavailable, so the standard cost assumption was used (0.05% spread and slippage). No real order was sent.', 'Carnet d’ordres indisponible : l’hypothèse de coût standard a été utilisée (0,05 % d’écart et de glissement). Aucun ordre réel n’a été envoyé.')}
+          </p>
+          <Button kind="primary" className="w-full" onClick={onClose}>{t('Done', 'Terminé')}</Button>
         </div>
       ) : (
         <div className="space-y-4">
-          <Segmented label="Order side" value={side} onChange={(v) => { setSide(v); setAmount(''); setResult(null); }} options={[{ value: 'buy', label: 'Buy' }, { value: 'sell', label: 'Sell' }]} />
+          <Segmented label={t('Order side', 'Sens de l’ordre')} value={side} onChange={(v) => { setSide(v); setAmount(''); setResult(null); }} options={[{ value: 'buy', label: t('Buy', 'Achat') }, { value: 'sell', label: t('Sell', 'Vente') }]} />
           <div className="space-y-1">
             <label htmlFor="trade-amount" className="text-sm text-slate-300">
-              {side === 'buy' ? 'Amount in US dollars' : `Amount in ${symbol}`}
+              {side === 'buy' ? t('Amount in US dollars', 'Montant en dollars US') : t(`Amount in ${symbol}`, `Quantité en ${symbol}`)}
             </label>
             <input
               id="trade-amount"
@@ -114,40 +129,45 @@ export default function TradeSheet({
                   onClick={() => setAmount(side === 'buy' ? ((account.cash * f) | 0).toString() : ((held?.qty ?? 0) * f).toFixed(8))}
                   className="min-h-[40px] rounded-full border border-ink-600 px-3 text-xs text-slate-300"
                 >
-                  {f === 1 ? 'All' : `${f * 100}%`}
+                  {f === 1 ? t('All', 'Tout') : `${f * 100}%`}
                 </button>
               ))}
             </div>
             <Note>
-              {side === 'buy' ? <>Available paper cash: <Money v={account.cash} className="text-slate-300" /></> : <>You hold {(held?.qty ?? 0).toFixed(8)} {symbol}</>}
+              {side === 'buy' ? <>{t('Available paper cash', 'Liquidités fictives disponibles')} : <Money v={account.cash} className="text-slate-300" /></> : <>{t('You hold', 'Vous détenez')} {(held?.qty ?? 0).toFixed(8)} {symbol}</>}
             </Note>
           </div>
 
           {preview && num > 0 && (
             <dl className="grid grid-cols-2 gap-y-1 rounded-xl bg-ink-900 p-3 text-sm">
-              <dt className="text-slate-400">Live price</dt>
+              <dt className="text-slate-400">{t('Live price', 'Prix en direct')}</dt>
               <dd className="text-right"><Money v={price} className="text-white" /></dd>
-              <dt className="text-slate-400">{side === 'buy' ? 'You get about' : 'You receive about'}</dt>
+              <dt className="text-slate-400">{side === 'buy' ? t('You get about', 'Vous obtenez environ') : t('You receive about', 'Vous recevez environ')}</dt>
               <dd className="text-right font-mono text-white">
                 {side === 'buy' ? `${(preview as ReturnType<typeof previewBuy>).qty.toFixed(8)} ${symbol}` : <Money v={(preview as ReturnType<typeof previewSell>).net} />}
               </dd>
-              <dt className="text-slate-400">Fee (0.60%)</dt>
+              <dt className="text-slate-400">{t('Fee (0.60%)', 'Frais (0,60 %)')}</dt>
               <dd className="text-right"><Money v={preview.fee} className="text-white" /></dd>
-              <dt className="text-slate-400">Spread + slippage</dt>
-              <dd className="text-right text-white">≈ 0.05%</dd>
+              <dt className="text-slate-400">{t('Spread & price impact', 'Écart et impact sur le prix')}</dt>
+              <dd className="text-right text-white">{t('From the live order book', 'Selon le carnet d’ordres en direct')}</dd>
             </dl>
           )}
 
           {result?.status === 'rejected' && (
-            <p role="alert" className="rounded-xl bg-down/15 p-3 text-sm text-[#F7A3A3]">{result.reason}</p>
+            <p role="alert" className="border-l-2 border-down py-1 pl-3 text-sm text-slate-200">{why(result.reason)}</p>
           )}
-          {stale && <Note tone="warn">Waiting for a live price{priceTs ? ` (last ${fmtAge(priceTs)})` : ''}…</Note>}
-          {value && account.halted && <Note tone="warn">Paper trading is paused. Resume it in Bot → Risk.</Note>}
+          {stale && <Note tone="warn">{t('Waiting for a live price', 'En attente d’un prix en direct')}{priceTs ? ` (${t('last', 'dernier')} ${fmtAge(priceTs)})` : ''}…</Note>}
+          {value && account.halted && (
+            <div className="flex items-center justify-between gap-3">
+              <Note tone="warn">{t('Paper trading is paused.', 'Le trading fictif est en pause.')}</Note>
+              <button type="button" onClick={() => void pause(false)} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm font-medium text-white">{t('Resume', 'Reprendre')}</button>
+            </div>
+          )}
 
           <Button kind="primary" className="w-full" onClick={submit} disabled={busy || !num || stale}>
-            {busy ? 'Placing…' : `Place paper ${side}`}
+            {busy ? t('Placing…', 'Envoi…') : side === 'buy' ? t('Place paper buy', 'Passer l’achat fictif') : t('Place paper sell', 'Passer la vente fictive')}
           </Button>
-          <Note>Fills at the live Coinbase price plus a 0.05% spread/slippage estimate and a 0.60% fee. Limits: $1 minimum; one coin up to 50% of your paper account.</Note>
+          <Note>{t('Fills against the live Coinbase order book (never more than 2% from the price; anything beyond that stays unfilled) plus a 0.60% fee. If the book cannot be loaded, a 0.05% spread/slippage estimate is used. Limits: $1 minimum; one coin up to 50% of your paper account.', 'Exécution contre le carnet d’ordres Coinbase en direct (jamais à plus de 2 % du prix; au-delà, l’ordre reste non exécuté) plus des frais de 0,60 %. Si le carnet ne peut pas être chargé, une estimation de 0,05 % d’écart et de glissement est utilisée. Limites : minimum 1 $; une crypto peut représenter au plus 50 % de votre compte fictif.')}</Note>
         </div>
       )}
     </Sheet>

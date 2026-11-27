@@ -1,7 +1,8 @@
+import { researchRunAt, plainSpec, plainAccountLabel, plural } from '../bot/insights';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import raw from '../bot/data/latest.json';
-import type { BotSummary, CandidateRow, MarketRow } from '../bot/summary';
+import { bot, useBotData } from '../bot/botData';
+import type { CandidateRow, MarketRow } from '../bot/summary';
 import { Card, Pill, Stat } from '../components/bot/ui';
 import { PageHeader } from '../components/ui';
 import { STATUS_LABEL, date, dateTime, ivLabel, pct, usd } from '../components/bot/format';
@@ -12,7 +13,6 @@ import { crossVenueDiscrepancies, Discrepancy } from '../bot/watchbot';
 import { fetchQuote, KRAKEN_SYMBOLS, Quote } from '../bot/sources';
 import type { MarketRef } from '../bot/types';
 
-const S = raw as unknown as BotSummary;
 
 const TABS = [
   ['overview', 'Overview'],
@@ -26,6 +26,7 @@ const TABS = [
 type Tab = (typeof TABS)[number][0];
 
 export default function ResearchLabPage() {
+  useBotData();
   const [params, setParams] = useSearchParams();
   const tab = (params.get('tab') as Tab) || 'overview';
   return (
@@ -34,12 +35,12 @@ export default function ResearchLabPage() {
       <header className="space-y-1">
         <PageHeader back title="Research Lab" subtitle="Advanced · every test, dataset and run behind the bot" />
         <p className={`text-sm ${isStale() ? 'text-amber-400' : 'text-slate-400'}`}>
-          Research data from {dateTime(S.generatedAt)} · {ageLabel()}
-          {isStale() && ' · not refreshed since'}
+          Last research run {dateTime(researchRunAt(bot()))} · {ageLabel()} · prices refreshed {dateTime(bot().generatedAt)}
+          {isStale() && ' · no new research for over a week'}
         </p>
       </header>
       <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label="Trading bot sections">
-        <div className="flex w-max gap-1 rounded-xl border border-white/10 bg-ink-800/60 p-1">
+        <div className="flex w-max gap-1 rounded-xl border border-ink-600 bg-ink-800/60 p-1">
           {TABS.map(([id, label]) => (
             <button
               key={id}
@@ -63,8 +64,8 @@ export default function ResearchLabPage() {
   );
 }
 
-const ageMs = () => Date.now() - new Date(S.generatedAt).getTime();
-const isStale = () => ageMs() > 24 * 3600_000;
+const ageMs = () => Date.now() - researchRunAt(bot());
+const isStale = () => ageMs() > 7 * 24 * 3600_000; // research runs are manual; older than a week is flagged
 /** Human age of the bundled research snapshot, e.g. "3 h old", "2 days old". */
 function ageLabel() {
   const h = Math.max(0, Math.floor(ageMs() / 3600_000));
@@ -75,7 +76,7 @@ function ageLabel() {
 
 function ModeBanner() {
   return (
-    <p className="rounded-lg border border-dashed border-amber-500/50 px-3 py-2 text-xs text-amber-200">
+    <p className="border-l-2 border-paper py-1 pl-3 text-xs text-slate-300">
       Simulated money only. Simulated results are not earnings. Real-money trading is disabled.
     </p>
   );
@@ -83,7 +84,7 @@ function ModeBanner() {
 
 // ------------------------------------------------------------------ helpers over the summary
 function allCandidates(): (CandidateRow & { scope: string; intervalMs: number })[] {
-  return S.runs.flatMap((r) => {
+  return bot().runs.flatMap((r) => {
     const iv = r.markets[0]?.intervalMs ?? 0;
     return [
       ...r.markets.flatMap((m) => m.candidates.map((c) => ({ ...c, scope: m.symbol, intervalMs: m.intervalMs }))),
@@ -92,7 +93,7 @@ function allCandidates(): (CandidateRow & { scope: string; intervalMs: number })
   });
 }
 function allMarkets(): MarketRow[] {
-  return S.runs.flatMap((r) => r.markets);
+  return bot().runs.flatMap((r) => r.markets);
 }
 function topReasons(n = 4) {
   const counts = new Map<string, number>();
@@ -109,8 +110,8 @@ function Overview() {
   const cands = allCandidates();
   const qualified = cands.filter((c) => c.status === 'qualified_paper_strategy');
   const reachedTest = cands.filter((c) => c.test).length;
-  const paper = S.paper.filter((a) => a.kind === 'qualified');
-  const diagnostic = S.paper.filter((a) => a.kind === 'diagnostic');
+  const paper = bot().paper.filter((a) => a.kind === 'qualified');
+  const diagnostic = bot().paper.filter((a) => a.kind === 'diagnostic');
   const initial = paper.reduce((s, a) => s + a.initialCash, 0);
   const equity = paper.reduce((s, a) => s + a.equity, 0);
   const realized = paper.reduce((s, a) => s + a.realizedPnl, 0);
@@ -167,9 +168,9 @@ function Overview() {
         <Card title="Market conditions (daily, last 48 bars)">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {regimes.map((m) => (
-              <div key={m.symbol} className="rounded-lg border border-white/10 px-3 py-2 text-xs">
+              <div key={m.symbol} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
                 <div className="font-semibold text-slate-200">{m.base}</div>
-                <div className={m.regime!.trend === 'up' ? 'text-mint-400' : m.regime!.trend === 'down' ? 'text-rose-400' : 'text-slate-400'}>
+                <div className={m.regime!.trend === 'up' ? 'text-up' : m.regime!.trend === 'down' ? 'text-rose-400' : 'text-slate-400'}>
                   {m.regime!.trend === 'range' ? 'Range' : m.regime!.trend === 'up' ? 'Uptrend' : 'Downtrend'}
                 </div>
                 <div className="text-slate-500">vol {m.regime!.volatility} · {m.regime!.realizedVolAnnPct.toFixed(0)}% ann.</div>
@@ -205,7 +206,7 @@ function Funnel() {
             <span className="text-slate-300">{label}</span>
             <span className="font-mono text-slate-400">{n}</span>
           </div>
-          <div className="h-2 rounded-full bg-white/5">
+          <div className="h-2 rounded-full bg-ink-800">
             <div className="h-2 rounded-full bg-mint-500/70" style={{ width: `${Math.max(1, (n / max) * 100)}%` }} />
           </div>
         </div>
@@ -242,12 +243,13 @@ function Strategies() {
         {rows.slice(0, 200).map((c) => {
           const id = `${c.scope}|${c.intervalMs}|${c.key}`;
           return (
-            <div key={id} className="rounded-xl border border-white/10 bg-ink-800/60">
-              <button type="button" onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
+            <div key={id} className="rounded-xl border border-ink-600 bg-ink-800/60">
+              <button type="button" aria-expanded={open === id} onClick={() => setOpen(open === id ? null : id)} className="flex w-full items-center gap-3 px-4 py-3 text-left">
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm text-slate-100">{c.key.replace('POOLED:', '')}</div>
+                  <div className="text-sm text-slate-100">{plainSpec(c.key).name}</div>
+                  <div className="font-code text-[11px] text-slate-500">{c.key.replace('POOLED:', '')}</div>
                   <div className="text-xs text-slate-500">
-                    {c.scope} · {ivLabel(c.intervalMs)} · validation {pct(c.validation?.netReturn)} net ({c.validation?.trades ?? 0} trades)
+                    {c.scope} · {ivLabel(c.intervalMs)} · validation {pct(c.validation?.netReturn)} net ({plural(c.validation?.trades ?? 0, 'trade')})
                     {c.test && ` · test ${pct(c.test.netReturn)}`}
                   </div>
                 </div>
@@ -264,7 +266,7 @@ function Strategies() {
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" onClick={onClick} className={`rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-mint-300' : 'border-white/10 text-slate-400'}`}>
+    <button type="button" onClick={onClick} className={`min-h-[44px] rounded-full border px-3 py-1 ${on ? 'border-mint-500/60 bg-mint-500/10 text-helix-400' : 'border-ink-600 text-slate-400'}`}>
       {children}
     </button>
   );
@@ -283,9 +285,9 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
   ] as const;
   const dd = (w?: CandidateRow['train']) => (w ? (w.maxDrawdown ?? w.maxDrawdownBound) : undefined);
   return (
-    <div className="space-y-3 border-t border-white/10 px-4 py-3 text-xs">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] text-left">
+    <div className="space-y-3 border-t border-ink-600 px-4 py-3 text-xs">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+        <table className="stack-sm w-full min-w-[520px] text-left">
           <thead className="text-slate-500">
             <tr>
               <th className="py-1 font-normal">Metric</th>
@@ -313,7 +315,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
               <tr key={label} className="border-t border-white/5">
                 <td className="py-1 font-display text-slate-500">{label}</td>
                 {cols.map(([l, w]) => (
-                  <td key={l} className="py-1">{w ? f(w) : <span className="text-slate-600">not opened</span>}</td>
+                  <td key={l} data-label={l} className="py-1">{w ? f(w) : <span className="text-slate-600">not opened</span>}</td>
                 ))}
               </tr>
             ))}
@@ -326,9 +328,15 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
           {(c.stress.neighbourPassShare * 100).toFixed(0)}%
         </div>
       )}
+      {c.walkForward && c.walkForward.folds > 0 && (
+        <div className="text-slate-400">
+          Walk-forward (re-selected each fold, {c.walkForward.embargoBars}-bar embargo, before the test window): {pct(c.walkForward.compoundedNet)} ·{' '}
+          {c.walkForward.positiveFolds}/{c.walkForward.folds} folds profitable
+        </div>
+      )}
       {c.ci && (
         <div className="text-slate-400">
-          Mean OOS trade {pct(c.ci.mean, 2)}; {((1 - c.ci.alpha) * 100).toFixed(2)}% CI [{pct(c.ci.lo, 2)}, {pct(c.ci.hi, 2)}] over {c.ci.n} trades
+          Mean OOS trade {pct(c.ci.mean, 2)}; {((1 - c.ci.alpha) * 100).toFixed(2)}% CI [{pct(c.ci.lo, 2)}, {pct(c.ci.hi, 2)}] over {plural(c.ci.n, 'trade')}
           {c.ci.blocks ? ` (${c.ci.blocks} monthly blocks)` : ''}
         </div>
       )}
@@ -339,7 +347,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
             {c.rejectionReasons.map((r) => <li key={r}>{r}</li>)}
           </ul>
         ) : (
-          <div className="text-mint-300">Passed all gates → forward paper trading. Not approved for real money.</div>
+          <div className="text-helix-400">Passed all gates → forward paper trading. Not approved for real money.</div>
         )}
       </div>
     </div>
@@ -352,24 +360,24 @@ function Lab() {
     <div className="space-y-5">
       <Card title="Research runs">
         <div className="space-y-3">
-          {S.runs.map((r) => (
-            <div key={r.runId} className="rounded-lg border border-white/10 p-3 text-xs">
-              <div className="font-mono text-slate-200">{r.runId}</div>
+          {bot().runs.map((r) => (
+            <div key={r.runId} className="rounded-lg border border-ink-600 p-3 text-xs">
+              <div className="font-code text-slate-200">{r.runId}</div>
               <div className="mt-1 text-slate-400">
                 {r.totals.markets} markets · {r.totals.oosCandidates} new candidates · {r.totals.configsTried} parameter sets on training ·{' '}
-                <span className={r.totals.qualified ? 'text-mint-400' : 'text-amber-400'}>{r.totals.qualified} qualified</span> · gates {r.gates}
+                <span className={r.totals.qualified ? 'text-up' : 'text-amber-400'}>{r.totals.qualified} qualified</span> · gates {r.gates}
               </div>
             </div>
           ))}
         </div>
         <details className="mt-3 text-xs text-slate-400">
-          <summary className="cursor-pointer text-slate-300">Assumptions</summary>
-          <ul className="mt-2 list-inside list-disc space-y-1">{S.runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
+          <summary className="flex min-h-[44px] cursor-pointer items-center text-slate-300">Assumptions</summary>
+          <ul className="mt-2 list-inside list-disc space-y-1">{bot().runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
         </details>
       </Card>
       <Card title="Datasets">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-xs">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+          <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">TF</th><th className="font-normal">Bars</th><th className="font-normal">Quality</th><th className="font-normal">Dataset id</th><th className="font-normal">Notes</th></tr>
             </thead>
@@ -377,11 +385,11 @@ function Lab() {
               {allMarkets().map((m) => (
                 <tr key={m.symbol + m.intervalMs} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td>{ivLabel(m.intervalMs)}</td>
-                  <td className="font-mono">{m.quality.bars}</td>
-                  <td className={`font-mono ${m.quality.score >= 90 ? 'text-mint-400' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
-                  <td className="font-mono text-slate-500">{m.datasetId}</td>
-                  <td className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
+                  <td data-label="Timeframe">{ivLabel(m.intervalMs)}</td>
+                  <td data-label="Bars" className="font-mono">{m.quality.bars}</td>
+                  <td data-label="Quality" className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
+                  <td data-label="Dataset id" className="font-code text-slate-500">{m.datasetId}</td>
+                  <td data-label="Notes" className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
                 </tr>
               ))}
             </tbody>
@@ -389,11 +397,11 @@ function Lab() {
         </div>
         <p className="mt-3 text-xs text-slate-500">
           Source: Coinbase Exchange public candles (no key). Gaps are never filled; only the trailing contiguous run is tested. Datasets are
-          stored in <span className="font-mono">research/data/</span> with content hashes for reproducibility.
+          stored in <span className="font-code">research/data/</span> with content hashes for reproducibility.
         </p>
       </Card>
       <Card title="Run research yourself">
-        <pre className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
+        <pre tabIndex={0} aria-label="Research commands" className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
 npm run bot:research -- --watch-only  # data, quotes, paper only (no re-testing)
 npm run bot:research -- --offline     # stored data only`}</pre>
       </Card>
@@ -407,7 +415,7 @@ function Watchbot() {
   const [live, setLive] = useState<Discrepancy[] | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [err, setErr] = useState('');
-  const shown = live ?? S.watchbot;
+  const shown = live ?? bot().watchbot;
   const costs = useMemo(
     () => ({ coinbase: COST_PRESETS.coinbase_taker, kraken: COST_PRESETS.kraken_taker, gemini: { ...COST_PRESETS.coinbase_taker, venue: 'gemini' as const, takerFeeBps: 40 } }),
     []
@@ -449,7 +457,7 @@ function Watchbot() {
       <Card
         title="Cross-venue price check"
         right={
-          <button type="button" onClick={refresh} disabled={state === 'loading'} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-slate-200">
+          <button type="button" onClick={refresh} disabled={state === 'loading'} className="rounded-lg border border-ink-600 px-3 py-1.5 text-xs text-slate-200">
             {state === 'loading' ? 'Checking…' : 'Check live quotes'}
           </button>
         }
@@ -474,13 +482,13 @@ function Watchbot() {
                 </span>
               </div>
             ))}
-            <div className="pt-1 text-[11px] text-slate-500">{live ? `Live check ${dateTime(Date.now())}` : `Stored snapshot ${dateTime(S.generatedAt)}`}</div>
+            <div className="pt-1 text-[11px] text-slate-500">{live ? `Live check ${dateTime(Date.now())}` : `Stored snapshot ${dateTime(bot().generatedAt)}`}</div>
           </div>
         )}
       </Card>
       <Card title="Market coverage (hourly)">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-left text-xs">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+          <table className="stack-sm w-full min-w-[520px] text-left text-xs">
             <thead className="text-slate-500">
               <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Data quality</th><th className="font-normal">Regime</th><th className="font-normal">Volatility</th><th className="font-normal">Min order</th></tr>
             </thead>
@@ -488,10 +496,10 @@ function Watchbot() {
               {markets.map((m) => (
                 <tr key={m.symbol} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td className="font-mono">{m.quality.score}/100</td>
-                  <td>{m.regime ? m.regime.trend : '—'}</td>
-                  <td>{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
-                  <td className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
+                  <td data-label="Data quality" className="font-mono">{m.quality.score}/100</td>
+                  <td data-label="Regime">{m.regime ? m.regime.trend : '—'}</td>
+                  <td data-label="Volatility">{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
+                  <td data-label="Min order" className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
                 </tr>
               ))}
             </tbody>
@@ -507,7 +515,7 @@ function Watchbot() {
 
 // ------------------------------------------------------------------ Risk Center
 function Risk() {
-  const feas = S.runs[0]?.feasibility ?? [];
+  const feas = bot().runs[0]?.feasibility ?? [];
   const caps = [...new Set(feas.map((f) => f.capitalUsd))];
   const venues = [...new Set(feas.map((f) => f.note.split(':')[0]))];
   const p = DEFAULT_RISK;
@@ -516,7 +524,7 @@ function Risk() {
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Execution mode" value={EXECUTION_MODE.toUpperCase()} tone="warn" />
         <Stat label="Live trading" value={LIVE_TRADING_ENABLED ? 'ON' : 'LOCKED'} tone={LIVE_TRADING_ENABLED ? 'bad' : 'good'} sub="no order adapter exists" />
-        <Stat label="Kill switches tripped" value={S.paper.filter((a) => a.killSwitch).length} />
+        <Stat label="Kill switches tripped" value={bot().paper.filter((a) => a.killSwitch).length} />
         <Stat label="Leverage" value="1× (none)" sub="no margin, no shorting" />
       </div>
       <Card title="Enforced limits (per paper account)">
@@ -544,8 +552,8 @@ function Risk() {
           A $20 account is not a scaled-down $1,000 account: venue minimums and fixed costs (gas) bind. Round-trip cost shown for one
           policy-sized position.
         </p>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-xs">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+          <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr>
                 <th className="py-1 font-normal">Capital</th>
@@ -558,9 +566,9 @@ function Risk() {
                   <td className="py-1.5 font-mono text-slate-200">${cap}</td>
                   {venues.map((v) => {
                     const f = feas.find((x) => x.capitalUsd === cap && x.note.startsWith(v + ':'))!;
-                    const tone = f.verdict === 'tradable' ? 'text-mint-400' : f.verdict === 'single_position_only' ? 'text-amber-400' : 'text-rose-400';
+                    const tone = f.verdict === 'tradable' ? 'text-up' : f.verdict === 'single_position_only' ? 'text-amber-400' : 'text-rose-400';
                     return (
-                      <td key={v} className={tone}>
+                      <td key={v} data-label={v.replace('_', ' ')} className={tone}>
                         {f.verdict.replace(/_/g, ' ')}
                         <div className="text-[10px] text-slate-500">{f.roundTripCostPct.toFixed(2)}% round trip</div>
                       </td>
@@ -580,16 +588,16 @@ function Risk() {
 function Activity() {
   return (
     <div className="space-y-5">
-      <Card title={`Paper accounts (${S.paper.length})`}>
+      <Card title={`Paper accounts (${bot().paper.length})`}>
         <p className="mb-3 text-xs text-slate-500">
           Forward-only: an account never trades bars that opened before it was created. “Diagnostic” accounts track rejected candidates to
           check whether rejecting them was right — they are not strategies the bot endorses.
         </p>
         <div className="space-y-2">
-          {S.paper.map((a) => (
-            <details key={a.id} className="rounded-lg border border-white/10 px-3 py-2 text-xs">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
-                <span className="min-w-0 truncate text-slate-200">{a.label}</span>
+          {bot().paper.map((a) => (
+            <details key={a.id} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
+              <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-2">
+                <span className="min-w-0 text-slate-200">{plainAccountLabel(a.id).title}<span className="block font-code text-[11px] text-slate-500">{plainAccountLabel(a.id).params}</span></span>
                 <span className="flex shrink-0 items-center gap-2">
                   <span className="font-mono text-slate-400">{usd(a.equity)}</span>
                   <Pill status={a.kind} />
@@ -597,7 +605,7 @@ function Activity() {
               </summary>
               <div className="mt-2 grid grid-cols-2 gap-2 text-slate-400 sm:grid-cols-4">
                 <div>Started {dateTime(a.createdAt)}</div>
-                <div>Bars processed {a.barsProcessed}</div>
+                <div>{plural(a.barsProcessed, 'bar')} processed</div>
                 <div>Entries {a.entries} · exits {a.trades}</div>
                 <div>Costs {usd(a.totalCostUsd)}</div>
               </div>
@@ -615,11 +623,11 @@ function Activity() {
       </Card>
       <Card title="Audit trail">
         <ul className="space-y-1.5 text-xs text-slate-400">
-          <li><span className="font-mono text-slate-500">{dateTime(S.generatedAt)}</span> snapshot written by code {S.codeVersion.slice(0, 12)}</li>
-          {S.runs.map((r) => (
-            <li key={r.runId}><span className="font-mono text-slate-500">{r.runId}</span> — {r.totals.oosCandidates} evaluated, {r.totals.qualified} qualified</li>
+          <li><span className="font-mono text-slate-500">{dateTime(bot().generatedAt)}</span> snapshot written by code {bot().codeVersion.slice(0, 12)}</li>
+          {bot().runs.map((r) => (
+            <li key={r.runId}><span className="font-code text-slate-500">{r.runId}</span> — {r.totals.oosCandidates} evaluated, {r.totals.qualified} qualified</li>
           ))}
-          <li>{S.datasets.length} stored datasets in research/data</li>
+          <li>{bot().datasets.length} stored datasets in research/data</li>
         </ul>
       </Card>
     </div>
@@ -632,11 +640,11 @@ function Settings() {
     <div className="space-y-5">
       <Card title="Mode">
         <div className="space-y-2 text-sm text-slate-300">
-          <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
+          <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
             <span>Paper trading</span>
             <Pill status="qualified">On (locked)</Pill>
           </div>
-          <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
+          <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
             <span>Real-money trading</span>
             <Pill status="rejected">Off (locked)</Pill>
           </div>
@@ -649,7 +657,7 @@ function Settings() {
       <Card title="Exchange connections">
         <p className="text-sm text-slate-400">
           The bot uses public market data only and needs no API keys. Read-only portfolio connections are managed on the{' '}
-          <Link to="/connections" className="text-mint-400 underline">Connections</Link> page and are never used for orders.
+          <Link to="/connections" className="text-up underline">Connections</Link> page and are never used for orders.
         </p>
       </Card>
       <Card title="Research configuration">
@@ -665,7 +673,7 @@ function Settings() {
 }
 
 function MeasuredCosts() {
-  const c = S.costs;
+  const c = bot().costs;
   const [size, setSize] = useState(1000);
   if (!c) return null;
   const rows = c.measured.filter((m) => m.notionalUsd === size).sort((a, b) => a.symbol.localeCompare(b.symbol) || a.venue.localeCompare(b.venue));
@@ -674,7 +682,7 @@ function MeasuredCosts() {
     <Card
       title="Measured execution costs (order books)"
       right={
-        <div className="flex gap-1 text-xs">
+        <div className="flex flex-wrap gap-1 text-xs">
           {[20, 100, 1000, 5000].map((n) => (
             <Chip key={n} on={size === n} onClick={() => setSize(n)}>${n}</Chip>
           ))}
@@ -686,8 +694,8 @@ function MeasuredCosts() {
         {c.collectionDays} day{c.collectionDays === 1 ? '' : 's'}. Research still uses the {total} bps placeholder until {c.requiredDays} days are
         collected (pre-registered). Exchange fees are separate and dominate: {COST_PRESETS.coinbase_taker.takerFeeBps} bps Coinbase taker.
       </p>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[420px] text-left text-xs">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+        <table className="stack-sm w-full min-w-[420px] text-left text-xs">
           <thead className="text-slate-500">
             <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Venue</th><th className="font-normal">Half-spread</th><th className="font-normal">Slippage</th><th className="font-normal">Total vs {total} bps</th></tr>
           </thead>
@@ -697,10 +705,10 @@ function MeasuredCosts() {
               return (
                 <tr key={m.venue + m.symbol} className="border-t border-white/5">
                   <td className="py-1.5 font-display">{m.symbol}</td>
-                  <td className="font-display text-slate-400">{m.venue}</td>
-                  <td>{m.halfSpreadBpsP75.toFixed(2)}</td>
-                  <td>{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
-                  <td className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-mint-400' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
+                  <td data-label="Venue" className="font-display text-slate-400">{m.venue}</td>
+                  <td data-label="Half-spread">{m.halfSpreadBpsP75.toFixed(2)}</td>
+                  <td data-label="Slippage">{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
+                  <td data-label={`Total vs ${total} bps`} className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-up' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
                 </tr>
               );
             })}

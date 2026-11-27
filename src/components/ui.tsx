@@ -13,7 +13,7 @@ export function PageHeader({ title, back, action, subtitle }: { title: string; b
         </button>
       )}
       <div className="min-w-0 flex-1">
-        <h1 className="truncate text-xl font-semibold text-white">{title}</h1>
+        <h1 className="truncate text-[26px] font-semibold leading-tight tracking-tight text-white">{title}</h1>
         {subtitle && <div className="text-xs text-slate-400">{subtitle}</div>}
       </div>
       {action}
@@ -23,10 +23,10 @@ export function PageHeader({ title, back, action, subtitle }: { title: string; b
 
 export function Panel({ title, action, children, className = '' }: { title?: string; action?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section className={`space-y-3 rounded-2xl border border-ink-600 bg-ink-800 p-4 ${className}`}>
+    <section className={`space-y-3 border-t border-ink-600 pt-4 ${className}`}>
       {(title || action) && (
         <div className="flex min-h-[28px] items-center justify-between gap-3">
-          {title && <h2 className="text-sm font-semibold text-white">{title}</h2>}
+          {title && <h2 className="eyebrow text-slate-400">{title}</h2>}
           {action}
         </div>
       )}
@@ -54,9 +54,9 @@ export function Money({ v, className = '' }: { v: number | null | undefined; cla
   return (
     <span className={`font-mono tabular-nums ${className}`}>
       {neg ? '−' : ''}$
-      {v !== 0 && Math.abs(v) < 0.01
-        ? Math.abs(v).toLocaleString(undefined, { maximumSignificantDigits: 4 })
-        : Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: Math.abs(v) < 1 && v !== 0 ? 4 : 2 })}
+      {v !== 0 && Math.abs(v) < 1
+        ? Math.abs(v).toLocaleString(undefined, { minimumSignificantDigits: 2, maximumSignificantDigits: 4 })
+        : Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
     </span>
   );
 }
@@ -82,13 +82,13 @@ export function Button({
   children, onClick, kind = 'secondary', disabled, type = 'button', className = '', ...rest
 }: { children: ReactNode; onClick?: () => void; kind?: 'primary' | 'secondary' | 'danger' | 'ghost'; disabled?: boolean; type?: 'button' | 'submit'; className?: string } & Record<string, unknown>) {
   const k = {
-    primary: 'bg-helix-400 text-ink-900 font-semibold',
-    secondary: 'bg-ink-700 text-white font-semibold',
+    primary: 'bg-white text-ink-900 font-semibold',
+    secondary: 'border border-ink-500 text-white font-semibold',
     danger: 'bg-down/15 text-[#F7A3A3] font-semibold',
     ghost: 'text-helix-400 font-medium'
   }[kind];
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={`min-h-[48px] rounded-xl px-4 text-sm transition disabled:opacity-40 ${k} ${className}`} {...rest}>
+    <button type={type} onClick={onClick} disabled={disabled} className={`min-h-[48px] rounded-full px-5 text-sm transition active:scale-[0.98] disabled:opacity-40 ${k} ${className}`} {...rest}>
       {children}
     </button>
   );
@@ -121,7 +121,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
         aria-modal="true"
         aria-label={title}
         className="relative mx-auto max-h-[90vh] w-full max-w-xl space-y-4 overflow-y-auto overscroll-contain rounded-t-3xl border border-ink-600 bg-ink-800 px-4 pt-3 outline-none"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)' }}
+        style={{ paddingBottom: 'calc(max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px)) + 20px)' }}
       >
         <div className="mx-auto h-1 w-10 rounded-full bg-ink-600" aria-hidden="true" />
         <h2 className="text-lg font-semibold text-white">{title}</h2>
@@ -134,7 +134,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
 
 export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { value: T; label: string }[]; onChange: (v: T) => void; label: string }) {
   return (
-    <div role="radiogroup" aria-label={label} className="flex gap-1 rounded-xl bg-ink-800 p-1">
+    <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-x-5 border-b border-ink-600">
       {options.map((o) => (
         <button
           key={o.value}
@@ -142,7 +142,7 @@ export function Segmented<T extends string>({ value, options, onChange, label }:
           role="radio"
           aria-checked={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`min-h-[40px] flex-1 rounded-lg px-2 text-sm ${value === o.value ? 'bg-ink-700 font-semibold text-white' : 'text-slate-400'}`}
+          className={`-mb-px min-h-[44px] min-w-[44px] border-b-2 text-sm ${value === o.value ? 'border-white font-semibold text-white' : 'border-transparent text-slate-400'}`}
         >
           {o.label}
         </button>

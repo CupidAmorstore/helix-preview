@@ -1,3 +1,5 @@
+import { sha256 } from '@noble/hashes/sha256';
+import { bytesToHex, utf8ToBytes } from '@noble/hashes/utils';
 import type { Candle } from './types';
 
 export const HOUR = 3_600_000;
@@ -11,6 +13,15 @@ export function fnv1a(input: string): string {
     h = Math.imul(h, 0x01000193);
   }
   return (h >>> 0).toString(16).padStart(8, '0');
+}
+
+/**
+ * Cryptographic content hash (audit 4.4): SHA-256 over the canonical serialisation "t,o,h,l,c,v;" per bar.
+ * FNV-1a ids remain as compact registry keys only; integrity/provenance use this hash.
+ */
+export function datasetSha256(candles: Candle[]): string {
+  const text = candles.map((k) => `${k.t},${k.o},${k.h},${k.l},${k.c},${k.v};`).join('');
+  return bytesToHex(sha256(utf8ToBytes(text)));
 }
 
 export function datasetHash(candles: Candle[]): string {

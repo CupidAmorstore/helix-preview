@@ -1,4 +1,4 @@
-﻿{
+{
   "appId": "com.helix.app",
   "appName": "HELIX",
   "webDir": "dist",
@@ -8,10 +8,13 @@
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 2000,
-      "backgroundColor": "#0a0f1e",
+      "backgroundColor": "#0F0F0D",
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP"
+    },
+    "SystemBars": {
+      "style": "DARK"
     }
-  }
+  },
+  "backgroundColor": "#0F0F0D"
 }
-

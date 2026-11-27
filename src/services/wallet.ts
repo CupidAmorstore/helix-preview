@@ -5,8 +5,26 @@ import { ECPairFactory } from 'ecpair';
 import * as ecc from '@bitcoinerlab/secp256k1';
 import { derivePath } from 'ed25519-hd-key';
 import { Buffer } from 'buffer';
-import { Keypair, Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { solKeypairFromSeed } from './solana';
 import { HDNodeWallet, Wallet, JsonRpcProvider, parseEther } from 'ethers';
+import { btcFetch } from './btcApi';
+import { ETH_CHAIN_ID, SOL_GENESIS } from './walletSafety';
+
+/**
+ * Transaction isolation (private paper-trading beta): no transaction is signed or broadcast on ANY network
+ * until the owner separately authorizes wallet broadcasts. Enabling requires a code change + review, not a
+ * setting. Addresses, balances, history and receive keep working. Every transaction function checks this
+ * itself (fail-closed), so hidden buttons are not the security boundary.
+ */
+export const WALLET_SEND_ENABLED = false as const;
+/** Even when sending is authorized, mainnet stays off unless this is also enabled. */
+export const WALLET_MAINNET_SEND_ENABLED = false as const;
+export const SEND_DISABLED_MSG = 'Sending is disabled in this private beta. No transaction is signed or broadcast on any network.';
+export const MAINNET_SEND_DISABLED_MSG = SEND_DISABLED_MSG;
+export function assertSendAllowed(network: WalletNetwork) {
+  if (!(WALLET_SEND_ENABLED as boolean)) throw new Error(SEND_DISABLED_MSG);
+  if (network !== 'testnet' && !(WALLET_MAINNET_SEND_ENABLED as boolean)) throw new Error(SEND_DISABLED_MSG);
+}
 
 const bip32 = BIP32Factory(ecc);
 const ECPair = ECPairFactory(ecc);
@@ -41,25 +59,23 @@ export async function deriveAddresses(mnemonic: string, network: WalletNetwork) 
 
   const solSeed = await bip39.mnemonicToSeed(mnemonic);
   const derived = derivePath("m/44'/501'/0'/0'", solSeed.toString('hex'));
-  const solKeypair = Keypair.fromSeed(derived.key);
+  const solKeypair = solKeypairFromSeed(Uint8Array.from(derived.key));
 
   return {
     btc: { address: btcAddress, privateKey: btcPrivateKey },
     eth: { address: ethWallet.address, privateKey: ethWallet.privateKey },
-    sol: { address: solKeypair.publicKey.toBase58(), secretKey: Buffer.from(solKeypair.secretKey).toString('hex') }
+    sol: { address: solKeypair.address, secretKey: Buffer.from(solKeypair.secretKey).toString('hex') }
   };
 }
 
 export async function fetchBtcUtxos(address: string, network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/address/${address}/utxo`);
+  const res = await btcFetch(network, `/address/${address}/utxo`);
   if (!res.ok) throw new Error('Failed to fetch UTXOs');
   return res.json();
 }
 
 export async function fetchBtcFeeRate(network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/fee-estimates`);
+  const res = await btcFetch(network, `/fee-estimates`);
   if (!res.ok) throw new Error('Failed to fetch fee estimates');
   return res.json();
 }
@@ -72,6 +88,7 @@ export async function buildAndSignBtcTx(params: {
   network: WalletNetwork;
 }) {
   const { mnemonic, toAddress, amountSats, feeRate, network } = params;
+  assertSendAllowed(network);
   const { btc } = await deriveAddresses(mnemonic, network);
   const utxos = await fetchBtcUtxos(btc.address, network);
   if (!utxos.length) throw new Error('No UTXOs found');
@@ -107,8 +124,8 @@ export async function buildAndSignBtcTx(params: {
 }
 
 export async function broadcastBtcTx(rawTx: string, network: WalletNetwork) {
-  const base = network === 'mainnet' ? 'https://blockstream.info/api' : 'https://blockstream.info/testnet/api';
-  const res = await fetch(`${base}/tx`, { method: 'POST', body: rawTx });
+  assertSendAllowed(network);
+  const res = await btcFetch(network, `/tx`, { method: 'POST', body: rawTx });
   if (!res.ok) throw new Error('Broadcast failed');
   return res.text();
 }
@@ -118,8 +135,14 @@ export async function sendEthTransaction(params: {
   toAddress: string;
   amountEth: string;
   rpcUrl: string;
+  network: WalletNetwork;
 }) {
+  assertSendAllowed(params.network);
   const provider = new JsonRpcProvider(params.rpcUrl);
+  // the RPC decides which chain is used: verify it really is the expected (test) chain before signing
+  const chainId = (await provider.getNetwork()).chainId;
+  if (chainId !== ETH_CHAIN_ID[params.network]) throw new Error(`RPC is on chain ${chainId}, not the selected network. Nothing was sent.`);
+  assertSendAllowed(chainId === ETH_CHAIN_ID.mainnet ? 'mainnet' : 'testnet');
   const wallet = Wallet.fromPhrase(params.mnemonic).connect(provider);
   const tx = await wallet.sendTransaction({
     to: params.toAddress,
@@ -133,23 +156,13 @@ export async function sendSolTransaction(params: {
   toAddress: string;
   amountSol: number;
   rpcUrl: string;
-}) {
-  const seed = await bip39.mnemonicToSeed(params.mnemonic);
-  const derived = derivePath("m/44'/501'/0'/0'", seed.toString('hex'));
-  const keypair = Keypair.fromSeed(derived.key);
-  const connection = new Connection(params.rpcUrl, 'confirmed');
-  const tx = new Transaction().add(
-    SystemProgram.transfer({
-      fromPubkey: keypair.publicKey,
-      toPubkey: new PublicKey(params.toAddress),
-      lamports: Math.round(params.amountSol * 1e9)
-    })
-  );
-  tx.feePayer = keypair.publicKey;
-  const { blockhash } = await connection.getLatestBlockhash('confirmed');
-  tx.recentBlockhash = blockhash;
-  tx.sign(keypair);
-  const signature = await connection.sendRawTransaction(tx.serialize());
-  return signature;
+  network: WalletNetwork;
+}): Promise<string> {
+  assertSendAllowed(params.network);
+  // Unreachable while sending is disabled. SOL transaction building was removed together with @solana/web3.js;
+  // it must be re-implemented and audited (with a genesis-hash check of the RPC) before sending is ever enabled.
+  void params;
+  void SOL_GENESIS;
+  throw new Error('SOL sending is not available in this build.');
 }
 

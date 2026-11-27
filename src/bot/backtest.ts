@@ -13,6 +13,8 @@ export type BacktestOptions = {
   positionFraction?: number;
   /** extra bars of execution delay beyond next-open (robustness test) */
   delayBars?: number;
+  /** record the marked equity curve (used for monthly inference) */
+  recordEquity?: boolean;
 };
 
 /**
@@ -40,6 +42,7 @@ export function backtest(candles: Candle[], spec: StrategySpec, opt: BacktestOpt
   let inMarketBars = 0;
   let rejected = 0;
   const pending: { at: number; want: 0 | 1 }[] = [];
+  const curve: { t: number; v: number }[] | undefined = opt.recordEquity ? [] : undefined;
 
   // Run the (possibly stateful) signal sequentially from bar 0 so state is identical across windows.
   for (let i = 0; i < end; i++) {
@@ -63,7 +66,7 @@ export function backtest(candles: Candle[], spec: StrategySpec, opt: BacktestOpt
         pos = 1;
       } else if (want === 0 && pos === 1 && entry) {
         const px = open * (1 - side);
-        const proceeds = units * px - opt.cost.fixedCostUsd;
+        const proceeds = exitProceeds(units * px, opt.cost.fixedCostUsd);
         const exitCost = units * open - proceeds;
         totalCost += exitCost;
         cash += proceeds;
@@ -80,6 +83,7 @@ export function backtest(candles: Candle[], spec: StrategySpec, opt: BacktestOpt
       peak = Math.max(peak, eq);
       maxDd = Math.max(maxDd, peak > 0 ? (peak - eq) / peak : 0);
       if (pos === 1) inMarketBars++;
+      curve?.push({ t: candles[i].t, v: eq });
     }
 
     // 3) evaluate the signal at this bar's close; it is ALWAYS called so stateful signals stay in sync
@@ -93,11 +97,18 @@ export function backtest(candles: Candle[], spec: StrategySpec, opt: BacktestOpt
   if (pos === 1 && entry && end > 0) {
     const last = candles[end - 1].c;
     const px = last * (1 - side);
-    const proceeds = units * px - opt.cost.fixedCostUsd;
+    const proceeds = exitProceeds(units * px, opt.cost.fixedCostUsd);
     const exitCost = units * last - proceeds;
     totalCost += exitCost;
     cash += proceeds;
     trades.push(makeTrade(entry, candles[end - 1].t, px, last, units, proceeds, exitCost, true));
+    units = 0;
+  }
+  // AUD-207: the liquidated equity is the final equity; it enters peak/drawdown like every marked bar
+  if (end > opt.start) {
+    peak = Math.max(peak, cash);
+    maxDd = Math.max(maxDd, peak > 0 ? (peak - cash) / peak : 0);
+    if (curve && curve.length) curve[curve.length - 1] = { t: curve[curve.length - 1].t, v: cash };
   }
 
   const startPx = candles[Math.min(opt.start, end - 1)]?.c ?? 1;
@@ -112,8 +123,17 @@ export function backtest(candles: Candle[], spec: StrategySpec, opt: BacktestOpt
     exposure: end - opt.start > 0 ? inMarketBars / (end - opt.start) : 0,
     bars: Math.max(0, end - opt.start),
     buyHoldReturn: endPx / startPx - 1,
-    rejectedOrders: rejected
+    rejectedOrders: rejected,
+    ...(curve ? { equity: curve } : {})
   };
+}
+
+/**
+ * Sale proceeds after a fixed per-fill cost. If the fixed cost exceeds the position's value the position is
+ * written off (proceeds 0) instead of paying more than it is worth: equity can fall to 0 but never below.
+ */
+export function exitProceeds(grossAfterProportional: number, fixedCostUsd: number): number {
+  return Math.max(0, grossAfterProportional - fixedCostUsd);
 }
 
 function makeTrade(

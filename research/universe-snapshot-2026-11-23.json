@@ -1,0 +1,2993 @@
+{
+ "takenAt": "2026-11-23T21:11:49.597Z",
+ "source": "https://api.exchange.coinbase.com/products",
+ "sha256": "767bf74e8549dfb3c3fb1e9b0305728c1892a1ae5f83e35436fa1838aa6a485c",
+ "counts": {
+  "online": 399,
+  "delisted": 98
+ },
+ "products": [
+  {
+   "id": "00-USD",
+   "base": "00",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "1INCH-USD",
+   "base": "1INCH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "2Z-USD",
+   "base": "2Z",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "A8-USD",
+   "base": "A8",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AAVE-USD",
+   "base": "AAVE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ABT-USD",
+   "base": "ABT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ACH-USD",
+   "base": "ACH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ACS-USD",
+   "base": "ACS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ACX-USD",
+   "base": "ACX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ADA-USD",
+   "base": "ADA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AERGO-USD",
+   "base": "AERGO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AERO-USD",
+   "base": "AERO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AGLD-USD",
+   "base": "AGLD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AI-USD",
+   "base": "AI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AIOZ-USD",
+   "base": "AIOZ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AKT-USD",
+   "base": "AKT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALCX-USD",
+   "base": "ALCX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALEO-USD",
+   "base": "ALEO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALEPH-USD",
+   "base": "ALEPH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALGO-USD",
+   "base": "ALGO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALICE-USD",
+   "base": "ALICE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALIGN-USD",
+   "base": "ALIGN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALLO-USD",
+   "base": "ALLO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ALT-USD",
+   "base": "ALT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AMP-USD",
+   "base": "AMP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ANKR-USD",
+   "base": "ANKR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ANT-USD",
+   "base": "ANT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "APE-USD",
+   "base": "APE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "API3-USD",
+   "base": "API3",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "APR-USD",
+   "base": "APR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "APT-USD",
+   "base": "APT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ARB-USD",
+   "base": "ARB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ARKM-USD",
+   "base": "ARKM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ARPA-USD",
+   "base": "ARPA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ARX-USD",
+   "base": "ARX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ASM-USD",
+   "base": "ASM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AST-USD",
+   "base": "AST",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ASTER-USD",
+   "base": "ASTER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ATA-USD",
+   "base": "ATA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ATH-USD",
+   "base": "ATH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ATOM-USD",
+   "base": "ATOM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AUCTION-USD",
+   "base": "AUCTION",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AUDIO-USD",
+   "base": "AUDIO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AURORA-USD",
+   "base": "AURORA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AVAX-USD",
+   "base": "AVAX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AVNT-USD",
+   "base": "AVNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AVT-USD",
+   "base": "AVT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AWE-USD",
+   "base": "AWE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AXIS-USD",
+   "base": "AXIS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AXL-USD",
+   "base": "AXL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AXS-USD",
+   "base": "AXS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "AZTEC-USD",
+   "base": "AZTEC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "B3-USD",
+   "base": "B3",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BADGER-USD",
+   "base": "BADGER",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "BAL-USD",
+   "base": "BAL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "BAND-USD",
+   "base": "BAND",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BARD-USD",
+   "base": "BARD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BASECAT-USD",
+   "base": "BASECAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BASED1-USD",
+   "base": "BASED1",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BAT-USD",
+   "base": "BAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BCH-USD",
+   "base": "BCH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BEAM-USD",
+   "base": "BEAM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BERA-USD",
+   "base": "BERA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BICO-USD",
+   "base": "BICO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BIGTIME-USD",
+   "base": "BIGTIME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BILL-USD",
+   "base": "BILL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BIO-USD",
+   "base": "BIO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BIRB-USD",
+   "base": "BIRB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BIT-USD",
+   "base": "BIT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "BLAST-USD",
+   "base": "BLAST",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "BLEND-USD",
+   "base": "BLEND",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BLUECHIP-USD",
+   "base": "BLUECHIP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BLUR-USD",
+   "base": "BLUR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BLZ-USD",
+   "base": "BLZ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BNB-USD",
+   "base": "BNB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BNKR-USD",
+   "base": "BNKR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BNT-USD",
+   "base": "BNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BOBA-USD",
+   "base": "BOBA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BOBBOB-USD",
+   "base": "BOBBOB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BOND-USD",
+   "base": "BOND",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "BONK-USD",
+   "base": "BONK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BREV-USD",
+   "base": "BREV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BTC-USD",
+   "base": "BTC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BTRST-USD",
+   "base": "BTRST",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "BUSD-USD",
+   "base": "BUSD",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "C98-USD",
+   "base": "C98",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CAKE-USD",
+   "base": "CAKE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CAP-USD",
+   "base": "CAP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CARD-USD",
+   "base": "CARD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CBETH-USD",
+   "base": "CBETH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CELR-USD",
+   "base": "CELR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CFG-USD",
+   "base": "CFG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CGLD-USD",
+   "base": "CGLD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CHECK-USD",
+   "base": "CHECK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CHIP-USD",
+   "base": "CHIP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CHZ-USD",
+   "base": "CHZ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CLANKER-USD",
+   "base": "CLANKER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CLV-USD",
+   "base": "CLV",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "COMP-USD",
+   "base": "COMP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "COOKIE-USD",
+   "base": "COOKIE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CORECHAIN-USD",
+   "base": "CORECHAIN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "COSMOSDYDX-USD",
+   "base": "COSMOSDYDX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "COTI-USD",
+   "base": "COTI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "COVAL-USD",
+   "base": "COVAL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "COW-USD",
+   "base": "COW",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CP-USD",
+   "base": "CP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CRO-USD",
+   "base": "CRO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CRPT-USD",
+   "base": "CRPT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "CRV-USD",
+   "base": "CRV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CT-USD",
+   "base": "CT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CTR-USD",
+   "base": "CTR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CTSI-USD",
+   "base": "CTSI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CTX-USD",
+   "base": "CTX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CVC-USD",
+   "base": "CVC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "CVX-USD",
+   "base": "CVX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DAI-USD",
+   "base": "DAI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "DAR-USD",
+   "base": "DAR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "DASH-USD",
+   "base": "DASH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DATA-USD",
+   "base": "DATA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DBR-USD",
+   "base": "DBR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DDX-USD",
+   "base": "DDX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "DEEP-USD",
+   "base": "DEEP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DEGEN-USD",
+   "base": "DEGEN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DESO-USD",
+   "base": "DESO",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "DEXT-USD",
+   "base": "DEXT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DIA-USD",
+   "base": "DIA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DIEM-USD",
+   "base": "DIEM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DIMO-USD",
+   "base": "DIMO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DNT-USD",
+   "base": "DNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DOGE-USD",
+   "base": "DOGE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DOGINME-USD",
+   "base": "DOGINME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DOLO-USD",
+   "base": "DOLO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DOOD-USD",
+   "base": "DOOD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DOT-USD",
+   "base": "DOT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DRB-USD",
+   "base": "DRB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DREP-USD",
+   "base": "DREP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "DRIFT-USD",
+   "base": "DRIFT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DRV-USD",
+   "base": "DRV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "DYP-USD",
+   "base": "DYP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "EDGE-USD",
+   "base": "EDGE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EDGEX-USD",
+   "base": "EDGEX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EGLD-USD",
+   "base": "EGLD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EIGEN-USD",
+   "base": "EIGEN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ELA-USD",
+   "base": "ELA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ELSA-USD",
+   "base": "ELSA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ENA-USD",
+   "base": "ENA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ENJ-USD",
+   "base": "ENJ",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ENS-USD",
+   "base": "ENS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EOS-USD",
+   "base": "EOS",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ERA-USD",
+   "base": "ERA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ERN-USD",
+   "base": "ERN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ESP-USD",
+   "base": "ESP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ETC-USD",
+   "base": "ETC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ETH-USD",
+   "base": "ETH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ETHFI-USD",
+   "base": "ETHFI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EUL-USD",
+   "base": "EUL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "EURC-USD",
+   "base": "EURC",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "FAI-USD",
+   "base": "FAI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FARM-USD",
+   "base": "FARM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FARTCOIN-USD",
+   "base": "FARTCOIN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FET-USD",
+   "base": "FET",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FIDA-USD",
+   "base": "FIDA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FIGHT-USD",
+   "base": "FIGHT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FIL-USD",
+   "base": "FIL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FIS-USD",
+   "base": "FIS",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "FLOCK-USD",
+   "base": "FLOCK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FLOKI-USD",
+   "base": "FLOKI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FLOW-USD",
+   "base": "FLOW",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FLR-USD",
+   "base": "FLR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FLUID-USD",
+   "base": "FLUID",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FORT-USD",
+   "base": "FORT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FORTH-USD",
+   "base": "FORTH",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "FOX-USD",
+   "base": "FOX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FUN1-USD",
+   "base": "FUN1",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "FX-USD",
+   "base": "FX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "G-USD",
+   "base": "G",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GAL-USD",
+   "base": "GAL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "GALA-USD",
+   "base": "GALA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "GEOD-USD",
+   "base": "GEOD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GFI-USD",
+   "base": "GFI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GHST-USD",
+   "base": "GHST",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GIGA-USD",
+   "base": "GIGA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GLM-USD",
+   "base": "GLM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GMT-USD",
+   "base": "GMT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GNO-USD",
+   "base": "GNO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GODS-USD",
+   "base": "GODS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GRASS-USD",
+   "base": "GRASS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GROVE-USD",
+   "base": "GROVE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GRT-USD",
+   "base": "GRT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GRVT-USD",
+   "base": "GRVT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GST-USD",
+   "base": "GST",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GTC-USD",
+   "base": "GTC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GUSD-USD",
+   "base": "GUSD",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "GWEI-USD",
+   "base": "GWEI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "GYEN-USD",
+   "base": "GYEN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "HBAR-USD",
+   "base": "HBAR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HFT-USD",
+   "base": "HFT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HIGH-USD",
+   "base": "HIGH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HNT-USD",
+   "base": "HNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HOME-USD",
+   "base": "HOME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HONEY-USD",
+   "base": "HONEY",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HOPR-USD",
+   "base": "HOPR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HYPE-USD",
+   "base": "HYPE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "HYPER-USD",
+   "base": "HYPER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ICNT-USD",
+   "base": "ICNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ICP-USD",
+   "base": "ICP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "IDEX-USD",
+   "base": "IDEX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ILV-USD",
+   "base": "ILV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "IMU-USD",
+   "base": "IMU",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "IMX-USD",
+   "base": "IMX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "INDEX-USD",
+   "base": "INDEX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "INJ-USD",
+   "base": "INJ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "INV-USD",
+   "base": "INV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "INX-USD",
+   "base": "INX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "IO-USD",
+   "base": "IO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "IOTX-USD",
+   "base": "IOTX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "IP-USD",
+   "base": "IP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "IRYS-USD",
+   "base": "IRYS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "JASMY-USD",
+   "base": "JASMY",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "JITOSOL-USD",
+   "base": "JITOSOL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "JTO-USD",
+   "base": "JTO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "JUP-USD",
+   "base": "JUP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "JUPITER-USD",
+   "base": "JUPITER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KAIO-USD",
+   "base": "KAIO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KAITO-USD",
+   "base": "KAITO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KARRAT-USD",
+   "base": "KARRAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KAT-USD",
+   "base": "KAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KAVA-USD",
+   "base": "KAVA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KEEP-USD",
+   "base": "KEEP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "KERNEL-USD",
+   "base": "KERNEL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KEYCAT-USD",
+   "base": "KEYCAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KITE-USD",
+   "base": "KITE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KMNO-USD",
+   "base": "KMNO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KNC-USD",
+   "base": "KNC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KRL-USD",
+   "base": "KRL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KSM-USD",
+   "base": "KSM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "KTA-USD",
+   "base": "KTA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "L3-USD",
+   "base": "L3",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LA-USD",
+   "base": "LA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LAYER-USD",
+   "base": "LAYER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LCX-USD",
+   "base": "LCX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LDO-USD",
+   "base": "LDO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LIGHTER-USD",
+   "base": "LIGHTER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LINEA-USD",
+   "base": "LINEA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LINK-USD",
+   "base": "LINK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LIT-USD",
+   "base": "LIT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "LMTS-USD",
+   "base": "LMTS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LOKA-USD",
+   "base": "LOKA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "LOOM-USD",
+   "base": "LOOM",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "LPT-USD",
+   "base": "LPT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LQTY-USD",
+   "base": "LQTY",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LRC-USD",
+   "base": "LRC",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "LRDS-USD",
+   "base": "LRDS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LSETH-USD",
+   "base": "LSETH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "LTC-USD",
+   "base": "LTC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MAGIC-USD",
+   "base": "MAGIC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MAMO-USD",
+   "base": "MAMO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MANA-USD",
+   "base": "MANA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MANTLE-USD",
+   "base": "MANTLE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MASK-USD",
+   "base": "MASK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MATH-USD",
+   "base": "MATH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MATIC-USD",
+   "base": "MATIC",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MCO2-USD",
+   "base": "MCO2",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MDT-USD",
+   "base": "MDT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ME-USD",
+   "base": "ME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MEDIA-USD",
+   "base": "MEDIA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MEGA-USD",
+   "base": "MEGA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MET-USD",
+   "base": "MET",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "META-USD",
+   "base": "META",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "METIS-USD",
+   "base": "METIS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MEZO-USD",
+   "base": "MEZO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MINA-USD",
+   "base": "MINA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MIR-USD",
+   "base": "MIR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MKR-USD",
+   "base": "MKR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MLN-USD",
+   "base": "MLN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MNDE-USD",
+   "base": "MNDE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MOBILE-USD",
+   "base": "MOBILE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MOG-USD",
+   "base": "MOG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MON-USD",
+   "base": "MON",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MONA-USD",
+   "base": "MONA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MOODENG-USD",
+   "base": "MOODENG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MORPHO-USD",
+   "base": "MORPHO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MOVE-USD",
+   "base": "MOVE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MPL-USD",
+   "base": "MPL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MPLX-USD",
+   "base": "MPLX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MSOL-USD",
+   "base": "MSOL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "MTL-USD",
+   "base": "MTL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MULTI-USD",
+   "base": "MULTI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MUSD-USD",
+   "base": "MUSD",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MUSE-USD",
+   "base": "MUSE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "MXC-USD",
+   "base": "MXC",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "NCT-USD",
+   "base": "NCT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NEAR-USD",
+   "base": "NEAR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NEON-USD",
+   "base": "NEON",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "NEST-USD",
+   "base": "NEST",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "NEWT-USD",
+   "base": "NEWT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NEX-USD",
+   "base": "NEX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NKN-USD",
+   "base": "NKN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NMR-USD",
+   "base": "NMR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NOICE-USD",
+   "base": "NOICE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NOM-USD",
+   "base": "NOM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "NU-USD",
+   "base": "NU",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "O-USD",
+   "base": "O",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OCEAN-USD",
+   "base": "OCEAN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OGN-USD",
+   "base": "OGN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OMG-USD",
+   "base": "OMG",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "OMNI-USD",
+   "base": "OMNI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ONDO-USD",
+   "base": "ONDO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OOKI-USD",
+   "base": "OOKI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "OP-USD",
+   "base": "OP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OPG-USD",
+   "base": "OPG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OPN-USD",
+   "base": "OPN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ORCA-USD",
+   "base": "ORCA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ORN-USD",
+   "base": "ORN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "OSMO-USD",
+   "base": "OSMO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "OXT-USD",
+   "base": "OXT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PAX-USD",
+   "base": "PAX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PAXG-USD",
+   "base": "PAXG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PEARL-USD",
+   "base": "PEARL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PENDLE-USD",
+   "base": "PENDLE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PENGU-USD",
+   "base": "PENGU",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PEPE-USD",
+   "base": "PEPE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PERP-USD",
+   "base": "PERP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PIRATE-USD",
+   "base": "PIRATE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "PLA-USD",
+   "base": "PLA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "PLU-USD",
+   "base": "PLU",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PLUME-USD",
+   "base": "PLUME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PNG-USD",
+   "base": "PNG",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PNUT-USD",
+   "base": "PNUT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "POL-USD",
+   "base": "POL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "POLS-USD",
+   "base": "POLS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "POLY-USD",
+   "base": "POLY",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "POND-USD",
+   "base": "POND",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PONS-USD",
+   "base": "PONS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "POPCAT-USD",
+   "base": "POPCAT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "POWR-USD",
+   "base": "POWR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PRCL-USD",
+   "base": "PRCL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PRIME-USD",
+   "base": "PRIME",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PRL-USD",
+   "base": "PRL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PRO-USD",
+   "base": "PRO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PROMPT-USD",
+   "base": "PROMPT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PROS-USD",
+   "base": "PROS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PROVE-USD",
+   "base": "PROVE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PRQ-USD",
+   "base": "PRQ",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "PUMP-USD",
+   "base": "PUMP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PUNDIX-USD",
+   "base": "PUNDIX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PYR-USD",
+   "base": "PYR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "PYTH-USD",
+   "base": "PYTH",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "PYUSD-USD",
+   "base": "PYUSD",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "QI-USD",
+   "base": "QI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "QNT-USD",
+   "base": "QNT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "QSP-USD",
+   "base": "QSP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "QUICK-USD",
+   "base": "QUICK",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RAD-USD",
+   "base": "RAD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RAI-USD",
+   "base": "RAI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RARE-USD",
+   "base": "RARE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RARI-USD",
+   "base": "RARI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RAVE-USD",
+   "base": "RAVE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RAY-USD",
+   "base": "RAY",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RBN-USD",
+   "base": "RBN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RE-USD",
+   "base": "RE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RECALL-USD",
+   "base": "RECALL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RED-USD",
+   "base": "RED",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "REN-USD",
+   "base": "REN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RENDER-USD",
+   "base": "RENDER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "REP-USD",
+   "base": "REP",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "REQ-USD",
+   "base": "REQ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "REZ-USD",
+   "base": "REZ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RGT-USD",
+   "base": "RGT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RITUAL-USD",
+   "base": "RITUAL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RLC-USD",
+   "base": "RLC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RLS-USD",
+   "base": "RLS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RLY-USD",
+   "base": "RLY",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "RNBW-USD",
+   "base": "RNBW",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RNDR-USD",
+   "base": "RNDR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ROBO-USD",
+   "base": "ROBO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RONIN-USD",
+   "base": "RONIN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ROSE-USD",
+   "base": "ROSE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RPL-USD",
+   "base": "RPL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RSC-USD",
+   "base": "RSC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "RSR-USD",
+   "base": "RSR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "S-USD",
+   "base": "S",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SAFE-USD",
+   "base": "SAFE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SAND-USD",
+   "base": "SAND",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SAPIEN-USD",
+   "base": "SAPIEN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SD-USD",
+   "base": "SD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SEAM-USD",
+   "base": "SEAM",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "SEI-USD",
+   "base": "SEI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SENT-USD",
+   "base": "SENT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SHDW-USD",
+   "base": "SHDW",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SHIB-USD",
+   "base": "SHIB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SHPING-USD",
+   "base": "SHPING",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SIGN-USD",
+   "base": "SIGN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SKL-USD",
+   "base": "SKL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SKR-USD",
+   "base": "SKR",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SKY-USD",
+   "base": "SKY",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SNT-USD",
+   "base": "SNT",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "SNX-USD",
+   "base": "SNX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SOL-USD",
+   "base": "SOL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SPA-USD",
+   "base": "SPA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SPELL-USD",
+   "base": "SPELL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SPK-USD",
+   "base": "SPK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SPX-USD",
+   "base": "SPX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SQD-USD",
+   "base": "SQD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "STABLE-USD",
+   "base": "STABLE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "STG-USD",
+   "base": "STG",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "STORJ-USD",
+   "base": "STORJ",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "STRK-USD",
+   "base": "STRK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "STX-USD",
+   "base": "STX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SUI-USD",
+   "base": "SUI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SUKU-USD",
+   "base": "SUKU",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SUP-USD",
+   "base": "SUP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SUPER-USD",
+   "base": "SUPER",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SUSHI-USD",
+   "base": "SUSHI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SWELL-USD",
+   "base": "SWELL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SWFTC-USD",
+   "base": "SWFTC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SXT-USD",
+   "base": "SXT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "SYLO-USD",
+   "base": "SYLO",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "SYN-USD",
+   "base": "SYN",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "SYND-USD",
+   "base": "SYND",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "SYRUP-USD",
+   "base": "SYRUP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "T-USD",
+   "base": "T",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TAO-USD",
+   "base": "TAO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "THQ-USD",
+   "base": "THQ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TIA-USD",
+   "base": "TIA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TIME-USD",
+   "base": "TIME",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "TNSR-USD",
+   "base": "TNSR",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "TON-USD",
+   "base": "TON",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TONE-USD",
+   "base": "TONE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "TOSHI-USD",
+   "base": "TOSHI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TOWNS-USD",
+   "base": "TOWNS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRAC-USD",
+   "base": "TRAC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRB-USD",
+   "base": "TRB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TREE-USD",
+   "base": "TREE",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRIA-USD",
+   "base": "TRIA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRIBE-USD",
+   "base": "TRIBE",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "TROLL-USD",
+   "base": "TROLL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRU-USD",
+   "base": "TRU",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "TRUMP-USD",
+   "base": "TRUMP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TRUST-USD",
+   "base": "TRUST",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TURBO-USD",
+   "base": "TURBO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "TVK-USD",
+   "base": "TVK",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "UMA-USD",
+   "base": "UMA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "UNFI-USD",
+   "base": "UNFI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "UNI-USD",
+   "base": "UNI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "UP-USD",
+   "base": "UP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "UPI-USD",
+   "base": "UPI",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "USD1-USD",
+   "base": "USD1",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "USDS-USD",
+   "base": "USDS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "USDT-USD",
+   "base": "USDT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "USELESS-USD",
+   "base": "USELESS",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "UST-USD",
+   "base": "UST",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "VARA-USD",
+   "base": "VARA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "VELO-USD",
+   "base": "VELO",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "VET-USD",
+   "base": "VET",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "VGX-USD",
+   "base": "VGX",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "VIRTUAL-USD",
+   "base": "VIRTUAL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "VOXEL-USD",
+   "base": "VOXEL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "VTHO-USD",
+   "base": "VTHO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "VVV-USD",
+   "base": "VVV",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "W-USD",
+   "base": "W",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WAL-USD",
+   "base": "WAL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WAMPL-USD",
+   "base": "WAMPL",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "WAXL-USD",
+   "base": "WAXL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WBTC-USD",
+   "base": "WBTC",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "WCFG-USD",
+   "base": "WCFG",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "WCT-USD",
+   "base": "WCT",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WELL-USD",
+   "base": "WELL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WET-USD",
+   "base": "WET",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WHUF-USD",
+   "base": "WHUF",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WIF-USD",
+   "base": "WIF",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WLD-USD",
+   "base": "WLD",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WLFI-USD",
+   "base": "WLFI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WLUNA-USD",
+   "base": "WLUNA",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "WMTX-USD",
+   "base": "WMTX",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "WRON-USD",
+   "base": "WRON",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XAN-USD",
+   "base": "XAN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XCN-USD",
+   "base": "XCN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XLM-USD",
+   "base": "XLM",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XPL-USD",
+   "base": "XPL",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XRP-USD",
+   "base": "XRP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XTZ-USD",
+   "base": "XTZ",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "XYO-USD",
+   "base": "XYO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "YB-USD",
+   "base": "YB",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "YFI-USD",
+   "base": "YFI",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "YFII-USD",
+   "base": "YFII",
+   "status": "delisted",
+   "tradingDisabled": true
+  },
+  {
+   "id": "ZAMA-USD",
+   "base": "ZAMA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZEC-USD",
+   "base": "ZEC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZEN-USD",
+   "base": "ZEN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZETA-USD",
+   "base": "ZETA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZETACHAIN-USD",
+   "base": "ZETACHAIN",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZK-USD",
+   "base": "ZK",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZKC-USD",
+   "base": "ZKC",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZKP-USD",
+   "base": "ZKP",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZORA-USD",
+   "base": "ZORA",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZRO-USD",
+   "base": "ZRO",
+   "status": "online",
+   "tradingDisabled": false
+  },
+  {
+   "id": "ZRX-USD",
+   "base": "ZRX",
+   "status": "online",
+   "tradingDisabled": false
+  }
+ ]
+}

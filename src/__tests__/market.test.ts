@@ -45,7 +45,7 @@ describe('market service (Coinbase)', () => {
 describe('live ticker reconnection', () => {
   it('backs off 1s, 2s, 4s… capped at 30s', async () => {
     const { reconnectDelay } = await import('../services/market');
-    expect([0, 1, 2, 3, 4, 5, 6].map(reconnectDelay)).toEqual([1000, 2000, 4000, 8000, 16000, 30000, 30000]);
+    expect([0, 1, 2, 3, 4, 5, 6].map(reconnectDelay)).toEqual([1000, 2000, 4000, 5000, 5000, 5000, 5000]);
   });
 
   it('reconnects after the socket drops and stops after close()', async () => {
@@ -75,4 +75,33 @@ describe('live ticker reconnection', () => {
     expect(got).toEqual(['BTC:60000.5']);
     vi.useRealTimers();
   });
+
+  it('REGRESSION (Android emulator): a silent socket that never closes is detected and reconnected', async () => {
+    vi.useFakeTimers();
+    const { connectTicker, HEARTBEAT_TIMEOUT_MS } = await import('../services/market');
+    type Fake = { readyState: number; onopen?: () => void; onclose?: () => void; onmessage?: (e: { data: string }) => void; send: (m: string) => void; close: () => void };
+    const sockets: Fake[] = [];
+    const sent: string[] = [];
+    const make = () => {
+      const s: Fake = { readyState: 1, send: (m) => sent.push(m), close: vi.fn(() => { s.readyState = 3; s.onclose?.(); }) };
+      sockets.push(s);
+      return s as unknown as WebSocket;
+    };
+    const statuses: string[] = [];
+    const h = connectTicker(['BTC-USD'], () => undefined, (st) => statuses.push(st), make);
+    sockets[0].onopen?.();
+    expect(sent[0]).toContain('heartbeat');
+    // heartbeats keep it alive
+    for (let i = 0; i < 5; i++) { await vi.advanceTimersByTimeAsync(1000); sockets[0].onmessage?.({ data: '{"type":"heartbeat"}' }); }
+    expect(statuses.at(-1)).toBe('live');
+    // network silently dies: no messages, socket stays "open"
+    await vi.advanceTimersByTimeAsync(HEARTBEAT_TIMEOUT_MS + 2500);
+    expect(statuses).toContain('reconnecting');
+    expect(sockets[0].close).toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sockets.length).toBeGreaterThan(1); // reconnect attempted
+    h.close();
+    vi.useRealTimers();
+  });
 });
+

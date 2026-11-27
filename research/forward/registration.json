@@ -1,0 +1,98 @@
+{
+ "id": "forward-2026-11-25-a",
+ "status": "active",
+ "registeredAt": "2026-11-25T09:00:00Z",
+ "startAt": 1795651200000,
+ "capitalUsd": 1000,
+ "costPreset": "coinbase_taker",
+ "rules": [
+  {
+   "id": "F1-pooled-ts-momentum-168d",
+   "kind": "pooled",
+   "family": "ts_momentum",
+   "params": {
+    "lookback": 168,
+    "threshold": 0
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  },
+  {
+   "id": "F2-pooled-weekly-trend-200d",
+   "kind": "pooled",
+   "family": "weekly_trend",
+   "params": {
+    "n": 200,
+    "period": 7
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  },
+  {
+   "id": "F3-xs-momentum-28d-top3",
+   "kind": "xs",
+   "params": {
+    "lookback": 28,
+    "topK": 3,
+    "rebalance": 7
+   },
+   "markets": [
+    "BTC-USD",
+    "ETH-USD",
+    "SOL-USD",
+    "XRP-USD",
+    "DOGE-USD",
+    "ADA-USD",
+    "AVAX-USD",
+    "LINK-USD",
+    "LTC-USD",
+    "DOT-USD"
+   ],
+   "intervalMs": 86400000
+  }
+ ],
+ "evaluation": {
+  "minMonths": 12,
+  "familyAlpha": 0.05
+ },
+ "rulesHash": "00bb27b20a7dc92c3d8f81b5b1d5eab82bd0c7bbc24242113445434c934bc998",
+ "rationale": [
+  "F1: the only family whose structural trade count (~19 validation trades) can meet the 15-trade minimum on daily data.",
+  "F2: decisions once a week keep cost drag low (cost-horizon study: weekly moves ~5x round-trip cost).",
+  "F3: diversifies across coins; feasible from $20 on Coinbase (capital-tier study).",
+  "Parameters are the longest/most conservative grid values; no new parameter was introduced."
+ ],
+ "disclosures": [
+  "Chosen by an agent that has seen the historical results of all 199 candidates (all rejected). Historical data is NOT evidence for these rules; only forward months after startAt count.",
+  "Power is low: ~12-24 forward months can only confirm very large edges (STATISTICAL_CONFIDENCE_VALIDATION.md). Holding cash remains the expected outcome.",
+  "Paper only. Activation (status 'active' + startAt) is an owner decision. Any rule change = new registration, clock restarts."
+ ],
+ "activation": {
+  "activatedAt": "2026-11-25T15:49:20+00:00",
+  "by": "owner, in chat: \"Start now\"",
+  "startAtUtc": "2026-11-26T00:00:00Z",
+  "note": "first complete daily bar after activation; paper only"
+ }
+}

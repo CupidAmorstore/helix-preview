@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { evaluateFamily, chronologicalSplit, evaluatePooled } from '../../bot/validation';
 import { runResearchCycle, ALL_FAMILIES } from '../../bot/research';
+import { DAILY_ONLY } from '../../bot/strategies';
 import { COST_PRESETS } from '../../bot/costs';
 import { HOUR, datasetHash } from '../../bot/candles';
 import type { CostModel, Dataset } from '../../bot/types';
-import { randomWalk, trendingRegimes } from './helpers';
+import { randomWalk, trendingRegimes, asDaily } from './helpers';
 
 const LOW: CostModel = { ...COST_PRESETS.coinbase_taker, takerFeeBps: 1, halfSpreadBps: 0, slippageBps: 0 };
 const mkDataset = (candles: Dataset['candles'], symbol = 'TEST-USD'): Dataset => ({
@@ -25,6 +26,10 @@ describe('walk-forward split (stage 3)', () => {
   });
 });
 
+// every family x several seeds, each with grid selection + 4 walk-forward re-selections: ~3 s locally,
+// slower on CI runners. Deterministic; a longer limit, not a skip.
+const HEAVY = 30_000;
+
 describe('false-positive control', () => {
   it('nothing qualifies on driftless random walks (5 seeds x all families, realistic costs)', () => {
     let qualified = 0;
@@ -36,7 +41,7 @@ describe('false-positive control', () => {
       }
     }
     expect(qualified).toBe(0);
-  });
+  }, HEAVY);
 
   it('nothing qualifies on random walks even with near-zero costs', () => {
     let qualified = 0;
@@ -45,12 +50,13 @@ describe('false-positive control', () => {
       for (const f of ALL_FAMILIES) if (evaluateFamily(c, f, LOW, 21).status === 'qualified_paper_strategy') qualified++;
     }
     expect(qualified).toBe(0);
-  });
+  }, HEAVY);
 });
 
 describe('power check (pipeline is not impossible)', () => {
   it('a genuine persistent-trend edge with low costs can qualify', () => {
-    const c = trendingRegimes(8000, 7, 60);
+    // daily bars: a real edge needs >= 12 calendar months of out-of-sample evidence (gates-v3)
+    const c = asDaily(trendingRegimes(8000, 7, 60));
     const r = evaluateFamily(c, 'ts_momentum', LOW, 1);
     expect(r.rejectionReasons).toEqual([]);
     expect(r.status).toBe('qualified_paper_strategy');
@@ -90,7 +96,8 @@ describe('November 21 regression cases', () => {
     const d = mkDataset(randomWalk(2000, 8));
     const args = { datasets: [d], costFor: () => COST_PRESETS.coinbase_taker, nowMs: d.candles[1999].t + HOUR, codeVersion: 't', minBars: 1500 };
     const first = runResearchCycle({ ...args, registry: {} });
-    expect(first.record.totals.oosCandidates).toBe(ALL_FAMILIES.length);
+    // hourly data: the daily-only multi-day families are not run at all
+    expect(first.record.totals.oosCandidates).toBe(ALL_FAMILIES.filter((f) => !DAILY_ONLY.has(f)).length);
     const second = runResearchCycle({ ...args, registry: first.registry });
     expect(second.record.totals.oosCandidates).toBe(0);
     expect(second.record.markets[0].skipped[0].reason).toMatch(/no new evidence/);
@@ -121,8 +128,8 @@ describe('pooled universe evaluation', () => {
     for (const f of ALL_FAMILIES) expect(evaluatePooled(u, f, COST_PRESETS.coinbase_taker, HOUR, 7).status).toBe('rejected');
   });
   it('a genuine shared edge qualifies when pooled', () => {
-    const u = mk([7, 8, 9].map((s) => trendingRegimes(6000, s, 60)));
-    const r = evaluatePooled(u, 'ts_momentum', LOW, HOUR, 1);
+    const u = mk([7, 8, 9].map((s) => asDaily(trendingRegimes(6000, s, 60))));
+    const r = evaluatePooled(u, 'ts_momentum', LOW, 86_400_000, 1);
     expect(r.rejectionReasons).toEqual([]);
   });
 });

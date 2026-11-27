@@ -94,8 +94,9 @@ export const fmtUsd = (v: number | null | undefined, opts: { compact?: boolean }
   if (opts.compact) return `$${Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 2 }).format(v)}`;
   // sub-cent coins (e.g. PEPE) keep 4 significant digits instead of rounding to $0.00
   if (v !== 0 && Math.abs(v) < 0.01) return `$${v.toLocaleString(undefined, { maximumSignificantDigits: 4 })}`;
-  const d = Math.abs(v) < 1 ? 4 : 2;
-  return `$${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: d })}`;
+  // under $1: 4 significant digits (DOGE $0.05572, not $0.0557 - audit MD-1)
+  if (Math.abs(v) < 1) return `$${v.toLocaleString(undefined, { minimumSignificantDigits: 2, maximumSignificantDigits: 4 })}`;
+  return `$${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };
 
 export const fmtAge = (ts: number, now = Date.now()) => {

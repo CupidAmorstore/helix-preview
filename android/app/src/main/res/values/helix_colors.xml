@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- HELIX "Ledger" ink: shown behind the system bars (edge-to-edge) -->
+    <color name="helix_ink">#0F0F0D</color>
+</resources>

@@ -1,7 +1,8 @@
 name: Android preview APK
 
-# Builds a DEBUG APK of the app (Capacitor) and publishes it as the "android-preview" pre-release,
-# so it can be downloaded and installed directly on a phone. Paper trading only; no store release.
+# Builds a DEBUG QA APK (Capacitor) as a CI artifact on every push. A GitHub release in this PUBLIC repo is
+# publicly downloadable, so publishing one is opt-in only: run this workflow manually with
+# publish_public_release = true. Paper trading only; no store release.
 on:
   push:
     branches:
@@ -12,6 +13,15 @@ on:
       - 'docs/**'
       - '**/*.md'
   workflow_dispatch:
+    inputs:
+      publish_public_release:
+        description: 'Also publish the APK as the PUBLIC "android-preview" pre-release (anyone can download it)'
+        type: boolean
+        default: false
+      require_private_signing:
+        description: 'Restricted QA build: FAIL unless the private QA signing key is configured and actually used'
+        type: boolean
+        default: false
 
 permissions:
   contents: write # needed to update the android-preview pre-release
@@ -41,20 +51,95 @@ jobs:
       # the web inspection page (screenshots) is for the public site only
       - run: rm -rf dist/inspect
       - run: npx cap sync android
-      - name: Build debug APK
+      # Private QA signing key (owner-provided secrets). Without it the build is signed with the PUBLIC
+      # debug key and labelled as such.
+      - name: Prepare QA signing key (if configured; fail-closed when required)
+        env:
+          QA_KEYSTORE_B64: ${{ secrets.HELIX_QA_KEYSTORE_B64 }}
+          QA_STORE_PW: ${{ secrets.HELIX_QA_STORE_PASSWORD }}
+          QA_ALIAS: ${{ secrets.HELIX_QA_KEY_ALIAS }}
+          QA_KEY_PW: ${{ secrets.HELIX_QA_KEY_PASSWORD }}
+          REQUIRE_PRIVATE: ${{ github.event_name == 'workflow_dispatch' && inputs.require_private_signing }}
+        run: |
+          set -eu
+          n=0; for v in "$QA_KEYSTORE_B64" "$QA_STORE_PW" "$QA_ALIAS" "$QA_KEY_PW"; do [ -n "$v" ] && n=$((n+1)); done
+          if [ "$n" -ne 0 ] && [ "$n" -ne 4 ]; then
+            echo "::error::QA signing secrets are partially configured ($n/4). Refusing to fall back to the public debug key."; exit 1
+          fi
+          if [ "$REQUIRE_PRIVATE" = "true" ] && [ "$n" -ne 4 ]; then
+            echo "::error::require_private_signing=true but the private QA signing secrets are not configured. No APK built."; exit 1
+          fi
+          echo "REQUIRE_PRIVATE=$REQUIRE_PRIVATE" >> "$GITHUB_ENV"
+          if [ -n "$QA_KEYSTORE_B64" ]; then
+            echo "$QA_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/helix-qa.jks"
+            echo "HELIX_QA_KEYSTORE=$RUNNER_TEMP/helix-qa.jks" >> "$GITHUB_ENV"
+            echo "SIGNING=private QA key" >> "$GITHUB_ENV"
+          else
+            echo "SIGNING=PUBLIC debug key (testing only; anyone can sign an update with it)" >> "$GITHUB_ENV"
+          fi
+      # With the private QA key: a non-debuggable release build (audit SEC-2). Without it: debug build,
+      # signed with the public debug key and labelled as such (owner-only testing).
+      - name: Build APK
         working-directory: android
         env:
           VERSION_CODE: ${{ github.run_number }}
+          HELIX_QA_STORE_PASSWORD: ${{ secrets.HELIX_QA_STORE_PASSWORD }}
+          HELIX_QA_KEY_ALIAS: ${{ secrets.HELIX_QA_KEY_ALIAS }}
+          HELIX_QA_KEY_PASSWORD: ${{ secrets.HELIX_QA_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+          if [ "$SIGNING" = "private QA key" ]; then
+            ./gradlew assembleRelease --no-daemon --stacktrace
+            cp app/build/outputs/apk/release/app-release.apk ../helix-preview.apk
+            echo "BUILD_TYPE=release (not debuggable)" >> "$GITHUB_ENV"
+          else
+            ./gradlew assembleDebug --no-daemon --stacktrace
+            cp app/build/outputs/apk/debug/app-debug.apk ../helix-preview.apk
+            echo "BUILD_TYPE=debug (debuggable)" >> "$GITHUB_ENV"
+          fi
+          sha256sum ../helix-preview.apk
+      - name: Record APK identity
+        run: |
+          {
+            echo "application_id=com.helix.app"
+            echo "version_name=$(grep -m1 versionName android/app/build.gradle | sed -E 's/.*\"(.*)\".*/\1/')"
+            echo "version_code=${{ github.run_number }}"
+            echo "source_commit=${GITHUB_SHA}"
+            echo "workflow_run=${{ github.run_id }}"
+            echo "build_type=${BUILD_TYPE}"
+            echo "signing=${SIGNING}"
+            echo "sha256=$(sha256sum helix-preview.apk | cut -d' ' -f1)"
+          } | tee apk-identity.txt
+      # Fail closed: the certificate actually in the APK must match what is claimed. The public debug key's
+      # SHA-256 is known (committed android/app/debug.keystore).
+      - name: Verify APK signing certificate
+        run: |
+          set -eu
+          SIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          CERT=$("$SIGNER" verify --print-certs helix-preview.apk | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
+          PUBLIC=2c87443785d679b0b51b8115738083aa38ac766f4c1280e4e162484c9e1e1cdc
+          echo "apk_certificate_sha256=$CERT" | tee -a apk-identity.txt
+          AAPT=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 | sort -V | tail -1)
+          if "$AAPT" dump badging helix-preview.apk | grep -q "application-debuggable"; then DEBUGGABLE=yes; else DEBUGGABLE=no; fi
+          echo "debuggable=$DEBUGGABLE" | tee -a apk-identity.txt
+          if [ "$SIGNING" = "private QA key" ] && [ "$DEBUGGABLE" = "yes" ]; then echo "::error::private QA build must not be debuggable"; exit 1; fi
+          if [ -z "$CERT" ]; then echo "::error::could not read the APK signing certificate"; exit 1; fi
+          if [ "$CERT" = "$PUBLIC" ]; then
+            if [ "$SIGNING" = "private QA key" ]; then echo "::error::claimed private QA key but APK carries the PUBLIC debug certificate"; exit 1; fi
+            if [ "$REQUIRE_PRIVATE" = "true" ]; then echo "::error::restricted QA build signed with the PUBLIC debug key"; exit 1; fi
+          elif [ "$SIGNING" != "private QA key" ]; then
+            echo "::error::unexpected signing certificate $CERT"; exit 1
+          fi
+          echo "signing certificate consistent with: $SIGNING"
       - uses: actions/upload-artifact@v4
         with:
           name: helix-preview-apk
-          path: helix-preview.apk
-          retention-days: 14
-      - name: Publish android-preview pre-release
+          path: |
+            helix-preview.apk
+            apk-identity.txt
+          retention-days: 30
+      - name: Publish PUBLIC android-preview pre-release (manual opt-in only)
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_public_release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -62,5 +147,83 @@ jobs:
           gh release create android-preview helix-preview.apk \
             --prerelease \
             --target "${GITHUB_SHA}" \
-            --title "HELIX Android preview (debug build #${{ github.run_number }})" \
-            --notes "Debug build of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Trading Bot is PAPER ONLY — no real-money orders. Install: open this page on your Android phone, tap helix-preview.apk, allow installing from your browser."
+            --title "HELIX QA build #${{ github.run_number }} (debug, PUBLIC download, not a release)" \
+            --notes "QA BUILD, PUBLICLY DOWNLOADABLE (this repository is public), not a production release. Debug build of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Signed with: ${SIGNING}. sha256: $(sha256sum helix-preview.apk | cut -d' ' -f1). Paper trading only; wallet sending disabled; no real-money orders. Install: open this page on your Android phone, tap helix-preview.apk, allow installing from your browser."
+
+  # Emulator test of the EXACT artifact the apk job produced (downloaded, not rebuilt). Same run, so it works on
+  # every branch (workflow_run triggers only fire for workflows on the default branch).
+  device:
+    needs: apk
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download the distributed APK artifact (not a rebuild)
+        uses: actions/download-artifact@v4
+        with:
+          name: helix-preview-apk
+      - name: APK under test
+        run: |
+          cat apk-identity.txt
+          sha256sum helix-preview.apk
+          cp helix-preview.apk helix-e2e.apk
+          mkdir -p e2e-out && cp apk-identity.txt e2e-out/
+      - run: npm i --no-save playwright-core@1.49.1
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run on Android 15 emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: |
+            adb install -r helix-e2e.apk
+            node scripts/android-e2e.cjs
+      # Authoritative evidence: a workflow artifact of this run (does not depend on the Releases API).
+      - name: Keep evidence as a run artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-e2e-evidence
+          path: e2e-out/
+          retention-days: 90
+      # Convenience copy on the android-e2e release: best effort. Files are uploaded FIRST; the title/notes that name
+      # the run are changed only after every file uploaded, so the release never claims a run its files don't match.
+      - name: Publish evidence to the android-e2e release (best effort)
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: ${{ github.sha }}
+        run: |
+          mkdir -p e2e-out
+          cd e2e-out && zip -qr ../android-e2e-evidence.zip . && cd ..
+          TITLE="HELIX Android emulator test (run #${{ github.run_number }}, ${TARGET_SHA::7})"
+          NOTES="Exact APK artifact built by the apk job of this same run, installed on an Android 15 (API 35) emulator, ${TARGET_SHA::7}. APK identity in apk-identity.txt. Emulator, not a physical phone."
+          FILES="android-e2e-evidence.zip e2e-out/results.json e2e-out/apk-identity.txt"
+          # Update in place (a delete + re-create is not atomic: an API error between the two left the tag behind).
+          # Retries absorb transient GitHub API errors. The tag is not moved (no force-push); the tested commit is in
+          # the title, notes and apk-identity.txt.
+          for attempt in 1 2 3 4; do
+            if gh release view android-e2e >/dev/null 2>&1; then
+              gh release edit android-e2e --title "HELIX Android emulator test (updating…)" --notes "Upload in progress or failed; authoritative evidence is the android-e2e-evidence artifact of the latest Android preview APK run." \
+                && gh release upload android-e2e $FILES --clobber \
+                && gh release edit android-e2e --prerelease --title "$TITLE" --notes "$NOTES" && exit 0
+            else
+              gh release create android-e2e $FILES --prerelease --target "${TARGET_SHA}" --title "$TITLE" --notes "$NOTES" && exit 0
+            fi
+            echo "publish attempt $attempt failed; retrying"; sleep $((attempt * 15))
+          done
+          exit 1

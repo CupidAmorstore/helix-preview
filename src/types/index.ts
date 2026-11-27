@@ -34,6 +34,8 @@ export interface AlertRecord {
   threshold: number;
   enabled: boolean;
   createdAt: string;
+  /** set when the alert last fired (it re-arms once the price moves back) */
+  lastTriggeredAt?: string;
 }
 
 export interface SnapshotRecord {
