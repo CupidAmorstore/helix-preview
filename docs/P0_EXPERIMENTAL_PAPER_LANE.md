@@ -6,7 +6,7 @@ authorization of 2026-11-27. Real-money trading is disabled. Nothing here is val
 ## Branch and commits
 - Branch: `experimental-paper-lane`, created from `origin/main` (`0fa9b81`, which contains PR #3 and PR #4). **Not merged to main.**
 - Commit `aac950a`: implementation, tests, screening record, proposed registrations.
-- Commit `<activation>`: activation of the two registrations, updated status record, this document.
+- Commits `3f52051`, `534fe33`, `7c07433`: activation of the two registrations, status script, initial engine state.
 
 ## Hypotheses in active observation (cap 5)
 | # | Hypothesis | Account | Registration | Status |

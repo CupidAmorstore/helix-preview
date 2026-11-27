@@ -1,0 +1,115 @@
+{
+ "generatedAt": "2026-11-27T22:29:12.265Z",
+ "policy": {
+  "version": "experimental-v1",
+  "positionFraction": 0.05,
+  "maxDrawdown": 0.05,
+  "leverage": 1,
+  "averaging": false,
+  "maxPositionsPerAccount": 1
+ },
+ "note": "diagnostic on already-inspected history; not evidence",
+ "candidates": {
+  "E1": {
+   "market": "XRP-USD",
+   "spec": {
+    "family": "bollinger_reversion",
+    "params": {
+     "n": 20,
+     "k": 2,
+     "maxHold": 24
+    }
+   },
+   "window": [
+    "2025-04-12",
+    "2026-01-30"
+   ],
+   "startIndex": 696,
+   "results": {
+    "conservative 1.20% (registered)": {
+     "netReturnPct": 2.227,
+     "fills": 14,
+     "maxBuyNotionalUsd": 51.03522895875966,
+     "maxDrawdownPct": 0.649,
+     "latchTripped": false,
+     "totalCostUsd": 9.109
+    },
+    "secondary 0.90%": {
+     "netReturnPct": 2.455,
+     "fills": 14,
+     "maxBuyNotionalUsd": 51.133426703109784,
+     "maxDrawdownPct": 0.65,
+     "latchTripped": false,
+     "totalCostUsd": 6.9501
+    },
+    "legacy 0.60%": {
+     "netReturnPct": 2.685,
+     "fills": 14,
+     "maxBuyNotionalUsd": 51.232368623865085,
+     "maxDrawdownPct": 0.652,
+     "latchTripped": false,
+     "totalCostUsd": 4.7741
+    },
+    "double cost 2.40%": {
+     "netReturnPct": 1.294,
+     "fills": 14,
+     "maxBuyNotionalUsd": 50.633902760407956,
+     "maxDrawdownPct": 0.641,
+     "latchTripped": false,
+     "totalCostUsd": 17.9252
+    }
+   }
+  },
+  "E2": {
+   "market": "ETH-USD",
+   "spec": {
+    "family": "rsi_reversion",
+    "params": {
+     "n": 14,
+     "lo": 25,
+     "hi": 55,
+     "maxHold": 24
+    }
+   },
+   "window": [
+    "2023-12-01",
+    "2025-05-26"
+   ],
+   "startIndex": 1102,
+   "results": {
+    "conservative 1.20% (registered)": {
+     "netReturnPct": 1.042,
+     "fills": 4,
+     "maxBuyNotionalUsd": 50.046014083046764,
+     "maxDrawdownPct": 0.63,
+     "latchTripped": false,
+     "totalCostUsd": 2.6334
+    },
+    "secondary 0.90%": {
+     "netReturnPct": 1.109,
+     "fills": 4,
+     "maxBuyNotionalUsd": 50.0613379588828,
+     "maxDrawdownPct": 0.632,
+     "latchTripped": false,
+     "totalCostUsd": 2.0077
+    },
+    "legacy 0.60%": {
+     "netReturnPct": 1.176,
+     "fills": 4,
+     "maxBuyNotionalUsd": 50.076753184202225,
+     "maxDrawdownPct": 0.633,
+     "latchTripped": false,
+     "totalCostUsd": 1.378
+    },
+    "double cost 2.40%": {
+     "netReturnPct": 0.768,
+     "fills": 4,
+     "maxBuyNotionalUsd": 50,
+     "maxDrawdownPct": 0.623,
+     "latchTripped": false,
+     "totalCostUsd": 5.1992
+    }
+   }
+  }
+ }
+}

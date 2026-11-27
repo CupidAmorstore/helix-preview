@@ -96,6 +96,32 @@ export type ForwardRuleResult = {
 
 export type ForwardReport = { registrationId: string; evaluatedAt: number; state: string; results: ForwardRuleResult[]; problems: string[]; warnings?: string[] };
 
+/** Identity of a registration as first seen by the forward runner, stored in its append-only ledger. */
+export type RegistrationPin = { rulesHash: string; startAt: number | null; registeredAt: string; pinnedAt: string };
+
+/**
+ * External integrity anchor (P0 Phase III). `rulesHash` only proves a registration is consistent with ITSELF: an edit
+ * that also rewrites `rulesHash` passes `evaluateForward`. The ledger lives on the forward-ledger branch, which only the
+ * daily job writes, so the identity pinned there on first evaluation cannot be changed by editing the registration.
+ * The pin also covers `startAt` and `registeredAt`, which hash v1/v2 (registrations a and b) do not commit to.
+ * Legacy ledgers without a pin are pinned on their next run (trust on first use, disclosed as a warning).
+ */
+export function checkRegistrationPin(
+  reg: Pick<ForwardRegistration, 'rulesHash' | 'startAt' | 'registeredAt'>,
+  pin: RegistrationPin | undefined,
+  nowIso: string
+): { pin: RegistrationPin; problems: string[]; warnings: string[] } {
+  const current = { rulesHash: reg.rulesHash, startAt: reg.startAt ?? null, registeredAt: reg.registeredAt };
+  if (!pin) return { pin: { ...current, pinnedAt: nowIso }, problems: [], warnings: ['registration identity pinned now (first evaluation with pinning; earlier runs were not pinned)'] };
+  const changed = (Object.keys(current) as (keyof typeof current)[]).filter((k) => pin[k] !== current[k]);
+  if (!changed.length) return { pin, problems: [], warnings: [] };
+  return {
+    pin,
+    problems: [`registration changed after it was pinned (${changed.join(', ')}): a changed experiment is a NEW registration — stored ledger kept, nothing evaluated`],
+    warnings: []
+  };
+}
+
 /** Data checks for one market inside the forward window: completed bars only, no gaps, not stale. */
 export function forwardDataProblems(market: string, candles: Candle[], intervalMs: number, fromMs: number, nowMs: number, maxStaleBars = 2): string[] {
   const p: string[] = [];
