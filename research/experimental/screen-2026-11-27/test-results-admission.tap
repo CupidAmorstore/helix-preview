@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: trade-count-only profitable record is research eligible, never executable
+ok 1 - trade-count-only profitable record is research eligible, never executable
+  ---
+  duration_ms: 1.449234
+  type: 'test'
+  ...
+# Subtest: loss
+ok 2 - loss
+  ---
+  duration_ms: 0.328846
+  type: 'test'
+  ...
+# Subtest: training loss
+ok 3 - training loss
+  ---
+  duration_ms: 0.181234
+  type: 'test'
+  ...
+# Subtest: risk
+ok 4 - risk
+  ---
+  duration_ms: 0.234693
+  type: 'test'
+  ...
+# Subtest: missing drawdown
+ok 5 - missing drawdown
+  ---
+  duration_ms: 0.163666
+  type: 'test'
+  ...
+# Subtest: invalid drawdown
+ok 6 - invalid drawdown
+  ---
+  duration_ms: 0.177237
+  type: 'test'
+  ...
+# Subtest: unstable parameters
+ok 7 - unstable parameters
+  ---
+  duration_ms: 0.175925
+  type: 'test'
+  ...
+# Subtest: missing stability
+ok 8 - missing stability
+  ---
+  duration_ms: 0.262576
+  type: 'test'
+  ...
+# Subtest: mismatched record
+ok 9 - mismatched record
+  ---
+  duration_ms: 0.545963
+  type: 'test'
+  ...
+# Subtest: additional rejection
+ok 10 - additional rejection
+  ---
+  duration_ms: 0.602137
+  type: 'test'
+  ...
+# Subtest: already observed test
+ok 11 - already observed test
+  ---
+  duration_ms: 0.234294
+  type: 'test'
+  ...
+# Subtest: failed walk-forward
+ok 12 - failed walk-forward
+  ---
+  duration_ms: 0.200663
+  type: 'test'
+  ...
+# Subtest: NaN
+ok 13 - NaN
+  ---
+  duration_ms: 1.045556
+  type: 'test'
+  ...
+# Subtest: non-rejected source
+ok 14 - non-rejected source
+  ---
+  duration_ms: 0.098618
+  type: 'test'
+  ...
+# Subtest: single trade can enter research with warning, not qualification
+ok 15 - single trade can enter research with warning, not qualification
+  ---
+  duration_ms: 0.232481
+  type: 'test'
+  ...
+# Subtest: does not mutate history
+ok 16 - does not mutate history
+  ---
+  duration_ms: 0.107883
+  type: 'test'
+  ...
+# Subtest: repository loader joins exact market, dataset and family
+ok 17 - repository loader joins exact market, dataset and family
+  ---
+  duration_ms: 4.152197
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 106.362213

@@ -1,0 +1,752 @@
+{
+  "policy": {
+    "maxDrawdown": 0.25,
+    "minNeighbourPassShare": 0.5
+  },
+  "scope": "historical research triage only",
+  "screened": 28,
+  "eligible": 5,
+  "results": [
+    {
+      "key": "sma_cross|ETH-USD|3600000|fd8dc91a-8754",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 50,
+          "slow": 200
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.013874816541649349,
+      "historicalValidationTrades": 7,
+      "historicalValidationDrawdown": 0.15266572224165792,
+      "historicalTrainingDrawdown": 0.17316681741036014,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "sma_cross|ADA-USD|3600000|5b1824c9-8754",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 50,
+          "slow": 100
+        }
+      },
+      "state": "experimental_research_eligible",
+      "reasons": [],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.1159875488447073,
+      "historicalValidationTrades": 8,
+      "historicalValidationDrawdown": 0.19157442204875835,
+      "historicalTrainingDrawdown": 0.16123880204829874,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "sma_cross|LINK-USD|3600000|3e2e8e14-8754",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 20,
+          "slow": 200
+        }
+      },
+      "state": "experimental_research_eligible",
+      "reasons": [],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.25604782593794884,
+      "historicalValidationTrades": 3,
+      "historicalValidationDrawdown": 0.13441432720232338,
+      "historicalTrainingDrawdown": 0.10302249452941005,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "sma_cross|BTC-USD|86400000|596997c7-2189",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 10,
+          "slow": 100
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.3568638358692371,
+      "historicalValidationTrades": 5,
+      "historicalValidationDrawdown": 0.4064991573979097,
+      "historicalTrainingDrawdown": 0.43887146638612123,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "donchian_breakout|BTC-USD|86400000|596997c7-2189",
+      "spec": {
+        "family": "donchian_breakout",
+        "params": {
+          "entry": 20,
+          "exit": 20
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.2776331440838167,
+      "historicalValidationTrades": 7,
+      "historicalValidationDrawdown": 0.44429639857649333,
+      "historicalTrainingDrawdown": 0.5086434790747889,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "bollinger_reversion|BTC-USD|86400000|596997c7-2189",
+      "spec": {
+        "family": "bollinger_reversion",
+        "params": {
+          "n": 20,
+          "k": 2.5,
+          "maxHold": 24
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.2376078041193277,
+      "historicalValidationTrades": 5,
+      "historicalValidationDrawdown": 0.10062770315563833,
+      "historicalTrainingDrawdown": 0.3201028371479227,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "rsi_reversion|ETH-USD|86400000|d42a807a-2189",
+      "spec": {
+        "family": "rsi_reversion",
+        "params": {
+          "n": 14,
+          "lo": 25,
+          "hi": 55,
+          "maxHold": 24
+        }
+      },
+      "state": "experimental_research_eligible",
+      "reasons": [],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.24110072036500863,
+      "historicalValidationTrades": 2,
+      "historicalValidationDrawdown": 0.11223546406644998,
+      "historicalTrainingDrawdown": 0.19637672368474265,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "sma_cross|SOL-USD|86400000|9ba1194d-1984",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 10,
+          "slow": 200
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.0311912780268786,
+      "historicalValidationTrades": 4,
+      "historicalValidationDrawdown": 0.4316946662689868,
+      "historicalTrainingDrawdown": 0.6562573892942285,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "vol_compression_breakout|SOL-USD|86400000|9ba1194d-1984",
+      "spec": {
+        "family": "vol_compression_breakout",
+        "params": {
+          "n": 20,
+          "lookback": 120,
+          "pct": 0.1
+        }
+      },
+      "state": "experimental_research_eligible",
+      "reasons": [],
+      "warnings": [
+        "only one validation trade",
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.0340850936922652,
+      "historicalValidationTrades": 1,
+      "historicalValidationDrawdown": 0.09648454505877214,
+      "historicalTrainingDrawdown": 0.1584335530968491,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "donchian_breakout|XRP-USD|86400000|0f197877-1285",
+      "spec": {
+        "family": "donchian_breakout",
+        "params": {
+          "entry": 55,
+          "exit": 10
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "only one validation trade",
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.14672852883204324,
+      "historicalValidationTrades": 1,
+      "historicalValidationDrawdown": 0.1722744573632497,
+      "historicalTrainingDrawdown": 0.33074388482662337,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "trend_filtered_momentum|XRP-USD|86400000|0f197877-1285",
+      "spec": {
+        "family": "trend_filtered_momentum",
+        "params": {
+          "lookback": 24,
+          "filter": 200
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.004753481077329091,
+      "historicalValidationTrades": 7,
+      "historicalValidationDrawdown": 0.3393502281244462,
+      "historicalTrainingDrawdown": 0.4567920283737405,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "bollinger_reversion|XRP-USD|86400000|0f197877-1285",
+      "spec": {
+        "family": "bollinger_reversion",
+        "params": {
+          "n": 20,
+          "k": 2,
+          "maxHold": 24
+        }
+      },
+      "state": "experimental_research_eligible",
+      "reasons": [],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.6644312302193034,
+      "historicalValidationTrades": 7,
+      "historicalValidationDrawdown": 0.12012426648256824,
+      "historicalTrainingDrawdown": 0.1939816593345659,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "donchian_breakout|DOGE-USD|86400000|0118ae7c-1998",
+      "spec": {
+        "family": "donchian_breakout",
+        "params": {
+          "entry": 20,
+          "exit": 10
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.9398155601183762,
+      "historicalValidationTrades": 6,
+      "historicalValidationDrawdown": 0.43413039958795835,
+      "historicalTrainingDrawdown": 0.6103484474951048,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "bollinger_reversion|DOGE-USD|86400000|0118ae7c-1998",
+      "spec": {
+        "family": "bollinger_reversion",
+        "params": {
+          "n": 50,
+          "k": 2.5,
+          "maxHold": 24
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "only one validation trade",
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.04941068771809376,
+      "historicalValidationTrades": 1,
+      "historicalValidationDrawdown": 0.12475668023358698,
+      "historicalTrainingDrawdown": 0.28029602220166516,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "donchian_breakout|ADA-USD|86400000|da286594-2075",
+      "spec": {
+        "family": "donchian_breakout",
+        "params": {
+          "entry": 55,
+          "exit": 10
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.4105780433624273,
+      "historicalValidationTrades": 4,
+      "historicalValidationDrawdown": 0.32391560273148773,
+      "historicalTrainingDrawdown": 0.5206631892888636,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "bollinger_reversion|ADA-USD|86400000|da286594-2075",
+      "spec": {
+        "family": "bollinger_reversion",
+        "params": {
+          "n": 20,
+          "k": 2.5,
+          "maxHold": 24
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.11627505952487449,
+      "historicalValidationTrades": 7,
+      "historicalValidationDrawdown": 0.35054479464726357,
+      "historicalTrainingDrawdown": 0.3755165509280965,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "sma_cross|AVAX-USD|86400000|6fae5cd5-1879",
+      "spec": {
+        "family": "sma_cross",
+        "params": {
+          "fast": 10,
+          "slow": 100
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.07897470192734035,
+      "historicalValidationTrades": 4,
+      "historicalValidationDrawdown": 0.5919745253206808,
+      "historicalTrainingDrawdown": 0.46492067552458216,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "bollinger_reversion|LINK-USD|86400000|dd2f0bba-2189",
+      "spec": {
+        "family": "bollinger_reversion",
+        "params": {
+          "n": 50,
+          "k": 2.5,
+          "maxHold": 24
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.05578486014585482,
+      "historicalValidationTrades": 2,
+      "historicalValidationDrawdown": 0.19364388141127695,
+      "historicalTrainingDrawdown": 0.48293885295743644,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "rsi_reversion|LINK-USD|86400000|dd2f0bba-2189",
+      "spec": {
+        "family": "rsi_reversion",
+        "params": {
+          "n": 14,
+          "lo": 25,
+          "hi": 55,
+          "maxHold": 24
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.3014854506767066,
+      "historicalValidationTrades": 2,
+      "historicalValidationDrawdown": 0.1513485544272686,
+      "historicalTrainingDrawdown": 0.2680652680652681,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "donchian_breakout|DOT-USD|86400000|81a55b83-1985",
+      "spec": {
+        "family": "donchian_breakout",
+        "params": {
+          "entry": 55,
+          "exit": 20
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.16506691563238118,
+      "historicalValidationTrades": 2,
+      "historicalValidationDrawdown": 0.42443018746359173,
+      "historicalTrainingDrawdown": 0.5563977975833042,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "vol_filtered_trend|ETH-USD|86400000|d42a807a-2189",
+      "spec": {
+        "family": "vol_filtered_trend",
+        "params": {
+          "trend": 50,
+          "vol": 20,
+          "lookback": 250
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.10756540995372488,
+      "historicalValidationTrades": 9,
+      "historicalValidationDrawdown": 0.24920254130182787,
+      "historicalTrainingDrawdown": 0.61452102714797,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "regime_switch|XRP-USD|86400000|0f197877-1285",
+      "spec": {
+        "family": "regime_switch",
+        "params": {
+          "er": 20,
+          "erTrend": 0.4,
+          "trend": 50,
+          "n": 20,
+          "k": 2,
+          "maxHold": 20
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.30436759649025213,
+      "historicalValidationTrades": 11,
+      "historicalValidationDrawdown": 0.22048928802680107,
+      "historicalTrainingDrawdown": 0.4330575524447418,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "vol_filtered_trend|DOGE-USD|86400000|0118ae7c-1998",
+      "spec": {
+        "family": "vol_filtered_trend",
+        "params": {
+          "trend": 50,
+          "vol": 20,
+          "lookback": 250
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.6352090782021802,
+      "historicalValidationTrades": 12,
+      "historicalValidationDrawdown": 0.3159634035598112,
+      "historicalTrainingDrawdown": 0.358182448217939,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "weekly_trend|BTC-USD|86400000|596997c7-2189",
+      "spec": {
+        "family": "weekly_trend",
+        "params": {
+          "n": 100,
+          "period": 7
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.28382172161733554,
+      "historicalValidationTrades": 6,
+      "historicalValidationDrawdown": 0.34523068987057043,
+      "historicalTrainingDrawdown": 0.3561484242701781,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "monthly_momentum|BTC-USD|86400000|596997c7-2189",
+      "spec": {
+        "family": "monthly_momentum",
+        "params": {
+          "lookback": 90,
+          "period": 28
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.05473709690417472,
+      "historicalValidationTrades": 4,
+      "historicalValidationDrawdown": 0.325557102285341,
+      "historicalTrainingDrawdown": 0.40417889305056187,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "weekly_trend|SOL-USD|86400000|9ba1194d-1984",
+      "spec": {
+        "family": "weekly_trend",
+        "params": {
+          "n": 200,
+          "period": 7
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing"
+      ],
+      "warnings": [
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.2989602176505721,
+      "historicalValidationTrades": 3,
+      "historicalValidationDrawdown": 0.41940807576018074,
+      "historicalTrainingDrawdown": 0.4797997135257051,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "weekly_trend|ADA-USD|86400000|da286594-2075",
+      "spec": {
+        "family": "weekly_trend",
+        "params": {
+          "n": 100,
+          "period": 7
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.12401340565298113,
+      "historicalValidationTrades": 5,
+      "historicalValidationDrawdown": 0.6712204595493432,
+      "historicalTrainingDrawdown": 0.4584904874292468,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    },
+    {
+      "key": "monthly_momentum|POOLED|86400000|b9460027",
+      "spec": {
+        "family": "monthly_momentum",
+        "params": {
+          "lookback": 90,
+          "period": 28
+        }
+      },
+      "state": "research_deferred",
+      "reasons": [
+        "historical drawdown above limit or missing",
+        "parameter stability too weak or missing"
+      ],
+      "warnings": [
+        "walk-forward not recorded",
+        "historical modeled costs; fresh venue cost evidence required",
+        "selection used previously observed results; prospective evidence required"
+      ],
+      "historicalValidationNet": 0.029085758364093932,
+      "historicalValidationTrades": 10,
+      "historicalValidationDrawdown": 0.46317130681818186,
+      "historicalTrainingDrawdown": 0.6381665107577176,
+      "qualifiedPaper": false,
+      "executionAuthorized": false,
+      "realMoneyAuthorized": false
+    }
+  ]
+}

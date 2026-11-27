@@ -1,0 +1,52 @@
+{
+ "status": "proposed",
+ "registeredAt": "2026-11-27T08:43:31.200Z",
+ "startAt": null,
+ "capitalUsd": 1000,
+ "costPreset": "coinbase_experimental_conservative_2026_11",
+ "evaluation": {
+  "minMonths": 12,
+  "familyAlpha": 0.01
+ },
+ "costSnapshot": {
+  "takerFeeBps": 120,
+  "halfSpreadBps": 2,
+  "slippageBps": 3,
+  "fixedCostUsd": 0,
+  "minOrderUsd": 1
+ },
+ "hashVersion": 3,
+ "policy": {
+  "version": "experimental-v1",
+  "positionFraction": 0.05,
+  "maxDrawdown": 0.05
+ },
+ "id": "experimental-e1-xrp-bollinger-2026-11-27",
+ "rules": [
+  {
+   "id": "E1-xrp-bollinger-20-2",
+   "kind": "pooled",
+   "family": "bollinger_reversion",
+   "params": {
+    "n": 20,
+    "k": 2,
+    "maxHold": 24
+   },
+   "markets": [
+    "XRP-USD"
+   ],
+   "intervalMs": 86400000
+  }
+ ],
+ "rationale": [
+  "Candidate: XRP daily Bollinger reversion (n=20, k=2, maxHold=24), from the P0 screen (validation net 66.4%, DD 12.0%, 7 validation trades)."
+ ],
+ "disclosures": [
+  "Experimental paper observation only. No real money, no leverage, no averaging down, 5% maximum per position, drawdown guard at 5% latches new entries.",
+  "Retrospectively selected from already-inspected history; that history is NOT evidence. Only bars at or after startAt count.",
+  "Costs are a conservative UNVERIFIED bound (Coinbase 1.20% taker + 2 bps half-spread + 3 bps slippage). The account tier is not verified; this is not the account fee.",
+  "Experimental approval is not a validation: the final qualification gates (gates-v4) are unchanged and a validated status requires them all.",
+  "Activation starts at the next 00:00 UTC bar; registrations a and b are untouched."
+ ],
+ "rulesHash": "580070b27a28d32e785e798b5f5e09afb2fb24f17a514fe5c6736fc315a29df1"
+}

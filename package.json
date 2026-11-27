@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest run && node --test tests/experimental-admission.test.mjs",
     "bot:research": "vite-node --config scripts/vite.node.config.ts scripts/bot-research.ts",
     "typecheck": "tsc --noEmit -p ."
   },

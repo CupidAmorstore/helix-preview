@@ -1,0 +1,1 @@
+PASS: canonical hash matches existing registration-b; proposed status, null start, two rules, cost and parameter mutation checks.

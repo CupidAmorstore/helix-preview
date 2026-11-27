@@ -1,4 +1,4 @@
-﻿import js from '@eslint/js';
+import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -28,6 +28,11 @@ export default [
       // TypeScript already checks undefined identifiers; core no-undef misfires on TS globals/types
       'no-undef': 'off'
     }
+  },
+  {
+    // plain Node ES modules (experimental triage scripts and tests): declare the Node globals they use
+    files: ['**/*.mjs'],
+    languageOptions: { globals: { process: 'readonly', console: 'readonly', URL: 'readonly' } }
   },
   {
     ignores: ['dist', 'dist-pages', 'legacy', 'netlify/functions/**', 'android/**', 'ios/**', 'docs/qa/**', 'docs/audits/**', 'scripts/android-e2e.cjs']
