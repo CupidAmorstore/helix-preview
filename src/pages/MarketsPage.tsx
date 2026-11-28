@@ -5,6 +5,7 @@ import { fetchCoinbaseProducts, fetchTopCoins, fmtAge, fmtUsd, type CoinbaseProd
 import { useWatchlist } from '../hooks/useWatchlist';
 import { usePaper } from '../paper/PaperProvider';
 import { MARKET_COINS } from '../services/market';
+import { useT } from '../i18n';
 
 type Tab = 'all' | 'watch' | 'gainers' | 'losers';
 type Sort = 'cap' | 'volume' | 'change';
@@ -20,6 +21,7 @@ export default function MarketsPage() {
   const [sort, setSort] = useState<Sort>('cap');
   const { list: watch } = useWatchlist();
   const { feed } = usePaper();
+  const t = useT();
 
   const loadTop = () => {
     setTopErr('');
@@ -68,29 +70,29 @@ export default function MarketsPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
-      <h1 className="text-[26px] font-semibold tracking-tight text-white">Markets</h1>
+      <h1 className="text-[26px] font-semibold tracking-tight text-white">{t('Markets', 'Marchés')}</h1>
       <label className="flex min-h-[48px] min-w-0 items-center gap-2 rounded-full border border-ink-500 bg-ink-800 px-4">
         <span aria-hidden="true" className="text-slate-400">⌕</span>
-        <span className="sr-only">Search coins</span>
+        <span className="sr-only">{t('Search coins', 'Rechercher une cryptomonnaie')}</span>
         <input
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search coins (all Coinbase markets)"
+          placeholder={t('Search coins (all Coinbase markets)', 'Rechercher (tous les marchés Coinbase)')}
           className="min-h-[46px] flex-1 bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none"
         />
       </label>
       <Segmented
-        label="Market lists"
+        label={t('Market lists', 'Listes de marchés')}
         value={tab}
         onChange={setTab}
-        options={[{ value: 'all', label: 'All' }, { value: 'watch', label: 'Watchlist' }, { value: 'gainers', label: 'Gainers' }, { value: 'losers', label: 'Losers' }]}
+        options={[{ value: 'all', label: t('All', 'Tous') }, { value: 'watch', label: t('Watchlist', 'Favoris') }, { value: 'gainers', label: t('Gainers', 'En hausse') }, { value: 'losers', label: t('Losers', 'En baisse') }]}
       />
       {tab === 'all' && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <span id="sort-label">Sort</span>
+          <span id="sort-label">{t('Sort', 'Trier')}</span>
           <div role="radiogroup" aria-labelledby="sort-label" className="flex flex-wrap gap-1">
-            {([['cap', 'Market cap'], ['volume', 'Volume'], ['change', '24h change']] as const).map(([v, l]) => (
+            {([['cap', t('Market cap', 'Capitalisation')], ['volume', t('Volume', 'Volume')], ['change', t('24h change', 'Variation 24 h')]] as const).map(([v, l]) => (
               <button key={v} type="button" role="radio" aria-checked={sort === v} onClick={() => setSort(v)}
                 className={`min-h-[44px] px-2 ${sort === v ? 'font-semibold text-white underline decoration-1 underline-offset-4' : 'text-slate-400'}`}>
                 {l}
@@ -100,17 +102,17 @@ export default function MarketsPage() {
         </div>
       )}
 
-      {!top && !topErr && <div className="space-y-2" aria-label="Loading markets">{[0, 1, 2, 3, 4].map((i) => <div key={i} className="h-14 animate-pulse border-b border-ink-600 bg-ink-800/60" />)}</div>}
+      {!top && !topErr && <div className="space-y-2" aria-label={t('Loading markets', 'Chargement des marchés')}>{[0, 1, 2, 3, 4].map((i) => <div key={i} className="h-14 animate-pulse border-b border-ink-600 bg-ink-800/60" />)}</div>}
       {topErr && !top && (
         <div role="status" className="flex items-start justify-between gap-3 border-l-2 border-paper py-1 pl-3">
-          <p className="text-sm text-slate-300">The full ranked list is busy right now. Showing the main coins with live prices; search still finds every Coinbase market.</p>
-          <button type="button" onClick={loadTop} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm text-white">Retry</button>
+          <p className="text-sm text-slate-300">{t('The full ranked list is busy right now. Showing the main coins with live prices; search still finds every Coinbase market.', 'Le classement complet est momentanément indisponible. Les principales cryptomonnaies sont affichées avec leurs prix en direct; la recherche trouve toujours tous les marchés Coinbase.')}</p>
+          <button type="button" onClick={loadTop} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm text-white">{t('Retry', 'Réessayer')}</button>
         </div>
       )}
 
       {(top || topErr) && (
         <ul className="divide-y divide-ink-600 border-t border-ink-600">
-          {shown.length === 0 && <li className="p-4 text-sm text-slate-400">{tab === 'watch' ? 'Your watchlist is empty. Open a coin and tap ☆ to add it.' : 'No coins match.'}</li>}
+          {shown.length === 0 && <li className="p-4 text-sm text-slate-400">{tab === 'watch' ? t('Your watchlist is empty. Open a coin and tap ☆ to add it.', 'Votre liste de favoris est vide. Ouvrez une cryptomonnaie et touchez ☆ pour l’ajouter.') : t('No coins match.', 'Aucun résultat.')}</li>}
           {shown.map((r) => (
             <li key={r.symbol}>
               <Link to={`/markets/${r.symbol}`} className="flex min-h-[60px] items-center gap-3 py-2">
@@ -120,7 +122,7 @@ export default function MarketsPage() {
                   <span className="block text-xs text-slate-500">
                     {r.symbol}
                     {r.cap ? ` · ${fmtUsd(r.cap, { compact: true })}` : ''}
-                    {!r.tradable ? (r.symbol === 'USDC' ? ' · = USD on Coinbase (no pair)' : ' · no USD pair on Coinbase') : ''}
+                    {!r.tradable ? (r.symbol === 'USDC' ? t(' · = USD on Coinbase (no pair)', ' · = USD sur Coinbase (aucune paire)') : t(' · no USD pair on Coinbase', ' · aucune paire USD sur Coinbase')) : ''}
                   </span>
                 </span>
                 <span className="text-right">
@@ -134,8 +136,9 @@ export default function MarketsPage() {
       )}
       {top && (
         <Note>
-          List: {top.source}{top.fromCache ? ' (saved copy)' : ''}, updated {fmtAge(top.fetchedAt)}. Main coins use live Coinbase prices; 24h change from Coinbase where live.
-          Exchange markets only; decentralized pools and network filters are not available yet.
+          {t('List', 'Liste')} : {top.source}{top.fromCache ? t(' (saved copy)', ' (copie enregistrée)') : ''}, {t('updated', 'mise à jour')} {fmtAge(top.fetchedAt)}.{' '}
+          {t('Main coins use live Coinbase prices; 24h change from Coinbase where live. Exchange markets only; decentralized pools and network filters are not available yet.',
+            'Les principales cryptomonnaies utilisent les prix Coinbase en direct, et la variation sur 24 h de Coinbase lorsqu’elle est disponible. Marchés de plateformes seulement; les pools décentralisés et les filtres par réseau ne sont pas encore offerts.')}
         </Note>
       )}
     </div>
