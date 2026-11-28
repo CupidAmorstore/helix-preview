@@ -94,7 +94,7 @@ export function WalletAccounts({ addresses, network, rpc }: { addresses: Partial
 
   return (
     <>
-      <Panel title={tt(tt('Accounts', 'Comptes'), 'Comptes')} action={<Button kind="ghost" onClick={refresh}>{tt(tt('Refresh', 'Actualiser'), 'Actualiser')}</Button>}>
+      <Panel title={tt('Accounts', 'Comptes')} action={<Button kind="ghost" onClick={refresh}>{tt('Refresh', 'Actualiser')}</Button>}>
         <ul className="divide-y divide-ink-600">
           {CHAINS.map(({ chain, symbol, name }) => {
             const a = addresses[chain];
@@ -107,43 +107,43 @@ export function WalletAccounts({ addresses, network, rpc }: { addresses: Partial
                     <p className="text-xs text-slate-400">{NETWORK_LABEL[chain][network]}</p>
                   </div>
                   <p className="text-right font-mono text-sm text-white tabular-nums">
-                    {b === undefined ? '…' : b === 'error' ? <span className="text-amber-400">{tt(tt('unavailable', 'indisponible'), 'indisponible')}</span> : `${b.toLocaleString(undefined, { maximumFractionDigits: 8 })} ${symbol}`}
+                    {b === undefined ? '…' : b === 'error' ? <span className="text-amber-400">{tt('unavailable', 'indisponible')}</span> : `${b.toLocaleString(undefined, { maximumFractionDigits: 8 })} ${symbol}`}
                   </p>
                 </div>
                 {a && <p className="break-all font-mono text-xs text-slate-400">{a}</p>}
                 <div className="grid grid-cols-3 gap-2">
-                  <Button onClick={() => setReceive(chain)} className="!min-h-[44px] !px-2 text-xs">{tt(tt('Receive', 'Recevoir'), 'Recevoir')}</Button>
+                  <Button onClick={() => setReceive(chain)} className="!min-h-[44px] !px-2 text-xs">{tt('Receive', 'Recevoir')}</Button>
                   <Button onClick={() => a && doCopy(a)} className="!min-h-[44px] !px-2 text-xs">{copied === a ? tt('Copied ✓', 'Copié ✓') : tt('Copy', 'Copier')}</Button>
-                  <Button onClick={() => setHistory(chain)} className="!min-h-[44px] !px-2 text-xs">{tt(tt('History', 'Historique'), 'Historique')}</Button>
+                  <Button onClick={() => setHistory(chain)} className="!min-h-[44px] !px-2 text-xs">{tt('History', 'Historique')}</Button>
                 </div>
               </li>
             );
           })}
         </ul>
-        {copied === 'failed' && <Note tone="warn">{tt(tt('Copy is blocked here. Long-press the address to select it.', 'La copie est bloquée ici. Appuyez longuement sur l’adresse pour la sélectionner.'), 'La copie est bloquée ici. Appuyez longuement sur l’adresse pour la sélectionner.')}</Note>}
+        {copied === 'failed' && <Note tone="warn">{tt('Copy is blocked here. Long-press the address to select it.', 'La copie est bloquée ici. Appuyez longuement sur l’adresse pour la sélectionner.')}</Note>}
         <Note>{checkedAt ? tt(`Balances from public blockchain data, checked ${fmtAge(checkedAt)}.`, `Soldes tirés des données publiques de la chaîne de blocs, vérifiés ${fmtAge(checkedAt)}.`) : ''} {network === 'testnet' ? tt('Testnet coins have no value.', 'Les pièces du réseau de test n’ont aucune valeur.') : tt('Mainnet: real funds.', 'Réseau principal : vrais fonds.')}</Note>
       </Panel>
 
-      <Sheet open={receive !== null} onClose={() => setReceive(null)} title={`${tt(tt('Receive', 'Recevoir'), 'Recevoir')} ${receive ? CHAINS.find((c) => c.chain === receive)!.name : ''}`}>
+      <Sheet open={receive !== null} onClose={() => setReceive(null)} title={`${tt('Receive', 'Recevoir')} ${receive ? CHAINS.find((c) => c.chain === receive)!.name : ''}`}>
         {receive && addresses[receive] && (
           <div className="space-y-3">
             <p className="rounded-xl bg-amber-500/10 p-3 text-sm text-amber-300">{tt(`Only send ${NETWORK_LABEL[receive][network]} coins to this address. Coins from another network can be lost.`, `N’envoyez à cette adresse que des pièces ${NETWORK_LABEL[receive][network]}. Des pièces d’un autre réseau peuvent être perdues.`)}</p>
-            <p className="break-all rounded-xl bg-ink-900 p-3 font-code text-sm text-white" aria-label={tt(tt('Your address', 'Votre adresse'), 'Votre adresse')}>{addresses[receive]}</p>
+            <p className="break-all rounded-xl bg-ink-900 p-3 font-code text-sm text-white" aria-label={tt('Your address', 'Votre adresse')}>{addresses[receive]}</p>
             <Button kind="primary" className="w-full" onClick={() => doCopy(addresses[receive]!)}>{copied === addresses[receive] ? tt('Copied ✓', 'Copié ✓') : tt('Copy address', 'Copier l’adresse')}</Button>
-            <a href={explorerAddressUrl(receive, addresses[receive]!, network)} target="_blank" rel="noreferrer" className="flex min-h-[44px] items-center justify-center text-sm text-helix-400">{tt(tt('View on block explorer', 'Voir dans l’explorateur de blocs'), 'Voir dans l’explorateur de blocs')}</a>
+            <a href={explorerAddressUrl(receive, addresses[receive]!, network)} target="_blank" rel="noreferrer" className="flex min-h-[44px] items-center justify-center text-sm text-helix-400">{tt('View on block explorer', 'Voir dans l’explorateur de blocs')}</a>
           </div>
         )}
       </Sheet>
 
-      <Sheet open={history !== null} onClose={() => { setHistory(null); setTxs(null); }} title={`${tt(tt('History', 'Historique'), 'Historique')} ${history ? CHAINS.find((c) => c.chain === history)!.name : ''}`}>
+      <Sheet open={history !== null} onClose={() => { setHistory(null); setTxs(null); }} title={`${tt('History', 'Historique')} ${history ? CHAINS.find((c) => c.chain === history)!.name : ''}`}>
         {history && (
           <div className="space-y-3">
-            {txs === null && <p className="text-sm text-slate-400">{tt(tt('Loading…', 'Chargement…'), 'Chargement…')}</p>}
-            {txs === 'error' && <p className="text-sm text-amber-400">{tt(tt('History is unavailable right now.', 'L’historique est indisponible pour l’instant.'), 'L’historique est indisponible pour l’instant.')}</p>}
+            {txs === null && <p className="text-sm text-slate-400">{tt('Loading…', 'Chargement…')}</p>}
+            {txs === 'error' && <p className="text-sm text-amber-400">{tt('History is unavailable right now.', 'L’historique est indisponible pour l’instant.')}</p>}
             {txs === 'unsupported' && (
               <p className="text-sm text-slate-300">{tt('Ethereum history needs an indexer HELIX doesn’t have for free. Open the explorer to see every transaction.', 'L’historique Ethereum exige un service d’indexation que HELIX n’a pas gratuitement. Ouvrez l’explorateur pour voir chaque transaction.')}</p>
             )}
-            {Array.isArray(txs) && txs.length === 0 && <p className="text-sm text-slate-400">{tt(tt('No transactions yet.', 'Aucune transaction pour l’instant.'), 'Aucune transaction pour l’instant.')}</p>}
+            {Array.isArray(txs) && txs.length === 0 && <p className="text-sm text-slate-400">{tt('No transactions yet.', 'Aucune transaction pour l’instant.')}</p>}
             {Array.isArray(txs) && txs.length > 0 && (
               <ul className="divide-y divide-ink-600">
                 {txs.map((t) => (
@@ -159,7 +159,7 @@ export function WalletAccounts({ addresses, network, rpc }: { addresses: Partial
                 ))}
               </ul>
             )}
-            {addresses[history] && <a href={explorerAddressUrl(history, addresses[history]!, network)} target="_blank" rel="noreferrer" className="flex min-h-[44px] items-center justify-center text-sm text-helix-400">{tt(tt('Open block explorer', 'Ouvrir l’explorateur de blocs'), 'Ouvrir l’explorateur de blocs')}</a>}
+            {addresses[history] && <a href={explorerAddressUrl(history, addresses[history]!, network)} target="_blank" rel="noreferrer" className="flex min-h-[44px] items-center justify-center text-sm text-helix-400">{tt('Open block explorer', 'Ouvrir l’explorateur de blocs')}</a>}
           </div>
         )}
       </Sheet>

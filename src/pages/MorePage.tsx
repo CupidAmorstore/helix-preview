@@ -40,7 +40,7 @@ export default function MorePage() {
             </button>
           ))}
         </div>
-        {lang === 'fr' && <p className="text-xs text-slate-500">La traduction française couvre l’accueil, la navigation, les ordres fictifs et les pages d’aide et légales; les autres écrans sont encore en anglais.</p>}
+        {lang === 'fr' && <p className="text-xs text-slate-500">Tous les écrans sont traduits. Certains détails techniques du Labo de recherche (identifiants, noms de jeux de données, raisons brutes des tests) restent en anglais. Traduction non révisée par un traducteur professionnel.</p>}
       </section>
       <p className="text-xs text-slate-400">
         {t('HELIX does not hold your funds. The Trading Bot uses simulated money only; real-money trading is disabled.',

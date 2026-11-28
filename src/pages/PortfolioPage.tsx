@@ -7,7 +7,7 @@ import { useVault } from '../services/vault';
 import { fetchExchangeBalances } from '../services/exchanges';
 import { fetchBtcBalance, fetchEthBalance, fetchSolBalance } from '../services/onchain';
 import type { EncryptedPayload } from '../types';
-import { useT } from '../i18n';
+import { tr, useT } from '../i18n';
 
 const COIN_ID_MAP: Record<string, string> = {
   BTC: 'bitcoin',
@@ -49,7 +49,7 @@ export default function PortfolioPage() {
     try {
       const [addresses, exchanges] = await Promise.all([listAddresses(), listExchanges()]);
       if (addresses.length === 0 && exchanges.length === 0) {
-        setNotes([t('Nothing to refresh yet: add a public address in Connections first.', 'Rien à actualiser pour l’instant : ajoutez d’abord une adresse publique dans Connexions.')]);
+        setNotes([tr('Nothing to refresh yet: add a public address in Connections first.', 'Rien à actualiser pour l’instant : ajoutez d’abord une adresse publique dans Connexions.')]);
         setStatus('idle');
         return;
       }
@@ -65,18 +65,18 @@ export default function PortfolioPage() {
           try {
             etherscanKey = await vault.decrypt(encryptedEtherscan);
           } catch {
-            localNotes.push(t('Unable to decrypt Etherscan API key.', 'Impossible de déchiffrer la clé API Etherscan.'));
+            localNotes.push(tr('Unable to decrypt Etherscan API key.', 'Impossible de déchiffrer la clé API Etherscan.'));
           }
         }
         if (encryptedSolRpc) {
           try {
             solRpc = await vault.decrypt(encryptedSolRpc);
           } catch {
-            localNotes.push(t('Unable to decrypt Solana RPC setting.', 'Impossible de déchiffrer le réglage RPC Solana.'));
+            localNotes.push(tr('Unable to decrypt Solana RPC setting.', 'Impossible de déchiffrer le réglage RPC Solana.'));
           }
         }
       } else {
-        localNotes.push(t('Ethereum tokens need an Etherscan key: unlock the vault in Connections to use a saved key.', 'Les jetons Ethereum exigent une clé Etherscan : déverrouillez le coffre dans Connexions pour utiliser une clé enregistrée.'));
+        localNotes.push(tr('Ethereum tokens need an Etherscan key: unlock the vault in Connections to use a saved key.', 'Les jetons Ethereum exigent une clé Etherscan : déverrouillez le coffre dans Connexions pour utiliser une clé enregistrée.'));
       }
 
       // On-chain balances
@@ -88,7 +88,7 @@ export default function PortfolioPage() {
           }
           if (address.chain === 'eth') {
             if (!etherscanKey) {
-              localNotes.push(t('Etherscan API key not configured.', 'Clé API Etherscan non configurée.'));
+              localNotes.push(tr('Etherscan API key not configured.', 'Clé API Etherscan non configurée.'));
             } else {
               const balance = await fetchEthBalance(address.address, etherscanKey);
               assetTotals.set('ETH', (assetTotals.get('ETH') ?? 0) + balance.eth);
