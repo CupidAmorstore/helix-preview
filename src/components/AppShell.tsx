@@ -32,8 +32,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="mt-auto rounded-lg border border-ink-600 px-3 py-2 text-xs">
-          <div className="text-slate-300">Mode</div>
-          <div className="text-amber-400">Paper trading only · no custody</div>
+          <div className="text-slate-300">{lang === 'fr' ? 'Mode' : 'Mode'}</div>
+          <div className="text-amber-400">{lang === 'fr' ? 'Négociation fictive seulement · aucune garde de fonds' : 'Paper trading only · no custody'}</div>
         </div>
       </aside>
 
@@ -43,7 +43,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="min-w-0 flex-1 px-4 pb-28 pt-5 sm:px-6 sm:pt-8 lg:px-10 lg:pb-8">{children}</main>
         <footer className="section-divider hidden px-6 py-6 text-xs text-slate-400 lg:block lg:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>HELIX is a market intelligence app. No custody. The Trading Bot runs in paper mode only — no real-money orders.</div>
+            <div>{lang === 'fr' ? 'HELIX est une application d’information sur les marchés. Aucune garde de fonds. Le robot de négociation fonctionne en mode fictif seulement — aucun ordre en argent réel.' : 'HELIX is a market intelligence app. No custody. The Trading Bot runs in paper mode only — no real-money orders.'}</div>
             <div className="flex gap-4">
               {legalItems.map((item) => (
                 <NavLink key={item.path} to={item.path} className="hover:text-slate-200">
