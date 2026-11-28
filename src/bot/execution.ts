@@ -27,6 +27,9 @@ import { assertPaperOnly } from './risk';
 
 export const EXECUTION_CONTRACT_VERSION = 'exec-v1' as const;
 
+/** Ledger reason for an entry blocked by a risk guard (experimental lane). Exits are never blocked. */
+export const ENTRY_SUSPENDED_REASON = 'entries suspended by experimental drawdown guard';
+
 export type ExecutionContract = {
   version: typeof EXECUTION_CONTRACT_VERSION;
   fill: 'next_open' | 'next_close';
@@ -39,6 +42,8 @@ export type ExecutionContract = {
   /** max fraction of a bar's USD volume one fill may take (partial fills). Omit = unlimited (legacy). */
   maxParticipation?: number;
   terminal: 'liquidate' | 'mark';
+  /** optional entry guard (risk control). Returning false blocks a NEW entry only; exits always proceed. */
+  allowEntry?: (s: EngineState) => boolean;
 };
 
 export type LedgerEvent =
@@ -108,6 +113,11 @@ export function stepBar(s: EngineState, k: Candle, c: ExecutionContract, decide:
     const raw = c.fill === 'next_open' ? k.o : k.c;
     const capUsd = c.maxParticipation !== undefined ? c.maxParticipation * k.v * raw : Infinity;
     if (p.want === 1 && s.units === 0) {
+      if (c.allowEntry && !c.allowEntry(s)) {
+        s.rejected++;
+        s.ledger.push({ kind: 'rejected', t: k.t, side: 'buy', reason: ENTRY_SUSPENDED_REASON });
+        continue;
+      }
       let notional = s.cash * c.positionFraction;
       let partial = false;
       if (notional > capUsd) { notional = capUsd; partial = true; }

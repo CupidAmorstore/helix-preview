@@ -1,0 +1,54 @@
+{
+ "status": "active",
+ "registeredAt": "2026-11-27T08:45:52.564Z",
+ "startAt": 1795824000000,
+ "capitalUsd": 1000,
+ "costPreset": "coinbase_experimental_conservative_2026_11",
+ "evaluation": {
+  "minMonths": 12,
+  "familyAlpha": 0.01
+ },
+ "costSnapshot": {
+  "takerFeeBps": 120,
+  "halfSpreadBps": 2,
+  "slippageBps": 3,
+  "fixedCostUsd": 0,
+  "minOrderUsd": 1
+ },
+ "hashVersion": 3,
+ "policy": {
+  "version": "experimental-v1",
+  "positionFraction": 0.05,
+  "maxDrawdown": 0.05
+ },
+ "id": "experimental-e2-eth-rsi-2026-11-27",
+ "rules": [
+  {
+   "id": "E2-eth-rsi-14-25-55",
+   "kind": "pooled",
+   "family": "rsi_reversion",
+   "params": {
+    "n": 14,
+    "lo": 25,
+    "hi": 55,
+    "maxHold": 24
+   },
+   "markets": [
+    "ETH-USD"
+   ],
+   "intervalMs": 86400000
+  }
+ ],
+ "rationale": [
+  "Candidate: ETH daily RSI reversion (n=14, lo=25, hi=55, maxHold=24), from the P0 screen (validation net 24.1%, DD 11.2%, 2 validation trades)."
+ ],
+ "disclosures": [
+  "Experimental paper observation only. No real money, no leverage, no averaging down, 5% maximum per position, drawdown guard at 5% latches new entries.",
+  "Retrospectively selected from already-inspected history; that history is NOT evidence. Only bars at or after startAt count.",
+  "Costs are a conservative UNVERIFIED bound (Coinbase 1.20% taker + 2 bps half-spread + 3 bps slippage). The account tier is not verified; this is not the account fee.",
+  "Experimental approval is not a validation: the final qualification gates (gates-v4) are unchanged and a validated status requires them all.",
+  "Activation starts at the next 00:00 UTC bar; registrations a and b are untouched.",
+  "Only 2 historical validation trades: the weakest evidence among the two accounts."
+ ],
+ "rulesHash": "76a82cc7836289acd03bfcb5789bd1931c620b595574ed0ac124b91dd8d5fb38"
+}

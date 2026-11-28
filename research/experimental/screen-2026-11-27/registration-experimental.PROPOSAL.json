@@ -1,0 +1,62 @@
+{
+  "id": "experimental-xrp-eth-2026-11-26",
+  "status": "proposed",
+  "registeredAt": "2026-11-26T00:00:00Z",
+  "startAt": null,
+  "capitalUsd": 1000,
+  "costPreset": "coinbase_taker_us_2026_09",
+  "rules": [
+    {
+      "id": "E1-xrp-bollinger-20-2",
+      "kind": "pooled",
+      "family": "bollinger_reversion",
+      "params": {
+        "n": 20,
+        "k": 2,
+        "maxHold": 24
+      },
+      "markets": [
+        "XRP-USD"
+      ],
+      "intervalMs": 86400000
+    },
+    {
+      "id": "E2-eth-rsi-14-25-55",
+      "kind": "pooled",
+      "family": "rsi_reversion",
+      "params": {
+        "n": 14,
+        "lo": 25,
+        "hi": 55,
+        "maxHold": 24
+      },
+      "markets": [
+        "ETH-USD"
+      ],
+      "intervalMs": 86400000
+    }
+  ],
+  "evaluation": {
+    "minMonths": 12,
+    "familyAlpha": 0.05
+  },
+  "costSnapshot": {
+    "takerFeeBps": 90,
+    "halfSpreadBps": 2,
+    "slippageBps": 3,
+    "fixedCostUsd": 0,
+    "minOrderUsd": 1
+  },
+  "hashVersion": 2,
+  "rationale": [
+    "Retrospectively selected for experimental research only; both passed the numerical research shortlist, not qualification."
+  ],
+  "disclosures": [
+    "Template only: registeredAt is a date placeholder; replace with actual registration timestamp before any activation and set a future startAt.",
+    "Existing three distinct forward hypotheses fill the current capacity. Do not activate without explicit prospective capacity and multiple-testing policy review.",
+    "Costs are inherited provisional US Coinbase proxy assumptions, not verified for the actual account or country. Confirm before registration.",
+    "Current forward pooled evaluator allocates its entire sleeve to a position. Do not run this template until a separately frozen position-size risk policy and executable admission enforcement are implemented; $1,000 is diagnostic normalization only.",
+    "Historical selection is not fresh evidence. No paper or real orders authorized by this template."
+  ],
+  "rulesHash": "2098606e504503a0b96dbb950f3be3eaad4eb6947cfdb1f8ba1a7b0852993d13"
+}
