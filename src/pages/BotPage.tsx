@@ -69,7 +69,7 @@ function Overview() {
           <Row k="Last research run (strategies tested)" v={utc(researchRunAt(bot()))} />
           <Row k="Research age" v={ageH < 48 ? `${Math.floor(ageH)} h` : `${Math.floor(ageH / 24)} days`} vClass={ageH > 24 * 7 ? 'text-amber-400' : 'text-white'} />
           <Row k="Prices & forward accounts refreshed" v={utc(new Date(bot().generatedAt).getTime())} vClass="text-slate-200" />
-          <Row k="How it updates" v="Run by the developer on a computer, not on this phone · no automatic schedule yet" vClass="text-slate-200" />
+          <Row k="How it updates" v="Automatically once a day on GitHub's servers, not on this phone · scheduled 04:41 UTC, GitHub may start it hours late" vClass="text-slate-200" />
           <Row
             k="Data on this phone"
             v={data.source === 'published' ? 'Daily feed' : data.source === 'cached' ? 'Saved copy of daily feed' : 'Built into the app'}

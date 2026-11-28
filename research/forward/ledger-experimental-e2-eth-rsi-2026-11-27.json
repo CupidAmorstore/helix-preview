@@ -1,0 +1,15 @@
+{
+ "registrationId": "experimental-e2-eth-rsi-2026-11-27",
+ "rules": {
+  "E2-eth-rsi-14-25-55": {
+   "ETH-USD": []
+  }
+ },
+ "updatedAt": "2026-11-28T11:04:02.244Z",
+ "registrationPin": {
+  "rulesHash": "76a82cc7836289acd03bfcb5789bd1931c620b595574ed0ac124b91dd8d5fb38",
+  "startAt": 1795824000000,
+  "registeredAt": "2026-11-27T08:45:52.564Z",
+  "pinnedAt": "2026-11-28T11:04:02.244Z"
+ }
+}

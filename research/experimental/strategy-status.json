@@ -1,0 +1,207 @@
+{
+ "generatedAt": "2026-11-27T08:46:00.891Z",
+ "scope": "evidence status only; no status permits real money (real-money permitted = false for every status)",
+ "statusCounts": {
+  "rejected": 23,
+  "insufficient_evidence": 3,
+  "collecting_forward_evidence": 2
+ },
+ "rows": [
+  {
+   "candidate": "sma_cross|ETH-USD|3600000|fd8dc91a-8754",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "parameter stability too weak or missing"
+  },
+  {
+   "candidate": "sma_cross|ADA-USD|3600000|5b1824c9-8754",
+   "screenState": "experimental_research_eligible",
+   "status": "insufficient_evidence",
+   "source": "owner_deferred",
+   "note": "hourly, cost-dominated; preserved for later investigation"
+  },
+  {
+   "candidate": "sma_cross|LINK-USD|3600000|3e2e8e14-8754",
+   "screenState": "experimental_research_eligible",
+   "status": "insufficient_evidence",
+   "source": "owner_deferred",
+   "note": "hourly, cost-dominated; preserved for later investigation"
+  },
+  {
+   "candidate": "sma_cross|BTC-USD|86400000|596997c7-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "donchian_breakout|BTC-USD|86400000|596997c7-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "bollinger_reversion|BTC-USD|86400000|596997c7-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "rsi_reversion|ETH-USD|86400000|d42a807a-2189",
+   "screenState": "experimental_research_eligible",
+   "status": "collecting_forward_evidence",
+   "source": "owner_approved_and_activated",
+   "note": "experimental paper account registration-e2.json; active from 2026-11-28 00:00 UTC"
+  },
+  {
+   "candidate": "sma_cross|SOL-USD|86400000|9ba1194d-1984",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "vol_compression_breakout|SOL-USD|86400000|9ba1194d-1984",
+   "screenState": "experimental_research_eligible",
+   "status": "insufficient_evidence",
+   "source": "owner_watchlist",
+   "note": "single validation trade: extremely weak evidence; research watchlist only"
+  },
+  {
+   "candidate": "donchian_breakout|XRP-USD|86400000|0f197877-1285",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "trend_filtered_momentum|XRP-USD|86400000|0f197877-1285",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "bollinger_reversion|XRP-USD|86400000|0f197877-1285",
+   "screenState": "experimental_research_eligible",
+   "status": "collecting_forward_evidence",
+   "source": "owner_approved_and_activated",
+   "note": "experimental paper account registration-e1.json; active from 2026-11-28 00:00 UTC"
+  },
+  {
+   "candidate": "donchian_breakout|DOGE-USD|86400000|0118ae7c-1998",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "bollinger_reversion|DOGE-USD|86400000|0118ae7c-1998",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "donchian_breakout|ADA-USD|86400000|da286594-2075",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "bollinger_reversion|ADA-USD|86400000|da286594-2075",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "sma_cross|AVAX-USD|86400000|6fae5cd5-1879",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "bollinger_reversion|LINK-USD|86400000|dd2f0bba-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "rsi_reversion|LINK-USD|86400000|dd2f0bba-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "donchian_breakout|DOT-USD|86400000|81a55b83-1985",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "vol_filtered_trend|ETH-USD|86400000|d42a807a-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "regime_switch|XRP-USD|86400000|0f197877-1285",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "vol_filtered_trend|DOGE-USD|86400000|0118ae7c-1998",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "weekly_trend|BTC-USD|86400000|596997c7-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "monthly_momentum|BTC-USD|86400000|596997c7-2189",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "weekly_trend|SOL-USD|86400000|9ba1194d-1984",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing"
+  },
+  {
+   "candidate": "weekly_trend|ADA-USD|86400000|da286594-2075",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  },
+  {
+   "candidate": "monthly_momentum|POOLED|86400000|b9460027",
+   "screenState": "research_deferred",
+   "status": "rejected",
+   "source": "screen",
+   "note": "historical drawdown above limit or missing; parameter stability too weak or missing"
+  }
+ ]
+}

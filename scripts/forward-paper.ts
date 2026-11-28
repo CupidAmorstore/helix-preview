@@ -12,7 +12,7 @@
 //   * the report always states the data's last completed bar; stale/gapped data refuses evaluation (fail closed).
 import { existsSync, readFileSync, readdirSync, writeFileSync, unlinkSync, statSync } from 'node:fs';
 import { gunzipSync, gzipSync } from 'node:zlib';
-import { evaluateForward, registrationHash, type ForwardRegistration } from '../src/bot/forward';
+import { checkRegistrationPin, evaluateForward, registrationHash, type ForwardRegistration, type RegistrationPin } from '../src/bot/forward';
 import { COST_PRESETS } from '../src/bot/costs';
 import type { Candle } from '../src/bot/types';
 import { barsAgree } from '../src/bot/candles';
@@ -75,9 +75,17 @@ for (const { reg } of regs) {
   if (!cost) { console.log(reg.id, `unknown cost preset ${reg.costPreset}`); continue; }
   const data: Record<string, Candle[]> = {};
   for (const r of reg.rules) for (const m of r.markets) data[m] ??= parse(file(m, r.intervalMs));
-  const rep = evaluateForward(reg, data, cost, now);
   const ledgerFile = `${DIR}/ledger-${reg.id}.json`;
   const stored = existsSync(ledgerFile) ? JSON.parse(readFileSync(ledgerFile, 'utf8')) : { registrationId: reg.id, rules: {} as Record<string, Record<string, unknown[]>> };
+  // external anchor: the identity pinned in the ledger must still match the registration (fail closed if not)
+  const pinCheck = checkRegistrationPin(reg, stored.registrationPin as RegistrationPin | undefined, new Date(now).toISOString());
+  const rep = pinCheck.problems.length
+    ? { registrationId: reg.id, evaluatedAt: now, state: 'not running', results: [], problems: pinCheck.problems, warnings: [] }
+    : evaluateForward(reg, data, cost, now);
+  rep.warnings = [...(rep.warnings ?? []), ...pinCheck.warnings];
+  // pin only an active registration that the evaluator accepted (a proposed or broken one must not be pinned)
+  if (!pinCheck.problems.length && reg.status === 'active' && !rep.problems.some((p) => p.includes('hash mismatch') || p.includes('startAt'))) stored.registrationPin = pinCheck.pin;
+  else if (!stored.registrationPin) rep.warnings = rep.warnings.filter((w) => !w.startsWith('registration identity pinned'));
   let revision = false;
   for (const r of rep.results) for (const m of r.ledger ?? []) {
     const fills = m.events.filter((e) => e.kind === 'fill' || e.kind === 'rejected' || e.kind === 'failed');
@@ -85,7 +93,7 @@ for (const { reg } of regs) {
     if (JSON.stringify(fills.slice(0, prev.length)) !== JSON.stringify(prev)) { revision = true; rep.problems.push(`${r.ruleId}/${m.market}: recomputed history differs from the stored ledger (data revision or code change) — stored ledger kept, investigate`); continue; }
     (stored.rules[r.ruleId] ??= {})[m.market] = fills;
   }
-  if (!revision && rep.results.length) writeFileSync(ledgerFile, JSON.stringify({ ...stored, updatedAt: new Date(now).toISOString() }, null, 1));
+  if (!revision && !pinCheck.problems.length && (rep.results.length || stored.registrationPin)) writeFileSync(ledgerFile, JSON.stringify({ ...stored, updatedAt: new Date(now).toISOString() }, null, 1));
   const lastBar = Math.max(0, ...Object.values(data).map((c) => (c.length ? c[c.length - 1].t + DAY : 0)));
   const out = { ...rep, dataThrough: lastBar ? new Date(lastBar).toISOString() : null, results: rep.results.map(({ equity, ledger, ...x }) => ({ ...x, equityPoints: equity.length, lastEquity: equity.length ? equity[equity.length - 1] : null, markets: ledger?.length ?? null })) };
   writeFileSync(`${DIR}/report-${reg.id}.json`, JSON.stringify(out, null, 1));

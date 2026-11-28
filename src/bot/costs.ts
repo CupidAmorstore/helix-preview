@@ -45,6 +45,18 @@ export const COST_PRESETS: Record<string, CostModel> = {
     minOrderUsd: 5,
     provenance: 'feeEvidence kraken-pro-spot-tier1-2026-07-09 (official); spread/slippage placeholder >= measured p75'
   },
+  // EXPERIMENTAL SIMULATION ONLY (2026-11-27). The owner's Coinbase fee tier could not be verified. 1.20% taker is the
+  // highest Coinbase taker rate found in the research (a secondary guide's description of an earlier schedule), used as
+  // a conservative bound. This is NOT a statement of the account's actual fees.
+  coinbase_experimental_conservative_2026_11: {
+    venue: 'coinbase',
+    takerFeeBps: 120,
+    halfSpreadBps: 2,
+    slippageBps: 3,
+    fixedCostUsd: 0,
+    minOrderUsd: 1,
+    provenance: 'UNVERIFIED conservative bound for simulation: 1.20% taker (secondary-source earlier schedule); account tier not verified'
+  },
   kraken_maker: {
     venue: 'kraken',
     takerFeeBps: 25, // maker tier; assumes limit order fills — optimistic, used only as a sensitivity case

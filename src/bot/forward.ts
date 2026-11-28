@@ -19,6 +19,7 @@ import { completeMonthlyReturns, monthlyInference, type Inference } from './stat
 import { assertPaperOnly } from './risk';
 import { buildSignal, dependencyHorizon } from './strategies';
 import { closeWindow, contractFor, initialState, runBar, summarize, type LedgerEvent } from './execution';
+import { EXPERIMENTAL_POLICY, runExperimentalAccount } from './experimental';
 
 export type ForwardRule =
   | { id: string; kind: 'pooled'; family: StrategyFamily; params: Record<string, number>; markets: string[]; intervalMs: number }
@@ -41,8 +42,10 @@ export type ForwardRegistration = {
   disclosures: string[];
   /** P0: the exact cost values frozen with the experiment. The preset NAME alone does not bind its values. */
   costSnapshot?: CostSnapshot;
-  /** P0 v2 registrations: hash also covers costSnapshot */
-  hashVersion?: 2;
+  /** hashVersion 2 also covers costSnapshot; 3 also covers id, timestamps and the experimental policy */
+  hashVersion?: 2 | 3;
+  /** experimental lane (hashVersion 3 only): one hypothesis per account, 5% per position, drawdown guard */
+  policy?: { version: 'experimental-v1'; positionFraction: number; maxDrawdown: number };
 };
 
 const canonical = (x: unknown): string =>
@@ -50,10 +53,20 @@ const canonical = (x: unknown): string =>
   : x && typeof x === 'object' ? `{${Object.keys(x as object).sort().map((k) => `${JSON.stringify(k)}:${canonical((x as Record<string, unknown>)[k])}`).join(',')}}`
   : JSON.stringify(x);
 
-/** Hash over everything that defines the experiment (rules, capital, costs, evaluation; v2 also cost values). */
-export function registrationHash(r: Pick<ForwardRegistration, 'rules' | 'capitalUsd' | 'costPreset' | 'evaluation'> & { costSnapshot?: CostSnapshot; hashVersion?: 2 }): string {
+export type RegistrationHashInput = Pick<ForwardRegistration, 'rules' | 'capitalUsd' | 'costPreset' | 'evaluation'> &
+  Partial<Pick<ForwardRegistration, 'id' | 'registeredAt' | 'startAt' | 'costSnapshot' | 'hashVersion' | 'policy'>>;
+
+/**
+ * Hash over everything that defines the experiment.
+ * v1 (no hashVersion): rules, capital, cost preset, evaluation. Registration a.
+ * v2: also the cost VALUES. Registration b. Unchanged, so both keep their recorded hashes.
+ * v3 (P0 2026-11-27): also id, registeredAt, startAt and the experimental policy. Without startAt in the hash a start
+ * date could be moved after registration without changing the hash; v3 closes that gap for new registrations.
+ */
+export function registrationHash(r: RegistrationHashInput): string {
   const body: Record<string, unknown> = { rules: r.rules, capitalUsd: r.capitalUsd, costPreset: r.costPreset, evaluation: r.evaluation };
   if (r.hashVersion === 2) body.costSnapshot = r.costSnapshot ?? null;
+  if (r.hashVersion === 3) Object.assign(body, { id: r.id ?? null, registeredAt: r.registeredAt ?? null, startAt: r.startAt ?? null, costSnapshot: r.costSnapshot ?? null, policy: r.policy ?? null });
   return bytesToHex(sha256(utf8ToBytes(canonical(body))));
 }
 
@@ -70,6 +83,8 @@ export type ForwardRuleResult = {
   unrealizedPnlUsd?: number;
   totalCostUsd?: number;
   fills?: number;
+  /** experimental lane only */
+  experimental?: { policy: string; suspendedAt: number | null; suspendedBars: number; entriesRejectedBySuspension: number; doubleCostNetReturn: number; doubleCostDeltaPctPoints: number; openPositionAtEnd: boolean };
   failedOrders?: number;
   rejectedOrders?: number;
   maxDrawdown?: number;
@@ -80,6 +95,32 @@ export type ForwardRuleResult = {
 };
 
 export type ForwardReport = { registrationId: string; evaluatedAt: number; state: string; results: ForwardRuleResult[]; problems: string[]; warnings?: string[] };
+
+/** Identity of a registration as first seen by the forward runner, stored in its append-only ledger. */
+export type RegistrationPin = { rulesHash: string; startAt: number | null; registeredAt: string; pinnedAt: string };
+
+/**
+ * External integrity anchor (P0 Phase III). `rulesHash` only proves a registration is consistent with ITSELF: an edit
+ * that also rewrites `rulesHash` passes `evaluateForward`. The ledger lives on the forward-ledger branch, which only the
+ * daily job writes, so the identity pinned there on first evaluation cannot be changed by editing the registration.
+ * The pin also covers `startAt` and `registeredAt`, which hash v1/v2 (registrations a and b) do not commit to.
+ * Legacy ledgers without a pin are pinned on their next run (trust on first use, disclosed as a warning).
+ */
+export function checkRegistrationPin(
+  reg: Pick<ForwardRegistration, 'rulesHash' | 'startAt' | 'registeredAt'>,
+  pin: RegistrationPin | undefined,
+  nowIso: string
+): { pin: RegistrationPin; problems: string[]; warnings: string[] } {
+  const current = { rulesHash: reg.rulesHash, startAt: reg.startAt ?? null, registeredAt: reg.registeredAt };
+  if (!pin) return { pin: { ...current, pinnedAt: nowIso }, problems: [], warnings: ['registration identity pinned now (first evaluation with pinning; earlier runs were not pinned)'] };
+  const changed = (Object.keys(current) as (keyof typeof current)[]).filter((k) => pin[k] !== current[k]);
+  if (!changed.length) return { pin, problems: [], warnings: [] };
+  return {
+    pin,
+    problems: [`registration changed after it was pinned (${changed.join(', ')}): a changed experiment is a NEW registration — stored ledger kept, nothing evaluated`],
+    warnings: []
+  };
+}
 
 /** Data checks for one market inside the forward window: completed bars only, no gaps, not stale. */
 export function forwardDataProblems(market: string, candles: Candle[], intervalMs: number, fromMs: number, nowMs: number, maxStaleBars = 2): string[] {
@@ -95,6 +136,60 @@ export function forwardDataProblems(market: string, candles: Candle[], intervalM
   return p;
 }
 
+/** One experimental account: one hypothesis, one market, its own $1,000 sleeve, full exec-v1 accounting. */
+function evaluateExperimentalRule(
+  reg: ForwardRegistration,
+  rule: Extract<ForwardRule, { kind: 'pooled' }>,
+  data: Record<string, Candle[]>,
+  cost: CostModel,
+  start: number,
+  nowMs: number,
+  alpha: number
+): ForwardRuleResult {
+  const market = rule.markets[0];
+  const candles = (data[market] ?? []).filter((k) => k.t + rule.intervalMs <= nowMs);
+  const startIndex = candles.findIndex((k) => k.t >= start);
+  const args = { candles, spec: { family: rule.family, params: rule.params }, cost, intervalMs: rule.intervalMs, startIndex: startIndex < 0 ? candles.length : startIndex, capitalUsd: reg.capitalUsd };
+  const run = runExperimentalAccount(args);
+  const doubled = runExperimentalAccount({ ...args, costMultiplier: 2 });
+  const equity = run.result.equity.filter((p) => p.t >= start);
+  const lastBarEnd = equity.length ? equity[equity.length - 1].t + rule.intervalMs : start;
+  const months = completeMonthlyReturns(equity, reg.capitalUsd, start, lastBarEnd);
+  const inference = monthlyInference(months.map((m) => m.ret), alpha, reg.evaluation.minMonths);
+  const status = months.length < reg.evaluation.minMonths ? 'collecting' : inference.pass ? 'forward_qualified' : 'rejected';
+  let peak = reg.capitalUsd;
+  let dd = 0;
+  for (const p of equity) {
+    peak = Math.max(peak, p.v);
+    dd = Math.max(dd, (peak - p.v) / peak);
+  }
+  return {
+    ruleId: rule.id,
+    forwardMonths: months.length,
+    netReturn: run.result.netReturn,
+    realizedPnlUsd: run.result.realizedPnlUsd,
+    unrealizedPnlUsd: run.result.unrealizedPnlUsd,
+    totalCostUsd: run.result.totalCostUsd,
+    fills: run.result.ledger.filter((e) => e.kind === 'fill').length,
+    failedOrders: run.result.failedOrders,
+    rejectedOrders: run.result.rejectedOrders,
+    maxDrawdown: dd,
+    equity,
+    inference,
+    status,
+    ledger: [{ market, events: run.result.ledger.filter((e) => e.t >= start) }],
+    experimental: {
+      policy: EXPERIMENTAL_POLICY.version,
+      suspendedAt: run.suspendedAt,
+      suspendedBars: run.suspendedBars,
+      entriesRejectedBySuspension: run.entriesRejectedBySuspension,
+      doubleCostNetReturn: doubled.result.netReturn,
+      doubleCostDeltaPctPoints: (doubled.result.netReturn - run.result.netReturn) * 100,
+      openPositionAtEnd: run.result.openPositionAtEnd
+    }
+  };
+}
+
 export function evaluateForward(reg: ForwardRegistration, data: Record<string, Candle[]>, cost: CostModel, nowMs: number): ForwardReport {
   assertPaperOnly();
   const problems: string[] = [];
@@ -107,6 +202,11 @@ export function evaluateForward(reg: ForwardRegistration, data: Record<string, C
     const drift = (Object.keys(reg.costSnapshot) as (keyof CostSnapshot)[]).filter((k) => reg.costSnapshot![k] !== now[k]);
     if (drift.length) problems.push(`cost values differ from the registered snapshot (${drift.join(', ')}): a cost change is a new registration`);
   } else warnings.push('legacy registration: cost values are not frozen (costSnapshot missing)');
+  if (reg.policy) {
+    if (reg.hashVersion !== 3) problems.push('experimental policy requires hashVersion 3');
+    if (reg.policy.version !== EXPERIMENTAL_POLICY.version || reg.policy.positionFraction !== EXPERIMENTAL_POLICY.positionFraction || reg.policy.maxDrawdown !== EXPERIMENTAL_POLICY.maxDrawdown) problems.push('experimental policy values differ from experimental-v1');
+    if (reg.rules.some((r) => r.kind !== 'pooled' || r.markets.length !== 1)) problems.push('an experimental account holds exactly one pooled hypothesis on one market');
+  }
   if (problems.length) return { registrationId: reg.id, evaluatedAt: nowMs, state: 'not running', results: [], problems, warnings };
   const start = reg.startAt!;
   // data integrity: only checked once at least one forward bar can be complete
@@ -118,6 +218,7 @@ export function evaluateForward(reg: ForwardRegistration, data: Record<string, C
 
   const alpha = reg.evaluation.familyAlpha / Math.max(1, reg.rules.length);
   const results = reg.rules.map((rule): ForwardRuleResult => {
+    if (reg.policy && rule.kind === 'pooled') return evaluateExperimentalRule(reg, rule, data, cost, start, nowMs, alpha);
     const series = rule.markets.map((m) => ({ symbol: m, candles: (data[m] ?? []).filter((k) => k.t + rule.intervalMs <= nowMs) }));
     const sleeve = reg.capitalUsd / series.length;
     let equity: { t: number; v: number }[] = [];

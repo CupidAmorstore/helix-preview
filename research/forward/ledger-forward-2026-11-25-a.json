@@ -74,5 +74,11 @@
    "DOT-USD": []
   }
  },
- "updatedAt": "2026-11-28T08:54:46.601Z"
+ "updatedAt": "2026-11-28T11:04:02.244Z",
+ "registrationPin": {
+  "rulesHash": "00bb27b20a7dc92c3d8f81b5b1d5eab82bd0c7bbc24242113445434c934bc998",
+  "startAt": 1795651200000,
+  "registeredAt": "2026-11-25T09:00:00Z",
+  "pinnedAt": "2026-11-28T11:04:02.244Z"
+ }
 }

@@ -1,6 +1,6 @@
 {
  "registrationId": "forward-2026-11-25-a",
- "evaluatedAt": 1795856086601,
+ "evaluatedAt": 1795863842244,
  "state": "running",
  "results": [
   {
@@ -100,7 +100,8 @@
  ],
  "problems": [],
  "warnings": [
-  "F3-xs-momentum-28d-top3: cross-sectional rule uses its own event-driven portfolio simulator (mark mode, same fill rules), not exec-v1"
+  "F3-xs-momentum-28d-top3: cross-sectional rule uses its own event-driven portfolio simulator (mark mode, same fill rules), not exec-v1",
+  "registration identity pinned now (first evaluation with pinning; earlier runs were not pinned)"
  ],
  "dataThrough": "2026-11-28T00:00:00.000Z"
 }
