@@ -1,0 +1,183 @@
+{
+ "overallTranslatedShare": 0.904,
+ "rows": [
+  {
+   "route": "/",
+   "frWords": 218,
+   "untranslatedWords": 2,
+   "translatedShare": 0.991,
+   "sampleUntranslated": [
+    "Mode",
+    "ADA"
+   ]
+  },
+  {
+   "route": "/markets",
+   "frWords": 478,
+   "untranslatedWords": 234,
+   "translatedShare": 0.51,
+   "sampleUntranslated": [
+    "Mode",
+    "Volume",
+    "Tether",
+    "USDT",
+    "BNB"
+   ]
+  },
+  {
+   "route": "/markets/BTC",
+   "frWords": 126,
+   "untranslatedWords": 2,
+   "translatedShare": 0.984,
+   "sampleUntranslated": [
+    "Mode",
+    "UTC"
+   ]
+  },
+  {
+   "route": "/bot",
+   "frWords": 369,
+   "untranslatedWords": 12,
+   "translatedShare": 0.967,
+   "sampleUntranslated": [
+    "Mode",
+    "2026-11-24 19:36 UTC",
+    "2026-11-25 23:45 UTC",
+    "Mode",
+    "Protections"
+   ]
+  },
+  {
+   "route": "/bot?tab=strategies",
+   "frWords": 408,
+   "untranslatedWords": 14,
+   "translatedShare": 0.966,
+   "sampleUntranslated": [
+    "Mode",
+    "22 tests",
+    "22 tests",
+    "Momentum",
+    "22 tests"
+   ]
+  },
+  {
+   "route": "/bot?tab=activity",
+   "frWords": 457,
+   "untranslatedWords": 1,
+   "translatedShare": 0.998,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/bot/research",
+   "frWords": 592,
+   "untranslatedWords": 110,
+   "translatedShare": 0.814,
+   "sampleUntranslated": [
+    "Mode",
+    "2026-11-24 19:36 UTC",
+    "2026-11-25 23:45 UTC",
+    "DOT",
+    "ADA"
+   ]
+  },
+  {
+   "route": "/wallet",
+   "frWords": 169,
+   "untranslatedWords": 3,
+   "translatedShare": 0.982,
+   "sampleUntranslated": [
+    "Mode",
+    "testnet",
+    "mainnet"
+   ]
+  },
+  {
+   "route": "/more",
+   "frWords": 154,
+   "untranslatedWords": 1,
+   "translatedShare": 0.994,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/orders",
+   "frWords": 71,
+   "untranslatedWords": 1,
+   "translatedShare": 0.986,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/portfolio",
+   "frWords": 109,
+   "untranslatedWords": 1,
+   "translatedShare": 0.991,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/alerts",
+   "frWords": 109,
+   "untranslatedWords": 11,
+   "translatedShare": 0.899,
+   "sampleUntranslated": [
+    "Mode",
+    "LINK",
+    "Chainlink",
+    "XRP",
+    "XRP"
+   ]
+  },
+  {
+   "route": "/connections",
+   "frWords": 130,
+   "untranslatedWords": 2,
+   "translatedShare": 0.985,
+   "sampleUntranslated": [
+    "Mode",
+    "ETH/EVM"
+   ]
+  },
+  {
+   "route": "/access",
+   "frWords": 106,
+   "untranslatedWords": 1,
+   "translatedShare": 0.991,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/support",
+   "frWords": 169,
+   "untranslatedWords": 1,
+   "translatedShare": 0.994,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/privacy",
+   "frWords": 249,
+   "untranslatedWords": 1,
+   "translatedShare": 0.996,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  },
+  {
+   "route": "/terms",
+   "frWords": 228,
+   "untranslatedWords": 1,
+   "translatedShare": 0.996,
+   "sampleUntranslated": [
+    "Mode"
+   ]
+  }
+ ]
+}

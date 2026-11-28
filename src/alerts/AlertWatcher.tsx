@@ -6,6 +6,7 @@ import { usePaper } from '../paper/PaperProvider';
 import { fmtUsd } from '../services/marketData';
 import type { AlertRecord } from '../types';
 import { ALERTS_CHANGED, checkAlerts } from './logic';
+import { tr } from '../i18n';
 
 export default function AlertWatcher() {
   const { feed } = usePaper();
@@ -30,7 +31,7 @@ export default function AlertWatcher() {
     armed.current = next;
     if (!fired.length) return;
     const f = fired[0];
-    setToast(`${f.alert.symbol} is ${f.alert.direction === 'above' ? 'above' : 'below'} ${fmtUsd(f.alert.threshold)} · now ${fmtUsd(f.price)}`);
+    setToast(tr(`${f.alert.symbol} is ${f.alert.direction === 'above' ? 'above' : 'below'} ${fmtUsd(f.alert.threshold)} · now ${fmtUsd(f.price)}`, `${f.alert.symbol} est ${f.alert.direction === 'above' ? 'au-dessus de' : 'sous'} ${fmtUsd(f.alert.threshold)} · maintenant ${fmtUsd(f.price)}`));
     for (const { alert } of fired) void saveAlert({ ...alert, lastTriggeredAt: new Date().toISOString() }).then(() => window.dispatchEvent(new Event(ALERTS_CHANGED + ':fired')));
     try {
       navigator.vibrate?.(80);
@@ -44,10 +45,10 @@ export default function AlertWatcher() {
     <div role="alert" className="fixed inset-x-3 z-40 flex items-center justify-between gap-3 rounded-xl border border-ink-500 bg-ink-800 px-4 py-3 shadow-soft"
       style={{ top: 'calc(max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px)) + 64px)' }}>
       <Link to="/alerts" onClick={() => setToast(null)} className="min-w-0 flex-1 text-sm text-white">
-        <span className="eyebrow block text-paper">Price alert</span>
+        <span className="eyebrow block text-paper">{tr('Price alert', 'Alerte de prix')}</span>
         {toast}
       </Link>
-      <button type="button" onClick={() => setToast(null)} aria-label="Dismiss alert" className="grid h-11 w-11 shrink-0 place-items-center text-slate-400">✕</button>
+      <button type="button" onClick={() => setToast(null)} aria-label={tr('Dismiss alert', 'Fermer l’alerte')} className="grid h-11 w-11 shrink-0 place-items-center text-slate-400">✕</button>
     </div>
   );
 }

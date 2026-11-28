@@ -13,16 +13,17 @@ import { crossVenueDiscrepancies, Discrepancy } from '../bot/watchbot';
 import { fetchQuote, KRAKEN_SYMBOLS, Quote } from '../bot/sources';
 import type { MarketRef } from '../bot/types';
 import { P0Diagnosis } from '../components/bot/P0Diagnosis';
+import { tr, useT } from '../i18n';
 
 
 const TABS = [
-  ['overview', 'Overview'],
-  ['strategies', 'Strategies'],
-  ['lab', 'Research Lab'],
-  ['watchbot', 'Watchbot'],
-  ['risk', 'Risk Center'],
-  ['activity', 'Activity & Audit'],
-  ['settings', 'Settings']
+  ['overview', 'Overview', 'Aperçu'],
+  ['strategies', 'Strategies', 'Stratégies'],
+  ['lab', 'Research Lab', 'Labo de recherche'],
+  ['watchbot', 'Watchbot', 'Veille'],
+  ['risk', 'Risk Center', 'Centre des risques'],
+  ['activity', 'Activity & Audit', 'Activité et audit'],
+  ['settings', 'Settings', 'Réglages']
 ] as const;
 type Tab = (typeof TABS)[number][0];
 
@@ -30,26 +31,27 @@ export default function ResearchLabPage() {
   useBotData();
   const [params, setParams] = useSearchParams();
   const tab = (params.get('tab') as Tab) || 'overview';
+  const t = useT();
   return (
     <div className="mx-auto max-w-6xl space-y-5 fade-in">
       <ModeBanner />
       <header className="space-y-1">
-        <PageHeader back title="Research Lab" subtitle="Advanced · every test, dataset and run behind the bot" />
+        <PageHeader back title={t('Research Lab', 'Labo de recherche')} subtitle={t('Advanced · every test, dataset and run behind the bot', 'Avancé · chaque test, jeu de données et exécution derrière le robot')} />
         <p className={`text-sm ${isStale() ? 'text-amber-400' : 'text-slate-400'}`}>
-          Last research run {dateTime(researchRunAt(bot()))} · {ageLabel()} · prices refreshed {dateTime(bot().generatedAt)}
-          {isStale() && ' · no new research for over a week'}
+          {t('Last research run', 'Dernière recherche')} {dateTime(researchRunAt(bot()))} · {ageLabel()} · {t('prices refreshed', 'prix actualisés')} {dateTime(bot().generatedAt)}
+          {isStale() && t(' · no new research for over a week', ' · aucune nouvelle recherche depuis plus d’une semaine')}
         </p>
       </header>
-      <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label="Trading bot sections">
+      <nav className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" aria-label={t('Trading bot sections', 'Sections du robot')}>
         <div className="flex w-max gap-1 rounded-xl border border-ink-600 bg-ink-800/60 p-1">
-          {TABS.map(([id, label]) => (
+          {TABS.map(([id, label, labelFr]) => (
             <button
               key={id}
               type="button"
               onClick={() => setParams({ tab: id })}
               className={`whitespace-nowrap rounded-lg px-3 py-2 text-sm transition ${tab === id ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white'}`}
             >
-              {label}
+              {t(label, labelFr)}
             </button>
           ))}
         </div>
@@ -70,15 +72,15 @@ const isStale = () => ageMs() > 7 * 24 * 3600_000; // research runs are manual; 
 /** Human age of the bundled research snapshot, e.g. "3 h old", "2 days old". */
 function ageLabel() {
   const h = Math.max(0, Math.floor(ageMs() / 3600_000));
-  if (h < 1) return 'less than 1 h old';
-  if (h < 48) return `${h} h old`;
-  return `${Math.floor(h / 24)} days old`;
+  if (h < 1) return tr('less than 1 h old', 'moins de 1 h');
+  if (h < 48) return tr(`${h} h old`, `il y a ${h} h`);
+  return tr(`${Math.floor(h / 24)} days old`, `il y a ${Math.floor(h / 24)} jours`);
 }
 
 function ModeBanner() {
   return (
     <p className="border-l-2 border-paper py-1 pl-3 text-xs text-slate-300">
-      Simulated money only. Simulated results are not earnings. Real-money trading is disabled.
+      {tr('Simulated money only. Simulated results are not earnings. Real-money trading is disabled.', 'Argent simulé seulement. Les résultats simulés ne sont pas des gains. La négociation en argent réel est désactivée.')}
     </p>
   );
 }
@@ -121,6 +123,7 @@ function Overview() {
   const fills = paper.reduce((s, a) => s + a.entries, 0);
   const regimes = allMarkets().filter((m) => m.intervalMs === 86_400_000 && m.regime);
   const trading = qualified.length > 0;
+  const t = useT();
 
   return (
     <div className="space-y-5">
@@ -129,12 +132,11 @@ function Overview() {
           <span className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${trading ? 'bg-mint-500' : 'bg-amber-500'}`} />
           <div className="space-y-1">
             <div className="text-base font-semibold text-white">
-              {trading ? `Paper trading ${qualified.length} qualified strateg${qualified.length === 1 ? 'y' : 'ies'}` : 'Holding 100% cash — no strategy has qualified'}
+              {trading ? t(`Paper trading ${qualified.length} qualified strateg${qualified.length === 1 ? 'y' : 'ies'}`, `Négociation fictive de ${qualified.length} stratégie(s) qualifiée(s)`) : t('Holding 100% cash — no strategy has qualified', '100 % en liquidités — aucune stratégie ne s’est qualifiée')}
             </div>
             <p className="text-sm text-slate-400">
-              {cands.length} candidates were tested on chronologically separated data with costs. {reachedTest} survived validation and
-              were opened on the untouched test period. {qualified.length} passed every gate.
-              {!trading && ' Staying in cash is the correct outcome until evidence supports a strategy.'}
+              {t(`${cands.length} candidates were tested on chronologically separated data with costs. ${reachedTest} survived validation and were opened on the untouched test period. ${qualified.length} passed every gate.`, `${cands.length} candidats ont été testés sur des données séparées chronologiquement, avec les coûts. ${reachedTest} ont survécu à la validation et ont été ouverts sur la période de test intacte. ${qualified.length} ont franchi toutes les étapes.`)}
+              {!trading && t(' Staying in cash is the correct outcome until evidence supports a strategy.', ' Rester en liquidités est le bon résultat tant que les preuves n’appuient pas une stratégie.')}
             </p>
           </div>
         </div>
@@ -143,18 +145,18 @@ function Overview() {
       <P0Diagnosis />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Real-money capital" value="$0.00" sub="live trading disabled" />
-        <Stat label="Bot paper capital" value={usd(initial)} sub={`${paper.length} qualified paper accounts`} />
-        <Stat label="Paper equity" value={usd(equity)} sub="simulated, after costs" />
-        <Stat label="Paper net P&L" value={usd(equity - initial)} tone={equity - initial >= 0 ? 'default' : 'bad'} sub="simulated — not earned" />
-        <Stat label="Realized (paper)" value={usd(realized)} />
-        <Stat label="Unrealized (paper)" value={usd(unrealized)} />
-        <Stat label="Open positions" value={open} sub={`${fills} entries · ${diagnostic.length} diagnostic accounts tracked separately`} />
-        <Stat label="Qualified strategies" value={`${qualified.length} / ${cands.length}`} tone={qualified.length ? 'good' : 'warn'} />
+        <Stat label={t('Real-money capital', 'Capital en argent réel')} value="$0.00" sub={t('live trading disabled', 'négociation réelle désactivée')} />
+        <Stat label={t('Bot paper capital', 'Capital fictif du robot')} value={usd(initial)} sub={t(`${paper.length} qualified paper accounts`, `${paper.length} comptes fictifs qualifiés`)} />
+        <Stat label={t('Paper equity', 'Valeur fictive')} value={usd(equity)} sub={t('simulated, after costs', 'simulée, après coûts')} />
+        <Stat label={t('Paper net P&L', 'Gain/perte net fictif')} value={usd(equity - initial)} tone={equity - initial >= 0 ? 'default' : 'bad'} sub={t('simulated — not earned', 'simulé — non gagné')} />
+        <Stat label={t('Realized (paper)', 'Réalisé (fictif)')} value={usd(realized)} />
+        <Stat label={t('Unrealized (paper)', 'Latent (fictif)')} value={usd(unrealized)} />
+        <Stat label={t('Open positions', 'Positions ouvertes')} value={open} sub={t(`${fills} entries · ${diagnostic.length} diagnostic accounts tracked separately`, `${fills} entrées · ${diagnostic.length} comptes diagnostiques suivis à part`)} />
+        <Stat label={t('Qualified strategies', 'Stratégies qualifiées')} value={`${qualified.length} / ${cands.length}`} tone={qualified.length ? 'good' : 'warn'} />
       </div>
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <Card title="Why the bot is not trading">
+        <Card title={t('Why the bot is not trading', 'Pourquoi le robot ne négocie pas')}>
           <ul className="space-y-2 text-sm">
             {topReasons().map(([r, n]) => (
               <li key={r} className="flex justify-between gap-3">
@@ -164,27 +166,25 @@ function Overview() {
             ))}
           </ul>
           <p className="mt-3 text-xs text-slate-500">
-            Historical research modelled a {COST_PRESETS.coinbase_taker.takerFeeBps / 100}% taker fee per side plus spread and slippage; verified
-            current fees are higher (see the diagnosis above). Before costs, the rules did no better than passive exposure; daily rules
-            produced too few trades to be statistically meaningful.
+            {t(`Historical research modelled a ${COST_PRESETS.coinbase_taker.takerFeeBps / 100}% taker fee per side plus spread and slippage; verified current fees are higher (see the diagnosis above). Before costs, the rules did no better than passive exposure; daily rules produced too few trades to be statistically meaningful.`, `La recherche historique a modélisé des frais de preneur de ${COST_PRESETS.coinbase_taker.takerFeeBps / 100} % par côté, plus l’écart et le glissement; les frais actuels vérifiés sont plus élevés (voir le diagnostic ci-dessus). Avant les coûts, les règles n’ont pas fait mieux qu’une exposition passive; les règles quotidiennes ont produit trop peu de transactions pour être statistiquement significatives.`)}
           </p>
         </Card>
-        <Card title="Market conditions (daily, last 48 bars)">
+        <Card title={t('Market conditions (daily, last 48 bars)', 'Conditions de marché (quotidien, 48 dernières barres)')}>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {regimes.map((m) => (
               <div key={m.symbol} className="rounded-lg border border-ink-600 px-3 py-2 text-xs">
                 <div className="font-semibold text-slate-200">{m.base}</div>
                 <div className={m.regime!.trend === 'up' ? 'text-up' : m.regime!.trend === 'down' ? 'text-rose-400' : 'text-slate-400'}>
-                  {m.regime!.trend === 'range' ? 'Range' : m.regime!.trend === 'up' ? 'Uptrend' : 'Downtrend'}
+                  {m.regime!.trend === 'range' ? t('Range', 'Latéral') : m.regime!.trend === 'up' ? t('Uptrend', 'Haussier') : t('Downtrend', 'Baissier')}
                 </div>
-                <div className="text-slate-500">vol {m.regime!.volatility} · {m.regime!.realizedVolAnnPct.toFixed(0)}% ann.</div>
+                <div className="text-slate-500">vol {m.regime!.volatility} · {m.regime!.realizedVolAnnPct.toFixed(0)}% {t('ann.', 'annualisée')}</div>
               </div>
             ))}
           </div>
         </Card>
       </div>
 
-      <Card title="Research funnel">
+      <Card title={t('Research funnel', 'Entonnoir de recherche')}>
         <Funnel />
       </Card>
     </div>
@@ -194,12 +194,12 @@ function Overview() {
 function Funnel() {
   const c = allCandidates();
   const steps = [
-    ['Hypotheses (family × market × timeframe)', c.length + allMarkets().reduce((s, m) => s + m.skipped.filter((x) => !/no new evidence/.test(x.reason)).length, 0)],
-    ['Backtested after costs', c.length],
-    ['Profitable on training', c.filter((x) => x.train.netReturn > 0).length],
-    ['Passed validation → test opened', c.filter((x) => x.test).length],
-    ['Qualified for paper trading', c.filter((x) => x.status === 'qualified_paper_strategy').length],
-    ['Owner-approved live', 0]
+    [tr('Hypotheses (family × market × timeframe)', 'Hypothèses (famille × marché × période)'), c.length + allMarkets().reduce((s, m) => s + m.skipped.filter((x) => !/no new evidence/.test(x.reason)).length, 0)],
+    [tr('Backtested after costs', 'Testées sur l’historique après coûts'), c.length],
+    [tr('Profitable on training', 'Rentables à l’entraînement'), c.filter((x) => x.train.netReturn > 0).length],
+    [tr('Passed validation → test opened', 'Validation réussie → test ouvert'), c.filter((x) => x.test).length],
+    [tr('Qualified for paper trading', 'Qualifiées pour la négociation fictive'), c.filter((x) => x.status === 'qualified_paper_strategy').length],
+    [tr('Owner-approved live', 'Approuvées en réel par le propriétaire'), 0]
   ] as const;
   const max = steps[0][1] || 1;
   return (
@@ -235,9 +235,9 @@ function Strategies() {
           <Chip key={x} on={iv === x} onClick={() => setIv(x)}>{x === 'all' ? 'All timeframes' : x}</Chip>
         ))}
         <span className="w-px bg-white/10" />
-        <Chip on={status === 'all'} onClick={() => setStatus('all')}>All</Chip>
-        <Chip on={status === 'tested'} onClick={() => setStatus('tested')}>Reached test</Chip>
-        <Chip on={status === 'qualified'} onClick={() => setStatus('qualified')}>Qualified</Chip>
+        <Chip on={status === 'all'} onClick={() => setStatus('all')}>{tr('All', 'Tous')}</Chip>
+        <Chip on={status === 'tested'} onClick={() => setStatus('tested')}>{tr('Reached test', 'Test atteint')}</Chip>
+        <Chip on={status === 'qualified'} onClick={() => setStatus('qualified')}>{tr('Qualified', 'Qualifiées')}</Chip>
       </div>
       <p className="text-xs text-slate-500">
         {rows.length} candidates · {GATES.version}: ≥{GATES.minTradesValidation} validation & ≥{GATES.minTradesTest} test trades, net &gt; 0
@@ -290,11 +290,11 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
   const dd = (w?: CandidateRow['train']) => (w ? (w.maxDrawdown ?? w.maxDrawdownBound) : undefined);
   return (
     <div className="space-y-3 border-t border-ink-600 px-4 py-3 text-xs">
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={tr('Scrollable table', 'Tableau défilant')}>
         <table className="stack-sm w-full min-w-[520px] text-left">
           <thead className="text-slate-500">
             <tr>
-              <th className="py-1 font-normal">Metric</th>
+              <th className="py-1 font-normal">{tr('Metric', 'Mesure')}</th>
               {cols.map(([l], i) => (
                 <th key={l} className="py-1 font-normal">
                   {l}
@@ -319,7 +319,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
               <tr key={label} className="border-t border-white/5">
                 <td className="py-1 font-display text-slate-500">{label}</td>
                 {cols.map(([l, w]) => (
-                  <td key={l} data-label={l} className="py-1">{w ? f(w) : <span className="text-slate-600">not opened</span>}</td>
+                  <td key={l} data-label={l} className="py-1">{w ? f(w) : <span className="text-slate-600">{tr('not opened', 'non ouvert')}</span>}</td>
                 ))}
               </tr>
             ))}
@@ -345,13 +345,13 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
         </div>
       )}
       <div>
-        <div className="mb-1 text-slate-500">Decision</div>
+        <div className="mb-1 text-slate-500">{tr('Decision', 'Décision')}</div>
         {c.rejectionReasons.length ? (
           <ul className="list-inside list-disc space-y-0.5 text-rose-300">
             {c.rejectionReasons.map((r) => <li key={r}>{r}</li>)}
           </ul>
         ) : (
-          <div className="text-helix-400">Passed all gates → forward paper trading. Not approved for real money.</div>
+          <div className="text-helix-400">{tr('Passed all gates → forward paper trading. Not approved for real money.', 'Toutes les étapes réussies → négociation fictive prospective. Non approuvée pour l’argent réel.')}</div>
         )}
       </div>
     </div>
@@ -362,7 +362,7 @@ function CandidateDetail({ c }: { c: CandidateRow }) {
 function Lab() {
   return (
     <div className="space-y-5">
-      <Card title="Research runs">
+      <Card title={tr('Research runs', 'Exécutions de recherche')}>
         <div className="space-y-3">
           {bot().runs.map((r) => (
             <div key={r.runId} className="rounded-lg border border-ink-600 p-3 text-xs">
@@ -375,37 +375,36 @@ function Lab() {
           ))}
         </div>
         <details className="mt-3 text-xs text-slate-400">
-          <summary className="flex min-h-[44px] cursor-pointer items-center text-slate-300">Assumptions</summary>
+          <summary className="flex min-h-[44px] cursor-pointer items-center text-slate-300">{tr('Assumptions', 'Hypothèses de calcul')}</summary>
           <ul className="mt-2 list-inside list-disc space-y-1">{bot().runs[0]?.assumptions.map((a) => <li key={a}>{a}</li>)}</ul>
         </details>
       </Card>
-      <Card title="Datasets">
-        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+      <Card title={tr('Datasets', 'Jeux de données')}>
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={tr('Scrollable table', 'Tableau défilant')}>
           <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
-              <tr><th className="py-1 font-normal">Market</th><th className="font-normal">TF</th><th className="font-normal">Bars</th><th className="font-normal">Quality</th><th className="font-normal">Dataset id</th><th className="font-normal">Notes</th></tr>
+              <tr><th className="py-1 font-normal">{tr('Market', 'Marché')}</th><th className="font-normal">TF</th><th className="font-normal">{tr('Bars', 'Barres')}</th><th className="font-normal">{tr('Quality', 'Qualité')}</th><th className="font-normal">{tr('Dataset id', 'Identifiant du jeu de données')}</th><th className="font-normal">{tr('Notes', 'Notes')}</th></tr>
             </thead>
             <tbody className="text-slate-300">
               {allMarkets().map((m) => (
                 <tr key={m.symbol + m.intervalMs} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td data-label="Timeframe">{ivLabel(m.intervalMs)}</td>
-                  <td data-label="Bars" className="font-mono">{m.quality.bars}</td>
-                  <td data-label="Quality" className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
-                  <td data-label="Dataset id" className="font-code text-slate-500">{m.datasetId}</td>
-                  <td data-label="Notes" className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
+                  <td data-label={tr('Timeframe', 'Période')}>{ivLabel(m.intervalMs)}</td>
+                  <td data-label={tr('Bars', 'Barres')} className="font-mono">{m.quality.bars}</td>
+                  <td data-label={tr('Quality', 'Qualité')} className={`font-mono ${m.quality.score >= 90 ? 'text-up' : m.quality.score >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>{m.quality.score}</td>
+                  <td data-label={tr('Dataset id', 'Identifiant du jeu de données')} className="font-code text-slate-500">{m.datasetId}</td>
+                  <td data-label={tr('Notes', 'Notes')} className="text-slate-500">{m.quality.reasons.join('; ') || '—'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="mt-3 text-xs text-slate-500">
-          Source: Coinbase Exchange public candles (no key). Gaps are never filled; only the trailing contiguous run is tested. Datasets are
-          stored in <span className="font-code">research/data/</span> with content hashes for reproducibility.
+          {tr('Source: Coinbase Exchange public candles (no key). Gaps are never filled; only the trailing contiguous run is tested. Datasets are stored in', 'Source : chandeliers publics de Coinbase Exchange (sans clé). Les trous ne sont jamais comblés; seule la dernière série continue est testée. Les jeux de données sont conservés dans')} <span className="font-code">research/data/</span> {tr('with content hashes for reproducibility.', 'avec des empreintes de contenu pour la reproductibilité.')}
         </p>
       </Card>
-      <Card title="Run research yourself">
-        <pre tabIndex={0} aria-label="Research commands" className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
+      <Card title={tr('Run research yourself', 'Lancer la recherche vous-même')}>
+        <pre tabIndex={0} aria-label={tr('Research commands', 'Commandes de recherche')} className="overflow-x-auto rounded-lg bg-ink-900 p-3 font-mono text-xs text-slate-300">{`npm run bot:research               # fetch data + new research + paper update
 npm run bot:research -- --watch-only  # data, quotes, paper only (no re-testing)
 npm run bot:research -- --offline     # stored data only`}</pre>
       </Card>
@@ -448,7 +447,7 @@ function Watchbot() {
   const markets = allMarkets().filter((m) => m.intervalMs === 3_600_000);
   return (
     <div className="space-y-5">
-      <Card title="Lifecycle (never merged)">
+      <Card title={tr('Lifecycle (never merged)', 'Cycle de vie (jamais fusionné)')}>
         <div className="flex flex-wrap items-center gap-2 text-xs">
           {['detected_opportunity', 'research_hypothesis', 'backtested_candidate', 'qualified_paper_strategy', 'owner_approved_live_candidate'].map((s, i, a) => (
             <span key={s} className="flex items-center gap-2">
@@ -459,7 +458,7 @@ function Watchbot() {
         </div>
       </Card>
       <Card
-        title="Cross-venue price check"
+        title={tr('Cross-venue price check', 'Comparaison des prix entre plateformes')}
         right={
           <button type="button" onClick={refresh} disabled={state === 'loading'} className="rounded-lg border border-ink-600 px-3 py-1.5 text-xs text-slate-200">
             {state === 'loading' ? 'Checking…' : 'Check live quotes'}
@@ -467,12 +466,11 @@ function Watchbot() {
         }
       >
         <p className="mb-3 text-xs text-slate-500">
-          Compares best bid/ask on Coinbase, Kraken and Gemini. Even a positive net edge is only a <em>detected opportunity</em>: it ignores
-          transfer time, withdrawal fees, inventory on both venues and order-book depth. It is never shown as profit.
+          {tr('Compares best bid/ask on Coinbase, Kraken and Gemini. Even a positive net edge is only a', 'Compare les meilleurs prix acheteur/vendeur sur Coinbase, Kraken et Gemini. Même un écart net positif n’est qu’une')} <em>{tr('detected opportunity', 'occasion détectée')}</em>{tr(': it ignores transfer time, withdrawal fees, inventory on both venues and order-book depth. It is never shown as profit.', ' : on ignore le délai de transfert, les frais de retrait, les avoirs sur chaque plateforme et la profondeur des carnets d’ordres. Ce n’est jamais présenté comme un profit.')}
         </p>
         {state === 'error' && <div className="mb-2 text-xs text-rose-400">{err}</div>}
         {!shown.length ? (
-          <div className="text-xs text-slate-500">No quote snapshot stored yet — press “Check live quotes”.</div>
+          <div className="text-xs text-slate-500">{tr('No quote snapshot stored yet — press “Check live quotes”.', 'Aucun relevé de prix enregistré — touchez « Check live quotes ».')}</div>
         ) : (
           <div className="space-y-1.5">
             {shown.slice(0, 18).map((d) => (
@@ -490,27 +488,27 @@ function Watchbot() {
           </div>
         )}
       </Card>
-      <Card title="Market coverage (hourly)">
-        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+      <Card title={tr('Market coverage (hourly)', 'Couverture des marchés (horaire)')}>
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={tr('Scrollable table', 'Tableau défilant')}>
           <table className="stack-sm w-full min-w-[520px] text-left text-xs">
             <thead className="text-slate-500">
-              <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Data quality</th><th className="font-normal">Regime</th><th className="font-normal">Volatility</th><th className="font-normal">Min order</th></tr>
+              <tr><th className="py-1 font-normal">{tr('Market', 'Marché')}</th><th className="font-normal">{tr('Data quality', 'Qualité des données')}</th><th className="font-normal">{tr('Regime', 'Régime')}</th><th className="font-normal">{tr('Volatility', 'Volatilité')}</th><th className="font-normal">{tr('Min order', 'Ordre minimal')}</th></tr>
             </thead>
             <tbody className="text-slate-300">
               {markets.map((m) => (
                 <tr key={m.symbol} className="border-t border-white/5">
                   <td className="py-1.5">{m.symbol}</td>
-                  <td data-label="Data quality" className="font-mono">{m.quality.score}/100</td>
-                  <td data-label="Regime">{m.regime ? m.regime.trend : '—'}</td>
-                  <td data-label="Volatility">{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
-                  <td data-label="Min order" className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
+                  <td data-label={tr('Data quality', 'Qualité des données')} className="font-mono">{m.quality.score}/100</td>
+                  <td data-label={tr('Regime', 'Régime')}>{m.regime ? m.regime.trend : '—'}</td>
+                  <td data-label={tr('Volatility', 'Volatilité')}>{m.regime ? `${m.regime.volatility} (${m.regime.realizedVolAnnPct.toFixed(0)}%)` : '—'}</td>
+                  <td data-label={tr('Min order', 'Ordre minimal')} className="font-mono">{usd(m.costBps.minOrderUsd)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="mt-3 text-xs text-slate-500">
-          Same asset on several venues or chains counts as one exposure. DEX/multichain discovery is not yet implemented in this section.
+          {tr('Same asset on several venues or chains counts as one exposure. DEX/multichain discovery is not yet implemented in this section.', 'Un même actif sur plusieurs plateformes ou chaînes compte comme une seule exposition. La découverte DEX/multichaîne n’est pas encore offerte dans cette section.')}
         </p>
       </Card>
     </div>
@@ -526,12 +524,12 @@ function Risk() {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Execution mode" value={EXECUTION_MODE.toUpperCase()} tone="warn" />
-        <Stat label="Live trading" value={LIVE_TRADING_ENABLED ? 'ON' : 'LOCKED'} tone={LIVE_TRADING_ENABLED ? 'bad' : 'good'} sub="no order adapter exists" />
-        <Stat label="Kill switches tripped" value={bot().paper.filter((a) => a.killSwitch).length} />
-        <Stat label="Leverage" value="1× (none)" sub="no margin, no shorting" />
+        <Stat label={tr('Execution mode', 'Mode d’exécution')} value={EXECUTION_MODE.toUpperCase()} tone="warn" />
+        <Stat label={tr('Live trading', 'Négociation réelle')} value={LIVE_TRADING_ENABLED ? tr('ON', 'ACTIVÉE') : tr('LOCKED', 'VERROUILLÉE')} tone={LIVE_TRADING_ENABLED ? 'bad' : 'good'} sub={tr('no order adapter exists', 'aucun module d’ordres n’existe')} />
+        <Stat label={tr('Kill switches tripped', 'Arrêts d’urgence déclenchés')} value={bot().paper.filter((a) => a.killSwitch).length} />
+        <Stat label={tr('Leverage', 'Levier')} value={tr('1× (none)', '1× (aucun)')} sub={tr('no margin, no shorting', 'ni marge, ni vente à découvert')} />
       </div>
-      <Card title="Enforced limits (per paper account)">
+      <Card title={tr('Enforced limits (per paper account)', 'Limites appliquées (par compte fictif)')}>
         <div className="grid gap-2 text-sm sm:grid-cols-2">
           {[
             ['Max position size', `${p.maxPositionFraction * 100}% of equity`],
@@ -551,16 +549,16 @@ function Risk() {
         </div>
       </Card>
       <MeasuredCosts />
-      <Card title="Small-account feasibility">
+      <Card title={tr('Small-account feasibility', 'Faisabilité pour un petit compte')}>
         <p className="mb-3 text-xs text-slate-500">
           A $20 account is not a scaled-down $1,000 account: venue minimums and fixed costs (gas) bind. Round-trip cost shown for one
           policy-sized position.
         </p>
-        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+        <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={tr('Scrollable table', 'Tableau défilant')}>
           <table className="stack-sm w-full min-w-[560px] text-left text-xs">
             <thead className="text-slate-500">
               <tr>
-                <th className="py-1 font-normal">Capital</th>
+                <th className="py-1 font-normal">{tr('Capital', 'Capital')}</th>
                 {venues.map((v) => <th key={v} className="font-normal">{v.replace('_', ' ')}</th>)}
               </tr>
             </thead>
@@ -594,8 +592,7 @@ function Activity() {
     <div className="space-y-5">
       <Card title={`Paper accounts (${bot().paper.length})`}>
         <p className="mb-3 text-xs text-slate-500">
-          Forward-only: an account never trades bars that opened before it was created. “Diagnostic” accounts track rejected candidates to
-          check whether rejecting them was right — they are not strategies the bot endorses.
+          {tr('Forward-only: an account never trades bars that opened before it was created. “Diagnostic” accounts track rejected candidates to check whether rejecting them was right — they are not strategies the bot endorses.', 'Prospectif seulement : un compte ne négocie jamais de barres ouvertes avant sa création. Les comptes « diagnostiques » suivent des candidats rejetés pour vérifier que leur rejet était justifié — le robot ne les endosse pas.')}
         </p>
         <div className="space-y-2">
           {bot().paper.map((a) => (
@@ -613,7 +610,7 @@ function Activity() {
                 <div>Entries {a.entries} · exits {a.trades}</div>
                 <div>Costs {usd(a.totalCostUsd)}</div>
               </div>
-              {a.barsProcessed === 0 && <div className="mt-2 text-amber-400">No forward bar has completed since creation — $0 P&amp;L is not performance.</div>}
+              {a.barsProcessed === 0 && <div className="mt-2 text-amber-400">{tr('No forward bar has completed since creation — $0 P&L is not performance.', 'Aucune barre prospective terminée depuis la création — 0 $ de gain/perte n’est pas une performance.')}</div>}
               {a.recentDecisions.length > 0 && (
                 <ul className="mt-2 space-y-1">
                   {a.recentDecisions.map((d, i) => (
@@ -625,7 +622,7 @@ function Activity() {
           ))}
         </div>
       </Card>
-      <Card title="Audit trail">
+      <Card title={tr('Audit trail', 'Piste d’audit')}>
         <ul className="space-y-1.5 text-xs text-slate-400">
           <li><span className="font-mono text-slate-500">{dateTime(bot().generatedAt)}</span> snapshot written by code {bot().codeVersion.slice(0, 12)}</li>
           {bot().runs.map((r) => (
@@ -642,29 +639,28 @@ function Activity() {
 function Settings() {
   return (
     <div className="space-y-5">
-      <Card title="Mode">
+      <Card title={tr('Mode', 'Mode')}>
         <div className="space-y-2 text-sm text-slate-300">
           <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
-            <span>Paper trading</span>
-            <Pill status="qualified">On (locked)</Pill>
+            <span>{tr('Paper trading', 'Négociation fictive')}</span>
+            <Pill status="qualified">{tr('On (locked)', 'Activée (verrouillée)')}</Pill>
           </div>
           <div className="flex items-center justify-between rounded-lg border border-ink-600 px-3 py-2">
-            <span>Real-money trading</span>
-            <Pill status="rejected">Off (locked)</Pill>
+            <span>{tr('Real-money trading', 'Négociation en argent réel')}</span>
+            <Pill status="rejected">{tr('Off (locked)', 'Désactivée (verrouillée)')}</Pill>
           </div>
           <p className="text-xs text-slate-500">
-            Enabling real money is not a switch in this app. It requires the owner’s written approval, a strategy with forward paper evidence,
-            a new reviewed exchange-order adapter and a code change to the lock in <span className="font-mono">src/bot/risk.ts</span>.
+            {tr('Enabling real money is not a switch in this app. It requires the owner’s written approval, a strategy with forward paper evidence, a new reviewed exchange-order adapter and a code change to the lock in', 'Activer l’argent réel n’est pas un simple interrupteur dans cette application. Il faut l’approbation écrite du propriétaire, une stratégie avec des preuves fictives prospectives, un nouveau module d’ordres révisé et une modification du verrou dans')} <span className="font-mono">src/bot/risk.ts</span>.
           </p>
         </div>
       </Card>
-      <Card title="Exchange connections">
+      <Card title={tr('Exchange connections', 'Connexions aux plateformes')}>
         <p className="text-sm text-slate-400">
-          The bot uses public market data only and needs no API keys. Read-only portfolio connections are managed on the{' '}
-          <Link to="/connections" className="text-up underline">Connections</Link> page and are never used for orders.
+          {tr('The bot uses public market data only and needs no API keys. Read-only portfolio connections are managed on the', 'Le robot utilise seulement des données de marché publiques et n’a besoin d’aucune clé API. Les connexions en lecture seule sont gérées sur la page')}{' '}
+          <Link to="/connections" className="text-up underline">{tr('Connections', 'Connexions')}</Link> {tr('page and are never used for orders.', 'et ne servent jamais à passer des ordres.')}
         </p>
       </Card>
-      <Card title="Research configuration">
+      <Card title={tr('Research configuration', 'Configuration de la recherche')}>
         <div className="grid gap-2 text-xs text-slate-400 sm:grid-cols-2">
           <div>Gates: <span className="font-mono text-slate-200">{GATES.version}</span></div>
           <div>Split: {GATES.split.train * 100}/{GATES.split.validation * 100}/{GATES.split.test * 100} train/validation/test (chronological)</div>
@@ -684,7 +680,7 @@ function MeasuredCosts() {
   const total = c.placeholder.halfSpreadBps + c.placeholder.slippageBps;
   return (
     <Card
-      title="Measured execution costs (order books)"
+      title={tr('Measured execution costs (order books)', 'Coûts d’exécution mesurés (carnets d’ordres)')}
       right={
         <div className="flex flex-wrap gap-1 text-xs">
           {[20, 100, 1000, 5000].map((n) => (
@@ -698,10 +694,10 @@ function MeasuredCosts() {
         {c.collectionDays} day{c.collectionDays === 1 ? '' : 's'}. Research still uses the {total} bps placeholder until {c.requiredDays} days are
         collected (pre-registered). Exchange fees are separate and dominate: {COST_PRESETS.coinbase_taker.takerFeeBps} bps Coinbase taker.
       </p>
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable table">
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={tr('Scrollable table', 'Tableau défilant')}>
         <table className="stack-sm w-full min-w-[420px] text-left text-xs">
           <thead className="text-slate-500">
-            <tr><th className="py-1 font-normal">Market</th><th className="font-normal">Venue</th><th className="font-normal">Half-spread</th><th className="font-normal">Slippage</th><th className="font-normal">Total vs {total} bps</th></tr>
+            <tr><th className="py-1 font-normal">{tr('Market', 'Marché')}</th><th className="font-normal">{tr('Venue', 'Plateforme')}</th><th className="font-normal">{tr('Half-spread', 'Demi-écart')}</th><th className="font-normal">{tr('Slippage', 'Glissement')}</th><th className="font-normal">Total vs {total} bps</th></tr>
           </thead>
           <tbody className="font-mono text-slate-300">
             {rows.map((m) => {
@@ -709,9 +705,9 @@ function MeasuredCosts() {
               return (
                 <tr key={m.venue + m.symbol} className="border-t border-white/5">
                   <td className="py-1.5 font-display">{m.symbol}</td>
-                  <td data-label="Venue" className="font-display text-slate-400">{m.venue}</td>
-                  <td data-label="Half-spread">{m.halfSpreadBpsP75.toFixed(2)}</td>
-                  <td data-label="Slippage">{m.unfilledShare > 0 ? <span className="text-rose-400">depth short</span> : m.slippageBpsP75.toFixed(2)}</td>
+                  <td data-label={tr('Venue', 'Plateforme')} className="font-display text-slate-400">{m.venue}</td>
+                  <td data-label={tr('Half-spread', 'Demi-écart')}>{m.halfSpreadBpsP75.toFixed(2)}</td>
+                  <td data-label={tr('Slippage', 'Glissement')}>{m.unfilledShare > 0 ? <span className="text-rose-400">{tr('depth short', 'profondeur insuffisante')}</span> : m.slippageBpsP75.toFixed(2)}</td>
                   <td data-label={`Total vs ${total} bps`} className={!Number.isFinite(t) ? 'text-rose-400' : t <= total ? 'text-up' : 'text-amber-400'}>{Number.isFinite(t) ? t.toFixed(2) : '—'}</td>
                 </tr>
               );

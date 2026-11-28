@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 import type { AlertRecord } from '../types';
 
 export const ALERTS_CHANGED = 'helix:alerts-changed';
@@ -29,9 +30,9 @@ export function checkAlerts(alerts: AlertRecord[], prices: Record<string, number
 /** Validation for the create form; returns an error message or null. */
 export function validateThreshold(raw: string): string | null {
   const t = raw.trim().replace(/[$,\s]/g, '');
-  if (!t) return 'Enter a price.';
+  if (!t) return tr('Enter a price.', 'Entrez un prix.');
   const v = Number(t);
-  if (!Number.isFinite(v) || v <= 0) return 'Enter a price above $0.';
+  if (!Number.isFinite(v) || v <= 0) return tr('Enter a price above $0.', 'Entrez un prix supérieur à 0 $.');
   return null;
 }
 export const parseThreshold = (raw: string) => Number(raw.trim().replace(/[$,\s]/g, ''));

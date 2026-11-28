@@ -1,3 +1,4 @@
+import { getLang } from '../i18n';
 // Public market data for discovery and asset pages. Every result carries its source and time.
 const CB = 'https://api.exchange.coinbase.com';
 const CG = 'https://api.coingecko.com/api/v3';
@@ -101,8 +102,8 @@ export const fmtUsd = (v: number | null | undefined, opts: { compact?: boolean }
 
 export const fmtAge = (ts: number, now = Date.now()) => {
   const s = Math.max(0, Math.round((now - ts) / 1000));
-  if (s < 60) return `${s}s ago`;
-  if (s < 3600) return `${Math.round(s / 60)} min ago`;
-  if (s < 86_400) return `${Math.round(s / 3600)} h ago`;
-  return `${Math.round(s / 86_400)} days ago`;
+  const fr = getLang() === 'fr';
+  const v = s < 60 ? `${s} s` : s < 3600 ? `${Math.round(s / 60)} min` : s < 86_400 ? `${Math.round(s / 3600)} h` : `${Math.round(s / 86_400)} ${fr ? 'jours' : 'days'}`;
+  if (fr) return `il y a ${v}`;
+  return s < 60 ? `${s}s ago` : `${v} ago`;
 };

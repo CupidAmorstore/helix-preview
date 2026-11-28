@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 // Pre-send checks: right address format for the chain AND the selected network, and an RPC that is
 // actually on that network. Nothing is signed until these pass.
 import * as bitcoin from 'bitcoinjs-lib';
@@ -28,7 +29,7 @@ export const SOL_GENESIS: Record<WalletNetwork, string> = {
 /** Returns an error message, or null when the address is valid for this chain and network. */
 export function validateAddress(chain: Chain, address: string, network: WalletNetwork): string | null {
   const a = address.trim();
-  if (!a) return 'Enter a recipient address';
+  if (!a) return tr('Enter a recipient address', 'Entrez une adresse de destination');
   if (chain === 'btc') {
     try {
       bitcoin.address.toOutputScript(a, network === 'mainnet' ? bitcoin.networks.bitcoin : bitcoin.networks.testnet);
@@ -36,22 +37,22 @@ export function validateAddress(chain: Chain, address: string, network: WalletNe
     } catch {
       try {
         bitcoin.address.toOutputScript(a, network === 'mainnet' ? bitcoin.networks.testnet : bitcoin.networks.bitcoin);
-        return network === 'mainnet' ? 'This is a testnet address. Switch to Testnet or use a mainnet address.' : 'This is a real (mainnet) Bitcoin address. Use a testnet address.';
+        return network === 'mainnet' ? tr('This is a testnet address. Switch to Testnet or use a mainnet address.', 'C’est une adresse du réseau de test. Passez au réseau de test ou utilisez une adresse du réseau principal.') : tr('This is a real (mainnet) Bitcoin address. Use a testnet address.', 'C’est une vraie adresse Bitcoin (réseau principal). Utilisez une adresse du réseau de test.');
       } catch {
-        return 'Not a valid Bitcoin address';
+        return tr('Not a valid Bitcoin address', 'Adresse Bitcoin invalide');
       }
     }
   }
-  if (chain === 'eth') return isAddress(a) ? null : 'Not a valid Ethereum address';
+  if (chain === 'eth') return isAddress(a) ? null : tr('Not a valid Ethereum address', 'Adresse Ethereum invalide');
   const sol = checkSolanaAddress(a);
-  if (sol === 'invalid') return 'Not a valid Solana address';
-  if (sol === 'small-order') return 'This Solana address has no owner (special system key): funds sent there are lost';
-  return sol === 'off-curve' ? 'This Solana address cannot receive transfers (not a wallet address)' : null;
+  if (sol === 'invalid') return tr('Not a valid Solana address', 'Adresse Solana invalide');
+  if (sol === 'small-order') return tr('This Solana address has no owner (special system key): funds sent there are lost', 'Cette adresse Solana n’a pas de propriétaire (clé système spéciale) : les fonds envoyés y sont perdus');
+  return sol === 'off-curve' ? tr('This Solana address cannot receive transfers (not a wallet address)', 'Cette adresse Solana ne peut pas recevoir de transferts (ce n’est pas une adresse de portefeuille)') : null;
 }
 
 export function validateAmount(amount: string): string | null {
   const n = Number(amount);
-  if (!amount.trim() || !Number.isFinite(n) || n <= 0) return 'Enter an amount greater than zero';
+  if (!amount.trim() || !Number.isFinite(n) || n <= 0) return tr('Enter an amount greater than zero', 'Entrez un montant supérieur à zéro');
   return null;
 }
 

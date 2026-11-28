@@ -2,6 +2,7 @@ import { createChart, ColorType, type IChartApi, type ISeriesApi, type LineData,
 import { useEffect, useRef, useState } from 'react';
 import { fetchCandles } from '../services/market';
 import { chartTone } from './chartTone';
+import { useT } from '../i18n';
 
 type MarketChartProps = {
   /** Coinbase product id, e.g. BTC-USD */
@@ -16,6 +17,7 @@ const fmtAxis = (v: number) =>
 
 export default function MarketChart({ symbol, timeframe, livePrice }: MarketChartProps) {
   const lastTime = useRef<UTCTimestamp | null>(null);
+  const tr = useT();
   const firstValue = useRef<number | null>(null);
   const paint = (last: number | null) => {
     const t = chartTone(firstValue.current, last);
@@ -116,11 +118,11 @@ export default function MarketChart({ symbol, timeframe, livePrice }: MarketChar
     <div className="relative">
       <div ref={containerRef} className="h-[280px] w-full" role="img" aria-label={`${symbol} price chart, ${timeframe} intervals`} />
       <p className="mt-1 text-[11px] text-slate-500">
-        <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center underline underline-offset-2">Charting by TradingView</a>
+        <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center underline underline-offset-2">{tr('Charting by TradingView', 'Graphiques par TradingView')}</a>
       </p>
-      <p className="text-[11px] text-slate-500">Times in your time zone ({Intl.DateTimeFormat().resolvedOptions().timeZone}). The last point is the current, unfinished interval and moves with the live price.</p>
+      <p className="text-[11px] text-slate-500">{tr('Times in your time zone', 'Heures dans votre fuseau horaire')} ({Intl.DateTimeFormat().resolvedOptions().timeZone}). {tr('The last point is the current, unfinished interval and moves with the live price.', 'Le dernier point est l’intervalle en cours, non terminé, et suit le prix en direct.')}</p>
       {status === 'loading' && (
-        <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Loading chart...</div>
+        <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">{tr('Loading chart…', 'Chargement du graphique…')}</div>
       )}
       {status === 'error' && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">Chart unavailable · check your connection</div>

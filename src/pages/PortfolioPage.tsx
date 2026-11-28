@@ -7,6 +7,7 @@ import { useVault } from '../services/vault';
 import { fetchExchangeBalances } from '../services/exchanges';
 import { fetchBtcBalance, fetchEthBalance, fetchSolBalance } from '../services/onchain';
 import type { EncryptedPayload } from '../types';
+import { tr, useT } from '../i18n';
 
 const COIN_ID_MAP: Record<string, string> = {
   BTC: 'bitcoin',
@@ -28,6 +29,7 @@ type AssetRow = {
 };
 
 export default function PortfolioPage() {
+  const t = useT();
   const vault = useVault();
   const [rows, setRows] = useState<AssetRow[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -47,7 +49,7 @@ export default function PortfolioPage() {
     try {
       const [addresses, exchanges] = await Promise.all([listAddresses(), listExchanges()]);
       if (addresses.length === 0 && exchanges.length === 0) {
-        setNotes(['Nothing to refresh yet: add a public address in Connections first.']);
+        setNotes([tr('Nothing to refresh yet: add a public address in Connections first.', 'Rien à actualiser pour l’instant : ajoutez d’abord une adresse publique dans Connexions.')]);
         setStatus('idle');
         return;
       }
@@ -63,18 +65,18 @@ export default function PortfolioPage() {
           try {
             etherscanKey = await vault.decrypt(encryptedEtherscan);
           } catch {
-            localNotes.push('Unable to decrypt Etherscan API key.');
+            localNotes.push(tr('Unable to decrypt Etherscan API key.', 'Impossible de déchiffrer la clé API Etherscan.'));
           }
         }
         if (encryptedSolRpc) {
           try {
             solRpc = await vault.decrypt(encryptedSolRpc);
           } catch {
-            localNotes.push('Unable to decrypt Solana RPC setting.');
+            localNotes.push(tr('Unable to decrypt Solana RPC setting.', 'Impossible de déchiffrer le réglage RPC Solana.'));
           }
         }
       } else {
-        localNotes.push('Ethereum tokens need an Etherscan key: unlock the vault in Connections to use a saved key.');
+        localNotes.push(tr('Ethereum tokens need an Etherscan key: unlock the vault in Connections to use a saved key.', 'Les jetons Ethereum exigent une clé Etherscan : déverrouillez le coffre dans Connexions pour utiliser une clé enregistrée.'));
       }
 
       // On-chain balances
@@ -86,7 +88,7 @@ export default function PortfolioPage() {
           }
           if (address.chain === 'eth') {
             if (!etherscanKey) {
-              localNotes.push('Etherscan API key not configured.');
+              localNotes.push(tr('Etherscan API key not configured.', 'Clé API Etherscan non configurée.'));
             } else {
               const balance = await fetchEthBalance(address.address, etherscanKey);
               assetTotals.set('ETH', (assetTotals.get('ETH') ?? 0) + balance.eth);
@@ -166,27 +168,27 @@ export default function PortfolioPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
-      <PageHeader title="Watched addresses" back subtitle="Read-only balances from public blockchain data" />
+      <PageHeader title={t('Watched addresses', 'Adresses suivies')} back subtitle={t('Read-only balances from public blockchain data', 'Soldes en lecture seule tirés des données publiques de la chaîne de blocs')} />
 
       <section className="space-y-3 border-t border-ink-600 pt-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="eyebrow text-slate-500">Total value</div>
+            <div className="eyebrow text-slate-500">{t('Total value', 'Valeur totale')}</div>
             <div className="font-mono text-[32px] font-semibold leading-tight text-white">${totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
           </div>
           <button type="button" onClick={refresh} disabled={status === 'loading'} className="min-h-[44px] shrink-0 rounded-full border border-ink-500 px-4 text-sm text-white disabled:opacity-50">
-            {status === 'loading' ? 'Refreshing…' : 'Refresh balances'}
+            {status === 'loading' ? t('Refreshing…', 'Actualisation…') : t('Refresh balances', 'Actualiser les soldes')}
           </button>
         </div>
         {notes.length > 0 && <div className="space-y-1 text-xs text-slate-400">{notes.map((n) => <p key={n}>{n}</p>)}</div>}
-        <Note>Not part of your paper account and not tradable here. Add or remove addresses in <Link className="underline" to="/connections">Connections</Link>.</Note>
+        <Note>{t('Not part of your paper account and not tradable here.', 'Ne fait pas partie de votre compte fictif et ne peut pas être négocié ici.')} {t('Add or remove addresses in', 'Ajoutez ou retirez des adresses dans')} <Link className="underline" to="/connections">{t('Connections', 'Connexions')}</Link>.</Note>
       </section>
 
-      <section className="border-t border-ink-600" aria-label="Holdings">
-        {status === 'loading' && rows.length === 0 && <p className="py-6 text-sm text-slate-400">Loading balances…</p>}
-        {status === 'error' && <p role="alert" className="py-6 text-sm text-down">Balances could not be loaded. Check your connection and try again.</p>}
+      <section className="border-t border-ink-600" aria-label={t('Holdings', 'Avoirs')}>
+        {status === 'loading' && rows.length === 0 && <p className="py-6 text-sm text-slate-400">{t('Loading balances…', 'Chargement des soldes…')}</p>}
+        {status === 'error' && <p role="alert" className="py-6 text-sm text-down">{t('Balances could not be loaded. Check your connection and try again.', 'Les soldes n’ont pas pu être chargés. Vérifiez votre connexion et réessayez.')}</p>}
         {status === 'idle' && rows.length === 0 && (
-          <p className="py-6 text-sm text-slate-400">No balances yet. <Link className="text-helix-400 underline" to="/connections">Add a public address</Link> to track it here.</p>
+          <p className="py-6 text-sm text-slate-400">{t('No balances yet.', 'Aucun solde pour l’instant.')} <Link className="text-helix-400 underline" to="/connections">{t('Add a public address', 'Ajoutez une adresse publique')}</Link> {t('to track it here.', 'pour la suivre ici.')}</p>
         )}
         <ul className="divide-y divide-ink-600">
           {rows.map((row) => {
@@ -204,20 +206,20 @@ export default function PortfolioPage() {
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <label className="flex items-center gap-2 text-xs text-slate-400">
-                    You paid $
+                    {t('You paid $', 'Vous avez payé $')}
                     <input
                       type="number"
                       inputMode="decimal"
                       min={0}
-                      placeholder="optional"
-                      aria-label={`What you paid for ${row.symbol}, in US dollars`}
+                      placeholder={t('optional', 'facultatif')}
+                      aria-label={t(`What you paid for ${row.symbol}, in US dollars`, `Montant payé pour ${row.symbol}, en dollars US`)}
                       value={costBasis || ''}
                       onChange={(e) => updateCostBasis(row.symbol, Math.max(0, Number(e.target.value) || 0))}
                       className="min-h-[40px] w-28 rounded-lg border border-ink-500 bg-ink-800 px-2 font-mono text-sm text-white"
                     />
                   </label>
                   {pnl === null ? (
-                    <span className="text-xs text-slate-500">Enter what you paid to see P&amp;L</span>
+                    <span className="text-xs text-slate-500">{t('Enter what you paid to see P&amp;L', 'Entrez le montant payé pour voir le gain ou la perte')}</span>
                   ) : (
                     <span className={`font-mono text-sm ${pnl >= 0 ? 'text-up' : 'text-down'}`}>
                       {pnl >= 0 ? '▲ +' : '▼ −'}${Math.abs(pnl).toLocaleString(undefined, { maximumFractionDigits: 2 })}

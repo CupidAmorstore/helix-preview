@@ -32,3 +32,11 @@ All 38 findings were worked; per-finding outcome and commit are in `19_COMPLETE_
 - **French at parity** for Markets, Bot, Wallet, Research Lab and secondary screens (L10N-1).
 - **Physical device:** confirm HDR-1 and run TalkBack.
 - **Human usability testing** (personas in 24 were simulated).
+
+## Update 2026-11-28: French (L10N-1)
+All screens now have French text (Markets, coin page, Trading Bot, Wallet and its guide/vault, Watched addresses,
+Alerts, Connections, Access, Research Lab, plus validation and error messages). Measured with
+`tools/french-coverage.cjs`: **90.4% of visible words** (was 34%). The remainder is coin names, tickers, words that are
+the same in French ("Mode", "Volume") and some Research Lab technical identifiers. French layouts: 23 routes × 360/412 px,
+0 horizontal overflow, 0 page errors. English suites unchanged: unit 416/416, functional 69/69, deep 21/21,
+research-mobile 24/24, wallet 10/10. **Not reviewed by a professional translator**; the More page says so.
