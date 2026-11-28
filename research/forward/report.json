@@ -1,12 +1,12 @@
 {
  "registrationId": "forward-2026-11-25-a",
- "evaluatedAt": 1795772446941,
+ "evaluatedAt": 1795856086601,
  "state": "running",
  "results": [
   {
    "ruleId": "F1-pooled-ts-momentum-168d",
    "forwardMonths": 0,
-   "netReturn": 0,
+   "netReturn": 0.0011327267716789713,
    "maxDrawdown": 0,
    "inference": {
     "months": 0,
@@ -24,15 +24,15 @@
    },
    "status": "collecting",
    "realizedPnlUsd": 0,
-   "unrealizedPnlUsd": 0,
-   "totalCostUsd": 0,
-   "fills": 0,
+   "unrealizedPnlUsd": 1.1327267716788612,
+   "totalCostUsd": 2.5832091405861632,
+   "fills": 4,
    "failedOrders": 0,
    "rejectedOrders": 0,
-   "equityPoints": 1,
+   "equityPoints": 2,
    "lastEquity": {
-    "t": 1795651200000,
-    "v": 1000
+    "t": 1795737600000,
+    "v": 1001.1327267716789
    },
    "markets": 10
   },
@@ -62,9 +62,9 @@
    "fills": 0,
    "failedOrders": 0,
    "rejectedOrders": 0,
-   "equityPoints": 1,
+   "equityPoints": 2,
    "lastEquity": {
-    "t": 1795651200000,
+    "t": 1795737600000,
     "v": 1000
    },
    "markets": 10
@@ -90,8 +90,11 @@
    },
    "status": "collecting",
    "rejectedOrders": 0,
-   "equityPoints": 0,
-   "lastEquity": null,
+   "equityPoints": 2,
+   "lastEquity": {
+    "t": 1795737600000,
+    "v": 1000
+   },
    "markets": null
   }
  ],
@@ -99,5 +102,5 @@
  "warnings": [
   "F3-xs-momentum-28d-top3: cross-sectional rule uses its own event-driven portfolio simulator (mark mode, same fill rules), not exec-v1"
  ],
- "dataThrough": "2026-11-27T00:00:00.000Z"
+ "dataThrough": "2026-11-28T00:00:00.000Z"
 }

@@ -1,6 +1,6 @@
 {
  "registrationId": "forward-2026-11-26-b",
- "evaluatedAt": 1795772446941,
+ "evaluatedAt": 1795856086601,
  "state": "running",
  "results": [
   {
@@ -93,5 +93,5 @@
  "warnings": [
   "F3-xs-momentum-28d-top3: cross-sectional rule uses its own event-driven portfolio simulator (mark mode, same fill rules), not exec-v1"
  ],
- "dataThrough": "2026-11-27T00:00:00.000Z"
+ "dataThrough": "2026-11-28T00:00:00.000Z"
 }

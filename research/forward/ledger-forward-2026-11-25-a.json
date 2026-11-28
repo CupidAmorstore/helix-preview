@@ -3,14 +3,62 @@
  "rules": {
   "F1-pooled-ts-momentum-168d": {
    "BTC-USD": [],
-   "ETH-USD": [],
-   "SOL-USD": [],
+   "ETH-USD": [
+    {
+     "kind": "fill",
+     "t": 1795737600000,
+     "side": "buy",
+     "rawPx": 1687.2,
+     "fillPx": 1698.1668,
+     "units": 0.058887030414209014,
+     "usd": 100,
+     "costUsd": 0.6458022851465444,
+     "partial": false
+    }
+   ],
+   "SOL-USD": [
+    {
+     "kind": "fill",
+     "t": 1795737600000,
+     "side": "buy",
+     "rawPx": 70.93,
+     "fillPx": 71.391045,
+     "units": 1.4007359046222112,
+     "usd": 100,
+     "costUsd": 0.6458022851465444,
+     "partial": false
+    }
+   ],
    "XRP-USD": [],
    "DOGE-USD": [],
    "ADA-USD": [],
    "AVAX-USD": [],
-   "LINK-USD": [],
-   "LTC-USD": [],
+   "LINK-USD": [
+    {
+     "kind": "fill",
+     "t": 1795737600000,
+     "side": "buy",
+     "rawPx": 9.262,
+     "fillPx": 9.322203,
+     "units": 10.727078138075303,
+     "usd": 100,
+     "costUsd": 0.6458022851465444,
+     "partial": false
+    }
+   ],
+   "LTC-USD": [
+    {
+     "kind": "fill",
+     "t": 1795737600000,
+     "side": "buy",
+     "rawPx": 43.744,
+     "fillPx": 44.028335999999996,
+     "units": 2.2712645783388226,
+     "usd": 99.99999999999999,
+     "costUsd": 0.6458022851465302,
+     "partial": false
+    }
+   ],
    "DOT-USD": []
   },
   "F2-pooled-weekly-trend-200d": {
@@ -26,5 +74,5 @@
    "DOT-USD": []
   }
  },
- "updatedAt": "2026-11-27T09:40:46.941Z"
+ "updatedAt": "2026-11-28T08:54:46.601Z"
 }
